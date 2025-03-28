@@ -1,5 +1,5 @@
 object PlayingField {
-    val pfUnit = 20 //playing field unit
+    val pfUnit = 30 //playing field unit
     val rows = 2 * pfUnit //40
     val columns = 3 * pfUnit //60
 
