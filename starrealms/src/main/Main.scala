@@ -1,5 +1,5 @@
 object PlayingField {
-    val pfUnit = 20 //playing field unit
+    val pfUnit = 40 //playing field unit
     val rows = 2 * pfUnit //40
     val columns = 3 * pfUnit //60
 
@@ -7,12 +7,12 @@ object PlayingField {
     val numGaps = numRecs - 1
     val totalGapWidth = columns - (numRecs * rectWidth)
     val cardRowWidth = numRecs * rectWidth + numGaps * gapWidth
-    val sideGapwidth = (columns - cardRowWidth) / 2  
+    val sideGapwidth = (columns - cardRowWidth) / 2
 
     val gapWidth = (columns / 25).toInt
     val rectWidth = gapWidth * 2 //ratio 2:3
     val rectHeight = Math.min((gapWidth * 3), (rows / 5)) // Ensure it doesn't exceed top third
-    
+
     val gapHeight = rows / 5
 
     val topThird = rows / 3
@@ -53,6 +53,6 @@ object PlayingField {
     def main(args: Array[String]): Unit = {
         drawField()
     }
-  
+
 }
 
