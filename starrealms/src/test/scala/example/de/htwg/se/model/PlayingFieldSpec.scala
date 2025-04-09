@@ -15,6 +15,7 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
         val playingField = new PlayingField
         playingField.rows should equal (2 * playingField.pfUnit)
         playingField.columns should equal (3 * playingField.pfUnit)
+        playingField.borderWidth.toInt should equal (playingField.columns * 3/2+3)
 
     }
 
@@ -40,12 +41,12 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
 
     "calculate the total gap width" in {
         val playingField = new PlayingField
-        playingField.totalGapWidth should equal (playingField.columns - (playingField.numRecs * playingField.rectWidth))
+        playingField.totalGapWidth.toFloat should equal (playingField.columns - (playingField.numRecs * playingField.rectWidth))
     }
 
     "calculate the card row width" in {
         val playingField = new PlayingField
-        playingField.cardRowWidth should equal (playingField.numRecs * playingField.rectWidth + playingField.numGaps * playingField.gapWidth)
+        playingField.cardRowWidth.toFloat should equal (playingField.numRecs * playingField.rectWidth + playingField.numGaps * playingField.gapWidth)
     }
 
     "calculate the gap width" in {
@@ -86,6 +87,12 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
         val spaceAboveCards = playingField.centeredRow
         val spaceBelowCards = playingField.rows - (playingField.centeredRow + playingField.rectHeight)
     } */
+
+    "draw borders around the playing field" in {
+        val playingField = new PlayingField
+        val border = "+" + ("-" * (playingField.borderWidth)) + "+"
+        println(border) // This will print the top and bottom border
+    }
 
     "draw the playing field with cards" in {
         val playingField = new PlayingField
