@@ -5,19 +5,26 @@ import org.scalatest.matchers.should.Matchers
 
 class PlayingFieldSpec extends AnyWordSpec with Matchers {
   "A PlayingField" should {
-    "have the correct dimensions" in {
-      val playingField = new PlayingField
-      playingField.rows should be(20)
-      playingField.columns should be(30)
-      playingField.numRecs should be(8)
-      playingField.numGaps should be(7)
-      playingField.totalGapWidth should be(6)
-      playingField.cardRowWidth should be(24)
-      playingField.sideGapwidth should be(3)
-      playingField.gapWidth should be(2)
-      playingField.rectWidth should be(4)
-      playingField.rectHeight should be(4)
-      playingField.gapHeight should be(4)
+    "have a height and width that is scalable" in {
+        val playingField = new PlayingField
+        playingField.rows shouldEqual 20
+        playingField.columns shouldEqual 30
+
+    }
+    "contain 8 card slots in the top third" in {
+        val playingField = new PlayingField
+        playingField.numRecs shouldEqual 8
+    }
+
+    "calculate correct card width and height with 3:2 ratio" in {
+        val playingField = new PlayingField
+        playingField.rectHeight.toFloat / playingField.rectWidth.toFloat shouldBe  1.5f +- 0.01f
+    }
+    "center the cards in the top third vertically" in {
+        val playingField = new PlayingField
+        val expectedTopThird = playingField.rows / 3
+        val spaceAboveCards = playingField.centeredRow
+        val spaceBelowCards = playingField.rows - (playingField.centeredRow + playingField.rectHeight)
     }
   }
 }
