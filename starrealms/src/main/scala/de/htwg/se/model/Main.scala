@@ -1,3 +1,4 @@
+package de.htwg.se.starrealms
 object PlayingField {
     val pfUnit = 40 //playing field unit
     val rows = 2 * pfUnit //40
