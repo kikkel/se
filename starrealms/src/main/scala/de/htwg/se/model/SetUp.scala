@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model
 
-class PlayingField(val dimension: Int=20) { // Default dimension is 20
+class SetUp(val dimension: Int=20) { // Default dimension is 20
 
     val borderWidth = dimension * 3/2+3 // Top/Bottom border
 
