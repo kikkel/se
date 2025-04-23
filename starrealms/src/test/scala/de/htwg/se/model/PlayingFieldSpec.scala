@@ -21,7 +21,7 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
 
         "consist of 3 horizontal partitions" in {
                 val playingField = new PlayingField()
-                val tradeRowHeight = playingField.unit * 2  // 1/4 of the height
+                val tradeSpaceHeight = playingField.unit * 2  // 1/4 of the height
                 val player1Height = playingField.unit * 3   // 1/4 + 1/8 (remaining quarter) of the height
                 val player2Height = playingField.unit * 3   // 1/4 + 1/8 (remaining quarter) of the height
         }
@@ -38,7 +38,7 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
 
         "contain a trade row between the player rows" in {
             val playingField = new PlayingField()
-            val tradeRow = playingField.tradeRow
+            val tradeRow = playingField.tradeSpace
         }
 
         "should be adjustable according to player's turn" in {
