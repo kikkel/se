@@ -1,8 +1,8 @@
 package de.htwg.se.starrealms.model
 
-class PlayingField(val dimension: Int=20) { // Default dimension is 20
+class PlayingField(val dimension: Int=30) { // Default dimension is 20
 
-    val borderWidth = dimension * 3/2+3 // Top/Bottom border
+    //val borderWidth = dimension * 3/2+3 // Top/Bottom border
     val unit = dimension / 8
 
     val tradeRowHeight = unit * 2  // 1/4 of the height
@@ -12,13 +12,14 @@ class PlayingField(val dimension: Int=20) { // Default dimension is 20
     val tradeRow = (0 until dimension).map(_ => " " * unit)
 
     val player1Row = (0 until dimension).map(_ => " " * unit)
+    val borderWidth = player1Row.mkString.length
     val player2Row = (0 until dimension).map(_ => " " * unit)
 
     val player1Turn = true
     val player2Turn = false
 
     def drawField(): Unit = {
-        val border = "+" + ("-" * borderWidth) + "+" // Top/Bottom border
+        val border = "+" + ("-" * borderWidth + "+") // Top/Bottom border
         println(border)
 
         for (row <- 0 until dimension) {
