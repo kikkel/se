@@ -15,6 +15,5 @@ class SetUp() {
   val player2Row: PlayerRow = new PlayerRow()
   val tradeRow: TradeRow = new TradeRow()
   val tradeDeck: TradeDeck = new TradeDeck()
-  val tradeDiscard: TradeDiscard = new TradeDiscard()
   val explorerDeck: ExplorerDeck = new ExplorerDeck()
   }

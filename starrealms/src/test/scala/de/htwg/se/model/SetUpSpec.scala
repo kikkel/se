@@ -51,11 +51,6 @@ class SetUpSpec extends AnyWordSpec with Matchers {
             val tradeDeck = setUp.tradeSpace.tradeDeck
             tradeDeck should not be null
         }
-        "have a DiscardPile" in {
-            val setUp = new SetUp()
-            val tradeDiscard = setUp.tradeSpace.tradeDiscard
-            tradeDiscard should not be null
-        }
         "have a ExplorerDeck" in {
             val setUp = new SetUp()
             val explorerDeck = setUp.tradeSpace.explorerDeck
