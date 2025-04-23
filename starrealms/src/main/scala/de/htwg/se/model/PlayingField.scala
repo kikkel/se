@@ -11,8 +11,8 @@ class PlayingField(val dimension: Int=30) { // Default dimension is 20
  */
     val tradeSpace = (0 until dimension).map(_ => " " * unit)
 
-    val player1Row = (0 until dimension).map(_ => " " * unit)
-    val borderWidth = player1Row.mkString.length
+    val playerRow = (0 until dimension).map(_ => " " * unit)
+    val borderWidth = playerRow.mkString.length
     //val player2Row = (0 until dimension).map(_ => " " * unit)
 
    /*  val player1Turn = true
@@ -23,7 +23,7 @@ class PlayingField(val dimension: Int=30) { // Default dimension is 20
         println(border)
 
         for (row <- 0 until dimension) {
-            println("|" + player1Row.mkString + "|") // Player 1 row
+            println("|" + playerRow.mkString + "|") // Player 1 row
         }
 
         println(border) // Bottom border

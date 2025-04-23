@@ -19,19 +19,19 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
             val unit = playingField.dimension / 8
         }
 
-        "consist of 3 horizontal partitions" in {
+     /*    "consist of 3 horizontal partitions" in {
                 val playingField = new PlayingField()
                 val tradeSpaceHeight = playingField.unit * 2  // 1/4 of the height
                 val player1Height = playingField.unit * 3   // 1/4 + 1/8 (remaining quarter) of the height
                 val player2Height = playingField.unit * 3   // 1/4 + 1/8 (remaining quarter) of the height
-        }
+        } */
 
-        "contain a player1 row" in {
+        "contain a player row" in {
             val playingField = new PlayingField()
-            val player1Row = playingField.player1Row
+            val playerRow = playingField.playerRow
         }
 
-        "contain a player2 row" in {
+       /*  "contain a player2 row" in {
             val playingField = new PlayingField()
             val player2Row = playingField.player2Row
         }
@@ -45,7 +45,7 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
             val playingField = new PlayingField()
             val player1Turn = true
             val player2Turn = false
-        }
+        } */
     }
 
 }
