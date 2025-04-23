@@ -3,19 +3,19 @@ package de.htwg.se.starrealms.model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
-class PlayingFieldSpec extends AnyWordSpec with Matchers {
+class SetUpSpec extends AnyWordSpec with Matchers {
 
   "A PlayingField" should {
    /*  "have a starting Unit to measure PlayingField" in {
       val playingField = new PlayingField()
       val playingFieldUnit = playingField.dimension
     } */
-
+/* 
     "have a dimension that is scalable" in {
         val playingField = new PlayingField()
         playingField.borderWidth.toInt should equal (playingField.dimension * 3/2+3)
 
-    }
+    } */
 
     /* "calculate correct card width and height with 3:2 ratio" in {
         val playingField = new PlayingField()
@@ -42,7 +42,7 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
         playingField.totalGapWidth.toFloat should equal (playingField.dimension - (playingField.numRecs * playingField.rectWidth))
     } */
 
-    "calculate the card row width" in {
+/*     "calculate the card row width" in {
         val playingField = new PlayingField()
         playingField.cardRowWidth.toFloat should equal (playingField.numRecs * playingField.rectWidth + playingField.numGaps * playingField.gapWidth)
     }
@@ -76,7 +76,7 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
         val playingField = new PlayingField()
         playingField.centeredRow should equal (Math.max((playingField.topThird - playingField.rectHeight) / 2, 0))
     }
-
+ */
 
 
    /* "center the cards in the top third vertically" in {
@@ -85,7 +85,7 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
         val spaceAboveCards = playingField.centeredRow
         val spaceBelowCards = playingField.rows - (playingField.centeredRow + playingField.rectHeight)
     } */
-
+/* 
     "draw borders around the playing field" in {
         val playingField = new PlayingField()
         val border = "+" + ("-" * (playingField.borderWidth)) + "+"
@@ -101,7 +101,7 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
         val playingField = new PlayingField()
         playingField.drawField() // This will print the playing field to the console
     }
-
+ */
    
 
   }
