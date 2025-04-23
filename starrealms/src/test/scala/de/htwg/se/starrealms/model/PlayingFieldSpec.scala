@@ -12,7 +12,6 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
         val playingFieldUnit = playingField.dimension
         }
 
-    // "have a scalable width proportion"
 
         "contain measuring units" in {
             val playingField = new PlayingField()
@@ -29,6 +28,12 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
         "contain a player row" in {
             val playingField = new PlayingField()
             val playerRow = playingField.playerRow
+        }
+
+
+        "have a scalable border width proportionate to player space requirements" in {
+            val playingField = new PlayingField()
+            val borderWidth = playingField.borderWidth
         }
 
        /*  "contain a player2 row" in {
