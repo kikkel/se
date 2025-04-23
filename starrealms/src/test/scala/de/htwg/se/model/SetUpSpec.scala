@@ -6,7 +6,12 @@ import org.scalatest.matchers.should.Matchers
 class SetUpSpec extends AnyWordSpec with Matchers {
 
     "The SetUp" should {
-        "have ActionSpaces" in {
+        "have a player1ActionSpace" in {
+        val setUp = new SetUp()
+        val actionSpace = setUp.actionSpace
+        actionSpace should not be null
+        }
+        "have a player2ActionSpace" in {
         val setUp = new SetUp()
         val actionSpace = setUp.actionSpace
         actionSpace should not be null
