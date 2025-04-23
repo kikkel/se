@@ -6,4 +6,21 @@ import org.scalatest.wordspec.AnyWordSpec
 //import org.scalatest.BeforeAndAfterEach
 
 
-class 
+class TradeDeckSpec extends AnyWordSpec with Matchers /* with BeforeAndAfterEach */ {
+  //  var tradeDeck: TradeDeck = _
+
+  "A TradeDeck" should {
+    "be initialized with a deck of cards" in {
+      val tradeDeck = new TradeDeck()
+      tradeDeck.cards.size should be > 0
+    }
+
+    "allow drawing a card" in {
+      val tradeDeck = new TradeDeck()
+      val initialSize = tradeDeck.cards.size
+      val drawnCard = tradeDeck.drawCard()
+      drawnCard should not be empty
+      tradeDeck.cards.size should be < initialSize
+    }
+  }
+}
