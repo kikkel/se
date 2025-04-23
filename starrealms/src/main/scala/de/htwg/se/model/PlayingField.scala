@@ -23,13 +23,7 @@ class PlayingField(val dimension: Int=30) { // Default dimension is 20
         println(border)
 
         for (row <- 0 until dimension) {
-            if (row < player1Height) {
-                println("|" + player1Row.mkString + "|") // Player 1 row
-            } else if (row < player1Height + tradeRowHeight) {
-                println("|" + tradeRow.mkString + "|") // Trade row
-            } else {
-                println("|" + player2Row.mkString + "|") // Player 2 row
-            }
+            println("|" + player1Row.mkString + "|") // Player 1 row
         }
 
         println(border) // Bottom border
