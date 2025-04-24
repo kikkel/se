@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model
 
-class GameLogic {
+class GameLogic (val playingfield: PlayingField){
   private var deck: List[String] = List.fill(8)("Scout") ++ List.fill(2)("Viper")
   private var field: List[String] = List()
 
@@ -10,16 +10,35 @@ class GameLogic {
 	s"Deck: $deckState\nField: $fieldState"
   }
 
-  def turnOverCard(): String = {
-	if (deck.nonEmpty) {
-	  val card = deck.head
-	  deck = deck.tail
-	  field = field :+ card
-	  s"Turned over card: $card"
-	} else {
-	  "The deck is empty! No more cards to turn over."
-	}
+  def turnOverCard(userInput: String): String = {
+  val scoutIndex = deck.indexWhere(_.toLowerCase.contains("scout"))
+  val viperIndex = deck.indexWhere(_.toLowerCase.contains("viper"))
+
+  userInput.toLowerCase match {
+    case "s" =>
+      if (scoutIndex != -1) {
+        val card = deck(scoutIndex)
+        deck = deck.patch(scoutIndex, Nil, 1)
+        field = field :+ card
+        s"Turned over Scout: $card"
+      } else {
+        "No Scout cards left in the deck."
+      }
+
+    case "v" =>
+      if (viperIndex != -1) {
+        val card = deck(viperIndex)
+        deck = deck.patch(viperIndex, Nil, 1)
+        field = field :+ card
+        s"Turned over Viper: $card"
+      } else {
+        "No Viper cards left in the deck."
+      }
+
+    case _ =>
+      "Invalid input. Please enter 's' for Scout or 'v' for Viper."
   }
+}
 
   def resetGame(): Unit = {
 	deck = List.fill(8)("Scout") ++ List.fill(2)("Viper")

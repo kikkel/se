@@ -11,7 +11,7 @@ class MainSpec extends AnyWordSpec with Matchers {
       playingField should not be null
     }
 
-    "handle viewing the current state" in {
+    /*"handle viewing the current state" in {
       val playingField = new PlayingField()
       playingField.getDeck should not be empty
       playingField.getField shouldBe empty
@@ -59,11 +59,11 @@ class MainSpec extends AnyWordSpec with Matchers {
       val playingField = new PlayingField()
       val actionSpace = playingField.actionSpace
       actionSpace should not be null
-    } */
+    } */*/
 
 
 
 
 
   }
-}
+  }

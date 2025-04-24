@@ -12,17 +12,27 @@ class TUI (gameLogic: GameLogic) {
       println("\nMenu:")
       println("1. View current state")
       println("2. Turn over a card")
-      println("3. Exit")
+      println("3. Reset game")
+      println("4. Exit")
       print("Enter your choice: ")
 
-      val choice = readLine()
+      val choice = readLine().trim
       choice match {
         case "1" =>
           println("\nCurrent state:")
           println(gameLogic.drawField())
         case "2" =>
-          println("\nTurning over a card...")
-          println(gameLogic.turnOverCard())
+          var valid = false
+          while (!valid) {
+            println("\nWhich card would you like to turn over? (s = Scout, v = Viper):")
+            val input = readLine().trim.toLowerCase
+            val result = gameLogic.turnOverCard(input)
+
+            println(result)
+            if (!result.startsWith("Invalid input")) {
+              valid = true
+            }
+          }
         case "3" =>
             println("\nResetting the game...")
             gameLogic.resetGame()
