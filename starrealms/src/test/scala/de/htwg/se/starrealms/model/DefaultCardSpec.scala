@@ -5,15 +5,7 @@ import org.scalatest.matchers.should.Matchers
 
 class DefaultCardSpec extends AnyWordSpec with Matchers {
 
-  "A DefaultCard" should {
-    "either be a Scout or a Viper" in {
-      val scout = new DefaultCard("Scout")
-      val viper = new DefaultCard("Viper")
-      scout.name should be("Scout")
-      viper.name should be("Viper")
-    }
 
-  }
   "A ViperCard" should {
     "have a name" in {
       val card = new ViperCard()
@@ -23,13 +15,9 @@ class DefaultCardSpec extends AnyWordSpec with Matchers {
       val card = new ViperCard()
       card.getName should be("Viper")
     }
-    "have a type" in {
+    "have an ability with 1 damage" in {
       val card = new ViperCard()
-      card.getType should be("Combat")
-    }
-    "have a value in damage" in {
-      val card = new ViperCard()
-      card.getValue should be(1)
+      card.getAbility.getActions should contain("1 damage")
     }
     "not be null" in {
       val card = new ViperCard()
@@ -45,13 +33,9 @@ class DefaultCardSpec extends AnyWordSpec with Matchers {
       val card = new ScoutCard()
       card.getName should be("Scout")
     }
-    "have a type" in {
+    "have an ability with 1 coin" in {
       val card = new ScoutCard()
-      card.getType should be("Trade")
-    }
-    "have a value" in {
-      val card = new ScoutCard()
-      card.getValue should be(1)
+      card.getAbility.getActions should contain("1 coin")
     }
     "not be null" in {
       val card = new ScoutCard()

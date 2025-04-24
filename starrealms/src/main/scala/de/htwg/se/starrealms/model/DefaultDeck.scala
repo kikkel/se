@@ -1,15 +1,10 @@
 package de.htwg.se.starrealms.model
 
-class DefaultDeck(){
+class DefaultDeck {
+  private val scoutCards: List[ScoutCard] = List.fill(8)(new ScoutCard())
+  private val viperCards: List[ViperCard] = List.fill(2)(new ViperCard())
 
-    val scoutCards: List[DefaultCard] = List.fill(8)(new DefaultCard("Scout"))
-    val viperCards: List[DefaultCard] = List.fill(2)(new DefaultCard("Viper"))
-
-    def getScoutCards: List[DefaultCard] = scoutCards
-    def getViperCards: List[DefaultCard] = viperCards
-
-    override def toString: String = s"DefaultDeck($scoutCards, $viperCards)"
-
-
-
+  def getScoutCards: List[ScoutCard] = scoutCards
+  def getViperCards: List[ViperCard] = viperCards
+  def getAllCards: List[DefaultCard] = scoutCards ++ viperCards
 }

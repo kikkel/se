@@ -1,41 +1,12 @@
 package de.htwg.se.starrealms.model
 
-class DefaultCard(val name: String) {
-    override def toString: String = s"DefaultCard($name, $cardType, $value)"
-    val cardType: String = name match {
-        case "Scout" => "Trade"
-        case "Viper" => "Combat"
-        //case _ => "Unknown"
-    }
-    val value: Int = name match {
-        case "Scout" => 1
-        case "Viper" => 1
-        //case _ => 0
-    }
+abstract class DefaultCard(val name: String, val ability: Ability) {
+  def getName: String = name
+  def getAbility: Ability = ability
 }
-class ViperCard {
 
-    val name: String = "Viper"
-    val cardType: String = "Combat"
-    val value: Int = 1
+class ScoutCard(override val ability: Ability = new Ability(List("1 coin")))
+  extends DefaultCard("Scout", ability)
 
-    override def toString: String = s"ViperCard($name, $cardType, $value)"
-
-    def getName: String = name
-    def getType: String = cardType
-    def getValue: Int = value
-
-}
-class ScoutCard {
-
-    val name: String = "Scout"
-    val cardType: String = "Trade"
-    val value: Int = 1
-
-    override def toString: String = s"ScoutCard($name, $cardType, $value)"
-
-    def getName: String = name
-    def getType: String = cardType
-    def getValue: Int = value
-
-}
+class ViperCard(override val ability: Ability = new Ability(List("1 damage")))
+  extends DefaultCard("Viper", ability)
