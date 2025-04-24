@@ -5,7 +5,7 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class PlayerSpec extends AnyWordSpec with Matchers {
 
-  /* "A Player" should {
+  "A Player" should {
     "have a name" in {
       val player = new Player("name")
       player.getName should be("name")
@@ -19,5 +19,5 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       val player = new Player("name")
       player.getDefaultDeck should be(10)
     }
-} */
+  }
 }
