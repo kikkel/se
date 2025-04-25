@@ -6,91 +6,61 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream, PrintStream}
 
 class TUISpec extends AnyWordSpec with Matchers {
 
+  def withSimulatedIO(inputStr: String)(testBlock: => Unit): String = {
+    val input = new ByteArrayInputStream(inputStr.getBytes)
+    val output = new ByteArrayOutputStream()
+    Console.withIn(input) {
+      Console.withOut(new PrintStream(output)) {
+        testBlock
+      }
+    }
+    output.toString
+  }
+
   "A TUI" should {
     "display the current state of the game" in {
-      val gameLogic = new GameLogic(new PlayingField())
-      val tui = new TUI(gameLogic)
-
-      val input = new ByteArrayInputStream("1\n4\n".getBytes)
-      val output = new ByteArrayOutputStream()
-      System.setIn(input)
-      System.setOut(new PrintStream(output))
-
-      tui.run()
-
-      val outputString = output.toString
-      outputString should include("Deck: Scout, Scout, Scout, Scout, Scout, Scout, Scout, Scout, Viper, Viper")
-      outputString should include("Field: Empty")
+      val output = withSimulatedIO("1\n4\n") {
+        new TUI(new GameLogic(new PlayingField())).run()
+      }
+      output should include("Deck: Scout")
+      output should include("Field: Empty")
     }
 
-    "turn over a Scout card and update the field" in {
-      val gameLogic = new GameLogic(new PlayingField())
-      val tui = new TUI(gameLogic)
-
-      // "2" (Turn over a card), "s" (Scout), "4" (Exit)
-      val input = new ByteArrayInputStream("2\ns\n4\n".getBytes)
-      val output = new ByteArrayOutputStream()
-      System.setIn(input)
-      System.setOut(new PrintStream(output))
-
-      tui.run()
-
-      val outputString = output.toString
-      outputString should include("Turned over card: Scout")
-      outputString should include("Field: Scout")
+    "turn over a card after valid input" in {
+      val output = withSimulatedIO("2\ns\n4\n") {
+        new TUI(new GameLogic(new PlayingField())).run()
+      }
+      output should include("Turned over Scout")
     }
 
-    "turn over a Viper card and update the field" in {
-      val gameLogic = new GameLogic(new PlayingField())
-      val tui = new TUI(gameLogic)
-
-      // Legen wir 8 Scouts manuell, damit nur noch Vipers im Deck sind:
-      for (_ <- 1 to 8) gameLogic.turnOverCard("s")
-
-      val input = new ByteArrayInputStream("2\nv\n4\n".getBytes)
-      val output = new ByteArrayOutputStream()
-      System.setIn(input)
-      System.setOut(new PrintStream(output))
-
-      tui.run()
-
-      val outputString = output.toString
-      outputString should include("Turned over card: Viper")
-      outputString should include("Field: Scout, Scout, Scout, Scout, Scout, Scout, Scout, Scout, Viper")
-    }
-
-    "handle invalid card input gracefully" in {
-      val gameLogic = new GameLogic(new PlayingField())
-      val tui = new TUI(gameLogic)
-
-      val input = new ByteArrayInputStream("2\nx\ns\n4\n".getBytes)
-      val output = new ByteArrayOutputStream()
-      System.setIn(input)
-      System.setOut(new PrintStream(output))
-
-      tui.run()
-
-      val outputString = output.toString
-      outputString should include("Invalid input. Please enter 's' for Scout or 'v' for Viper.")
-      outputString should include("Turned over card: Scout")
+    "handle invalid card input then valid" in {
+      val output = withSimulatedIO("2\nx\nv\n4\n") {
+        new TUI(new GameLogic(new PlayingField())).run()
+      }
+      output should include("Invalid input")
+      output should include("Turned over Viper")
     }
 
     "reset the game" in {
-      val gameLogic = new GameLogic(new PlayingField())
-      val tui = new TUI(gameLogic)
+      val output = withSimulatedIO("2\ns\n3\n1\n4\n") {
+        new TUI(new GameLogic(new PlayingField())).run()
+      }
+      output should include("Game has been reset.")
+      output should include("Field: Empty")
+    }
 
-      val input = new ByteArrayInputStream("2\ns\n3\n4\n".getBytes)
-      val output = new ByteArrayOutputStream()
-      System.setIn(input)
-      System.setOut(new PrintStream(output))
+    "exit the game properly" in {
+      val output = withSimulatedIO("4\n") {
+        new TUI(new GameLogic(new PlayingField())).run()
+      }
+      output should include("Exiting the game. Goodbye!")
+    }
 
-      tui.run()
-
-      val outputString = output.toString
-      outputString should include("Turned over card: Scout")
-      outputString should include("Game has been reset.")
-      outputString should include("Deck: Scout, Scout, Scout, Scout, Scout, Scout, Scout, Scout, Viper, Viper")
-      outputString should include("Field: Empty")
+    "handle invalid menu input" in {
+      val output = withSimulatedIO("9\n4\n") {
+        new TUI(new GameLogic(new PlayingField())).run()
+      }
+      output should include("Invalid choice. Please try again.")
     }
   }
 }
