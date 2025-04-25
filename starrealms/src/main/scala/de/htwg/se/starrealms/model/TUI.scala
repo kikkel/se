@@ -13,7 +13,8 @@ class TUI (gameLogic: GameLogic) {
       println("1. View current state")
       println("2. Turn over a card")
       println("3. Reset game")
-      println("4. Exit")
+      println("4. Draw playing field")
+      println("5. Exit")
       print("Enter your choice: ")
 
       val choice = readLine().trim
@@ -38,6 +39,9 @@ class TUI (gameLogic: GameLogic) {
             gameLogic.resetGame()
             println("Game has been reset.")
         case "4" =>
+          println("\nDrawing the playing field...")
+          gameLogic.playingfield.drawField()
+        case "5" =>
           println("\nExiting the game. Goodbye!")
           continue = false
         case _ =>

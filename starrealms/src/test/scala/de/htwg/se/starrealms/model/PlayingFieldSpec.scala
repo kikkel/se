@@ -9,13 +9,13 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
   "A PlayingField" should {
 
 
-    "initialize with a default dimension" in {
+    "initialize with a default dimension" in { 
       val playingField = new PlayingField()
       playingField.dimensions should be(30)
     }
 
     "initialize with a custom dimension" in {
-      val playingField = new PlayingField(20)
+      val playingField = new PlayingField(20) 
       playingField.dimensions should be(20)
     }
 
@@ -36,16 +36,26 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
     }
 
     "draw the playing field with borders and rows" in {
-      val playingField = new PlayingField(5)
+      val dimension = 5
+      val playingField = new PlayingField(dimension)
       val output = new ByteArrayOutputStream()
       Console.withOut(new PrintStream(output)) {
         playingField.drawField()
       }
       val outputString = output.toString
-
-      // Check that the output contains the correct number of rows and borders
-      outputString should include("+-----+")
-      outputString.split("\n").count(_.contains("|     |")) should be(5)
+    
+      // Dynamically calculate the expected border and rows
+      val unit = dimension / 8
+      val rowWidth = dimension * unit
+      val border = "+" + ("-" * rowWidth) + "+"
+      val row = "|" + (" " * rowWidth) + "|"
+    
+      // Build the expected output
+      val expectedOutput = (border + "\n") +
+        (row + "\n").repeat(dimension) +
+        (border + "\n")
+    
+      outputString should be(expectedOutput)
     }
 
     "return a string representation of the playing field" in {
