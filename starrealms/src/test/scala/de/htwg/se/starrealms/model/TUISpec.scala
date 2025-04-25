@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+/*package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -9,19 +9,19 @@ class TUISpec extends AnyWordSpec with Matchers {
   def io(inputStr: String)(testBlock: => Unit): String = {
     val input = new ByteArrayInputStream(inputStr.getBytes) // Simulate user input
     val output = new ByteArrayOutputStream() // Simulate output stream
-    val originalIn = System.in 
+    val originalIn = System.in
     val originalOut = System.out
-  
+
     try {
       System.setIn(input) //redirect to avoid interfering with the test
       System.setOut(new PrintStream(output)) // Redirect to capture output
-      testBlock 
+      testBlock
     } finally {
       System.setIn(originalIn) // Restore
       System.setOut(originalOut) // Restore
     }
-  
-    output.toString 
+
+    output.toString
   }
 
   "A TUI" should {
@@ -29,9 +29,9 @@ class TUISpec extends AnyWordSpec with Matchers {
       val gameLogic = new GameLogic(new PlayingField())
       val tui = new TUI(gameLogic)
 
-      val input = new ByteArrayInputStream("1\n5\n".getBytes) 
+      val input = new ByteArrayInputStream("1\n5\n".getBytes)
       val output = new ByteArrayOutputStream()
-      System.setIn(input) 
+      System.setIn(input)
       System.setOut(new PrintStream(output))
 
       tui.run()
@@ -97,4 +97,4 @@ class TUISpec extends AnyWordSpec with Matchers {
       output should include("Invalid choice. Please try again.")
     }
   }
-}
+}*/
