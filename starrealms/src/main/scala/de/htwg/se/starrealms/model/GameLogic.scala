@@ -45,5 +45,9 @@ class GameLogic (val playingfield: PlayingField){
 	field = List()
   }
 
+  def exitGame(): Boolean = {
+    true
+  }
+
 }
 

@@ -3,7 +3,7 @@ package de.htwg.se.starrealms.model
 
 import scala.io.StdIn.readLine
 
-class TUI (gameLogic: GameLogic) {
+class TUI(gameLogic: GameLogic, inputSource: () => String = scala.io.StdIn.readLine) {
   def run(): Unit = {
     var continue = true
 
@@ -17,7 +17,7 @@ class TUI (gameLogic: GameLogic) {
       println("5. Exit")
       print("Enter your choice: ")
 
-      val choice = readLine().trim
+      val choice = inputSource()
       choice match {
         case "1" =>
           println("\nCurrent state:")

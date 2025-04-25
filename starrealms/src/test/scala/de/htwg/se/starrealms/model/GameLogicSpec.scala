@@ -37,5 +37,11 @@ class GameLogicSpec extends AnyWordSpec with Matchers {
       gameLogic.drawField() should include("Deck: Scout, Scout, Scout, Scout, Scout, Scout, Scout, Scout, Viper, Viper")
       gameLogic.drawField() should include("Field: Empty")
     }
+    "exit the game correctly" in {
+      val gameLogic = new GameLogic(new PlayingField())
+      gameLogic.exitGame() should be(true)
+    }
+  
+
   }
 }
