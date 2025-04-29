@@ -5,39 +5,43 @@ import org.scalatest.matchers.should.Matchers
 import de.htwg.se.starrealms.model.AbstractCardSpec
 import de.htwg.se.starrealms.model.AbstractCard
 
+
+
 class DefaultCardSpec extends AnyWordSpec with Matchers {
   "A DefaultCard" should {
-    "inherit from AbstractCard" in {
-      val card = new DefaultCard("name", new Ability(List())) // Check if it is an instance of DefaultCard
-      card shouldBe a[AbstractCard] // Check if it is an instance of AbstractCard
-    }
-    "either be a ViperCard or a ScoutCard" in {
-      val card = new DefaultCard("name", new Ability(List()))
-      assert(card.isInstanceOf[ViperCard] || card.isInstanceOf[ScoutCard])
-    }
-    "have a default ability" in {
-      val card = new DefaultCard("name", new Ability(List()))
-      card.getAbility should not be null
+    "be created with a name and an ability" in {
+      val ability = new Ability(List("TestAbility"))
+      val card = new DefaultCard("TestCard", ability)
+      card.getName should be("TestCard")
+      card.getAbility should be(ability)
     }
 
+    "be created with a name and a default empty ability" in {
+      val card = new DefaultCard("TestCard")
+      card.getName should be("TestCard")
+      card.getAbility.getActions shouldBe empty
+    }
   }
+
   "A ViperCard" should {
     "be a DefaultCard" in {
       val card = new ViperCard()
       card shouldBe a[DefaultCard]
     }
 
-    "be a Viper" in {
+    "have the name 'Viper'" in {
       val card = new ViperCard()
       card.getName should be("Viper")
     }
-    "have an ability with 1 damage" in {
+
+    "have an ability with '1 damage'" in {
       val card = new ViperCard()
       card.getAbility.getActions should contain("1 damage")
     }
-    "not be null" in {
+
+    "have a proper toString implementation" in {
       val card = new ViperCard()
-      card should not be null
+      card.toString should be("ViperCard(name=Viper, ability=Ability(actions=List(1 damage)))")
     }
   }
 
@@ -47,20 +51,21 @@ class DefaultCardSpec extends AnyWordSpec with Matchers {
       card shouldBe a[DefaultCard]
     }
 
-    "be a Scout" in {
+    "have the name 'Scout'" in {
       val card = new ScoutCard()
       card.getName should be("Scout")
     }
-    "have an ability with 1 coin" in {
+
+    "have an ability with '1 coin'" in {
       val card = new ScoutCard()
       card.getAbility.getActions should contain("1 coin")
     }
-    "not be null" in {
+
+    "have a proper toString implementation" in {
       val card = new ScoutCard()
-      card should not be null
+      card.toString should be("ScoutCard(name=Scout, ability=Ability(actions=List(1 coin)))")
     }
   }
-
 }
 
 /* class DefaultCardSpec extends AnyWordSpec with Matchers {
