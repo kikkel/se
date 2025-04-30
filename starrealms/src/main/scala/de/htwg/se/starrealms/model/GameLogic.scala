@@ -1,8 +1,17 @@
 package de.htwg.se.starrealms.model
 
-class GameLogic (val playingfield: PlayingField){
+import scala.collection.mutable.ListBuffer
+import de.htwg.se.starrealms.view
+import de.htwg.util.Observer
+
+class GameLogic (val playingfield: PlayingField) {
   private var deck: List[String] = List.fill(8)("Scout") ++ List.fill(2)("Viper")
   private var field: List[String] = List()
+  private val observers: ListBuffer[Observer] = ListBuffer()
+
+  def addObserver(observer: Observer): Unit = observers += observer
+  def removeObserver(observer: Observer): Unit = observers -= observer
+  def notifyObservers(): Unit = observers.foreach(_.update)
 
   def drawField(): String = {
 	val deckState = if (deck.nonEmpty) deck.mkString(", ") else "Empty"

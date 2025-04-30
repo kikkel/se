@@ -1,0 +1,55 @@
+package de.htwg.se.starrealms.app
+
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import de.htwg.util
+import de.htwg.se.starrealms.controller
+import de.htwg.se.starrealms.model
+import de.htwg.se.starrealms.view
+
+/* import java.io.{ByteArrayInputStream, ByteArrayOutputStream, PrintStream}
+ */
+class MainSpec extends AnyWordSpec with Matchers {
+
+  "Main object" should {
+    "initialize the model, controller and view without errors" in {
+      noException should be thrownBy {
+        
+        //simulate initialized process
+        val gameLogic = new GameLogic(new PlayingField())
+        val controller = new Controller(gameLogic, view)
+        val view = new ConsoleView(gameLogic)
+
+
+        //ensure components are properly connected
+        gameLogic.addObserver(view)
+      }
+    } 
+
+    "run the application without throwing an exception" in {
+      noException should be thrownBy {
+        //simulate running the application
+        Main.main(Array.empty)
+      }
+    }
+  }
+
+/*   "The Main object" should {
+    "run the application without throwing an exception" in {
+      // Simuliere Eingabe: direkt beenden (Option 5)
+      val input = new ByteArrayInputStream("5\n".getBytes)
+      val output = new ByteArrayOutputStream()
+
+      // Standard Input und Output umleiten
+      System.setIn(input)
+      System.setOut(new PrintStream(output))
+        noException should be thrownBy {
+          Main.main(Array.empty)
+        }
+
+
+
+      val result = output.toString
+    }
+  } */
+}
