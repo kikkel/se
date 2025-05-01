@@ -3,46 +3,50 @@ package de.htwg.se.starrealms.controller
 import de.htwg.se.starrealms.model._
 import de.htwg.se.starrealms.util.Observable
 
-class Controller (gameLogic: GameLogic) extends Observable {
+trait GameLogicController {
+    val gameLogic: GameLogic
+    def getGameState: String = gameLogic.drawField()
+    def resetGame(): Unit = gameLogic.resetGame()
+}
+
+trait DeckController {
+    val deck: DefaultDeck
+    def drawCard(cardType: String): String = {
+        deck.drawCard(cardType) match {
+            case Some(card) => s"Drew card: $card"
+            case None => s"No $cardType cards left in the deck. #DeckController"
+        }
+    }
+    def getDeckState: String = deck.getDeckState
+    def resetDeck(): Unit = deck.resetDeck()
+}
+
+
+class Controller (val gameLogic: GameLogic, val deck: DefaultDeck) 
+    extends Observable 
+    with GameLogicController 
+    with DeckController {
+    
+    //input processing
     def processInput(input: String): String = {
         val result = input.toLowerCase match {
-            case "s" => gameLogic.turnOverCard("s")
-            case "v" => gameLogic.turnOverCard("v")
+            case "s" => drawCard("Scout")
+            case "v" => drawCard("Viper")
             case "reset" => 
-                gameLogic.resetGame()
-                "Game has been reset."
+                resetGame()
+                resetDeck()
+                "Game and deck have been reset. #Controller"
 /*             case "exit" => 
                 println("Exiting the game.")
                 return false //break loop */
+            case "deck" => getDeckState
             case _ => 
-                val message = s"Unknown command: $input"
+                val message = s"Unknown command: $input #Controller"
                 println(message)
                 message //Meaningful String
         }
         notifyObservers()
         result
     }
-
-    def getGameState: String = {
-        gameLogic.drawField()
-    }
 }
 
-class DefaultDeckController(val deck: DefaultDeck) {
-    //draw card and return message for view
-    def drawCard(cardType: String): String = {
-        deck.drawCard(cardType) match {
-            case Some(card) => s"Drew card: $card"
-            case None => s"No $cardType cards left in the deck."
-        }
-    }
-
-    //get current deck state
-    def getDeckState: String = deck.getDeckState
-
-    //reset to default state
-    def resetDeck(): String = {
-        deck.resetDeck()
-        "Deck reset to default state."
-    }
-}

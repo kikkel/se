@@ -27,12 +27,12 @@ class PlayingField(var dimension: Int = 30) { // Default dimension is 30
         if (newDimension > 0) {
             dimension = newDimension
         } else {
-            throw new IllegalArgumentException("Dimension must be greater than 0.")
+            throw new IllegalArgumentException("Dimension must be greater than 0. #playingField")
         }
     }
 
     // Get the current dimensions of the playing field
     def dimensions: Int = dimension
 
-    override def toString: String = s"PlayingField(dimension=$dimension)"
+    override def toString: String = s"PlayingField(dimension=$dimension) #playingField"
 }

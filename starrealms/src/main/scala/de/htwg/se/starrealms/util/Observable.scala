@@ -22,7 +22,7 @@ class Observable {
 }
 
 class TestObject extends Observer {
-    def update: Unit = println("Ding Dong Test Update")
+    def update: Unit = println("Ding Dong Test Update #observable/testobject")
 }
 
 object ObserverPattern {

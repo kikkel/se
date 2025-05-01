@@ -1,12 +1,12 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.controller.Controller
 import de.htwg.se.starrealms.util.Observer
-import de.htwg.se.starrealms.controller.DefaultDeckController
+import de.htwg.se.starrealms.controller._
 
 class ConsoleView (controller: Controller) extends Observer {
   def update: Unit = render()
-  def render(): Unit = println("Rendering game state...") // Placeholder for actual rendering logic
+  def render(): Unit = 
+    println("Rendering game state... #ConsoleView") // Placeholder for actual rendering logic
     println(controller.getGameState)
   
   def processInputLine(input: String): Boolean = {
@@ -21,10 +21,10 @@ class ConsoleView (controller: Controller) extends Observer {
         println(controller.processInput("reset"))
         true
       case "exit" =>
-        println("Exiting the game.")
+        println("Exiting the game. #ConsoleView")
         false // Signal to exit the loop
       case _ =>
-        println("Invalid input. Please enter 's', 'v', 'reset', or 'exit'.")
+        println("Invalid input. Please enter 's', 'v', 'reset', or 'exit'. #ConsoleView")
         true
 
     }

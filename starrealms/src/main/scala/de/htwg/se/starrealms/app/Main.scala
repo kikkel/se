@@ -1,13 +1,14 @@
 package de.htwg.se.starrealms.app
 
-import de.htwg.se.starrealms.controller.Controller
-import de.htwg.se.starrealms.model.{GameLogic, PlayingField}
+import de.htwg.se.starrealms.controller._
+import de.htwg.se.starrealms.model._
 import de.htwg.se.starrealms.view.ConsoleView
 
 object Main extends App {
   // Initialize the model, controller, and view
   val gameLogic = new GameLogic(new PlayingField())
-  val controller = new Controller(gameLogic)
+  val deck = new DefaultDeck()
+  val controller = new Controller(gameLogic, deck)
   val view = new ConsoleView(controller)
 
   // Application loop
@@ -17,14 +18,14 @@ object Main extends App {
     view.render()
 
     // Prompt the user for input
-    println("Enter command (s: draw Scout, v: draw Viper, reset: reset game, exit: quit):")
+    println("Enter command (s: draw Scout, v: draw Viper, reset: reset game, exit: quit): #main")
     val input = scala.io.StdIn.readLine()
 
     // Process the input and decide whether to continue
     continue = view.processInputLine(input)
   }
 
-  println("Game exited. Goodbye!")
+  println("Game exited. Goodbye! #main")
 }
 
 /* 

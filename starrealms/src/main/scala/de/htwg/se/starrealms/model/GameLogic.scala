@@ -16,7 +16,7 @@ class GameLogic (val playingfield: PlayingField) {
   def drawField(): String = {
 	val deckState = deck.getDeckState
 	val fieldState = if (field.nonEmpty) field.mkString(", ") else "Empty"
-	s"Deck: $deckState\nField: $fieldState"
+	s"Deck: $deckState\nField: $fieldState  #gameLogic"
   }
 
   def turnOverCard(userInput: String): String = {
@@ -26,18 +26,18 @@ class GameLogic (val playingfield: PlayingField) {
           case Some(card) =>
             field = field :+ card
             notifyObservers()
-            s"Turned over Scout: $card"
-          case None => "No Scout cards left in the deck."
+            s"Turned over Scout: $card  #gameLogic"
+          case None => "No Scout cards left in the deck.  #gameLogic"
     }
       case "v" =>
         deck.drawCard("Viper") match {
           case Some(card) =>
             field = field :+ card
             notifyObservers()
-            s"Turned over Viper: $card"
-          case None => "No Viper cards left in the deck."
+            s"Turned over Viper: $card  #gameLogic"
+          case None => "No Viper cards left in the deck.  #gameLogic"
         }
-      case _ => "Invalid input. Please enter 's' for Scout or 'v' for Viper."
+      case _ => "Invalid input. Please enter 's' for Scout or 'v' for Viper.  #gameLogic"
     }
 
   }
@@ -48,7 +48,8 @@ class GameLogic (val playingfield: PlayingField) {
   }
 
   def exitGame(): Boolean = {
-    true
+    println("Exiting the game... #gameLogic")
+    false // Signal to exit the loop
   }
 
 }
