@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.starrealms.util.Observer
+import de.htwg.util.Observer
 
 class GameLogicSpec extends AnyWordSpec with Matchers {
   "A GameLogic" should {

@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.controller
 
 import de.htwg.se.starrealms.model._
-import de.htwg.se.starrealms.util.Observable
+import de.htwg.util.Observable
 
 trait GameLogicController {
     val gameLogic: GameLogic

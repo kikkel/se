@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.util.Observer
+import de.htwg.util.Observer
 import de.htwg.se.starrealms.controller._
 
 class ConsoleView (controller: Controller) extends Observer {

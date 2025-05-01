@@ -18,14 +18,9 @@ object Main extends App {
   // Application loop
   var continue = true
   while (continue) {
-    // Render the current state of the game
-    view.render()
-
-    // Prompt the user for input
+    view.render() //current game state
     println("Enter command (s: draw Scout, v: draw Viper, reset: reset game, exit: quit): #main")
     val input = scala.io.StdIn.readLine()
-
-    // Process the input and decide whether to continue
     continue = view.processInputLine(input)
   }
 

@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.model
 
 import scala.collection.mutable.ListBuffer
 import de.htwg.se.starrealms.view
-import de.htwg.se.starrealms.util.Observer
+import de.htwg.util.Observer
 
 class GameLogic (val playingfield: PlayingField) {
   private var deck = new DefaultDeck()

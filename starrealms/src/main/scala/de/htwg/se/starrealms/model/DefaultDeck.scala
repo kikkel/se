@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.model
 
 import de.htwg.se.starrealms.view
-import de.htwg.se.starrealms.util.Observer
+import de.htwg.util.Observable
 
 class DefaultDeck {
   private var cards: List[String] = List.fill(8)("Scout") ++ List.fill(2)("Viper")
