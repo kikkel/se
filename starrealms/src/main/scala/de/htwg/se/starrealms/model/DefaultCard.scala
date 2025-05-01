@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model
 
-class DefaultCard(name: String, cardType: CardType, ability: Ability) extends AbstractCard(name, ability) {
+class DefaultCard(name: String, cardType: CardType, ability: Ability) extends AbstractCard(name, cardType, ability) {
   def this(name: String, cardType: CardType) = this(name, cardType, new Ability(List())) // Default constructor with empty ability
 
   override def getName: String = name
@@ -8,10 +8,13 @@ class DefaultCard(name: String, cardType: CardType, ability: Ability) extends Ab
   override def getAbility: Ability = ability
 }
 
-class ViperCard extends DefaultCard("Viper", cardType, new Ability(List("1 damage"))) {
-  override def toString: String = s"ViperCard(name=$name, ability=$ability)"
+class ViperCard extends DefaultCard("Viper", new CardType("Default"), new Ability(List("1 damage"))) {
+  override def toString: String = s"ViperCard(name=$name, cardType=$cardType, ability=$ability)"
 }
+/* class ViperCard extends DefaultCard("Viper", new Ability(List("1 damage"))) {
+  override def toString: String = s"ViperCard(name=$name, ability=$ability)"
+} */
 
-class ScoutCard extends DefaultCard("Scout", cardType, new Ability(List("1 coin"))) {
-  override def toString: String = s"ScoutCard(name=$name, ability=$ability)"
+class ScoutCard extends DefaultCard("Scout", new CardType("Default"), new Ability(List("1 coin"))) {
+  override def toString: String = s"ScoutCard(name=$name, cardType=$cardType, ability=$ability)"
 }

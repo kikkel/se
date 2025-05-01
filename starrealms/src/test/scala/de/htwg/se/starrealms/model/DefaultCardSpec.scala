@@ -12,7 +12,7 @@ class DefaultCardSpec extends AnyWordSpec with Matchers {
     "be created with a name, cardType and an ability" in {
       val cardType = new CardType("TestCardType")
       val ability = new Ability(List("TestAbility"))
-      val card = new DefaultCard("TestCard", ability)
+      val card = new DefaultCard("TestCard", cardType, ability)
       card.getName should be("TestCard")
       card.getAbility should be(ability)
     }
@@ -20,7 +20,7 @@ class DefaultCardSpec extends AnyWordSpec with Matchers {
     "have a toString method" in {
       val cardType = new CardType("TestCardType")
       val ability = new Ability(List("TestAbility"))
-      val card = new DefaultCard("TestCard", ability)
+      val card = new DefaultCard("TestCard", cardType, ability)
       card.toString should be("DefaultCard(name=TestCard, ability=Ability(actions=List(TestAbility)))")
     }
 

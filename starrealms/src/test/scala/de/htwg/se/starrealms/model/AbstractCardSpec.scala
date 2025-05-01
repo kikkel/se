@@ -5,41 +5,34 @@ import org.scalatest.wordspec.AnyWordSpec
 
 abstract class AbstractCardSpec extends AnyWordSpec with Matchers {
   "an AbstractCard" should {
+    val ability = new Ability(List("TestAbility"))
+    val cardType = new CardType("TestCardType")
+    val card = new TestCard("TestCard", cardType, ability)
+
     "have a name" in {
-      val card = new TestCard("TestCard", new Ability(List()))
       card.getName should be("TestCard")
     }
-    "belong to a card type" in {
-      val cardType = new CardType("TestCardType")
-      val card = new TestCard("TestCard", new Ability(List()))
-      card.getCardType should be(cardType)
-    }
+    "belong to "
     "have at least one ability" in {
-      val ability = new Ability(List("TestAbility"))
-      val card = new TestCard("TestCard", ability)
       card.getAbility.getActions should contain("TestAbility")
     }
     "have a main ability" in {
-      val ability = new Ability(List("TestAbility"))
-      val card = new TestCard("TestCard", ability)
       card.getAbility should be(ability)
     }
     "have a toString method" in {
-      val card = new TestCard("TestCard", new Ability(List()))
-      card.toString should be("Card(name=TestCard, ability=Ability(actions=[]))")
+      card.toString should be("Card(name=TestCard, cardType=CardType, ability=Ability(actions=[]))")
     }
     "be equal to another card with the same name" in {
-      val card1 = new TestCard("TestCard", new Ability(List()))
-      val card2 = new TestCard("TestCard", new Ability(List()))
+      val card1 = new TestCard("TestCard", new CardType("TestCardType"), new Ability(List()))
+      val card2 = new TestCard("TestCard", new CardType("TestCardType"), new Ability(List()))
       card1 should be(card2)
     }
     "not be equal to another card with a different name" in {
-      val card1 = new TestCard("TestCard1", new Ability(List()))
-      val card2 = new TestCard("TestCard2", new Ability(List()))
+      val card1 = new TestCard("TestCard1", new CardType("TestCardType"), new Ability(List()))
+      val card2 = new TestCard("TestCard2", new CardType("TestCardType"), new Ability(List()))
       card1 should not be card2
     }
     "not be equal to null" in {
-      val card = new TestCard("TestCard", new Ability(List()))
       card should not be null
     }
     
