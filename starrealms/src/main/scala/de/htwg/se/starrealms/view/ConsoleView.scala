@@ -9,7 +9,7 @@ class ConsoleView (controller: Controller) extends Observer {
   def render(): Unit = println("Rendering game state...") // Placeholder for actual rendering logic
     println(controller.getGameState)
   
-  def processInputLine(input: String): Unit = {
+  def processInputLine(input: String): Boolean = {
     input.toLowerCase match {
       case "s" =>
         println(controller.processInput("s"))

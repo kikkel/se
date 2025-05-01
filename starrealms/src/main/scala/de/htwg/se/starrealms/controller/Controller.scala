@@ -5,7 +5,7 @@ import de.htwg.se.starrealms.util.Observable
 
 class Controller (gameLogic: GameLogic) extends Observable {
     def processInput(input: String): String = {
-        input.toLowerCase match {
+        val result = input.toLowerCase match {
             case "s" => gameLogic.turnOverCard("s")
             case "v" => gameLogic.turnOverCard("v")
             case "reset" => 
@@ -14,10 +14,13 @@ class Controller (gameLogic: GameLogic) extends Observable {
 /*             case "exit" => 
                 println("Exiting the game.")
                 return false //break loop */
-            case _ => println(s"Unknown command: $input")
+            case _ => 
+                val message = s"Unknown command: $input"
+                println(message)
+                message //Meaningful String
         }
-/*         notifyObservers()
-        true */
+        notifyObservers()
+        result
     }
 
     def getGameState: String = {
