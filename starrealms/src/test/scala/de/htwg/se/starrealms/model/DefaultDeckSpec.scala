@@ -6,14 +6,32 @@ import org.scalatest.wordspec.AnyWordSpec
 class DefaultDeckSpec extends AnyWordSpec with Matchers {
 
   "A DefaultDeck" should {
-    "have 8 ScoutCards" in {
+    "initialize with 8 Scouts and 2 Vipers" in {
       val deck = new DefaultDeck()
-      deck.getScoutCards.size should be(8)
+      deck.getDeckState should include("Scout")
+      deck.getDeckState should include("Viper")
     }
-    "have 2 ViperCards" in {
+    "allow drawing a Scout card" in {
       val deck = new DefaultDeck()
-      deck.getViperCards.size should be(2)
+      deck.drawCard("scout") should be(Some("Scout"))
+      deck.getDeckState should not include "Scout"
     }
+
+    "allow drawing a Viper card" in {
+      val deck = new DefaultDeck()
+      deck.drawCard("viper") should be(Some("Viper"))
+      deck.getDeckState should not include "Viper"
+    }
+    "return None when no cards of the requested type are left" in {
+      val deck = new DefaultDeck()
+      (1 to 8).foreach(_ => deck.drawCard("scout"))
+      deck.drawCard("scout") should be(None)
+    } 
+    "return an empty deck state when all cards are drawn" in {
+      val deck = new DefaultDeck()
+      (1 to 10).foreach(_ => deck.drawCard("scout") orElse deck.drawCard("viper"))
+      deck.getDeckState should be("Empty")
+    }           
     "contain only DefaultCards" in {
       val deck = new DefaultDeck()
       deck.getAllCards.forall(_.isInstanceOf[DefaultCard]) should be(true)
