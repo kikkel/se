@@ -12,7 +12,7 @@ trait GameLogicController {
 trait DeckController {
     val deck: DefaultDeck
     def drawCard(cardType: String): String = {
-        deck.drawCard(cardType) match {
+        deck.drawCard() match {
             case Some(card) => s"Drew card: $card"
             case None => s"No $cardType cards left in the deck. #DeckController"
         }

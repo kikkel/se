@@ -3,12 +3,12 @@ package de.htwg.se.starrealms.view
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.starrealms.controller.Controller
-import de.htwg.se.starrealms.model.{GameLogic, PlayingField, DefaultDeck}
+import de.htwg.se.starrealms.model._
 
 class ConsoleViewSpec extends AnyWordSpec with Matchers {
     "A ConsoleView" should {
         val gameLogic = new GameLogic(new PlayingField())
-        val deck = new DefaultDeck()
+        val deck = new DefaultDeck("DefaultDeck", new CardType("Default"))
         val controller = new Controller(gameLogic, deck)
         val view = new ConsoleView(controller)
 

@@ -5,7 +5,7 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class DefaultDeckSpec extends AnyWordSpec with Matchers {
   "A DefaultDeck" should {
-    val deck = new DefaultDeck()
+    val deck = new DefaultDeck("DefaultDeck", new CardType("Default"))
 
     "initialize with the correct cards" in {
       deck.getDeckState should include("Scout")
@@ -13,21 +13,21 @@ class DefaultDeckSpec extends AnyWordSpec with Matchers {
     }
 
     "allow drawing a Scout card" in {
-      val card = deck.drawCard("scout")
+      val card = deck.drawCard()
       card should not be empty
-      card.get should include("Scout")
+      card.toString should include("Scout")
     }
 
     "allow drawing a Viper card" in {
-      val card = deck.drawCard("viper")
+      val card = deck.drawCard()
       card should not be empty
-      card.get should include("Viper")
+      card.toString should include("Viper")
     }
 
     "return None when drawing from an empty deck" in {
       deck.resetDeck()
-      (1 to 10).foreach(_ => deck.drawCard("scout"))
-      deck.drawCard("scout") should be(None)
+      (1 to 10).foreach(_ => deck.drawCard())
+      deck.drawCard() should be(None)
     }
 
     "reset the deck correctly" in {

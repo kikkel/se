@@ -2,12 +2,12 @@ package de.htwg.se.starrealms.controller
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.starrealms.model.{GameLogic, PlayingField, DefaultDeck}
+import de.htwg.se.starrealms.model._
 
 class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" should {
     val gameLogic = new GameLogic(new PlayingField())
-    val deck = new DefaultDeck()
+    val deck = new DefaultDeck("DefaultDeck", new CardType("Default"))
     val controller = new Controller(gameLogic, deck)
 
     "process input to draw a Scout card" in {
