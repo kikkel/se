@@ -21,6 +21,10 @@ class AbilitySpec extends AnyWordSpec with Matchers {
         val ability = new Ability(List("Attack", "Trade"))
         ability.hasActions should be(true)
         }
+        "have a toString method" in {
+        val ability = new Ability(List("Attack", "Trade"))
+        ability.toString should be("Ability(actions=[Attack, Trade])")
+        }
   }
   
 }

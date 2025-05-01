@@ -9,18 +9,21 @@ import de.htwg.se.starrealms.model.AbstractCard
 
 class DefaultCardSpec extends AnyWordSpec with Matchers {
   "A DefaultCard" should {
-    "be created with a name and an ability" in {
+    "be created with a name, cardType and an ability" in {
+      val cardType = new CardType("TestCardType")
       val ability = new Ability(List("TestAbility"))
       val card = new DefaultCard("TestCard", ability)
       card.getName should be("TestCard")
       card.getAbility should be(ability)
     }
 
-    "be created with a name and a default empty ability" in {
-      val card = new DefaultCard("TestCard")
-      card.getName should be("TestCard")
-      card.getAbility.getActions shouldBe empty
+    "have a toString method" in {
+      val cardType = new CardType("TestCardType")
+      val ability = new Ability(List("TestAbility"))
+      val card = new DefaultCard("TestCard", ability)
+      card.toString should be("DefaultCard(name=TestCard, ability=Ability(actions=List(TestAbility)))")
     }
+
   }
 
   "A ViperCard" should {
@@ -38,6 +41,10 @@ class DefaultCardSpec extends AnyWordSpec with Matchers {
       val card = new ViperCard()
       card.getAbility.getActions should contain("1 damage")
     }
+    "belong to cardType: Default" in {
+      val card = new ViperCard()
+      card.getCardType.getName should be("Default")
+    }
 
     "have a proper toString implementation" in {
       val card = new ViperCard()
@@ -54,6 +61,10 @@ class DefaultCardSpec extends AnyWordSpec with Matchers {
     "have the name 'Scout'" in {
       val card = new ScoutCard()
       card.getName should be("Scout")
+    }
+    "belong to cardType: Default" in {
+      val card = new ScoutCard()
+      card.getCardType.getName should be("Default")
     }
 
     "have an ability with '1 coin'" in {
