@@ -5,7 +5,7 @@ import de.htwg.se.starrealms.view
 import de.htwg.util.Observer
 
 class GameLogic (val playingfield: PlayingField) {
-  private var deck = new DefaultDeck()
+  private var deck = new DefaultDeck("DefaultDeck", new CardType("Default"))
   private var field: List[String] = List()
   private val observers: ListBuffer[Observer] = ListBuffer()
 
@@ -22,17 +22,17 @@ class GameLogic (val playingfield: PlayingField) {
   def turnOverCard(userInput: String): String = {
     userInput.toLowerCase match {
       case "s" =>
-        deck.drawCard("Scout") match {
+        deck.drawCard() match {
           case Some(card) =>
-            field = field :+ card
+            field = field :+ card.toString()
             notifyObservers() //state change
             s"Turned over Scout: $card  #gameLogic"
           case None => "No Scout cards left in the deck.  #gameLogic"
     }
       case "v" =>
-        deck.drawCard("Viper") match {
+        deck.drawCard() match {
           case Some(card) =>
-            field = field :+ card
+            field = field :+ card.toString()
             notifyObservers() //state change
             s"Turned over Viper: $card  #gameLogic"
           case None => "No Viper cards left in the deck.  #gameLogic"
