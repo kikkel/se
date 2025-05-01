@@ -11,6 +11,10 @@ object Main extends App {
   val controller = new Controller(gameLogic, deck)
   val view = new ConsoleView(controller)
 
+  // Connect view to model
+  gameLogic.addObserver(view) 
+
+
   // Application loop
   var continue = true
   while (continue) {

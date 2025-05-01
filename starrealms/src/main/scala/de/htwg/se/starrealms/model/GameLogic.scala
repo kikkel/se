@@ -25,7 +25,7 @@ class GameLogic (val playingfield: PlayingField) {
         deck.drawCard("Scout") match {
           case Some(card) =>
             field = field :+ card
-            notifyObservers()
+            notifyObservers() //state change
             s"Turned over Scout: $card  #gameLogic"
           case None => "No Scout cards left in the deck.  #gameLogic"
     }
@@ -33,7 +33,7 @@ class GameLogic (val playingfield: PlayingField) {
         deck.drawCard("Viper") match {
           case Some(card) =>
             field = field :+ card
-            notifyObservers()
+            notifyObservers() //state change
             s"Turned over Viper: $card  #gameLogic"
           case None => "No Viper cards left in the deck.  #gameLogic"
         }
@@ -44,7 +44,8 @@ class GameLogic (val playingfield: PlayingField) {
 
   def resetGame(): Unit = {
     field = List()
-    notifyObservers()
+    deck.resetDeck()
+    notifyObservers() //notify all observers of its reset
   }
 
   def exitGame(): Boolean = {

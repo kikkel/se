@@ -5,20 +5,15 @@ import de.htwg.se.starrealms.controller._
 
 class ConsoleView (controller: Controller) extends Observer {
   def update: Unit = render()
+
   def render(): Unit = 
     println("Rendering game state... #ConsoleView") // Placeholder for actual rendering logic
     println(controller.getGameState)
   
   def processInputLine(input: String): Boolean = {
     input.toLowerCase match {
-      case "s" =>
-        println(controller.processInput("s"))
-        true
-      case "v" =>
-        println(controller.processInput("v"))
-        true
-      case "reset" =>
-        println(controller.processInput("reset"))
+      case "s" | "v" | "reset" =>
+        controller.processInput(input)
         true
       case "exit" =>
         println("Exiting the game. #ConsoleView")

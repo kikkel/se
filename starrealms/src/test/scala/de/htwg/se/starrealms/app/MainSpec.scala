@@ -4,7 +4,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.starrealms.util
 import de.htwg.se.starrealms.controller.Controller
-import de.htwg.se.starrealms.model.{ PlayingField, GameLogic}
+import de.htwg.se.starrealms.model._
 import de.htwg.se.starrealms.view.ConsoleView
 
 /* import java.io.{ByteArrayInputStream, ByteArrayOutputStream, PrintStream}
@@ -17,7 +17,8 @@ class MainSpec extends AnyWordSpec with Matchers {
         
         //simulate initialized process
         val gameLogic = new GameLogic(new PlayingField())
-        val controller = new Controller(gameLogic)
+    	  val deck = new DefaultDeck()
+	      val controller = new Controller(gameLogic, deck)
         val view = new ConsoleView(controller)
 
 

@@ -4,6 +4,47 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
 class DefaultDeckSpec extends AnyWordSpec with Matchers {
+  "A DefaultDeck" should {
+    val deck = new DefaultDeck()
+
+    "initialize with the correct cards" in {
+      deck.getDeckState should include("Scout")
+      deck.getDeckState should include("Viper")
+    }
+
+    "allow drawing a Scout card" in {
+      val card = deck.drawCard("scout")
+      card should not be empty
+      card.get should include("Scout")
+    }
+
+    "allow drawing a Viper card" in {
+      val card = deck.drawCard("viper")
+      card should not be empty
+      card.get should include("Viper")
+    }
+
+    "return None when drawing from an empty deck" in {
+      deck.resetDeck()
+      (1 to 10).foreach(_ => deck.drawCard("scout"))
+      deck.drawCard("scout") should be(None)
+    }
+
+    "reset the deck correctly" in {
+      deck.resetDeck()
+      deck.getDeckState should include("Scout")
+      deck.getDeckState should include("Viper")
+    }
+  }
+}
+
+
+/* package de.htwg.se.starrealms.model
+
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+
+class DefaultDeckSpec extends AnyWordSpec with Matchers {
 
   "A DefaultDeck" should {
     "initialize with 8 Scouts and 2 Vipers" in {
@@ -45,4 +86,4 @@ class DefaultDeckSpec extends AnyWordSpec with Matchers {
       deck.getViperCards.foreach(_.getAbility.actions should contain("1 damage"))
     }
   }
-}
+} */
