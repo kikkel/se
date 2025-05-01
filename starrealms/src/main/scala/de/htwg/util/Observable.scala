@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.util
+package de.htwg.util
 
 
 trait Observer {
