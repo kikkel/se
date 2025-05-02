@@ -1,52 +1,52 @@
 package de.htwg.se.starrealms.model
 
-class GameLogic (val playingfield: PlayingField){
-  private var deck: List[String] = List.fill(8)("Scout") ++ List.fill(2)("Viper")
-  private var field: List[String] = List()
+import scala.collection.mutable.ListBuffer
+import de.htwg.se.starrealms.view
+import de.htwg.util.Observer
 
-  def drawField(): String = {
-	val deckState = if (deck.nonEmpty) deck.mkString(", ") else "Empty"
-	val fieldState = if (field.nonEmpty) field.mkString(", ") else "Empty"
-	s"Deck: $deckState\nField: $fieldState"
+class GameLogic {
+  private var deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
+  private val observers: ListBuffer[Observer] = ListBuffer()
+  //private var discardPile: List[DefaultCard] = List()
+
+  def optionsMenu(): String = {
+	val deckState = deck.getDeckState
+	s"\n\nDeck:\n$deckState\n\n  #gameLogic\n\n"
+
   }
 
   def turnOverCard(userInput: String): String = {
-  val scoutIndex = deck.indexWhere(_.toLowerCase.contains("scout"))
-  val viperIndex = deck.indexWhere(_.toLowerCase.contains("viper"))
+    userInput.toLowerCase match {
+      case "s" =>
+        deck.drawCard() match {
+          case Some(card) =>
+            //exitdeck.removeCard(card)
+            //discardPile = discardPile :+ card
+            s"Turned over Scout: $card  #gameLogic"
 
-  userInput.toLowerCase match {
-    case "s" =>
-      if (scoutIndex != -1) {
-        val card = deck(scoutIndex)
-        deck = deck.patch(scoutIndex, Nil, 1)
-        field = field :+ card
-        s"Turned over Scout: $card"
-      } else {
-        "No Scout cards left in the deck."
-      }
 
-    case "v" =>
-      if (viperIndex != -1) {
-        val card = deck(viperIndex)
-        deck = deck.patch(viperIndex, Nil, 1)
-        field = field :+ card
-        s"Turned over Viper: $card"
-      } else {
-        "No Viper cards left in the deck."
-      }
+          case None => "No Scout cards left in the deck.  #gameLogic"
+    }
+      case "v" =>
+        deck.drawCard() match {
+          case Some(card) =>
+            s"Turned over Viper: $card  #gameLogic"            
 
-    case _ =>
-      "Invalid input. Please enter 's' for Scout or 'v' for Viper."
+          case None => "No Viper cards left in the deck.  #gameLogic"
+        }
+      case _ => "Invalid input. Please enter 's' for Scout or 'v' for Viper.  #gameLogic"
+    }
+
   }
-}
 
   def resetGame(): Unit = {
-	deck = List.fill(8)("Scout") ++ List.fill(2)("Viper")
-	field = List()
+    //discardPile = List()
+    deck.resetDeck()
   }
 
   def exitGame(): Boolean = {
-    true
+    println("Exiting the game... #gameLogic")
+    false // Signal to exit the loop
   }
 
 }

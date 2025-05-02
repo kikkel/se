@@ -1,0 +1,5 @@
+Controller:
+
+Acts as a mediator between the model and the view.
+Processes user input, updates the model, and triggers updates in the view.
+Example: Controller.

@@ -2,6 +2,30 @@ package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+
+class PlayingFieldSpec extends AnyWordSpec with Matchers {
+  "A PlayingField" should {
+    val playingField = new PlayingField()
+
+    "initialize with the correct dimensions" in {
+      playingField.dimensions should be(30)
+    }
+
+    "resize the playing field" in {
+      playingField.resize(5)
+      playingField.dimensions should be(5)
+    }
+
+    "generate a string representation" in {
+      playingField.toString should include("PlayingField")
+    }
+  }
+}
+
+/* package de.htwg.se.starrealms.model
+
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import java.io.{ByteArrayOutputStream, PrintStream}
 
 class PlayingFieldSpec extends AnyWordSpec with Matchers {
@@ -63,4 +87,4 @@ class PlayingFieldSpec extends AnyWordSpec with Matchers {
       playingField.toString should be("PlayingField(dimension=25)")
     }
   }
-}
+} */

@@ -1,0 +1,73 @@
+/Users/kianimoon/se/se/starrealms/project/To do/TradeSpace.scala:  def drawTradeCard(): TradeCard = {
+/Users/kianimoon/se/se/starrealms/project/To do/TradeSpace.scala:  def addToTradeRow(card: TradeCard): Unit = {
+/Users/kianimoon/se/se/starrealms/project/To do/TradeSpace.scala:    def removeFromTradeRow(card: TradeCard): Unit = {
+/Users/kianimoon/se/se/starrealms/project/To do/TradeSpace.scala:    def clearTradeRow(): Unit = {
+/Users/kianimoon/se/se/starrealms/project/To do/TradeSpace.scala:    def refillTradeRow(): Unit = {
+/Users/kianimoon/se/se/starrealms/project/To do/TUISpec.scala:  def io(inputStr: String)(testBlock: => Unit): String = {
+/Users/kianimoon/se/se/starrealms/src/test/scala/de/htwg/se/starrealms/model/TestCard.scala:    def this(name: String) = this(name, new Ability(List())) // Default constructor with empty ability
+/Users/kianimoon/se/se/starrealms/src/test/scala/de/htwg/se/starrealms/model/TestCard.scala:override def getName: String = name
+/Users/kianimoon/se/se/starrealms/src/test/scala/de/htwg/se/starrealms/model/TestCard.scala:    override def getAbility: Ability = ability
+/Users/kianimoon/se/se/starrealms/src/test/scala/de/htwg/se/starrealms/model/TestCard.scala:    override def toString: String = s"TestCard(name=$name, ability=$ability)"    
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/app/Main.scala:  def run(): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/app/Main.scala:  def main(args: Array[String]): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/util/Observable.scala:  def update: Unit
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/util/Observable.scala:  def addObserver(observer: Observer): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/util/Observable.scala:  def removeObserver(observer: Observer): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/util/Observable.scala:  def notifyObservers(): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/util/Observable.scala:    def update: Unit = println("Ding Dong Test Update")
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/controller/Controller.scala:    def processInput(input: String): String = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/controller/Controller.scala:    def getGameState: String = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/controller/Controller.scala:    def drawCard(cardType: String): String = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/controller/Controller.scala:    def getDeckState: String = deck.getDeckState
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/controller/Controller.scala:    def resetDeck(): String = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultCard.scala:  def this(name: String) = this(name, new Ability(List())) // Default constructor with empty ability
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultCard.scala:  override def getName: String = name
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultCard.scala:  override def getAbility: Ability = ability
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultCard.scala:  override def toString: String = s"ViperCard(name=$name, ability=$ability)"
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultCard.scala:  override def toString: String = s"ScoutCard(name=$name, ability=$ability)"
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Ability.scala:  def getActions: List[String] = actions // Return the list of actions
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Ability.scala:  def hasActions: Boolean = actions.nonEmpty // Check if the list is not empty
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Ability.scala:  override def toString: String = s"Ability(actions=$actions)" // String representation of the Ability class
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Ability.scala:/*   override def equals(obj: Any): Boolean = obj match {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Ability.scala:  override def hashCode(): Int = actions.hashCode // Hash code based on actions
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Ability.scala:  def addAction(action: String): Ability = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Ability.scala:  def removeAction(action: String): Ability = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Ability.scala:  def clearActions(): Ability = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/GameLogic.scala:  def addObserver(observer: Observer): Unit = observers += observer
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/GameLogic.scala:  def removeObserver(observer: Observer): Unit = observers -= observer
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/GameLogic.scala:  def notifyObservers(): Unit = observers.foreach(_.update)
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/GameLogic.scala:  def drawField(): String = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/GameLogic.scala:  def turnOverCard(userInput: String): String = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/GameLogic.scala:  def resetGame(): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/GameLogic.scala:  def exitGame(): Boolean = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/AbstractCard.scala:  def getName: String
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/AbstractCard.scala:  def getAbility: Ability
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/AbstractCard.scala:  override def toString: String = s"Card(name=$name, ability=$ability)"
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/AbstractCard.scala:/*   override def equals(obj: Any): Boolean = obj match { 
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/AbstractCard.scala:  override def hashCode(): Int = name.hashCode */
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Player.scala:    def this(name: String) = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Player.scala:    def this(name: String, authority: Int) = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Player.scala:    def this(name: String, authority: Int, defaultDeck: Int) = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Player.scala:    override def toString: String = s"Player($name, $authority, $defaultDeck)"
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Player.scala:    def getName: String = name
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Player.scala:    def getAuthority: Int = authority
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/Player.scala:    def getDefaultDeck: Int = defaultDeck*/
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/PlayingField.scala:    private def generateRow(): String = " " * (dimension * unit)
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/PlayingField.scala:    private def borderWidth: Int = generateRow().length
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/PlayingField.scala:    def drawField(): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/PlayingField.scala:    def resize(newDimension: Int): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/PlayingField.scala:    def dimensions: Int = dimension
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/PlayingField.scala:    override def toString: String = s"PlayingField(dimension=$dimension)"
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultDeck.scala:  def drawCard(cardType: String): Option[String] = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultDeck.scala:  def isEmpty: Boolean = cards.isEmpty
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultDeck.scala:  def getDeckState: String = if (cards.nonEmpty) cards.mkString(", ") else "Empty"
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultDeck.scala:  def resetDeck(): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultDeck.scala:  def getScoutCards: List[ScoutCard] = ???
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultDeck.scala:  def getViperCards: List[ViperCard] = ???
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/model/DefaultDeck.scala:  def getAllCards: List[DefaultCard] = ???
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/view/ConsoleView.scala:  def update: Unit = render()
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/view/ConsoleView.scala:  def render(): Unit = println("Rendering game state...") // Placeholder for actual rendering logic
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/view/ConsoleView.scala:  def processInputLine(input: String): Boolean = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/view/ConsoleView.scala:  override def update(): Unit = render()
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/view/ConsoleView.scala:  def render(): Unit = {
+/Users/kianimoon/se/se/starrealms/src/main/scala/de/htwg/se/starrealms/view/ConsoleView.scala:def processInputLine(input: String): Unit = {
