@@ -32,10 +32,10 @@ class Controller (val gameLogic: GameLogic, val deck: DefaultDeck)
             val result = input.toLowerCase match {
                 case "s" => 
                     drawCard("Scout")
-                    gameLogic.turnOverCard("s")
+                    s"Drew card: ${gameLogic.turnOverCard("s")}"
                 case "v" => 
                     drawCard("Viper")
-                    gameLogic.turnOverCard("v")
+                    s"Drew card: ${gameLogic.turnOverCard("v")}"
                 case "reset" => 
                     resetGame()
                     resetDeck()
