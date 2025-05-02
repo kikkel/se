@@ -30,8 +30,12 @@ class Controller (val gameLogic: GameLogic, val deck: DefaultDeck)
         //input processing
         def processInput(input: String): String = {
             val result = input.toLowerCase match {
-                case "s" => drawCard("Scout")
-                case "v" => drawCard("Viper")
+                case "s" => 
+                    drawCard("Scout")
+                    gameLogic.turnOverCard("s")
+                case "v" => 
+                    drawCard("Viper")
+                    gameLogic.turnOverCard("v")
                 case "reset" => 
                     resetGame()
                     resetDeck()

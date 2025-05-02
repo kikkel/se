@@ -12,7 +12,6 @@ abstract class AbstractCardSpec extends AnyWordSpec with Matchers {
     "have a name" in {
       card.getName should be("TestCard")
     }
-    "belong to "
     "have at least one ability" in {
       card.getAbility.getActions should contain("TestAbility")
     }

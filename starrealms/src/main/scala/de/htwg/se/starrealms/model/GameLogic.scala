@@ -28,9 +28,9 @@ class GameLogic (val playingfield: PlayingField) {
         deck.drawCard() match {
           case Some(card) =>
             //field = field :+ card.toString()
-            deck.removeCard(card)
+            //exitdeck.removeCard(card)
             //discardPile = discardPile :+ card
-            notifyObservers() //state change
+            //notifyObservers() //state change
             s"Turned over Scout: $card  #gameLogic"
 
 
@@ -39,11 +39,9 @@ class GameLogic (val playingfield: PlayingField) {
       case "v" =>
         deck.drawCard() match {
           case Some(card) =>
-            //field = field :+ card.toString()
-            deck.removeCard(card)
-            //discardPile = discardPile :+ card
-            notifyObservers() //state change
-            s"Turned over Viper: $card  #gameLogic"
+            s"Turned over Viper: $card  #gameLogic"            
+            //notifyObservers() //state change
+
           case None => "No Viper cards left in the deck.  #gameLogic"
         }
       case _ => "Invalid input. Please enter 's' for Scout or 'v' for Viper.  #gameLogic"

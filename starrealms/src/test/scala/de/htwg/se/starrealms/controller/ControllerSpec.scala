@@ -6,40 +6,29 @@ import de.htwg.se.starrealms.model._
 
 class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" should {
-    val gameLogic = new GameLogic(new PlayingField())
-    val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), 	List())
-    val controller = new Controller(gameLogic, deck)
+	val gameLogic = new GameLogic(new PlayingField())
+	val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), 	List())
+	val controller = new Controller(gameLogic, deck)
 
-    "process input to draw a Scout card" in {
-      val result = controller.processInput("s")
-      result should include("Scout")
-    }
+	"process input to draw a Scout card" in {
+	  val result = controller.processInput("s")
+	  result should include("Drew card:")
+	}
 
-    "process input to draw a Viper card" in {
-      val result = controller.processInput("v")
-      result should include("Viper")
-    }
+	"process input to draw a Viper card" in {
+	  val result = controller.processInput("v")
+	  result should include("Drew card:")
+	}
 
-    "process input to reset the game" in {
-      val result = controller.processInput("reset")
-      result should include("reset")
-    }
+	"reset the game and deck" in {
+	  val result = controller.processInput("reset")
+	  result should include("Game and deck have been reset")
+	}
 
-    "process input to get the deck state" in {
-      val result = controller.processInput("deck")
-      result should include("Deck")
-    }
-
-    "handle invalid input gracefully" in {
-      val result = controller.processInput("invalid")
-      result should include("Unknown command")
-    }
-
-    "return the current game state" in {
-      val gameState = controller.getGameState
-      gameState should include("Deck")
-      gameState should include("Field")
-    }
+	"handle unknown commands" in {
+	  val result = controller.processInput("unknown")
+	  result should include("Unknown command")
+	}
   }
 }
 

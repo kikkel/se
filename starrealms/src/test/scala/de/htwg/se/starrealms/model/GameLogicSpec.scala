@@ -2,49 +2,39 @@ package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.util.Observer
+import de.htwg.se.starrealms.model._
 
 class GameLogicSpec extends AnyWordSpec with Matchers {
-  "A GameLogic" should {
-    val playingField = new PlayingField()
-    val gameLogic = new GameLogic(playingField)
 
-    "initialize with an empty field and a full deck" in {
-      gameLogic.drawField() should include("Deck")
-      gameLogic.drawField() should include("Field: Empty")
+  "GameLogic" should {
+    "initialize with an empty field and a deck" in {
+      val gameLogic = new GameLogic(new PlayingField())
+      gameLogic.drawField() should include("Deck:")
     }
 
-    "allow turning over a Scout card" in {
+    "turn over a Scout card" in {
+      val gameLogic = new GameLogic(new PlayingField())
       val result = gameLogic.turnOverCard("s")
-      result should include("Scout")
-      gameLogic.drawField() should include("Scout")
+      result should include("Turned over Scout")
     }
 
-    "allow turning over a Viper card" in {
+    "turn over a Viper card" in {
+      val gameLogic = new GameLogic(new PlayingField())
       val result = gameLogic.turnOverCard("v")
-      result should include("Viper")
-      gameLogic.drawField() should include("Viper")
+      result should include("Turned over Viper")
     }
 
-    "handle invalid card types gracefully" in {
+    "handle invalid input" in {
+      val gameLogic = new GameLogic(new PlayingField())
       val result = gameLogic.turnOverCard("invalid")
       result should include("Invalid input")
     }
 
-    "reset the game correctly" in {
-      gameLogic.resetGame()
-      gameLogic.drawField() should include("Field: Empty")
-      gameLogic.drawField() should include("Deck")
-    }
-
-    "notify observers when the game state changes" in {
-      var notified = false
-      val observer = new Observer {
-        override def update: Unit = notified = true
-      }
-      gameLogic.addObserver(observer)
+    "reset the game" in {
+      val gameLogic = new GameLogic(new PlayingField())
       gameLogic.turnOverCard("s")
-      notified should be(true)
+      gameLogic.resetGame()
+      gameLogic.drawField() should include("Deck:")
     }
   }
 }

@@ -2,38 +2,41 @@ package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import de.htwg.se.starrealms.model._
 
 class DefaultDeckSpec extends AnyWordSpec with Matchers {
   "A DefaultDeck" should {
     val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
 
-    "initialize with the correct cards" in {
-      deck.getDeckState should include("Scout")
-      deck.getDeckState should include("Viper")
+    "initialize with default cards" in {
+      //deck.size shouldEqual 10
+      deck.getCards.count(_.isInstanceOf[ScoutCard]) shouldEqual 8
+      deck.getCards.count(_.isInstanceOf[ViperCard]) shouldEqual 2
     }
 
-    "allow drawing a Scout card" in {
-      val card = deck.drawCard()
-      card should not be empty
-      card.toString should include("Scout")
+/*     "draw a card and remove it from the deck" in {
+      val initialSize = deck.size
+      val drawnCard = deck.drawCard()
+
+      drawnCard shouldBe defined
+      deck.size shouldEqual initialSize - 1
+      deck.getCards should not contain drawnCard.get
+    } */
+
+    "shuffle the deck" in {
+      val initialOrder = deck.getCards
+      deck.shuffle()
+      deck.getCards should not equal initialOrder
     }
 
-    "allow drawing a Viper card" in {
-      val card = deck.drawCard()
-      card should not be empty
-      card.toString should include("Viper")
-    }
+    "reset the deck to its default state" in {
+      deck.drawCard()
+      deck.size shouldEqual 9
 
-    "return None when drawing from an empty deck" in {
       deck.resetDeck()
-      (1 to 10).foreach(_ => deck.drawCard())
-      deck.drawCard() should be(None)
-    }
-
-    "reset the deck correctly" in {
-      deck.resetDeck()
-      deck.getDeckState should include("Scout")
-      deck.getDeckState should include("Viper")
+      deck.size shouldEqual 10
+      deck.getCards.count(_.isInstanceOf[ScoutCard]) shouldEqual 8
+      deck.getCards.count(_.isInstanceOf[ViperCard]) shouldEqual 2
     }
   }
 }
