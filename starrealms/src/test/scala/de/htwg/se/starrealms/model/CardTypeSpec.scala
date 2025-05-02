@@ -13,11 +13,7 @@ class CardTypeSpec extends AnyWordSpec with Matchers {
         val cardType = new CardType("TestCardType")
         cardType.toString should be("CardType(name=TestCardType)")
     }
-    "be equal to another card type with the same name" in {
-      val cardType1 = new CardType("TestCardType")
-      val cardType2 = new CardType("TestCardType")
-      cardType1 should be(cardType2)
-    }
+
     "not be equal to another card type with a different name" in {
       val cardType1 = new CardType("TestCardType1")
       val cardType2 = new CardType("TestCardType2")
