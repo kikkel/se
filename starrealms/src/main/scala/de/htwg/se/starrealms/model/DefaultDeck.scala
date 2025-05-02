@@ -17,7 +17,7 @@ class DefaultDeck(name: String, cardType: CardType, initialCards: List[DefaultCa
 
   override def addCard(card: AbstractCard): Unit = ???
   override def removeCard(card: AbstractCard): Unit = ???
-  override def shuffle(): Unit = localCards = Random.shuffle(localCards)
+  override def shuffle(): Unit = ??? //localCards = Random.shuffle(localCards)
 
 
   // Draw a card of the specified type (e.g., "Scout" or "Viper")

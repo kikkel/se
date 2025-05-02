@@ -5,7 +5,7 @@ import de.htwg.util.Observable
 
 trait GameLogicController {
     val gameLogic: GameLogic
-    def getGameState: String = gameLogic.drawField()
+    def getGameState: String = gameLogic.optionsMenu()
     def resetGame(): Unit = gameLogic.resetGame()
 }
 
@@ -14,7 +14,7 @@ trait DeckController {
     def drawCard(cardType: String): String = {
         deck.drawCard() match {
             case Some(card) => s"Drew card: $card"
-            case None => s"No $cardType cards left in the deck. #DeckController"
+            case None => s"No $cardType cards left in the deck."
         }
     }
     def getDeckState: String = deck.getDeckState

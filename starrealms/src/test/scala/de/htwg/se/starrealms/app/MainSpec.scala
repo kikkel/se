@@ -16,18 +16,14 @@ class MainSpec extends AnyWordSpec with Matchers {
       noException should be thrownBy {
         
         //simulate initialized process
-        val gameLogic = new GameLogic(new PlayingField())
+        val gameLogic = new GameLogic
     	  val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
-        // Create a new instance of GameLogic with a PlayingField
         // Create a new instance of DefaultDeck with a CardType and an empty list
         // Create a new instance of Controller with the gameLogic and deck
         // Create a new instance of ConsoleView with the controller
 	      val controller = new Controller(gameLogic, deck)
         val view = new ConsoleView(controller)
 
-
-        //ensure components are properly connected
-        gameLogic.addObserver(view)
       }
     } 
 
@@ -39,22 +35,4 @@ class MainSpec extends AnyWordSpec with Matchers {
     }
   }
 
-/*   "The Main object" should {
-    "run the application without throwing an exception" in {
-      // Simuliere Eingabe: direkt beenden (Option 5)
-      val input = new ByteArrayInputStream("5\n".getBytes)
-      val output = new ByteArrayOutputStream()
-
-      // Standard Input und Output umleiten
-      System.setIn(input)
-      System.setOut(new PrintStream(output))
-        noException should be thrownBy {
-          Main.main(Array.empty)
-        }
-
-
-
-      val result = output.toString
-    }
-  } */
 }

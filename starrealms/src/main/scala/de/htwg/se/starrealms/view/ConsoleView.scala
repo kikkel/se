@@ -6,6 +6,8 @@ import de.htwg.se.starrealms.controller._
 class ConsoleView (controller: Controller) extends Observer {
   def update: Unit = render()
 
+  // Connect view to model
+  controller.addObserver(this)
   def render(): Unit =
     //println("Rendering game state... #ConsoleView") // Placeholder for actual rendering logic
     println(controller.getGameState)
