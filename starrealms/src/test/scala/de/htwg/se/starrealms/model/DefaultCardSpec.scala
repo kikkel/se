@@ -21,7 +21,7 @@ class DefaultCardSpec extends AnyWordSpec with Matchers {
       val cardType = new CardType("TestCardType")
       val ability = new Ability(List("TestAbility"))
       val card = new DefaultCard("TestCard", cardType, ability)
-      card.toString should be("DefaultCard(name=TestCard, cardType=TestCardType, ability=Ability(actions=List(TestAbility)))")
+      card.toString should be("Card(name=TestCard, cardType=CardType(name=TestCardType), ability=Ability(actions=List(TestAbility)))")
     }
 
   }
@@ -74,7 +74,7 @@ class DefaultCardSpec extends AnyWordSpec with Matchers {
 
     "have a proper toString implementation" in {
       val card = new ScoutCard()
-      card.toString should be("ScoutCard(name=Scout, cardType=Default, ability=Ability(actions=List(1 coin)))")
+      card.toString should be("ScoutCard(name=Scout, cardType=CardType(name=Default), ability=Ability(actions=List(1 coin)))")
     }
   }
 }

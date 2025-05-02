@@ -4,7 +4,7 @@ class DefaultCard(name: String, cardType: CardType, ability: Ability) extends Ab
   def this(name: String, cardType: CardType) = this(name, cardType, new Ability(List())) // Default constructor with empty ability
 
   override def getName: String = name
-  override def getCardType: CardType = new CardType(name) // Assuming card type is derived from name
+  override def getCardType: CardType = cardType // Assuming card type is derived from name
   override def getAbility: Ability = ability
 }
 

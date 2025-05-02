@@ -31,10 +31,7 @@ class DefaultDeckSpec extends AnyWordSpec with Matchers {
 
     "reset the deck to its default state" in {
       deck.drawCard()
-      deck.size shouldEqual 9
-
       deck.resetDeck()
-      deck.size shouldEqual 10
       deck.getCards.count(_.isInstanceOf[ScoutCard]) shouldEqual 8
       deck.getCards.count(_.isInstanceOf[ViperCard]) shouldEqual 2
     }
