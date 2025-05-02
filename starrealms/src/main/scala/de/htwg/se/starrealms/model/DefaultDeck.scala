@@ -40,7 +40,7 @@ class DefaultDeck(name: String, cardType: CardType, initialCards: List[DefaultCa
   // Reset the deck to its default state
   def resetDeck(): Unit = {
     localCards = List.fill(8)(new ScoutCard) ++ List.fill(2)(new ViperCard)
-    discardPile = List()
+    //discardPile = List()
   }
 
   def getScoutCards: List[ScoutCard] = ???
