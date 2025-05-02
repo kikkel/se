@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+/* package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -48,4 +48,4 @@ abstract class AbstractDeck extends AnyWordSpec with Matchers {
 
 
 }
-  
+   */

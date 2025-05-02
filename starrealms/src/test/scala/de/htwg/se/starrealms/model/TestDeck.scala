@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+/* package de.htwg.se.starrealms.model
 
 class TestDeck(name: String, cardType: CardType, cards: List[AbstractCard]) extends AbstractDeck(name: String, cardType: CardType, List()) {
     def this(name: String) = this(name, new CardType(name), List()) // Default constructor with empty card type
@@ -17,4 +17,4 @@ class TestDeck(name: String, cardType: CardType, cards: List[AbstractCard]) exte
     
     override def toString: String = s"TestDeck(name=$name, cardType=$cardType, cards=$getCards)"
 
-}
+} */

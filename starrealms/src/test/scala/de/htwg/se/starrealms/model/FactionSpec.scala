@@ -25,5 +25,61 @@ class FactionSpec extends AnyWordSpec with Matchers {
       val faction = new Faction("Trade Federation")
       faction should not be null
     }
+
+  }
+}
+class TradeFederationSpec extends AnyWordSpec with Matchers {
+  "A Trade Federation" should {
+    "have a name" in {
+      val faction = new TradeFederation()
+      faction.getName should be("Trade Federation")
+    }
+
+    "have a toString method" in {
+      val faction = new TradeFederation()
+      faction.toString should be("TradeFederation(name=Trade Federation)")
+    }
+  }
+}
+
+class StarEmpireSpec extends AnyWordSpec with Matchers {
+  "A Star Empire" should {
+    "have a name" in {
+      val faction = new StarEmpire()
+      faction.getName should be("Star Empire")
+    }
+
+    "have a toString method" in {
+      val faction = new StarEmpire()
+      faction.toString should be("StarEmpire(name=Star Empire)")
+    }
+  }
+}
+
+class BlobSpec extends AnyWordSpec with Matchers {
+  "A Blob" should {
+    "have a name" in {
+      val faction = new Blob()
+      faction.getName should be("Blob")
+    }
+
+    "have a toString method" in {
+      val faction = new Blob()
+      faction.toString should be("Blob(name=Blob)")
+    }
+  }
+}
+
+class MachineCultSpec extends AnyWordSpec with Matchers {
+  "A MachineCult" should {
+    "have a name" in {
+      val faction = new MachineCult()
+      faction.getName should be("MachineCult")
+    }
+
+    "have a toString method" in {
+      val faction = new MachineCult()
+      faction.toString should be("MachineCult(name=MachineCult)")
+    }
   }
 }
