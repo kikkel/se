@@ -25,7 +25,7 @@ class TestObject extends Observer {
     def update: Unit = println("Ding Dong Test Update #observable/testobject")
 }
 
-object ObserverPattern {
+/* object ObserverPattern {
     val observable = new Observable
     val observer1 = new TestObject
     val observer2 = new TestObject
@@ -38,4 +38,4 @@ object ObserverPattern {
     observable.notifyObservers() // Notify remaining observers
     observable.removeObserver(observer2) // Remove observer2
     observable.notifyObservers() // No observers left, no output expected
-}
+} */
