@@ -5,47 +5,52 @@ import org.scalatest.wordspec.AnyWordSpec
 
 abstract class AbstractDeck extends AnyWordSpec with Matchers {
     "an AbstractDeck" should {
+         "be empty when initialized" in {
+            val deck = new TestDeck("TestDeck", List())
+            deck.isEmpty should be(true)
+         }
+        "not be empty when cards are added" in {
+            val deck = new TestDeck("TestDeck", List())
+            deck.addCard(new TestCard("TestCard"))
+            deck.isEmpty should be(false)
+        }
         "have a name" in {
-            val cardType = new CardType("TestCardType")
-            val deck = new TestDeck("TestDeck", cardType, List())
-            deck.getName should be("TestDeck")
+            val deck = new TestDeck("TestDeck", List())
+            deck.getName should be("DefaultDeck")
         }
-        "have a card type" in {
-            val cardType = new CardType("TestCardType")
-            val deck = new TestDeck("TestDeck", cardType, List())
-            deck.getCardType should be(cardType)
+        "have an addCard method" in {
+            val deck = new TestDeck("TestDeck", List())
+            val newCard = new TestCard("TestCard")
+            deck.addCard(newCard)
+            deck.getCards should contain(newCard)
         }
-        "have a toString method" in {
-            val cardType = new CardType("TestCardType")
-            val deck = new TestDeck("TestDeck", cardType, List())
-            deck.toString should be("TestDeck(name=TestDeck, cardType=CardType(name=TestCardType))")
+        "have a removeCard method" in {
+            val deck = new TestDeck("TestDeck", List())
+            val cardToRemove = new TestCard("TestCard")
+            deck.addCard(cardToRemove)
+            deck.removeCard(cardToRemove)
+            deck.getCards should not contain cardToRemove
         }
         "have a shuffle method" in {
-            val cardType = new CardType("TestCardType")
-            val deck = new TestDeck("TestDeck", cardType, List())
-            deck.shuffle() should be(true) // Assuming shuffle always returns true
+            val deck = new TestDeck("TestDeck", List())
+            val initialOrder = deck.getCards
+            deck.shuffle()
+            deck.getCards should not equal initialOrder
         }
         "have a drawCard method" in {
-            val cardType = new CardType("TestCardType")
-            val deck = new TestDeck("TestDeck", cardType, List())
-            deck.drawCard() should be(None) // Assuming drawCard returns None when no cards are present
-        }
+            val deck = new TestDeck("TestDeck", List())
+            val drawnCard = deck.drawCard()
 
-        "have a size method" in {
-            val cardType = new CardType("TestCardType")
-            val deck = new TestDeck("TestDeck", cardType, List())
-            deck.size() should be(0) // Assuming size returns 0 when no cards are present
+            drawnCard shouldBe defined
+            deck.getCards should not contain drawnCard.get
         }
-        "have a isEmpty method" in {
-            val cardType = new CardType("TestCardType")
-            val deck = new TestDeck("TestDeck", cardType, List())
-            deck.isEmpty() should be(true) // Assuming isEmpty returns true when no cards are present
+        "have a drawCard method that returns None when the deck is empty" in {
+            val emptyDeck = new TestDeck("TestDeck", List())
+            emptyDeck.drawCard() shouldBe None
         }
-        
+       
+
+
     }
-
-
-
-
 }
    */

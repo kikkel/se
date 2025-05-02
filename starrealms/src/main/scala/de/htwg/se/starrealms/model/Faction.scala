@@ -10,7 +10,7 @@ class Faction(val name: String) {
         case _ => false
     }
     
-    override def hashCode(): Int = name.hashCode
+    //override def hashCode(): Int = name.hashCode
 
 }
 

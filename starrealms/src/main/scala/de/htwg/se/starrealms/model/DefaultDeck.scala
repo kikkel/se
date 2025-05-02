@@ -3,15 +3,12 @@ package de.htwg.se.starrealms.model
 import scala.util.Random
 
 
-class DefaultDeck(name: String, cardType: CardType, initialCards: List[DefaultCard]) extends AbstractDeck(name, cardType, initialCards) {
+class DefaultDeck(name: String, cardType: CardType, initialCards: List[DefaultCard]) extends AbstractDeck(name, initialCards) {
   private var localCards: List[DefaultCard] = List.fill(8)(new ScoutCard) ++ List.fill(2)(new ViperCard)
   //private var discardPile: List[AbstractCard] = List()
 
-
-  override def size: Int = cards.size
-  override def isEmpty: Boolean = cards.isEmpty
+  override def isEmpty: Boolean = localCards.isEmpty
   override def getName: String = name
-  override def getCardType: CardType = cardType
   override def getCards: List[DefaultCard] = localCards
 
 
