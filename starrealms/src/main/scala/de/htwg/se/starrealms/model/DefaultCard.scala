@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.model
 
-class DefaultCard(name: String, cardType: CardType, ability: Ability) extends AbstractCard(name, cardType, ability) {
-  def this(name: String, cardType: CardType) = this(name, cardType, new Ability(List())) // Default constructor with empty ability
+class DefaultCard(name: String, cardType: CardType, ability: Ability=new Ability(List())) extends AbstractCard(name, cardType, ability) {
+  //def this(name: String, cardType: CardType, ability: Ability) = this(name, cardType)) // Default constructor with empty ability
 
   override def getName: String = name
   override def getCardType: CardType = cardType // Assuming card type is derived from name

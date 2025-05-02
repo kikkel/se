@@ -9,6 +9,11 @@ class ControllerSpec extends AnyWordSpec with Matchers {
 	val gameLogic = new GameLogic(new PlayingField())
 	val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), 	List())
 	val controller = new Controller(gameLogic, deck)
+	
+	"get the current deck state" in {
+	  val result = controller.getDeckState
+	  result should include("ScoutCard")
+	}
 
 	"process input to draw a Scout card" in {
 	  val result = controller.processInput("s")
@@ -24,13 +29,21 @@ class ControllerSpec extends AnyWordSpec with Matchers {
 	  val result = controller.processInput("reset")
 	  result should include("Game and deck have been reset")
 	}
+	"handle deck state" in {
+	  val result = controller.processInput("deck")
+	  result should include("ScoutCard")
+	}
 
 	"handle unknown commands" in {
 	  val result = controller.processInput("unknown")
 	  result should include("Unknown command")
 	}
   }
+
+
 }
+
+
 
 
 /* package de.htwg.se.starrealms.controller
