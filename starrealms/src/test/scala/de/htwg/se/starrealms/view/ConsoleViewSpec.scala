@@ -35,6 +35,11 @@ class ConsoleViewSpec extends AnyWordSpec with Matchers {
         "handle invalid input gracefully" in {
             view.processInputLine("invalid") should be(true)
         }
+        "update when notified by the controller" in {
+            // Simuliere eine Benachrichtigung durch den Controller
+            controller.addObserver(view)
+            noException should be thrownBy controller.notifyObservers()
+        }
     }
 }
 
