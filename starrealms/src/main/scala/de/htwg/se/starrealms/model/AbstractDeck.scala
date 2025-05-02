@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model
 
-abstract class AbstractDeck(val name: String, val cardType: CardType) {
+abstract class AbstractDeck(val name: String, val cardType: CardType, val cards: List[AbstractCard]) {
     
     //informative
     def size: Int

@@ -7,19 +7,19 @@ import de.htwg.se.starrealms.view.ConsoleView
 object Main extends App {
   // Initialize the model, controller, and view
   val gameLogic = new GameLogic(new PlayingField())
-  val deck = new DefaultDeck("DefaultDeck", new CardType("Default"))
+  val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
   val controller = new Controller(gameLogic, deck)
   val view = new ConsoleView(controller)
 
   // Connect view to model
   gameLogic.addObserver(view) 
 
-
+  
   // Application loop
   var continue = true
   while (continue) {
     view.render() //current game state
-    println("Enter command (s: draw Scout, v: draw Viper, reset: reset game, exit: quit): #main")
+    println("Enter command\n\ts: draw Scout\n\tv: draw Viper\n\treset: reset game\n\texit: quit): #main")
     val input = scala.io.StdIn.readLine()
     continue = view.processInputLine(input)
   }

@@ -1,0 +1,4 @@
+View:
+
+Responsible for rendering the game state and interacting with the user.
+Should not contain business logic or directly modify the model.

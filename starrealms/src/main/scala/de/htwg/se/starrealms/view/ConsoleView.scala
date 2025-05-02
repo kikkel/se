@@ -7,7 +7,7 @@ class ConsoleView (controller: Controller) extends Observer {
   def update: Unit = render()
 
   def render(): Unit = 
-    println("Rendering game state... #ConsoleView") // Placeholder for actual rendering logic
+    //println("Rendering game state... #ConsoleView") // Placeholder for actual rendering logic
     println(controller.getGameState)
   
   def processInputLine(input: String): Boolean = {

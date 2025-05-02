@@ -7,7 +7,7 @@ import de.htwg.se.starrealms.model._
 class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" should {
     val gameLogic = new GameLogic(new PlayingField())
-    val deck = new DefaultDeck("DefaultDeck", new CardType("Default"))
+    val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), 	List())
     val controller = new Controller(gameLogic, deck)
 
     "process input to draw a Scout card" in {

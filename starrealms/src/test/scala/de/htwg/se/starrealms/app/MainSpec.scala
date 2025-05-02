@@ -17,7 +17,11 @@ class MainSpec extends AnyWordSpec with Matchers {
         
         //simulate initialized process
         val gameLogic = new GameLogic(new PlayingField())
-    	  val deck = new DefaultDeck("DefaultDeck", new CardType("Default"))
+    	  val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
+        // Create a new instance of GameLogic with a PlayingField
+        // Create a new instance of DefaultDeck with a CardType and an empty list
+        // Create a new instance of Controller with the gameLogic and deck
+        // Create a new instance of ConsoleView with the controller
 	      val controller = new Controller(gameLogic, deck)
         val view = new ConsoleView(controller)
 

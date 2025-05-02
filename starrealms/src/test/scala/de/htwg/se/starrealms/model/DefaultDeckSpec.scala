@@ -5,7 +5,7 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class DefaultDeckSpec extends AnyWordSpec with Matchers {
   "A DefaultDeck" should {
-    val deck = new DefaultDeck("DefaultDeck", new CardType("Default"))
+    val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
 
     "initialize with the correct cards" in {
       deck.getDeckState should include("Scout")
