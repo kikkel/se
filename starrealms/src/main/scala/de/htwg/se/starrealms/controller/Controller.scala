@@ -29,28 +29,16 @@ class Controller (val gameLogic: GameLogic, val deck: DefaultDeck)
     
         //input processing
         def processInput(input: String): String = {
-            val result = input.toLowerCase match {
-                case "s" => 
-                    drawCard("Scout")
-                    s"Drew card: ${gameLogic.turnOverCard("s")}"
-                case "v" => 
-                    drawCard("Viper")
-                    s"Drew card: ${gameLogic.turnOverCard("v")}"
-                case "reset" => 
-                    resetGame()
-                    resetDeck()
-                    "Game and deck have been reset. #Controller"
-    /*             case "exit" => 
-                    println("Exiting the game.")
-                    return false //break loop */
-                case "deck" => getDeckState
-                case _ => 
-                    val message = s"Unknown command: $input #Controller"
-                    println(message)
-                    message //Meaningful String
-            }
-            notifyObservers()
-            result
+        val command: Command = input.toLowerCase match {
+            case "s" => new DrawCardCommand(this, "Scout")
+            case "v" => new DrawCardCommand(this, "Viper")
+            case "reset" => new ResetGameCommand(this)
+            case "deck" => new ShowDeckCommand(this)
+            case _ => new InvalidCommand(input)
+        }
+        val result = command.execute()
+        notifyObservers()
+        result
         }
 }
 

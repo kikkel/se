@@ -2,9 +2,7 @@ package de.htwg.se.starrealms.model
 
 class Faction(val name: String) {
     def getName: String = name
-    
-    override def toString: String = s"Faction(name=$name)"
-    
+    def render(): String = name // Return the name of the faction    
     override def equals(obj: Any): Boolean = obj match {
         case that: Faction => this.name == that.name
         case _ => false
@@ -16,14 +14,14 @@ class Faction(val name: String) {
 
 
 class TradeFederation extends Faction("Trade Federation") {
-    override def toString: String = s"TradeFederation(name=$name)"
+    override def render(): String = "Trade Federation"
 }
 class StarEmpire extends Faction("Star Empire") {
-    override def toString: String = s"StarEmpire(name=$name)"
+    override def render(): String = "Star Empire"
 }
 class Blob extends Faction("Blob") {
-    override def toString: String = s"Blob(name=$name)"
+    override def render(): String = "Blob"
 }
 class MachineCult extends Faction("MachineCult") {
-    override def toString: String = s"MachineCult(name=$name)"
+    override def render(): String = "Machine Cult"
 }

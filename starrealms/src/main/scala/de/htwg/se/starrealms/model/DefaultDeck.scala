@@ -3,13 +3,15 @@ package de.htwg.se.starrealms.model
 import scala.util.Random
 
 
-class DefaultDeck(name: String, cardType: CardType, initialCards: List[DefaultCard]) extends AbstractDeck(name, initialCards) {
-  private var localCards: List[DefaultCard] = List.fill(8)(new ScoutCard) ++ List.fill(2)(new ViperCard)
+class DefaultDeck(name: String, cardType: CardType, initialCards: List[AbstractCard]) extends AbstractDeck(name, initialCards) {
+  val scoutCard = CardFactory.createCard("Scout")
+  val viperCard = CardFactory.createCard("Viper")
+  private var localCards: List[AbstractCard] = List.fill(8)(scoutCard) ++ List.fill(2)(viperCard)
   //private var discardPile: List[AbstractCard] = List()
 
   override def isEmpty: Boolean = localCards.isEmpty
   override def getName: String = name
-  override def getCards: List[DefaultCard] = localCards
+  override def getCards: List[AbstractCard] = localCards
 
 
   override def addCard(card: AbstractCard): Unit = ???
@@ -18,7 +20,7 @@ class DefaultDeck(name: String, cardType: CardType, initialCards: List[DefaultCa
 
 
   // Draw a card of the specified type (e.g., "Scout" or "Viper")
-  override def drawCard(): Option[DefaultCard] = {
+  override def drawCard(): Option[AbstractCard] = {
     val index = Random.nextInt(localCards.size) // Randomly select an index
     if (index != -1) {
       val card = localCards(index)
@@ -36,11 +38,11 @@ class DefaultDeck(name: String, cardType: CardType, initialCards: List[DefaultCa
 
   // Reset the deck to its default state
   def resetDeck(): Unit = {
-    localCards = List.fill(8)(new ScoutCard) ++ List.fill(2)(new ViperCard)
+    localCards = List.fill(8)(scoutCard) ++ List.fill(2)(viperCard)
     //discardPile = List()
   }
 
   def getScoutCards: List[ScoutCard] = ???
   def getViperCards: List[ViperCard] = ???
-  def getAllCards: List[DefaultCard] = ???
+  def getAllCards: List[AbstractCard] = ???
 }

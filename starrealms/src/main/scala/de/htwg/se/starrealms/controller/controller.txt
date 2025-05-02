@@ -3,3 +3,13 @@ Controller:
 Acts as a mediator between the model and the view.
 Processes user input, updates the model, and triggers updates in the view.
 Example: Controller.
+
+
+
+Command.scala
+    Encapsulates user actions (e.g., drawing a card, resetting the game) as objects, 
+    decoupling input handling from the controller logic.
+    The Command classes (e.g., DrawCardCommand, ResetGameCommand) belong to 
+    the Controller layer because they process user input and invoke the appropriate 
+    actions on the model or controller.
+    The Command Pattern ensures that input handling is modular and extensible.

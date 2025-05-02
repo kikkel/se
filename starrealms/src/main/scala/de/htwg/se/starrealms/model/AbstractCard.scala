@@ -5,8 +5,9 @@ abstract class AbstractCard(val name: String, val cardType: CardType, val abilit
   def getCardType: CardType
   def getAbility: Ability
 
-  override def toString: String = s"Card(name=$name, cardType=$cardType, ability=$ability)"
-
+  def render(): String = {
+    s"Card Name: $name, Card Type: ${cardType.render()}, Ability: ${ability.render()}"
+  }
 /*   override def equals(obj: Any): Boolean = obj match { 
     case that: AbstractCard => this.name == that.name //
     case _ => false

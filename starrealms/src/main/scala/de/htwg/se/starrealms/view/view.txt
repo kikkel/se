@@ -2,3 +2,16 @@ View:
 
 Responsible for rendering the game state and interacting with the user.
 Should not contain business logic or directly modify the model.
+
+
+Renderer.scala 
+    Handles the presentation of data (e.g., cards, decks, game state) in a flexible and reusable way.
+
+    The Renderer classes (e.g., CardRenderer, DeckRenderer) belong to the View layer because they define how the data is displayed to the user.
+    This ensures that the rendering logic is decoupled from the Model and Controller.
+
+Strategy.scala
+    Encapsulates different algorithms or behaviors (e.g., rendering logic) and allows them to be swapped dynamically.
+    The Strategy Pattern ensures that the rendering logic is decoupled from the core game logic.
+
+
