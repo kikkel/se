@@ -12,9 +12,9 @@ object Main extends App {
   val view = new ConsoleView(controller)
 
   // Connect view to model
-  gameLogic.addObserver(view) 
+  gameLogic.addObserver(view)
 
-  
+
   // Application loop
   var continue = true
   while (continue) {
@@ -24,10 +24,10 @@ object Main extends App {
     continue = view.processInputLine(input)
   }
 
-  println("Game exited. Goodbye! #main")
+  println("\n\nGame exited. Goodbye! #main\n\n")
 }
 
-/* 
+/*
 object Main extends App {
   // initialize the game
   val gameLogic = new GameLogic(new PlayingField())
@@ -52,7 +52,7 @@ object Main extends App {
 
   //start game
   run()
-  
+
 } */
 
 /* object Main {
