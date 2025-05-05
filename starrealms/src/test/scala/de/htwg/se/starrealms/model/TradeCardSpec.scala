@@ -5,6 +5,7 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class TradeCardSpec extends AnyWordSpec with Matchers {
   "A TradeCard" should {
+    val card = TradeCard.
     "have a name" in {
       val card = new TradeCard("Trade Card")
       card.getName should be("Trade Card")

@@ -1,19 +1,40 @@
 package de.htwg.se.starrealms.model
 
 object CardFactory {
-    def createCard(cardName: String): AbstractCard = cardName.toLowerCase match {
-        case "scout" => new ScoutCard()
-        case "viper" => new ViperCard()
-        case "explorer" => new ExplorerCard()
-        case "freighter" => new TradeFederationCard()
-        case "trade pod" => new BlobCard()
-        case "survey ship" => new StarEmpireCard()
-        case "battle station" => new MachineCultCard()
+    def createCard(cardName: String): Card = cardName.toLowerCase match {
+        //Ships: Default
+        case "scout" => new Ship("")
+        case "viper" => new Ship("")
+        case "explorer" => new Ship("")
+
+        //Ships: Trade Federation
+        case "example trade federation ship" => new Ship("")
+
+        //Ships: Blob
+        case "example blob ship" => new Ship("")
+
+        //Ships: Star Empire
+        case "star empire ship" => new Ship("")
+
+        //Ships: Machine Cult
+        case "machine cult ship" => new Ship("")
+        
+//------------------------------------------------------------------------------------------
+
+        //Bases: Trade Federation
+        case "trade federation base" => new Base("", defense = 1, isOutPost = false)
+
+        //Bases: Blob
+        case "blob base" => new Base("", defense = 2, isOutPost = true)
+
+        //Bases: Star Empire
+        case "star empire base" => new Base("", defense = 1, isOutPost = false)
+
+        //Bases: Machine Cult
+        case "machine cult base" => new Base("", defense = 2, isOutPost = true)
+
+
         case _ => throw new IllegalArgumentException(s"Unknown card type: $cardType")
     }
-/*   def createCard(cardType: String): AbstractCard = cardType.toLowerCase match {
-    case "scout" => new ScoutCard()
-    case "viper" => new ViperCard()
-    case _ => throw new IllegalArgumentException(s"Unknown card type: $cardType")
-  } */
+
 }
