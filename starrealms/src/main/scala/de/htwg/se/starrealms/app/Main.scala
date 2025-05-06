@@ -18,7 +18,7 @@ object Main extends App {
   var continue = true
   while (continue) {
     view.render() //current game state
-    println("Options\n\ts: draw Scout\n\tv: draw Viper\n\treset: reset game\n\texit: quit): #main")
+    println("Options:\n\t's' draw Scout\n\t'v' draw Viper\n\t'r' reset game\n\t'x' quit game\n\t #main")
     val input = scala.io.StdIn.readLine()
     continue = view.processInputLine(input)
   }

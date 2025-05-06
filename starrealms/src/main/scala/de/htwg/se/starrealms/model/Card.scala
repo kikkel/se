@@ -23,6 +23,14 @@ abstract class Card(
   def getAllyAbility: Option[Ability] = allyAbility
   def getScrapAbility: Option[Ability] = scrapAbility
 
+  // Überschreibe die toString-Methode
+  override def toString: String = {
+  s"$name ($cardType), Abilities: " +
+    s"Primary: ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+    s"Ally: ${allyAbility.map(_.render()).getOrElse("None")}, " +
+    s"Scrap: ${scrapAbility.map(_.render()).getOrElse("None")}"
+}
+
   def render(): String = {
     s"Card Name: $name, Card Type: $cardType, Faction: ${faction.map(_.render()).getOrElse("None")}, primaryAbility: ${primaryAbility.map(_.render()).getOrElse("None")}, allyAbility: ${allyAbility.map(_.render()).getOrElse("None")}, scrapAbility: ${scrapAbility.map(_.render()).getOrElse("None")}"
   }
@@ -37,7 +45,12 @@ class Ship(
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
 ) extends Card(name, cardType, faction, cost, None, primaryAbility, allyAbility, scrapAbility) {
-
+  override def toString: String = {
+  s"Ship: $name, Faction: ${faction.map(_.name).getOrElse("None")}, Cost: ${cost.getOrElse("Unknown")}, Abilities: " +
+    s"Primary: ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+    s"Ally: ${allyAbility.map(_.render()).getOrElse("None")}, " +
+    s"Scrap: ${scrapAbility.map(_.render()).getOrElse("None")}"
+}
 }
 
 class Base(
@@ -51,7 +64,12 @@ class Base(
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
 ) extends Card(name, cardType, faction, Some(cost), Some(defense), primaryAbility, allyAbility, scrapAbility) {
-
+  override def toString: String = {
+  s"Base: $name, Defense: $defense, Outpost: $isOutpost, Abilities: " +
+    s"Primary: ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+    s"Ally: ${allyAbility.map(_.render()).getOrElse("None")}, " +
+    s"Scrap: ${scrapAbility.map(_.render()).getOrElse("None")}"
+}
 }
 
 //----------------------------------------------------------------------------------------

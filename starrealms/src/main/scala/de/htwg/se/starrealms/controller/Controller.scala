@@ -22,13 +22,45 @@ trait DeckController {
 }
 
 
-class Controller (val gameLogic: GameLogic, val deck: DefaultDeck) 
-    extends Observable 
-    with GameLogicController 
+class Controller (val gameLogic: GameLogic, val deck: DefaultDeck)
+    extends Observable
+    with GameLogicController
     with DeckController {
-    
-        //input processing
-        def processInput(input: String): String = {
+
+        def drawScout(): Unit = {
+            val card = deck.drawCard()
+            card match {
+                case Some(c) if c.name == "Scout" =>
+                println(s"Scout card drawn: $c")
+                case Some(_) =>
+                println("The drawn card is not a Scout card.")
+                case None =>
+                println("No Scout cards left in the deck.")
+            }
+        }
+
+        def drawViper(): Unit = {
+            val card = deck.drawCard()
+            card match {
+                case Some(c) if c.name == "Viper" =>
+                println(s"Viper card drawn: $c")
+                case Some(_) =>
+                println("The drawn card is not a Viper card.")
+                case None =>
+                println("No Viper cards left in the deck.")
+            }
+        }
+
+        override def resetGame(): Unit = {
+            deck.resetDeck()
+            println("Game has been reset.")
+        }
+
+        override def getGameState: String = {
+            s"Deck:\n${deck.getDeckState}\n"
+        }
+
+       def processInput(input: String): String = {
         val command: Command = input.toLowerCase match {
             case "s" => new DrawCardCommand(this, "Scout")
             case "v" => new DrawCardCommand(this, "Viper")
@@ -41,4 +73,5 @@ class Controller (val gameLogic: GameLogic, val deck: DefaultDeck)
         result
         }
 }
+
 
