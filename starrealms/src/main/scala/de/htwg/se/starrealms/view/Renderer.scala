@@ -9,7 +9,7 @@ trait Renderer[T] {
 
 class CardRenderer extends Observable with Renderer[Card] {
   override def render(card: Card): String =
-    s"Card Name: ${card.getName}, Card Type: ${card.getCardType.getName}, Abilities: ${card.getAbility.getActions.mkString(", ")}"
+    s"Card Name: ${card.getName}, Card Type: ${card.getCardType}, Abilities: ${card.getPrimaryAbility.map(_.getActions.mkString(", ")).getOrElse("None")}"
 }
 
 class DeckRenderer extends Renderer[Deck] {

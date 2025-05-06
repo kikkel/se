@@ -23,7 +23,7 @@ object CardItineraryApp {
     reader.close()
     rows
   }
-  
+
 
 
   //filter
@@ -72,19 +72,15 @@ def generateCardClass(card: Map[String, String]): String = {
 }
 
   //write classes to file
-  def writeClassesToFile(cards: List[Map[String, String]], outputFile: String): Unit = {
-    val writer = new java.io.PrintWriter(new java.io.File(outputFile))
-    try {
-      cards.foreach { card =>
-        writer.println(generateCardClass(card))
-      }
-    } finally {
-      writer.close()
-    }
+  def writeClassesToFile(classes: List[String], outputFile: String): Unit = {
+  val writer = new java.io.PrintWriter(new java.io.File(outputFile))
+  try {
+    classes.foreach(writer.println)
+  } finally {
+    writer.close()
   }
-  
-  // Call the main method to run the application
-  main(args)
+  }
+
 }
 
 

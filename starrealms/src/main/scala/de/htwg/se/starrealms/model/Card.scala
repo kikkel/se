@@ -46,6 +46,7 @@ class Base(
   faction: Option[Faction] = None,
   cost: Int,
   defense: String,
+  isOutpost: Boolean = false, // Hier der neue Parameter
   primaryAbility: Option[Ability] = None,
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
@@ -99,7 +100,7 @@ class Ability(val actions: List[String]) {
 
 }
 
-case class PrimaryAbility(val actions: List[String]) extends Ability(actions) {
+case class PrimaryAbility(override val actions: List[String]) extends Ability(actions) {
   override def render(): String = {
     if (actions.isEmpty) {
       "No primary actions available"
@@ -109,7 +110,7 @@ case class PrimaryAbility(val actions: List[String]) extends Ability(actions) {
   } // Return a string representation of the primary actions
 }
 
-case class AllyAbility(val actions: List[String]) extends Ability(actions) {
+case class AllyAbility(override val actions: List[String]) extends Ability(actions) {
   override def render(): String = {
     if (actions.isEmpty) {
       "No ally actions available"
@@ -118,7 +119,7 @@ case class AllyAbility(val actions: List[String]) extends Ability(actions) {
     }
   } // Return a string representation of the ally actions
 }
-case class ScrapAbility(val actions: List[String]) extends Ability(actions) {
+case class ScrapAbility(override val actions: List[String]) extends Ability(actions) {
   override def render(): String = {
     if (actions.isEmpty) {
       "No scrap actions available"
