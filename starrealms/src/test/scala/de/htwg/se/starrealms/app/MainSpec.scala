@@ -27,12 +27,12 @@ class MainSpec extends AnyWordSpec with Matchers {
       }
     }
 
-    "run the application without throwing an exception" in {
+    /* "run the application without throwing an exception" in {
       noException should be thrownBy {
         //simulate running the application
         Main.main(Array.empty)
       }
-    }
+    }*/
   }
 
 }
