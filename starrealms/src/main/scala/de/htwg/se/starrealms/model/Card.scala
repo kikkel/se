@@ -47,6 +47,8 @@ class Base(
 
   def isOutPost: Boolean = isOutPost
 }
+
+//----------------------------------------------------------------------------------------
 class CardType(val name: String) {
     def getName: String = name
     def render(): String = name // Return the name of the card type
@@ -56,6 +58,8 @@ class CardType(val name: String) {
     override def render(): String = "Default"
 } */
 
+
+//----------------------------------------------------------------------------------------
 class Faction(val name: String) {
     def getName: String = name
     def render(): String = name // Return the name of the faction    
@@ -79,7 +83,7 @@ class MachineCult extends Faction("MachineCult") {
 }
 
 
-
+//----------------------------------------------------------------------------------------
 
 class Ability(val actions: List[String]) {
   def getActions: List[String] = actions // Return the list of actions
