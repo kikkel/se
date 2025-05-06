@@ -3,25 +3,25 @@ package de.htwg.se.starrealms.model
 import scala.util.Random
 
 abstract class Deck(val name: String, val cards: List[Card]) {
-    
+
   //informative
   def isEmpty: Boolean
   def getName: String
   def getCards: List[Card]
 
   //functionality
-  def addCard(card: Card): Unit 
+  def addCard(card: Card): Unit
   def removeCard(card: Card): Unit
   def shuffle(): Unit
   def drawCard(): Option[Card]
-    
+
 }
-    
+
 
 
 //-------------------------------------------------------------------------------------
 
-class DefaultDeck(name: String, cardType: CardType, initialCards: List[Card]) extends Deck(name, initialCards) {
+class DefaultDeck(name: String, cardType: String, initialCards: List[Card]) extends Deck(name, initialCards) {
   val scoutCard = CardFactory.createCard("Scout")
   val viperCard = CardFactory.createCard("Viper")
   private var localCards: List[Card] = List.fill(8)(scoutCard) ++ List.fill(2)(viperCard)

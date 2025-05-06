@@ -3,8 +3,8 @@ package de.htwg.se.starrealms.model
 
 
 abstract class Card(
-  val name: String, 
-  val cardType: String, 
+  val name: String,
+  val cardType: String,
   val faction: Option[Faction] = None,
   val cost: Option[Int] = None,
   val defense: Option[String] = None,
@@ -29,27 +29,27 @@ abstract class Card(
 }
 
 class Ship(
-  name: String, 
-  cardType: String = "Ship", 
+  name: String,
+  cardType: String = "Ship",
   faction: Option[Faction] = None,
   cost: Option[Int] = None,
   primaryAbility: Option[Ability] = None,
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
-) extends Card(name, cardType, faction, primaryAbility, allyAbility, scrapAbility) {
+) extends Card(name, cardType, faction,cost, None, primaryAbility, allyAbility, scrapAbility) {
 
 }
 
 class Base(
-  name: String, 
-  cardType: String = "Base", 
+  name: String,
+  cardType: String = "Base",
   faction: Option[Faction] = None,
   cost: Int,
   defense: String,
   primaryAbility: Option[Ability] = None,
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
-) extends Card(name, cardType, faction, primaryAbility, allyAbility, scrapAbility) {
+) extends Card(name, cardType, faction, Some(cost), Some(defense), primaryAbility, allyAbility, scrapAbility) {
 
 }
 
@@ -61,7 +61,7 @@ class Base(
 //----------------------------------------------------------------------------------------
 case class Faction(val name: String) {
     def getFaction: String = name
-    def render(): String = name // Return the name of the faction    
+    def render(): String = name // Return the name of the faction
     override def equals(obj: Any): Boolean = obj match {
         case that: Faction => this.name == that.name
         case _ => false
