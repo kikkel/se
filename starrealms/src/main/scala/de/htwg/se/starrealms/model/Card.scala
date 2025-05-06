@@ -57,13 +57,13 @@ class Base(
   faction: Option[Faction] = None,
   cost: Int,
   defense: String,
-  isOutpost: Boolean = false, // Hier der neue Parameter
+  isOutPost: Boolean = false, // Hier der neue Parameter
   primaryAbility: Option[Ability] = None,
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
 ) extends Card(name, cardType, faction, Some(cost), Some(defense), primaryAbility, allyAbility, scrapAbility) {
 
-  val outpost: Boolean = isOutpost
+  val outpost: Boolean = isOutPost
   def isOutpost: Boolean = outpost
   override def toString: String = {
   s"Base: $name, Defense: $defense, Outpost: $isOutpost, Abilities: " +

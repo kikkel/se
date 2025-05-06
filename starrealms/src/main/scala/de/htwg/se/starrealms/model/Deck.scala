@@ -14,7 +14,7 @@ abstract class Deck(val name: String, val cards: List[Card]) {
   def removeCard(card: Card): Unit
   def shuffle(): Unit
   def drawCard(): Option[Card]
-  def resetDeck(): Unit
+  def resetDeck (): Unit
 
 }
 

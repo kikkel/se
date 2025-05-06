@@ -64,8 +64,8 @@ class Controller (val gameLogic: GameLogic, val deck: DefaultDeck)
         val command: Command = input.toLowerCase match {
             case "s" => new DrawCardCommand(this, "Scout")
             case "v" => new DrawCardCommand(this, "Viper")
-            case "reset" => new ResetGameCommand(this)
-            case "deck" => new ShowDeckCommand(this)
+            case "r" => new ResetGameCommand(this)
+            //case "deck" => new ShowDeckCommand(this, "Deck:")
             case _ => new InvalidCommand(input)
         }
         val result = command.execute()
