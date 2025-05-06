@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model.CardItinerary
+package de.htwg.se.starrealms.model
 
 class ScoutCard extends Card(
   name = "Scout",

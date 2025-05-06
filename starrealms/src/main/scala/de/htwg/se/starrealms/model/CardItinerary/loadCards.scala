@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.app
+package de.htwg.se.starrealms.model
 
 import com.github.tototoshi.csv._
 

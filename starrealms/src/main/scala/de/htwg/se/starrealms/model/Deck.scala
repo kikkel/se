@@ -58,7 +58,5 @@ class DefaultDeck(name: String, cardType: CardType, initialCards: List[Card]) ex
     //discardPile = List()
   }
 
-  def getScoutCards: List[ScoutCard] = ???
-  def getViperCards: List[ViperCard] = ???
-  def getAllCards: List[Card] = ???
+
 }
