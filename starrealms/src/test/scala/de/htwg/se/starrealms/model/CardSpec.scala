@@ -3,7 +3,7 @@ package de.htwg.se.starrealms.model
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-abstract class AbstractCardSpec extends AnyWordSpec with Matchers {
+abstract class CardSpec extends AnyWordSpec with Matchers {
   "an AbstractCard" should {
     val ability = new Ability(List("TestAbility"))
     val cardType = new CardType("TestCardType")
