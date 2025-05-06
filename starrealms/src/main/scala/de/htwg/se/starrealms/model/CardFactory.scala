@@ -37,7 +37,7 @@ object CardFactory {
             name = "Trade Federation Base",
             cost = 4,
             defense = "5",
-            isOutpost = false,
+            isOutPost = false,
             primaryAbility = Some(new Ability(List("Gain 4 authority")))
         )
 
@@ -45,7 +45,7 @@ object CardFactory {
             name = "Blob Base",
             cost = 5,
             defense = "5",
-            isOutpost = true, // Setze isOutpost auf true
+            isOutPost = true, // Setze isOutpost auf true
             primaryAbility = Some(new Ability(List("Gain 3 damage")))
         )
 
@@ -54,7 +54,7 @@ object CardFactory {
             name = "Star Empire Base",
             cost = 4,
             defense = "1",
-            isOutpost = false, // Setze isOutpost auf false
+            isOutPost = false, // Setze isOutpost auf false
             primaryAbility = Some(new Ability(List("Draw a card")))
         )
 
@@ -63,7 +63,7 @@ object CardFactory {
             name = "Machine Cult Base",
             cost = 5,
             defense = "2",
-            isOutpost = true, // Setze isOutpost auf true
+            isOutPost = true, // Setze isOutpost auf true
             primaryAbility = Some(new Ability(List("Scrap a card from your hand or discard pile")))
         )
 

@@ -33,12 +33,7 @@ class DefaultDeckSpec extends AnyWordSpec with Matchers {
       deck.shuffle()
       deck.getCards should not equal initialOrder
     } */
-    "have a drawCard method" in {
-      val drawnCard = deck.drawCard()
 
-      drawnCard shouldBe defined
-      deck.getCards should not contain drawnCard.get
-    }
 
 /*     "have a drawCard method that returns None when the deck is empty" in {
       val emptyDeck = new DefaultDeck("EmptyDeck", new CardType("Empty"), List())

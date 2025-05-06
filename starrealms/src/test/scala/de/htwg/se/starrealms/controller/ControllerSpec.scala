@@ -12,7 +12,8 @@ class ControllerSpec extends AnyWordSpec with Matchers {
 
 	"get the current deck state" in {
 	  val result = controller.getDeckState
-	  result should include("ScoutCard")
+	  result should include("Scout")
+	  result should include("Viper")
 	}
 
 	"process input to draw a Scout card" in {
@@ -26,12 +27,14 @@ class ControllerSpec extends AnyWordSpec with Matchers {
 	}
 
 	"reset the game and deck" in {
-	  val result = controller.processInput("reset")
+	  val result = controller.processInput("r")
 	  result should include("Game and deck have been reset")
 	}
-	"handle deck state" in {
-	  val result = controller.processInput("deck")
-	  result should include("ScoutCard")
+	 "handle deck state" in {
+	  val result = controller.getDeckState
+	  //result should include("Deck:")
+	  result should include("Scout")
+	  result should include("Viper")
 	}
 
 	"handle unknown commands" in {

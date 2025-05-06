@@ -28,11 +28,11 @@ class ConsoleViewSpec extends AnyWordSpec with Matchers {
         }
 
         "process input to reset the game" in {
-            view.processInputLine("reset") should be(true)
+            view.processInputLine("r") should be(true)
         }
 
         "process input to exit the game" in {
-            view.processInputLine("exit") should be(false)
+            view.processInputLine("x") should be(false)
         }
 
         "handle invalid input gracefully" in {
