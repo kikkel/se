@@ -78,26 +78,25 @@ class Base(
 
 
 //----------------------------------------------------------------------------------------
-case class Faction(val name: String) {
-    def getFaction: String = name
-    def render(): String = name // Return the name of the faction
-    override def equals(obj: Any): Boolean = obj match {
-        case that: Faction => this.name == that.name
-        case _ => false
-    }
-    //override def hashCode(): Int = name.hashCode
+abstract class Faction(val name: String) {
+  def getName: String  // Diese Methode bleibt abstrakt
+  def render(): String = getName
 }
+
 class TradeFederation extends Faction("Trade Federation") {
-    override def render(): String = "Trade Federation"
+  override def getName: String = "Trade Federation"
 }
+
 class StarEmpire extends Faction("Star Empire") {
-    override def render(): String = "Star Empire"
+  override def getName: String = "Star Empire"
 }
+
 class Blob extends Faction("Blob") {
-    override def render(): String = "Blob"
+  override def getName: String = "Blob"
 }
-class MachineCult extends Faction("MachineCult") {
-    override def render(): String = "Machine Cult"
+
+class MachineCult extends Faction("Machine Cult") {
+  override def getName: String = "Machine Cult"
 }
 
 

@@ -5,58 +5,58 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class CardSpec extends AnyWordSpec with Matchers {
   "A Card" should {
-    val scout = new Ship("Scout", new CardType("Ship"), None, Some(new Ability(List("1 coin"))), None, None)
-    val ship = new Ship()
+    val scout = new Ship("Scout", "Ship", None, Some(0), Some(new Ability(List("1 coin"))), None, None)
+    val ship = new Ship("Default", "Ship", None, Some(0), None, None, None)
     "have a name" in {
-      val card = new Ship("Test Card", new CardType("Ship"))
+      val card = new Ship("Test Card", "Ship")
       card.getName should be("Test Card")
     }
 
     "have a cost" in {
-      val card = new Ship("Test Card", new CardType("Ship"))
-      card.getCardType.getName should be("Ship")
+      val card = new Ship("Test Card", "Ship")
+      card.getCardType should be("Ship")
     }
 
     "have a faction" in {
-      val card = new Ship("Test Card", new CardType("Ship"), Some(new TradeFederation))
+      val card = new Ship("Test Card", "Ship", Some(new TradeFederation))
       card.getFaction should be(Some(new TradeFederation))
     }
 
     "have no faction" in {
-      val card = new Ship("Test Card", new CardType("Ship"), None)
+      val card = new Ship("Test Card", "Ship", None)
       card.getFaction should be(None)
     }
 
     "have a primary ability" in {
       val ability = new Ability(List("Draw a card"))
-      val card = new Ship("Test Card", new CardType("Ship"), None, Some(ability))
+      val card = new Ship("Test Card", "Ship", None, Some(1), Some(ability), None, None)
       card.getPrimaryAbility should be(Some(ability))
     }
 
     "have no primary ability" in {
-      val card = new Ship("Test Card", new CardType("Ship"), None, None)
+      val card = new Ship("Test Card", "Ship", None, None)
       card.getPrimaryAbility should be(None)
     }
 
     "have an ally ability" in {
       val allyAbility = new Ability(List("Gain 2 Trade"))
-      val card = new Ship("Test Card", new CardType("Ship"), None, None, Some(allyAbility))
+      val card = new Ship("Test Card", "Ship", None, None, Some(allyAbility))
       card.getAllyAbility should be(Some(allyAbility))
     }
 
     "have no ally ability" in {
-      val card = new Ship("Test Card", new CardType("Ship"), None, None, None)
+      val card = new Ship("Test Card", "Ship", None, None, None)
       card.getAllyAbility should be(None)
     }
 
     "have a scrap ability" in {
       val scrapAbility = new Ability(List("Scrap this card"))
-      val card = new Ship("Test Card", new CardType("Ship"), None, None, None, Some(scrapAbility))
+      val card = new Ship("Test Card", "Ship", None, None, None, Some(scrapAbility))
       card.getScrapAbility should be(Some(scrapAbility))
     }
 
     "have no scrap ability" in {
-      val card = new Ship("Test Card", new CardType("Ship"), None, None, None, None)
+      val card = new Ship("Test Card", "Ship", None, None, None, None)
       card.getScrapAbility should be(None)
     }
   }
@@ -64,12 +64,12 @@ class CardSpec extends AnyWordSpec with Matchers {
   "A Ship" should {
 
     "be a ship" in {
-      val card = new Ship("Test Card", new CardType("Ship"))
+      val card = new Ship("Test Card", "Ship")
       card.isShip should be(true)
     }
 
     "not be a base" in {
-      val card = new Ship("Test Card", new CardType("Ship"))
+      val card = new Ship("Test Card", "Ship")
       card.isBase should be(false)
     }
   }
@@ -77,33 +77,33 @@ class CardSpec extends AnyWordSpec with Matchers {
   "A Base" should {
 
     "be a base" in {
-      val card = new Base("Test Card", new CardType("Base"))
+      val card = new Base("Test Card", "Base", None, 2, "5", true, None, None, None)
       card.isBase should be(true)
     }
 
     "not be a ship" in {
-      val card = new Base("Test Card", new CardType("Base"))
+      val card = new Base("Test Card", "Base", None, 2, "5", true, None, None, None)
       card.isShip should be(false)
     }
     "be an outpost" in {
-      val card = new Base("Test Card", new CardType("Base"))
-      card.isOutPost should be(true)
+      val card = new Base("Test Card", "Base", None, 2, "5", true, None, None, None)
+      card.isOutpost should be(true)
     }
     "not be an outpost" in {
-      val card = new Base("Test Card", new CardType("Base"))
-      card.isOutPost should be(false)
+      val card = new Base("Test Card", "Base", None, 2, "5", false, None, None, None)
+      card.isOutpost should be(false)
     }
   }
 
   "A CardType" should {
 
     "have a name" in {
-      val cardType = new CardType("Ship")
-      cardType.getName should be("Ship")
+      val cardType = "Ship"
+      cardType should be("Ship")
     }
 
     "render its name" in {
-      val cardType = new CardType("Ship")
+      val cardType = "Ship"
       cardType.render() should be("Ship")
     }
   }
