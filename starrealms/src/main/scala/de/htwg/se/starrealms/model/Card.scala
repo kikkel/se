@@ -1,18 +1,24 @@
 package de.htwg.se.starrealms.model
 
+
+
 abstract class Card(
   val name: String, 
   val cardType: String, 
   val faction: Option[Faction] = None,
+  val cost: Option[Int] = None,
+  val defense: Option[String] = None,
   val primaryAbility: Option[Ability] = None,
   val allyAbility: Option[Ability] = None,
   val scrapAbility: Option[Ability] = None
 ) {
-  def isBase: Boolean
-  def isShip: Boolean
+  def isBase: Boolean = cardType == "Base"
+  def isShip: Boolean = cardType == "Ship"
   def getName: String = name
   def getCardType: String = cardType
   def getFaction: Option[Faction] = faction
+  def getCost: Option[Int] = cost
+  def getDefense: Option[String] = defense
   def getPrimaryAbility: Option[Ability] = primaryAbility
   def getAllyAbility: Option[Ability] = allyAbility
   def getScrapAbility: Option[Ability] = scrapAbility
@@ -22,30 +28,29 @@ abstract class Card(
   }
 }
 
-case class Ship(
+class Ship(
   name: String, 
   cardType: String = "Ship", 
   faction: Option[Faction] = None,
+  cost: Option[Int] = None,
   primaryAbility: Option[Ability] = None,
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
 ) extends Card(name, cardType, faction, primaryAbility, allyAbility, scrapAbility) {
-  override def isBase: Boolean = false
-  override def isShip: Boolean = true
+
 }
 
-case class Base(
+class Base(
   name: String, 
   cardType: String = "Base", 
   faction: Option[Faction] = None,
+  cost: Int,
+  defense: String,
   primaryAbility: Option[Ability] = None,
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
 ) extends Card(name, cardType, faction, primaryAbility, allyAbility, scrapAbility) {
-  override def isBase: Boolean = true
-  override def isShip: Boolean = false
 
-  def isOutPost: Boolean = isOutPost
 }
 
 //----------------------------------------------------------------------------------------
@@ -55,7 +60,7 @@ case class Base(
 
 //----------------------------------------------------------------------------------------
 case class Faction(val name: String) {
-    def getName: String = name
+    def getFaction: String = name
     def render(): String = name // Return the name of the faction    
     override def equals(obj: Any): Boolean = obj match {
         case that: Faction => this.name == that.name
@@ -79,7 +84,7 @@ class MachineCult extends Faction("MachineCult") {
 
 //----------------------------------------------------------------------------------------
 
-case class Ability(val actions: List[String]) {
+abstract class Ability(val actions: List[String]) {
   def getActions: List[String] = actions // Return the list of actions
   def hasActions: Boolean = actions.nonEmpty // Check if the list is not empty
 
@@ -91,7 +96,35 @@ case class Ability(val actions: List[String]) {
     }
   } // Return a string representation of the actions
 
+
 }
 
+case class PrimaryAbility(val actions: List[String]) extends Ability(actions) {
+  override def render(): String = {
+    if (actions.isEmpty) {
+      "No primary actions available"
+    } else {
+      actions.mkString(", ")
+    }
+  } // Return a string representation of the primary actions
+}
 
+case class AllyAbility(val actions: List[String]) extends Ability(actions) {
+  override def render(): String = {
+    if (actions.isEmpty) {
+      "No ally actions available"
+    } else {
+      actions.mkString(", ")
+    }
+  } // Return a string representation of the ally actions
+}
+case class ScrapAbility(val actions: List[String]) extends Ability(actions) {
+  override def render(): String = {
+    if (actions.isEmpty) {
+      "No scrap actions available"
+    } else {
+      actions.mkString(", ")
+    }
+  } // Return a string representation of the scrap actions
+}
 

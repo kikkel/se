@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model
 
-class Scout extends Card(
+class Scout extends Ship(
   name = "Scout",
   cardType = new CardType("Default"),
   primaryAbility = Some(new Ability(List("1 coin")))
@@ -8,7 +8,7 @@ class Scout extends Card(
   override def render(): String = s"Scout Card: $name, Type: ${cardType.render()}, Ability: ${primaryAbility.map(_.render()).getOrElse("None")}"
 }
 
-class Viper extends Card(
+class Viper extends Ship(
   name = "Viper",
   cardType = new CardType("Default"),
   primaryAbility = Some(new Ability(List("1 damage")))
@@ -16,7 +16,7 @@ class Viper extends Card(
   override def render(): String = s"Viper Card: $name, Type: ${cardType.render()}, Ability: ${primaryAbility.map(_.render()).getOrElse("None")}"
 }
 
-class Explorer extends Card(
+class Explorer extends Ship(
   name = "Explorer",
   cardType = new CardType("Explorer"),
   primaryAbility = Some(new Ability(List("2 coins"))),
