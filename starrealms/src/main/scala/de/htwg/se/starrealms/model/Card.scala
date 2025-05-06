@@ -36,7 +36,7 @@ class Ship(
   primaryAbility: Option[Ability] = None,
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
-) extends Card(name, cardType, faction,cost, None, primaryAbility, allyAbility, scrapAbility) {
+) extends Card(name, cardType, faction, cost, None, primaryAbility, allyAbility, scrapAbility) {
 
 }
 
