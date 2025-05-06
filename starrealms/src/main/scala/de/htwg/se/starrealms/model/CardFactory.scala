@@ -3,8 +3,8 @@ package de.htwg.se.starrealms.model
 object CardFactory {
     def createCard(cardName: String): Card = cardName.toLowerCase match {
         //Ships: Default
-        case "scout" => new Ship("")
-        case "viper" => new Ship("")
+        case "scout" => new Ship("Scout", new CardType("Ship"), None, Some(new Ability(List("1 coin"))), None, None)
+        case "viper" => new Ship("Viper", new CardType("Ship"), None, Some(new Ability(List("1 damage"))), None, None)
         case "explorer" => new Ship("")
 
         //Ships: Trade Federation
