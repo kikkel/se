@@ -101,11 +101,6 @@ class CardSpec extends AnyWordSpec with Matchers {
       val cardType = "Ship"
       cardType should be("Ship")
     }
-
-    "render its name" in {
-      val cardType = "Ship"
-      cardType.render() should be("Ship")
-    }
   }
 
   "A Faction" should {

@@ -1,7 +1,5 @@
 package de.htwg.se.starrealms.model
 
-
-
 abstract class Card(
   val name: String,
   val cardType: String,
@@ -64,6 +62,9 @@ class Base(
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
 ) extends Card(name, cardType, faction, Some(cost), Some(defense), primaryAbility, allyAbility, scrapAbility) {
+
+  val outpost: Boolean = isOutpost
+  def isOutpost: Boolean = outpost
   override def toString: String = {
   s"Base: $name, Defense: $defense, Outpost: $isOutpost, Abilities: " +
     s"Primary: ${primaryAbility.map(_.render()).getOrElse("None")}, " +

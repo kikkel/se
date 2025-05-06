@@ -9,8 +9,8 @@ class DefaultDeckSpec extends AnyWordSpec with Matchers {
     val deck = new DefaultDeck("DefaultDeck", "Default", List())
 
     "initialize with default cards" in {
-      deck.getCards.count(_.isInstanceOf[ScoutCard]) shouldEqual 8
-      deck.getCards.count(_.isInstanceOf[ViperCard]) shouldEqual 2
+      deck.getCards.count(_.name == "Scout") shouldEqual 8
+      deck.getCards.count(_.name == "Viper") shouldEqual 2
     }
     "be empty" in {
       deck.isEmpty shouldBe false
@@ -52,8 +52,8 @@ class DefaultDeckSpec extends AnyWordSpec with Matchers {
     "reset the deck to its default state" in {
       deck.drawCard()
       deck.resetDeck()
-      deck.getCards.count(_.isInstanceOf[ScoutCard]) shouldEqual 8
-      deck.getCards.count(_.isInstanceOf[ViperCard]) shouldEqual 2
+      deck.getCards.count(_.name == "Scout") shouldEqual 8
+      deck.getCards.count(_.name == "Viper") shouldEqual 2
     }
   }
 }
