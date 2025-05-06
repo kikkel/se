@@ -84,7 +84,7 @@ class MachineCult extends Faction("MachineCult") {
 
 //----------------------------------------------------------------------------------------
 
-abstract class Ability(val actions: List[String]) {
+class Ability(val actions: List[String]) {
   def getActions: List[String] = actions // Return the list of actions
   def hasActions: Boolean = actions.nonEmpty // Check if the list is not empty
 
