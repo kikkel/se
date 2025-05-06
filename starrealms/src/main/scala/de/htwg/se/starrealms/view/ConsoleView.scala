@@ -15,10 +15,17 @@ class ConsoleView (controller: Controller) extends Observer {
 
   def processInputLine(input: String): Boolean = {
     input.toLowerCase match {
-      case "s" | "v" | "reset" =>
-        controller.processInput(input)
+      case "s" =>
+        controller.drawScout()
+        true // Schleife fortsetzen
+      case "v" =>
+        controller.drawViper()
+        true // Schleife fortsetzen
+      case "r" =>
+        controller.resetGame()
+        true // Schleife fortsetzener.processInput(input)
         true
-      case "exit" =>
+      case "x" =>
         println("\n\nExiting the game. #ConsoleView")
         false // Signal to exit the loop
       case _ =>

@@ -5,7 +5,7 @@ import de.htwg.se.starrealms.view
 import de.htwg.util.Observer
 
 class GameLogic {
-  private var deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
+  private var deck = new DefaultDeck("DefaultDeck", "Default", List())
   private val observers: ListBuffer[Observer] = ListBuffer()
   //private var discardPile: List[DefaultCard] = List()
 
@@ -30,7 +30,7 @@ class GameLogic {
       case "v" =>
         deck.drawCard() match {
           case Some(card) =>
-            s"Turned over Viper: $card  #gameLogic"            
+            s"Turned over Viper: $card  #gameLogic"
 
           case None => "No Viper cards left in the deck.  #gameLogic"
         }

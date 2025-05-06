@@ -4,7 +4,7 @@ import de.htwg.se.starrealms.model._
 import de.htwg.util._
 
 class GameState extends Observable {
-  private var deck: DefaultDeck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
+  private var deck: DefaultDeck = new DefaultDeck("DefaultDeck", "Default", List())
   private var discardPile: List[Card] = List()
   private var field: List[Card] = List()
 

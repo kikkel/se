@@ -7,5 +7,7 @@ import de.htwg.se.starrealms.model._
 class RendererSpec extends AnyWordSpec with Matchers {
   "A Renderer" should {
     "handle presentation in a reusable way" in {
-        
+
     }
+  }
+}
