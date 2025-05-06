@@ -5,6 +5,8 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class CardSpec extends AnyWordSpec with Matchers {
   "A Card" should {
+    val scout = new Ship("Scout", new CardType("Ship"), None, Some(new Ability(List("1 coin"))), None, None)
+    val ship = new Ship()
     "have a name" in {
       val card = new Ship("Test Card", new CardType("Ship"))
       card.getName should be("Test Card")
