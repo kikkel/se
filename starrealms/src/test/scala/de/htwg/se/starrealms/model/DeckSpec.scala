@@ -1,56 +1,87 @@
-/* package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-abstract class AbstractDeck extends AnyWordSpec with Matchers {
-    "an AbstractDeck" should {
-         "be empty when initialized" in {
-            val deck = new TestDeck("TestDeck", List())
-            deck.isEmpty should be(true)
-         }
-        "not be empty when cards are added" in {
-            val deck = new TestDeck("TestDeck", List())
-            deck.addCard(new TestCard("TestCard"))
-            deck.isEmpty should be(false)
+class DeckSpec extends AnyWordSpec with Matchers {
+
+    "A Deck" should {
+        "be empty when initialized with no cards" in {
+        val deck = new DefaultDeck("TestDeck", CardType.Scout, List())
+        deck.isEmpty should be(true)
         }
-        "have a name" in {
-            val deck = new TestDeck("TestDeck", List())
-            deck.getName should be("DefaultDeck")
+
+        "not be empty when initialized with cards" in {
+        val deck = new DefaultDeck("TestDeck", CardType.Scout, List(CardFactory.createCard("Scout")))
+        deck.isEmpty should be(false)
         }
-        "have an addCard method" in {
-            val deck = new TestDeck("TestDeck", List())
-            val newCard = new TestCard("TestCard")
-            deck.addCard(newCard)
-            deck.getCards should contain(newCard)
+
+        "add a card to the deck" in {
+        val deck = new DefaultDeck("TestDeck", CardType.Scout, List())
+        val card = CardFactory.createCard("Scout")
+        deck.addCard(card)
+        deck.getCards should contain(card)
         }
-        "have a removeCard method" in {
-            val deck = new TestDeck("TestDeck", List())
-            val cardToRemove = new TestCard("TestCard")
-            deck.addCard(cardToRemove)
-            deck.removeCard(cardToRemove)
-            deck.getCards should not contain cardToRemove
+
+        "remove a card from the deck" in {
+        val card = CardFactory.createCard("Scout")
+        val deck = new DefaultDeck("TestDeck", CardType.Scout, List(card))
+        deck.removeCard(card)
+        deck.getCards should not contain card
         }
-        "have a shuffle method" in {
-            val deck = new TestDeck("TestDeck", List())
-            val initialOrder = deck.getCards
-            deck.shuffle()
-            deck.getCards should not equal initialOrder
+
+        "shuffle the deck" in {
+        val deck = new DefaultDeck("TestDeck", CardType.Scout, List(CardFactory.createCard("Scout"), CardFactory.createCard("Viper")))
+        val originalOrder = deck.getCards
+        deck.shuffle()
+        deck.getCards should not equal originalOrder
         }
-        "have a drawCard method" in {
-            val deck = new TestDeck("TestDeck", List())
+
+        "draw a card from the deck" in {
+        val card = CardFactory.createCard("Scout")
+        val deck = new DefaultDeck("TestDeck", CardType.Scout, List(card))
+        val drawnCard = deck.drawCard()
+        drawnCard should contain(card)
+        }
+
+        "return None when drawing from an empty deck" in {
+        val deck = new DefaultDeck("TestDeck", CardType.Scout, List())
+        val drawnCard = deck.drawCard()
+        drawnCard should be(None)
+        }
+    }
+    "A DefaultDeck" should {
+        "have a default state with 8 Scouts and 2 Vipers" in {
+            val deck = new DefaultDeck("TestDeck", CardType.Scout, List())
+            deck.getCards should have size 10
+            deck.getCards.count(_.name == "Scout") should be(8)
+            deck.getCards.count(_.name == "Viper") should be(2)
+        }
+        "draw a card and remove it from the deck" in {
+            val deck = new DefaultDeck("TestDeck", CardType.Scout, List())
             val drawnCard = deck.drawCard()
-
-            drawnCard shouldBe defined
-            deck.getCards should not contain drawnCard.get
+            drawnCard should not be None
+            deck.getCards should have size 9
         }
-        "have a drawCard method that returns None when the deck is empty" in {
-            val emptyDeck = new TestDeck("TestDeck", List())
-            emptyDeck.drawCard() shouldBe None
+        "return the deck state as a string" in {
+            val deck = new DefaultDeck("TestDeck", CardType.Scout, List())
+            val state = deck.getDeckState
+            state should include("Scout")
+            state should include("Viper")
         }
-       
+        "view the discard pile" in {
+            val deck = new DefaultDeck("TestDeck", CardType.Scout, List())
+            val discardPile = deck.viewDiscardPile
+            discardPile should include("Scout")
+            discardPile should include("Viper")
+        }
 
-
+        "reset to its default state" in {
+            val deck = new DefaultDeck("TestDeck", CardType.Scout, List())
+            deck.resetDeck()
+            deck.getCards should have size 10
+            deck.getCards.count(_.name == "Scout") should be(8)
+            deck.getCards.count(_.name == "Viper") should be(2)
+        }
     }
 }
-   */

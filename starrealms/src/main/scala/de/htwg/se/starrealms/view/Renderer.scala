@@ -7,13 +7,13 @@ trait Renderer[T] {
   def render(entity: T): String
 }
 
-class CardRenderer extends Observable with Renderer[AbstractCard] {
-  override def render(card: AbstractCard): String = 
+class CardRenderer extends Observable with Renderer[Card] {
+  override def render(card: Card): String =
     s"Card Name: ${card.getName}, Card Type: ${card.getCardType.getName}, Abilities: ${card.getAbility.getActions.mkString(", ")}"
 }
 
-class DeckRenderer extends Renderer[AbstractDeck] {
-  override def render(deck: AbstractDeck): String = {
+class DeckRenderer extends Renderer[Deck] {
+  override def render(deck: Deck): String = {
     val cards = deck.getCards.map(card => new CardRenderer().render(card)).mkString("\n")
     s"Deck Name: ${deck.getName}\nCards:\n$cards"
   }
