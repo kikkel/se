@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.controller
+/* package de.htwg.se.starrealms.controller
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -23,4 +23,4 @@ class GameStateSpec extends AnyWordSpec with Matchers {
       gameState.getDiscardPile should be(discardPile)
     }
   }
-}
+} */

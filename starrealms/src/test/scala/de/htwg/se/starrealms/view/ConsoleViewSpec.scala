@@ -8,7 +8,7 @@ import de.htwg.se.starrealms.model._
 class ConsoleViewSpec extends AnyWordSpec with Matchers {
     "A ConsoleView" should {
         val gameLogic = new GameLogic
-        val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
+        val deck = new DefaultDeck("DefaultDeck", "Default", List())
         val controller = new Controller(gameLogic, deck)
         val view = new ConsoleView(controller)
 

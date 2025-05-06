@@ -14,10 +14,10 @@ class MainSpec extends AnyWordSpec with Matchers {
   "Main object" should {
     "initialize the model, controller and view without errors" in {
       noException should be thrownBy {
-        
+
         //simulate initialized process
         val gameLogic = new GameLogic
-    	  val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
+    	  val deck = new DefaultDeck("DefaultDeck", "Default", List())
         // Create a new instance of DefaultDeck with a CardType and an empty list
         // Create a new instance of Controller with the gameLogic and deck
         // Create a new instance of ConsoleView with the controller
@@ -25,7 +25,7 @@ class MainSpec extends AnyWordSpec with Matchers {
         val view = new ConsoleView(controller)
 
       }
-    } 
+    }
 
     "run the application without throwing an exception" in {
       noException should be thrownBy {

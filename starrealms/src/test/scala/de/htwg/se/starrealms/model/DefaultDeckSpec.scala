@@ -6,11 +6,11 @@ import de.htwg.se.starrealms.model._
 
 class DefaultDeckSpec extends AnyWordSpec with Matchers {
   "A DefaultDeck" should {
-    val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), List())
-    
+    val deck = new DefaultDeck("DefaultDeck", "Default", List())
+
     "initialize with default cards" in {
-      deck.getCards.count(_.isInstanceOf[ScoutCard]) shouldEqual 8
-      deck.getCards.count(_.isInstanceOf[ViperCard]) shouldEqual 2
+      deck.getCards.count(_.name == "Scout") shouldEqual 8
+      deck.getCards.count(_.name == "Viper") shouldEqual 2
     }
     "be empty" in {
       deck.isEmpty shouldBe false
@@ -52,8 +52,8 @@ class DefaultDeckSpec extends AnyWordSpec with Matchers {
     "reset the deck to its default state" in {
       deck.drawCard()
       deck.resetDeck()
-      deck.getCards.count(_.isInstanceOf[ScoutCard]) shouldEqual 8
-      deck.getCards.count(_.isInstanceOf[ViperCard]) shouldEqual 2
+      deck.getCards.count(_.name == "Scout") shouldEqual 8
+      deck.getCards.count(_.name == "Viper") shouldEqual 2
     }
   }
 }
@@ -87,12 +87,12 @@ class DefaultDeckSpec extends AnyWordSpec with Matchers {
       val deck = new DefaultDeck()
       (1 to 8).foreach(_ => deck.drawCard("scout"))
       deck.drawCard("scout") should be(None)
-    } 
+    }
     "return an empty deck state when all cards are drawn" in {
       val deck = new DefaultDeck()
       (1 to 10).foreach(_ => deck.drawCard("scout") orElse deck.drawCard("viper"))
       deck.getDeckState should be("Empty")
-    }           
+    }
     "contain only DefaultCards" in {
       val deck = new DefaultDeck()
       deck.getAllCards.forall(_.isInstanceOf[DefaultCard]) should be(true)

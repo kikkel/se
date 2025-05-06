@@ -7,9 +7,9 @@ import de.htwg.se.starrealms.model._
 class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" should {
 	val gameLogic = new GameLogic
-	val deck = new DefaultDeck("DefaultDeck", new CardType("Default"), 	List())
+	val deck = new DefaultDeck("DefaultDeck", "Default", 	List())
 	val controller = new Controller(gameLogic, deck)
-	
+
 	"get the current deck state" in {
 	  val result = controller.getDeckState
 	  result should include("ScoutCard")
