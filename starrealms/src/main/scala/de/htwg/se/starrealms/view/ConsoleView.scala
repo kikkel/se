@@ -2,6 +2,7 @@ package de.htwg.se.starrealms.view
 
 import de.htwg.util.Observer
 import de.htwg.se.starrealms.controller._
+import de.htwg.se.starrealms.view.Renderer
 
 class ConsoleView (controller: Controller) extends Observer {
   def update: Unit = render()

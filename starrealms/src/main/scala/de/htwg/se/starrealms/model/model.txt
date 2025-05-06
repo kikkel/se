@@ -3,3 +3,6 @@ Model:
 Manages the state and logic of the game (e.g., deck, cards, field, players).
 Should not handle user input or rendering.
 Example: DefaultDeck, GameLogic, PlayingField, Player.
+
+Strategy Patterns:
+    Game state
