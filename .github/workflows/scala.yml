@@ -24,13 +24,6 @@ jobs:
         run: |
           git symbolic-ref HEAD refs/heads/main || git checkout -b main
 
-      # Step 3: Debug Git State (Optional for troubleshooting)
-      - name: Debug Git State
-        run: |
-          git status
-          git branch -a
-          git log --oneline -5
-
       # Step 4: Install dependencies
       - name: Install dependencies
         run: |
