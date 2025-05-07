@@ -21,7 +21,7 @@ abstract class Card(
   def getAllyAbility: Option[Ability] = allyAbility
   def getScrapAbility: Option[Ability] = scrapAbility
 
-  // Überschreibe die toString-Methode
+  // toString
   override def toString: String = {
   s"$name ($cardType), Abilities: " +
     s"Primary: ${primaryAbility.map(_.render()).getOrElse("None")}, " +

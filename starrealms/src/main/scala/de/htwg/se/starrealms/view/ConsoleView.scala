@@ -24,7 +24,6 @@ class ConsoleView (controller: Controller) extends Observer {
       case "r" =>
         controller.resetGame()
         true // Schleife fortsetzener.processInput(input)
-        true
       case "x" =>
         println("\n\nExiting the game. #ConsoleView")
         false // Signal to exit the loop
