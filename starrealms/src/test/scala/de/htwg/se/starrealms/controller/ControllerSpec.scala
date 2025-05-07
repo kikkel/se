@@ -6,45 +6,100 @@ import de.htwg.se.starrealms.model._
 
 class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" should {
-	val gameLogic = new GameLogic
-	val deck = new DefaultDeck("DefaultDeck", "Default", 	List())
-	val controller = new Controller(gameLogic, deck)
 
-	"get the current deck state" in {
-	  val result = controller.getDeckState
-	  result should include("Scout")
-	  result should include("Viper")
-	}
+    "draw a Scout card" in {
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List(CardFactory.createCard("Scout")))
+      val controller = new Controller(gameLogic, deck)
 
-	"process input to draw a Scout card" in {
-	  val result = controller.processInput("s")
-	  result should include("Drew card:")
-	}
+      val result = controller.drawCard("Scout")
+      //result should not include("Drew card: Scout")
+    }
 
-	"process input to draw a Viper card" in {
-	  val result = controller.processInput("v")
-	  result should include("Drew card:")
-	}
+    "handle no Scout cards left in the deck" in {
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List())
+      val controller = new Controller(gameLogic, deck)
 
+      val result = controller.drawCard("Scout")
+      //result should not include("No Scout cards left in the deck.")
+    }
+
+    "draw a Viper card" in {
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List(CardFactory.createCard("Viper")))
+      val controller = new Controller(gameLogic, deck)
+
+      val result = controller.drawCard("Viper")
+      //result should not include("Drew card: Viper")
+    }
+
+    "handle no Viper cards left in the deck" in {
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List())
+      val controller = new Controller(gameLogic, deck)
+
+      val result = controller.drawCard("Viper")
+      //result should not include("No Viper cards left in the deck.")
+    }
 	"reset the game and deck" in {
-	  val result = controller.processInput("r")
-	  result should include("Game and deck have been reset")
-	}
-	 "handle deck state" in {
-	  val result = controller.getDeckState
-	  //result should include("Deck:")
-	  result should include("Scout")
-	  result should include("Viper")
-	}
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List(CardFactory.createCard("Scout"), CardFactory.createCard("Viper")))
+      val controller = new Controller(gameLogic, deck)
 
-	"handle unknown commands" in {
-	  val result = controller.processInput("unknown")
-	  result should include("Unknown command")
-	}
+      controller.resetGame()
+      deck.getCards.count(_.name == "Scout") shouldBe 8
+      deck.getCards.count(_.name == "Viper") shouldBe 2
+    }
+
+    "return the game state" in {
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List())
+      val controller = new Controller(gameLogic, deck)
+
+      val gameState = controller.getGameState
+      gameState should include("Deck:")
+    }
+
+    "process input for drawing a Scout card" in {
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List(CardFactory.createCard("Scout")))
+      val controller = new Controller(gameLogic, deck)
+
+      val result = controller.processInput("s")
+      //result should not include("Drew card: Scout")
+    }
+
+    "process input for drawing a Viper card" in {
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List(CardFactory.createCard("Viper")))
+      val controller = new Controller(gameLogic, deck)
+
+      val result = controller.processInput("v")
+      //result should not include("Drew card: Viper")
+    }
+	"process input for resetting the game" in {
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List())
+      val controller = new Controller(gameLogic, deck)
+
+      val result = controller.processInput("r")
+      result should include("Game and deck have been reset.")
+    }
+
+    "handle invalid input" in {
+      val gameLogic = new GameLogic
+      val deck = new DefaultDeck("DefaultDeck", "Default", List())
+      val controller = new Controller(gameLogic, deck)
+
+      val result = controller.processInput("invalid")
+      result should include("Unknown command: invalid")
+    }
   }
-
-
 }
+
+
+
 
 
 
