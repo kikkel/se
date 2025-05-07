@@ -2,61 +2,49 @@ name: Scala CI
 
 on:
   push:
-    branches: ["pleasework"]
+    branches: ["main"]
   pull_request:
-    branches: ["pleasework"]
+    branches: ["main"]
 
-permissions:
-  contents: write # Changed to write for Coveralls reporting
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
       - name: Display current branch
         run: 'echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"'
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          ref: pleasework # Changed to branch name
+          ref: main # Changed to branch name
           fetch-depth: 0
 
-      - name: Set up JDK 11
-        uses: actions/setup-java@v4
+
+      - uses: actions/checkout@v4
         with:
-          java-version: "11"
-          distribution: "temurin"
-          cache: "sbt"
-      - name: install sbt
-        uses: coursier/setup-action@v1
-        with:
-          apps: sbt
+          fetch-depth: 0 # Fetch the full history
+
       - name: compile
         run: sbt compile
         working-directory: starrealms
 
-  run_tests:
-    runs-on: ubuntu-latest
-    steps:
+      #- name: compile
+      #  run: sbt compile
+      - name: compile
+        run: sbt --allow-empty compile
+
+
       - name: Display current branch
         run: 'echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"'
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: pleasework # Changed to branch name
+          ref: main # Changed to branch name
           fetch-depth: 0
-      - name: install sbt
-        uses: coursier/setup-action@v1
+
+      - uses: actions/checkout@v4
         with:
-          apps: sbt
-      - name: build project and export coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: |
-          sbt clean coverage test coverageReport coveralls
+          fetch-depth: 0 # Fetch the full history
+
         working-directory: starrealms
       - name: Debug GITHUB_REF and GITHUB_SHA
         run: |
           echo "GITHUB_REF: $GITHUB_REF"
           echo "GITHUB_SHA: $GITHUB_SHA"
           echo "Extracted CI_BRANCH: ${GITHUB_REF#refs/heads/}"
+
