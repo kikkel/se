@@ -1,2 +1,2 @@
-package de.htwg.se.starrealms.view
+//package de.htwg.se.starrealms.view
 
