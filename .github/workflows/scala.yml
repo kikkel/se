@@ -14,6 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Symlink .git into starrealms
+      run: ln -s ../.git .git
+      working-directory: starrealms
+      
       - name: Checkout code with full Git history
         uses: actions/checkout@v4
         with:
@@ -32,8 +36,8 @@ jobs:
         with:
           apps: sbt
 
-      - name: Build, test, and publish coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run:
-          sbt clean coverage test coverageReport coverallsAggregate
+     - name: Run tests and report coverage
+  working-directory: starrealms
+  env:
+    COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+  run: sbt clean coverage test coverageReport coveralls
