@@ -1,2 +1,2 @@
-package de.htwg.se.starrealms.model.CardItinerary
+//package de.htwg.se.starrealms.model.CardItinerary
 

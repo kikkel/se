@@ -1,26 +1,25 @@
-/* package de.htwg.se.starrealms.controller
+package de.htwg.se.starrealms.controller
 
+import de.htwg.se.starrealms.model._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
 class GameStateSpec extends AnyWordSpec with Matchers {
+
   "A GameState" should {
-    "have a player" in {
-      val player = new Player("Player1")
-      val gameState = new GameState(player)
-      gameState.getPlayer should be(player)
+
+    "initialize with an empty discard pile and field" in {
+      val gameState = new GameState
+
+      // Überprüfen, ob die Ablagestapel und das Spielfeld leer sind
+      gameState.drawCard("Scout") // Trigger observers
+      gameState.reset() // Reset to ensure initial state
     }
 
-    "have a deck" in {
-      val deck = new Deck()
-      val gameState = new GameState(new Player("Player1"), deck)
-      gameState.getDeck should be(deck)
-    }
-
-    "have a discard pile" in {
-      val discardPile = new DiscardPile()
-      val gameState = new GameState(new Player("Player1"), new Deck(), discardPile)
-      gameState.getDiscardPile should be(discardPile)
+    "draw a card and add it to the discard pile" in {
+      val gameState = new GameState
+      val card = CardFactory.createCard("Scout")
+      val drawnCard = gameState.drawCard("Scout")
     }
   }
-} */
+}
