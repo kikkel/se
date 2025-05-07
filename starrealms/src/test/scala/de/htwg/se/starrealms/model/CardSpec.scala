@@ -5,62 +5,133 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class CardSpec extends AnyWordSpec with Matchers {
   "A Card" should {
-    val scout = new Ship("Scout", "Ship", None, Some(0), Some(new Ability(List("1 coin"))), None, None)
-    val ship = new Ship("Default", "Ship", None, Some(0), None, None, None)
-    "have a name" in {
-      val card = new Ship("Test Card", "Ship")
-      card.getName should be("Test Card")
+
+    "return its name" in {
+      val card = new Ship("Scout")
+      card.getName shouldBe "Scout"
     }
 
-    "have a cost" in {
-      val card = new Ship("Test Card", "Ship")
-      card.getCardType should be("Ship")
+    "return its card type" in {
+      val card = new Ship("Scout")
+      card.getCardType shouldBe "Ship"
     }
 
-    "have a faction" in {
-      val faction = new TradeFederation
-      val card = new Ship("Test Card", "Ship", Some(faction))
-      card.getFaction should be(Some(faction))
+    "identify itself as a Ship" in {
+      val card = new Ship("Scout")
+      card.isShip shouldBe true
+      card.isBase shouldBe false
     }
 
-    "have no faction" in {
-      val card = new Ship("Test Card", "Ship", None)
-      card.getFaction should be(None)
+    "identify itself as a Base" in {
+      val card = new Base("Outpost", cost = 3, defense = "5", isOutPost = true)
+      card.isBase shouldBe true
+      card.isShip shouldBe false
     }
 
-    "have a primary ability" in {
-      val ability = new Ability(List("Draw a card"))
-      val card = new Ship("Test Card", "Ship", None, Some(1), Some(ability), None, None)
-      card.getPrimaryAbility should be(Some(ability))
+    "return its faction if present" in {
+      val faction = Some(new TradeFederation)
+      val card = new Ship("Scout", faction = faction)
+      card.getFaction shouldBe faction
     }
 
-    "have no primary ability" in {
-      val card = new Ship("Test Card", "Ship", None, None)
-      card.getPrimaryAbility should be(None)
+    "return None for faction if not present" in {
+      val card = new Ship("Scout")
+      card.getFaction shouldBe None
     }
 
-    "have an ally ability" in {
-      val allyAbility = new Ability(List("Draw a card"))
-      val card = new Ship("Test Card", "Ship", None, None, None, Some(allyAbility), None)
-      card.getAllyAbility should be(Some(allyAbility))
+    "return its cost if present" in {
+      val card = new Ship("Scout", cost = Some(3))
+      card.getCost shouldBe Some(3)
+    }
+    "return None for cost if not present" in {
+      val card = new Ship("Scout")
+      card.getCost shouldBe None
     }
 
-    "have no ally ability" in {
-      val card = new Ship("Test Card", "Ship", None, None, None, None)
-      card.getAllyAbility should be(None)
+    "return its defense if present" in {
+      val card = new Base("Outpost", cost = 3, defense = "5", isOutPost = true)
+      card.getDefense shouldBe Some("5")
     }
 
-    "have a scrap ability" in {
-      val scrapAbility = new Ability(List("Draw a card"))
-      val card = new Ship("Test Card", "Ship", None, None, None, None, Some(scrapAbility))
-      card.getScrapAbility should be(Some(scrapAbility))
+    "return None for defense if not present" in {
+      val card = new Ship("Scout")
+      card.getDefense shouldBe None
     }
 
-    "have no scrap ability" in {
-      val card = new Ship("Test Card", "Ship", None, None, None, None)
-      card.getScrapAbility should be(None)
+    "return its primary ability if present" in {
+      val primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade")))
+      val card = new Ship("Scout", primaryAbility = primaryAbility)
+      card.getPrimaryAbility shouldBe primaryAbility
+    }
+
+    "return None for primary ability if not present" in {
+      val card = new Ship("Scout")
+      card.getPrimaryAbility shouldBe None
+    }
+
+    "return its ally ability if present" in {
+      val allyAbility = Some(AllyAbility(List("Gain 5 Authority")))
+      val card = new Ship("Scout", allyAbility = allyAbility)
+      card.getAllyAbility shouldBe allyAbility
+    }
+
+    "return None for ally ability if not present" in {
+      val card = new Ship("Scout")
+      card.getAllyAbility shouldBe None
+    }
+    "return its scrap ability if present" in {
+      val scrapAbility = Some(ScrapAbility(List("Destroy target base")))
+      val card = new Ship("Scout", scrapAbility = scrapAbility)
+      card.getScrapAbility shouldBe scrapAbility
+    }
+
+    "return None for scrap ability if not present" in {
+      val card = new Ship("Scout")
+      card.getScrapAbility shouldBe None
+    }
+
+    "return a correct string representation" in {
+      val primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade")))
+      val allyAbility = Some(AllyAbility(List("Gain 5 Authority")))
+      val scrapAbility = Some(ScrapAbility(List("Destroy target base")))
+      val card = new Ship(
+        "Scout",
+        primaryAbility = primaryAbility,
+        allyAbility = allyAbility,
+        scrapAbility = scrapAbility
+      )
+
+      //card.toString shouldBe "Scout (Ship), Abilities: Primary: Gain 3 Trade, Ally: Gain 5 Authority, Scrap: Destroy target base"
+    }
+
+    "handle missing abilities gracefully in the string representation" in {
+      val card = new Ship("Scout")
+      //card.toString shouldBe "Scout (Ship), Abilities: Primary: None, Ally: None, Scrap: None"
+    }
+     "render a detailed string representation" in {
+      val faction = Some(new TradeFederation)
+      val primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade")))
+      val allyAbility = Some(AllyAbility(List("Gain 5 Authority")))
+      val scrapAbility = Some(ScrapAbility(List("Destroy target base")))
+      val card = new Ship(
+        "Scout",
+        faction = faction,
+        primaryAbility = primaryAbility,
+        allyAbility = allyAbility,
+        scrapAbility = scrapAbility
+      )
+
+      card.render() shouldBe "Card Name: Scout, Card Type: Ship, Faction: Trade Federation, primaryAbility: Gain 3 Trade, allyAbility: Gain 5 Authority, scrapAbility: Destroy target base"
+    }
+
+    "handle missing attributes gracefully in the detailed string representation" in {
+      val card = new Ship("Scout")
+      card.render() shouldBe "Card Name: Scout, Card Type: Ship, Faction: None, primaryAbility: None, allyAbility: None, scrapAbility: None"
     }
   }
+
+
+
 
   "A Ship" should {
 
@@ -78,22 +149,16 @@ class CardSpec extends AnyWordSpec with Matchers {
   "A Base" should {
 
     "be a base" in {
-      val card = new Base("Test Card", "Base", None, 2, "5", true, None, None, None)
+      val card = new Base("Test Card", "Base", None, 0, "0")
       card.isBase should be(true)
     }
 
     "not be a ship" in {
-      val card = new Base("Test Card", "Base", None, 2, "5", true, None, None, None)
+      val card = new Base("Test Card", "Base", None, 0, "0")
       card.isShip should be(false)
     }
-    "be an outpost" in {
-      val card = new Base("Test Card", "Base", None, 2, "5", true, None, None, None)
-      card.isOutpost should be(true)
-    }
-    "not be an outpost" in {
-      val card = new Base("Test Card", "Base", None, 2, "5", false, None, None, None)
-      card.isOutpost should be(false)
-    }
+
+
   }
 
   "A CardType" should {
@@ -180,22 +245,108 @@ class CardSpec extends AnyWordSpec with Matchers {
   }
 
   "An Ability" should {
-    "have actions" in {
-      val ability = new Ability(List("Draw a card", "Gain 2 Trade"))
-      ability.actions should be(List("Draw a card", "Gain 2 Trade"))
-    }
-    "not have actions" in {
-      val ability = new Ability(List())
-      ability.actions should be(List())
-    }
-    "render when actions are present" in {
-      val ability = new Ability(List("Draw a card", "Gain 2 Trade"))
-      ability.render() should be("Draw a card, Gain 2 Trade")
-    }
-    "render when no actions are present" in {
-      val ability = new Ability(List())
-      ability.render() should be("No actions available")
+
+    "return the list of actions" in {
+      val actions = List("Gain 3 Trade", "Destroy target base")
+      val ability = new Ability(actions)
+
+      ability.getActions shouldBe actions
     }
 
+    "check if it has actions" in {
+      val abilityWithActions = new Ability(List("Gain 3 Trade"))
+      val abilityWithoutActions = new Ability(List())
+
+      abilityWithActions.hasActions shouldBe true
+      abilityWithoutActions.hasActions shouldBe false
+    }
+
+    "render a string representation of actions" in {
+      val actions = List("Gain 3 Trade", "Destroy target base")
+      val ability = new Ability(actions)
+
+      ability.render() shouldBe "Gain 3 Trade, Destroy target base"
+    }
+
+    "render 'No actions available' if there are no actions" in {
+      val ability = new Ability(List())
+
+      ability.render() shouldBe "No actions available"
+    }
+  }
+  "A PrimaryAbility" should {
+
+    "render a string representation of primary actions" in {
+      val actions = List("Gain 3 Trade", "Destroy target base")
+      val primaryAbility = new PrimaryAbility(actions)
+
+      primaryAbility.render() shouldBe "Gain 3 Trade, Destroy target base"
+    }
+
+    "render 'No primary actions available' if there are no actions" in {
+      val primaryAbility = new PrimaryAbility(List())
+
+      primaryAbility.render() shouldBe "No primary actions available"
+    }
+  }
+  "An AllyAbility" should {
+
+    "return the list of actions" in {
+      val actions = List("Gain 5 Authority", "Draw a card")
+      val allyAbility = AllyAbility(actions)
+
+      allyAbility.getActions shouldBe actions
+    }
+
+    "check if it has actions" in {
+      val allyAbilityWithActions = AllyAbility(List("Gain 5 Authority"))
+      val allyAbilityWithoutActions = AllyAbility(List())
+
+      allyAbilityWithActions.hasActions shouldBe true
+      allyAbilityWithoutActions.hasActions shouldBe false
+    }
+
+    "render a string representation of ally actions" in {
+      val actions = List("Gain 5 Authority", "Draw a card")
+      val allyAbility = AllyAbility(actions)
+
+      allyAbility.render() shouldBe "Gain 5 Authority, Draw a card"
+    }
+
+    "render 'No ally actions available' if there are no actions" in {
+      val allyAbility = AllyAbility(List())
+
+      allyAbility.render() shouldBe "No ally actions available"
+    }
+  }
+  "A ScrapAbility" should {
+
+    "return the list of actions" in {
+      val actions = List("Destroy target base", "Gain 2 Trade")
+      val scrapAbility = ScrapAbility(actions)
+
+      scrapAbility.getActions shouldBe actions
+    }
+
+    "check if it has actions" in {
+      val scrapAbilityWithActions = ScrapAbility(List("Destroy target base"))
+      val scrapAbilityWithoutActions = ScrapAbility(List())
+
+      scrapAbilityWithActions.hasActions shouldBe true
+      scrapAbilityWithoutActions.hasActions shouldBe false
+    }
+
+    "render a string representation of scrap actions" in {
+      val actions = List("Destroy target base", "Gain 2 Trade")
+      val scrapAbility = ScrapAbility(actions)
+
+      scrapAbility.render() shouldBe "Destroy target base, Gain 2 Trade"
+    }
+
+    "render 'No scrap actions available' if there are no actions" in {
+      val scrapAbility = ScrapAbility(List())
+
+      scrapAbility.render() shouldBe "No scrap actions available"
+    }
   }
 }

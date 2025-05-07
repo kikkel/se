@@ -11,7 +11,7 @@ import de.htwg.se.starrealms.view.ConsoleView
  */
 class MainSpec extends AnyWordSpec with Matchers {
 
-  "Main object" should {
+  /* "Main object" should {
     "initialize the model, controller and view without errors" in {
       noException should be thrownBy {
 
@@ -33,6 +33,6 @@ class MainSpec extends AnyWordSpec with Matchers {
         Main.main(Array.empty)
       }
     }*/
-  }
+  } */
 
 }

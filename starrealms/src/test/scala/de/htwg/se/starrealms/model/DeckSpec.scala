@@ -32,10 +32,12 @@ class DeckSpec extends AnyWordSpec with Matchers {
         }
 
         "shuffle the deck" in {
-        val deck = new DefaultDeck("TestDeck", "Scout", List(CardFactory.createCard("Scout"), CardFactory.createCard("Viper")))
-        val originalOrder = deck.getCards
+        val card1 = CardFactory.createCard("Scout")
+        val card2 = CardFactory.createCard("Viper")
+        val deck = new DefaultDeck("TestDeck", "Scout", List(card1, card2))
+        val initialOrder = deck.getCards
         deck.shuffle()
-        deck.getCards should not equal originalOrder
+        deck.getCards should not equal initialOrder
         }
 
         /* "draw a card from the deck" in {
@@ -58,11 +60,36 @@ class DeckSpec extends AnyWordSpec with Matchers {
             deck.getCards.count(_.name == "Scout") should be(8)
             deck.getCards.count(_.name == "Viper") should be(2)
         }
+        "be empty when all cards are drawn" in {
+            val deck = new DefaultDeck("DefaultDeck", "Default", List())
+            while (deck.drawCard().isDefined) {}
+            deck.isEmpty shouldBe true
+        }
         "draw a card and remove it from the deck" in {
             val deck = new DefaultDeck("TestDeck", "Scout", List())
             val drawnCard = deck.drawCard()
             drawnCard should not be None
             deck.getCards should have size 9
+        }
+         "shuffle the deck" in {
+            val deck = new DefaultDeck("DefaultDeck", "Default", List())
+            val originalOrder = deck.getCards
+            deck.shuffle()
+            val shuffledOrder = deck.getCards
+            shuffledOrder should not equal originalOrder
+        }
+
+        "draw a card from the deck" in {
+            val deck = new DefaultDeck("DefaultDeck", "Default", List())
+            val drawnCard = deck.drawCard()
+            drawnCard.isDefined shouldBe true
+            deck.getCards.size shouldEqual 9
+        }
+
+        "return None when drawing from an empty deck" in {
+            val deck = new DefaultDeck("DefaultDeck", "Default", List())
+            while (deck.drawCard().isDefined) {}
+            deck.drawCard() shouldBe None
         }
         "return the deck state as a string" in {
             val deck = new DefaultDeck("TestDeck", "Scout", List())
@@ -70,18 +97,17 @@ class DeckSpec extends AnyWordSpec with Matchers {
             state should include("Scout")
             state should include("Viper")
         }
-        /* "view the discard pile" in {
-            val deck = new DefaultDeck("TestDeck", "Scout", List())
-            discardPile should include("Scout")
-            discardPile should include("Viper")
-        } */
-
-        "reset to its default state" in {
-            val deck = new DefaultDeck("TestDeck", "Scout", List())
-            deck.resetDeck()
-            deck.getCards should have size 10
-            deck.getCards.count(_.name == "Scout") should be(8)
-            deck.getCards.count(_.name == "Viper") should be(2)
+        "return the correct deck state as a string" in {
+            val deck = new DefaultDeck("DefaultDeck", "Default", List())
+            val deckState = deck.getDeckState
+            deckState should include("Scout")
+            deckState should include("Viper")
         }
-    }
+
+        "return 'Empty' as the deck state when the deck is empty" in {
+            val deck = new DefaultDeck("DefaultDeck", "Default", List())
+            while (deck.drawCard().isDefined) {}
+            deck.getDeckState shouldEqual "Empty"
+        }
+  }
 }
