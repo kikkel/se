@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          ref: main # Changed to branch name
+          ref: ${{ github.ref }} # Use the dynamically provided ref
           fetch-depth: 0
 
       - name: Set up JDK 11
@@ -43,7 +43,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: main # Changed to branch name
+          ref: ${{ github.ref }} # Use the dynamically provided ref
           fetch-depth: 0
       - name: install sbt
         uses: coursier/setup-action@v1
