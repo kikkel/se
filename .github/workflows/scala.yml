@@ -28,6 +28,8 @@ jobs:
           apps: sbt
       - name: compile
         run: sbt compile
+      #- name: compile
+      #  run: sbt --allow-empty compile
 
   run_tests:
     runs-on: ubuntu-latest
