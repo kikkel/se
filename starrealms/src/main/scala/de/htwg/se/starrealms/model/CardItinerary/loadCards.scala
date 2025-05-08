@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+/* package de.htwg.se.starrealms.model
 
 import com.github.tototoshi.csv._
 
@@ -84,3 +84,4 @@ def generateCardClass(card: Map[String, String]): String = {
 }
 
 
+ */
