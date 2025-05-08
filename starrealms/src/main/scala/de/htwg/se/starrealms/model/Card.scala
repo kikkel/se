@@ -22,12 +22,12 @@ abstract class Card(
   def getScrapAbility: Option[Ability] = scrapAbility
 
   // toString
-  override def toString: String = {
+/*   override def toString: String = {
   s"$name ($cardType), Abilities: " +
     s"Primary: ${primaryAbility.map(_.render()).getOrElse("None")}, " +
     s"Ally: ${allyAbility.map(_.render()).getOrElse("None")}, " +
     s"Scrap: ${scrapAbility.map(_.render()).getOrElse("None")}"
-}
+} */
 
   def render(): String = {
     s"Card Name: $name, Card Type: $cardType, Faction: ${faction.map(_.render()).getOrElse("None")}, primaryAbility: ${primaryAbility.map(_.render()).getOrElse("None")}, allyAbility: ${allyAbility.map(_.render()).getOrElse("None")}, scrapAbility: ${scrapAbility.map(_.render()).getOrElse("None")}"

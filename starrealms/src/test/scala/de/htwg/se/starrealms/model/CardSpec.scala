@@ -90,24 +90,41 @@ class CardSpec extends AnyWordSpec with Matchers {
       card.getScrapAbility shouldBe None
     }
 
-    "return a correct string representation" in {
+    "handle toString method with all attributes" in {
+      val faction = Some(new TradeFederation)
       val primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade")))
       val allyAbility = Some(AllyAbility(List("Gain 5 Authority")))
       val scrapAbility = Some(ScrapAbility(List("Destroy target base")))
       val card = new Ship(
         "Scout",
+        faction = faction,
         primaryAbility = primaryAbility,
         allyAbility = allyAbility,
         scrapAbility = scrapAbility
       )
 
-      //card.toString shouldBe "Scout (Ship), Abilities: Primary: Gain 3 Trade, Ally: Gain 5 Authority, Scrap: Destroy target base"
+      card.toString shouldBe   "Ship: Scout, Faction: Trade Federation, Cost: Unknown, Abilities: " +
+        "Primary: Gain 3 Trade, " +
+        "Ally: Gain 5 Authority, " +
+        "Scrap: Destroy target base"
     }
 
-    "handle missing abilities gracefully in the string representation" in {
-      val card = new Ship("Scout")
-      //card.toString shouldBe "Scout (Ship), Abilities: Primary: None, Ally: None, Scrap: None"
-    }
+/*     "handle missing attributes gracefully in the toString method" in {
+      val faction = Some(new TradeFederation)
+      val primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade")))
+      val allyAbility = Some(AllyAbility(List("Gain 5 Authority")))
+      val scrapAbility = None
+      val card = new Ship(
+        "Scout",
+        faction = faction,
+        primaryAbility = primaryAbility,
+        allyAbility = allyAbility,
+        scrapAbility = scrapAbility
+      )
+
+      card.toString shouldBe "Ship: Scout, Faction: Trade Federation, Cost: Unknown, Abilities: Primary: Gain 3 Trade, Ally: Gain 5 Authority, Scrap: None"
+    } */
+
      "render a detailed string representation" in {
       val faction = Some(new TradeFederation)
       val primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade")))
@@ -134,28 +151,54 @@ class CardSpec extends AnyWordSpec with Matchers {
 
 
   "A Ship" should {
+    "handle toString method with all attributes" in {
+      val faction = Some(new TradeFederation)
+      val primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade")))
+      val allyAbility = Some(AllyAbility(List("Gain 5 Authority")))
+      val scrapAbility = Some(ScrapAbility(List("Destroy target base")))
+      val card = new Ship(
+        "Scout",
+        faction = faction,
+        primaryAbility = primaryAbility,
+        allyAbility = allyAbility,
+        scrapAbility = scrapAbility
+      )
 
-    "be a ship" in {
-      val card = new Ship("Test Card", "Ship")
-      card.isShip should be(true)
+      card.toString shouldBe "Ship: Scout, Faction: Trade Federation, Cost: Unknown, Abilities: Primary: Gain 3 Trade, Ally: Gain 5 Authority, Scrap: Destroy target base"
     }
+    "handle missing attributes gracefully in the toString method" in {
+      val faction = Some(new TradeFederation)
+      val primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade")))
+      val allyAbility = Some(AllyAbility(List("Gain 5 Authority")))
+      val scrapAbility = None
+      val card = new Ship(
+        "Scout",
+        faction = faction,
+        primaryAbility = primaryAbility,
+        allyAbility = allyAbility,
+        scrapAbility = scrapAbility
+      )
 
-    "not be a base" in {
-      val card = new Ship("Test Card", "Ship")
-      card.isBase should be(false)
+      card.toString shouldBe "Ship: Scout, Faction: Trade Federation, Cost: Unknown, Abilities: Primary: Gain 3 Trade, Ally: Gain 5 Authority, Scrap: None"
     }
   }
 
   "A Base" should {
-
-    "be a base" in {
-      val card = new Base("Test Card", "Base", None, 0, "0")
-      card.isBase should be(true)
+    "be an outpost" in {
+      val card = new Base("Test Card", cost = 3, defense = "5", isOutPost = true)
+      card.isOutpost should be(true)
     }
-
-    "not be a ship" in {
-      val card = new Base("Test Card", "Base", None, 0, "0")
-      card.isShip should be(false)
+    "not be an outpost" in {
+      val card = new Base("Test Card", cost = 3, defense = "5", isOutPost = false)
+      card.isOutpost should be(false)
+    }
+    "handle toString method with all attributes" in {
+      val card = new Base("Test Card", cost = 3, defense = "5", isOutPost = true)
+      card.toString shouldBe "Base: Test Card, Defense: 5, Outpost: true, Abilities: Primary: None, Ally: None, Scrap: None"
+    }
+    "handle missing attributes gracefully in the toString method" in {
+      val card = new Base("Test Card", cost = 3, defense = "5", isOutPost = false)
+      card.toString shouldBe "Base: Test Card, Defense: 5, Outpost: false, Abilities: Primary: None, Ally: None, Scrap: None"
     }
 
 
