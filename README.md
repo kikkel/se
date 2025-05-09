@@ -80,11 +80,13 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - to convert any operation into an object. The operation’s parameters become fields of that object. The conversion lets you defer execution of the operation, queue it, store the history of commands, send commands to remote services, etc.
   > - to parametrize objects with operations
   > - to queue operations, schedule their execution, or execute them remotely.
-  > - _to implement reversible operations.(Lecture 8, DP II)_ 
-  > -  _**Warning:**_ _To be able to revert operations, you need to implement the history of performed operations. The command history is a stack that contains all executed command objects along with related backups of the application’s state._
+  > - _to implement reversible operations.(Lecture 8, DP II)_
 
+  
+  >  _**Warning:**_ _To be able to revert operations, you need to implement the history of performed operations. The command history is a stack that contains all executed command objects along with related backups of the application’s state._
+  >
   > _This method has two drawbacks. First, it isn’t that easy to save an application’s state because some of it can be private. This problem can be mitigated with the **Memento pattern**._
-
+  >
   > _Second, the state backups may consume quite a lot of RAM. Therefore, sometimes you can resort to an alternative implementation: instead of restoring the past state, the command performs the inverse operation. The reverse operation also has a price: it may turn out to be hard or even impossible to implement._
 
 - ### Memento Pattern:
