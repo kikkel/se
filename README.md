@@ -6,7 +6,9 @@ Lecture 07 - Patterns
 
 Factory method - CardFactory (schon angefangen)
 
-Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen)
+Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen) abhängigkeit zw controller und view zu verbessern
+
+state: soll input verarbeiten/MODUS/ETC
 
 Refactoring Guru: https://refactoring.guru/design-patterns
 
