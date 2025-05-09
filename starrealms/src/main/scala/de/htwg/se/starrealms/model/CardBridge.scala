@@ -54,7 +54,7 @@ class FactionCard (
 
 class DefaultCard (
     override val name: String,
-    override val cardType: CardType,    
+    override val cardType: CardType,
     override val primaryAbility: Option[Ability] = None,
     override val scrapAbility: Option[Ability] = None
 ) extends Card {

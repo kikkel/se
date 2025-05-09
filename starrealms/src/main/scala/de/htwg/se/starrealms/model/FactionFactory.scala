@@ -5,7 +5,7 @@ trait Faction { def apply(factionName: String): Faction }
 private class TradeFederation extends Faction { override def apply(factionName: String): Faction }
 private class StarEmpire extends Faction { override def apply(factionName: String): Faction }
 private class Blob extends Faction { override def apply(factionName: String): Faction }
-private class MachineCult extends Faction { override def apply(factionName: String): Faction }       
+private class MachineCult extends Faction { override def apply(factionName: String): Faction }
 
 object Faction {
     def apply(factionName: String): Faction = factionName.toLowerCase match {

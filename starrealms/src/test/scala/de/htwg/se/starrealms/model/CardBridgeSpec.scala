@@ -3,6 +3,122 @@ package de.htwg.se.starrealms.model
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
+class CardBridgeSpec extends AnyWordSpec with Matchers {
+
+  "A Ship CardType" should {
+    "return its description and render correctly" in {
+      val ship = new Ship
+      ship.description shouldBe "pew pew #bridge"
+      ship.render() shouldBe "Ship #cardType"
+    }
+  }
+
+  "A Base CardType" should {
+    "return its description and render correctly" in {
+      val base = new Base {
+        override def isOutpost: Boolean = true
+      }
+      base.description shouldBe "chilling #bridge"
+      base.render() shouldBe "Base #cardType"
+      base.isOutpost shouldBe true
+    }
+  }
+
+  "A FactionCard" should {
+    "render correctly with all attributes" in {
+      val faction = new Faction {
+        override def render(): String = "FactionName"
+      }
+      val primaryAbility = new Ability(List("Attack", "Heal"))
+      val allyAbility = new Ability(List("Boost"))
+      val scrapAbility = new Ability(List("Draw"))
+
+      val factionCard = new FactionCard(
+        name = "FactionCard1",
+        cardType = new Ship,
+        faction = Some(faction),
+        cost = Some(5),
+        defense = Some("10"),
+        isOutPost = true,
+        primaryAbility = Some(primaryAbility),
+        allyAbility = Some(allyAbility),
+        scrapAbility = Some(scrapAbility)
+      )
+
+      factionCard.render() should include("FactionCard Name: FactionCard1")
+      factionCard.render() should include("Card Type: Ship #cardType")
+      factionCard.render() should include("Faction: FactionName")
+      factionCard.render() should include("Cost: 5")
+      factionCard.render() should include("Defense: 10")
+      factionCard.render() should include("Outpost: true")
+      factionCard.render() should include("Primary Ability: Attack, Heal")
+      factionCard.render() should include("Ally Ability: Boost")
+      factionCard.render() should include("Scrap Ability: Draw")
+    }
+
+    "render correctly with missing optional attributes" in {
+      val factionCard = new FactionCard(
+        name = "FactionCard2",
+        cardType = new Base {
+          override def isOutpost: Boolean = false
+        }
+      )
+
+      factionCard.render() should include("FactionCard Name: FactionCard2")
+      factionCard.render() should include("Card Type: Base #cardType")
+      factionCard.render() should include("Faction: None")
+      factionCard.render() should include("Cost: None")
+      factionCard.render() should include("Defense: None")
+      factionCard.render() should include("Outpost: false")
+      factionCard.render() should include("Primary Ability: None")
+      factionCard.render() should include("Ally Ability: None")
+      factionCard.render() should include("Scrap Ability: None")
+    }
+  }
+
+  "A DefaultCard" should {
+    "render correctly with all attributes" in {
+      val primaryAbility = new Ability(List("Attack"))
+      val scrapAbility = new Ability(List("Draw"))
+
+      val defaultCard = new DefaultCard(
+        name = "DefaultCard1",
+        cardType = new Ship,
+        primaryAbility = Some(primaryAbility),
+        scrapAbility = Some(scrapAbility)
+      )
+
+      defaultCard.render() should include("DefaultCard Name: DefaultCard1")
+      defaultCard.render() should include("Card Type: Ship #cardType")
+      defaultCard.render() should include("Primary Ability: Attack")
+      defaultCard.render() should include("Scrap Ability: Draw")
+    }
+
+    "render correctly with missing optional attributes" in {
+      val defaultCard = new DefaultCard(
+        name = "DefaultCard2",
+        cardType = new Base {
+          override def isOutpost: Boolean = false
+        }
+      )
+
+      defaultCard.render() should include("DefaultCard Name: DefaultCard2")
+      defaultCard.render() should include("Card Type: Base #cardType")
+      defaultCard.render() should include("Primary Ability: None")
+      defaultCard.render() should include("Scrap Ability: None")
+    }
+  }
+}
+
+
+
+/*package de.htwg.se.starrealms.model
+
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+
+
+
 class CardSpec extends AnyWordSpec with Matchers {
   "A Card" should {
 
@@ -393,3 +509,4 @@ class CardSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+ */

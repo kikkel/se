@@ -3,6 +3,44 @@ package de.htwg.se.starrealms.model
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
+class FactionFactorySpec extends AnyWordSpec with Matchers {
+
+  "The Faction factory" should {
+    "create a TradeFederation faction" in {
+      val faction = Faction("trade federation")
+      faction shouldBe a[TradeFederation]
+    }
+
+    "create a StarEmpire faction" in {
+      val faction = Faction("star empire")
+      faction shouldBe a[StarEmpire]
+    }
+
+    "create a Blob faction" in {
+      val faction = Faction("blob")
+      faction shouldBe a[Blob]
+    }
+
+    "create a MachineCult faction" in {
+      val faction = Faction("machine cult")
+      faction shouldBe a[MachineCult]
+    }
+
+    "throw an exception for an unknown faction" in {
+      val exception = intercept[IllegalArgumentException] {
+        Faction("unknown faction")
+      }
+      exception.getMessage should include("Unknown faction: unknown faction")
+    }
+  }
+}
+
+
+/* package de.htwg.se.starrealms.model
+
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+
 class CardFactorySpec extends AnyWordSpec with Matchers {
 
   "The CardFactory" should {
@@ -90,3 +128,4 @@ class CardFactorySpec extends AnyWordSpec with Matchers {
   }
 }
 
+ */

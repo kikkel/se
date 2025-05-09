@@ -1,6 +1,8 @@
 package de.htwg.se.starrealms.model.CardItinerary
 
 import de.htwg.se.starrealms.model._
+import de.htwg.se.starrealms.model.CardBridge._
+import de.htwg.se.starrealms.model.FactionFactory._
 
 case class TradePod() extends Ship(
     name = "Trade Pod",

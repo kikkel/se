@@ -1,10 +1,10 @@
 package de.htwg.se.starrealms.model
 
+import de.htwg.se.starrealms.model._
+import de.htwg.se.starrealms.model.CardBridge._
+import de.htwg.se.starrealms.model.FactionFactory._
 
-
-
-
-class Base(
+/* class Base(
   name: String,
   cardType: String = "Base",
   faction: Option[Faction] = None,
@@ -14,7 +14,7 @@ class Base(
   primaryAbility: Option[Ability] = None,
   allyAbility: Option[Ability] = None,
   scrapAbility: Option[Ability] = None
-) extends Card(name, cardType, faction, Some(cost), Some(defense), primaryAbility, allyAbility, scrapAbility) {
+) extends Card(name, cardType, faction, Some(cost), Some(defense), None, primaryAbility, allyAbility, scrapAbility) {
 
   val outpost: Boolean = isOutPost
   def isOutpost: Boolean = outpost
@@ -24,7 +24,26 @@ class Base(
     s"Ally: ${allyAbility.map(_.render()).getOrElse("None")}, " +
     s"Scrap: ${scrapAbility.map(_.render()).getOrElse("None")}"
 }
-}
+} */
+
+/* class Ship(
+  name: String,
+  cardType: String = "Ship",
+  faction: Option[Faction] = None,
+  cost: Int,
+  defense: String = "0",
+  isOutPost: Boolean = false,
+  primaryAbility: Option[Ability] = None,
+  allyAbility: Option[Ability] = None,
+  scrapAbility: Option[Ability] = None
+) extends Card(name, cardType, faction, Some(cost), Some(defense), None, primaryAbility, allyAbility, scrapAbility) {
+  override def toString: String = {
+    s"Ship: $name, Abilities: " +
+      s"Primary: ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+      s"Ally: ${allyAbility.map(_.render()).getOrElse("None")}, " +
+      s"Scrap: ${scrapAbility.map(_.render()).getOrElse("None")}"
+  }
+} */
 
 //----------------------------------------------------------------------------------------
 
@@ -99,4 +118,24 @@ case class ScrapAbility(override val actions: List[String]) extends Ability(acti
     }
   } // Return a string representation of the scrap actions
 }
+
+//----------------------------------------------------------------------------------------
+// Kosten einer Karte
+class CardCost(val cost: Int) {
+  def getCost: Int = cost // Return the cost of the card
+  def isFree: Boolean = cost == 0 // Check if the card is free
+}
+//----------------------------------------------------------------------------------------
+//Schaden einer Karte festlegen
+class CardDamage(val damage: Int) {
+  def getDamage: Int = damage // Return the damage of the card
+  def isNoDamage: Boolean = damage == 0 // Check if the card has no damage
+}
+//----------------------------------------------------------------------------------------
+//defense einer Karte festlegen
+class CardDefense(val defense: Int) {
+  def getDefense: Int = defense // Return the defense of the card
+  def isNoDefense: Boolean = defense == 0 // Check if the card has no defense
+}
+//----------------------------------------------------------------------------------------
 

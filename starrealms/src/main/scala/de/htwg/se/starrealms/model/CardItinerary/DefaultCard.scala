@@ -1,5 +1,9 @@
 package de.htwg.se.starrealms.model
 
+import de.htwg.se.starrealms.model._
+import de.htwg.se.starrealms.model.CardBridge._
+import de.htwg.se.starrealms.model.FactionFactory._
+
 class Scout extends Ship(
   name = "Scout",
   cardType = "Default",
