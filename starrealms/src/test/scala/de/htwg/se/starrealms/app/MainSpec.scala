@@ -2,37 +2,29 @@ package de.htwg.se.starrealms.app
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.util
 import de.htwg.se.starrealms.controller.Controller
 import de.htwg.se.starrealms.model._
 import de.htwg.se.starrealms.view.ConsoleView
 
-/* import java.io.{ByteArrayInputStream, ByteArrayOutputStream, PrintStream}
- */
 class MainSpec extends AnyWordSpec with Matchers {
+  "Main" should {
+	"run the game loop and exit on 'x'" in {
+	  val gameLogic = new GameLogic
+	  val deck = new DefaultDeck("DefaultDeck", "Default", List())
+	  val controller = new Controller(gameLogic, deck)
+	  val view = new ConsoleView(controller)
 
-  /* "Main object" should {
-    "initialize the model, controller and view without errors" in {
-      noException should be thrownBy {
+	  var inputs = List("s", "v", "r", "x").iterator
+	  def mockInputProvider(): String = inputs.next()
 
-        //simulate initialized process
-        val gameLogic = new GameLogic
-    	  val deck = new DefaultDeck("DefaultDeck", "Default", List())
-        // Create a new instance of DefaultDeck with a CardType and an empty list
-        // Create a new instance of Controller with the gameLogic and deck
-        // Create a new instance of ConsoleView with the controller
-	      val controller = new Controller(gameLogic, deck)
-        val view = new ConsoleView(controller)
+	  // Run the game loop with mock input
+	  Main.view = mock[ConsoleView]
+    when(Main.view.render()).thenReturn(())
+    
+    Main.run(mockInputProvider)
 
-      }
-    }
-
-    /* "run the application without throwing an exception" in {
-      noException should be thrownBy {
-        //simulate running the application
-        Main.main(Array.empty)
-      }
-    }*/
-  } */
-
+	  // Assertions can be added here if needed
+	  // For example, check the state of the controller or view
+	}
+  }
 }
