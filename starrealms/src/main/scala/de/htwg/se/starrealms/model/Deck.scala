@@ -25,7 +25,7 @@ abstract class Deck(val name: String, val cards: List[Card]) {
 class DefaultDeck(name: String, cardType: String, initialCards: List[Card]) extends Deck(name, initialCards) {
   val scoutCard = CardFactory.createCard("Scout")
   val viperCard = CardFactory.createCard("Viper")
-  private var localCards: List[Card] = List.fill(8)(scoutCard) ++ List.fill(2)(viperCard)
+  /*private*/ var localCards: List[Card] = List.fill(8)(scoutCard) ++ List.fill(2)(viperCard)
 
   override def isEmpty: Boolean = localCards.isEmpty
   override def getName: String = name
