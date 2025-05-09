@@ -8,7 +8,7 @@ Factory method - CardFactory (schon angefangen)
 
 Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen)
 
-Refactoring Guru:
+Refactoring Guru: https://refactoring.guru/design-patterns
 
 Chain of responsibility,
 Template method,
