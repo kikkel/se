@@ -5,11 +5,14 @@ Notes:
 Lecture 07 - Patterns
 
 Factory pattern - CardFactory (schon angefangen)
-  -use abstract factory for factions?/ship-base? 
+  - use abstract factory for factions?/ship-base? 
     https://refactoring.guru/design-patterns/abstract-factory
-  -create default cards separately to factions (scout, viper, explorer) 
-  -implement BRIDGE PATTERN to combine classes without offending hierarchy and inheritence.
+  - create default cards separately to factions (scout, viper, explorer) 
+  - BRIDGE PATTERN lets you replace the implementation object inside the abstraction. It’s as easy as assigning a new value to a field.
     https://refactoring.guru/design-patterns/bridge
+    - to divide and organize a monolithic class that has several variants of some functionality
+    - to extend a class in several orthogonal (independent) dimensions
+    - to be able to switch implementations at runtime
   
 
 Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen) abhängigkeit zw controller und view zu verbessern
