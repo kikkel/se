@@ -12,17 +12,20 @@ object Main extends App {
   val view = new ConsoleView(controller)
 
 
-
-
   // Application loop
-  var continue = true
-  while (continue) {
-    view.render() //current game state
-    println("Options:\n\t's' draw Scout\n\t'v' draw Viper\n\t'r' reset game\n\t'x' quit game\n\t #main")
-    val input = scala.io.StdIn.readLine()
-    continue = view.processInputLine(input)
+  def run(inputProvider: () => String): Unit = {
+    var continue = true
+    while (continue) {
+      view.render()
+      println("Options:\n\t's' draw Scout\n\t'v' draw Viper\n\t'r' reset game\n\t'x' quit game\n\t #main")
+      val input = inputProvider()
+      continue = view.processInputLine(input)
+    }
+    println("\n\nGame exited. Goodbye! #main\n\n")
   }
 
-  println("\n\nGame exited. Goodbye! #main\n\n")
+  // Use StdIn for real input
+  run(() => scala.io.StdIn.readLine())
+
 }
 
