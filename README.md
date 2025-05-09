@@ -2,7 +2,7 @@
 
 
 Notes:
-Lecture 07 - Patterns
+## Lecture 07 - Patterns
 
 - ### Factory pattern - CardFactory (schon angefangen)
   - use abstract factory for factions?/ship-base? 
