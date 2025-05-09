@@ -22,7 +22,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
    
 
 - ### Builder Pattern - DeckBuilder
-  > - https://refactoring.guru/design-patterns/builder
+  > https://refactoring.guru/design-patterns/builder
   > - extract the object construction code out of its own class and move it to separate objects called builders.
   > - to create different representations of some product (for example, stone and wooden houses)
   > - to construct Composite trees or other complex objects
@@ -32,7 +32,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
 
 ## Structural
 - ### BRIDGE Pattern: 
-  > - https://refactoring.guru/design-patterns/bridge
+  > https://refactoring.guru/design-patterns/bridge
   > - to divide and organize a monolithic class that has several variants of some functionality
   > - to extend a class in several orthogonal (independent) dimensions
   > - to be able to switch implementations at runtime
@@ -42,14 +42,14 @@ Refactoring Guru: https://refactoring.guru/design-patterns
 
 ## Behavioural
 - ### Observer Pattern ✅
-  > - https://refactoring.guru/design-patterns/observer
+  > https://refactoring.guru/design-patterns/observer
   > - subscription mechanism to notify multiple objects about any events that happen to the object they’re observing
   > - when changes to the state of one object may require changing other objects, and the actual set of objects is unknown beforehand or changes dynamically
   > - when some objects in your app must observe others, but only for a limited time or in specific cases.
   > - to establish dynamic one-way connections between objects, where some objects act as subordinates of others.
   > - 
 - ### Mediator Pattern
-  > - https://refactoring.guru/design-patterns/mediator
+  > https://refactoring.guru/design-patterns/mediator
   > - **eliminates direct connections between senders and receivers, forcing them to communicate indirectly via a mediator object.**
   > - when it’s hard to change some of the classes because they are tightly coupled to a bunch of other classes.
   > - when you can’t reuse a component in a different program because it’s too dependent on other components.
@@ -59,7 +59,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - **when relying on Observer,** it plays the role of publisher, and the components act as subscribers which subscribe to and unsubscribe from the mediator’s events.
   > - 
 - ### Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen) abhängigkeit zw controller und view zu verbessern
-  > - https://refactoring.guru/design-patterns/strategy
+  > https://refactoring.guru/design-patterns/strategy
   > - usually describes different ways of doing the same thing, letting you swap these algorithms within a single context class.
   > - makes objects completely independent and unaware of each other.
   > - use different variants of an algorithm within an object and be able to switch from one algorithm to another during runtime.
@@ -68,14 +68,14 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - when your class has a massive conditional statement that switches between different variants of the same algorithm.
 
 - ### State Pattern: an extension of _Strategy Pattern_
-  > - https://refactoring.guru/design-patterns/state
+  > https://refactoring.guru/design-patterns/state
   > - doesn’t restrict dependencies between concrete states, letting objects alter the state of the context at will.
   > - when you have an object that behaves differently depending on its current state, the number of states is enormous, and the state-specific code changes frequently.
   > - when you have a class polluted with massive conditionals that alter how the class behaves according to the current values of the class’s fields.
   > - when you have a lot of duplicate code across similar states and transitions of a condition-based state machine.
  
 - ### Command Pattern: 
-  > - https://refactoring.guru/design-patterns/command
+  > https://refactoring.guru/design-patterns/command
   > - **unidirectional connections between senders and receivers**
   > - to convert any operation into an object. The operation’s parameters become fields of that object. The conversion lets you defer execution of the operation, queue it, store the history of commands, send commands to remote services, etc.
   > - to parametrize objects with operations
@@ -90,7 +90,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > _Second, the state backups may consume quite a lot of RAM. Therefore, sometimes you can resort to an alternative implementation: instead of restoring the past state, the command performs the inverse operation. The reverse operation also has a price: it may turn out to be hard or even impossible to implement._
 
 - ### Memento Pattern:
-  > - https://refactoring.guru/design-patterns/memento
+  > https://refactoring.guru/design-patterns/memento
   > - save and restore the previous state of an object without revealing the details of its implementation
   > - to produce snapshots of the object’s state to be able to restore a previous state of the object.
   > - when direct access to the object’s fields/getters/setters violates its encapsulation.
