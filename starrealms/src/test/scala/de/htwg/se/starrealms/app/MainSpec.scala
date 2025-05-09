@@ -8,6 +8,11 @@ import de.htwg.se.starrealms.view.ConsoleView
 
 class MainSpec extends AnyWordSpec with Matchers {
   "Main" should {
+
+    "execute without exceptions" in {
+      noException should be thrownBy Main.main(Array.empty)
+    }
+
 		"contain a run method" in {
 		val gameLogic = new GameLogic
 		val deck = new DefaultDeck("DefaultDeck", "Default", List())
