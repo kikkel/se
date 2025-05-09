@@ -8,3 +8,5 @@ Factory method - CardFactory (schon angefangen)
 
 Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen)
 
+
+alle if statements mit strategy und andere design patterns ersetzen
