@@ -5,7 +5,7 @@ Notes:
 # Lecture 07 - Patterns
 Refactoring Guru: https://refactoring.guru/design-patterns
 
-- Chain of responsibility,
+- Chain of responsibility- passes a request sequentially along a dynamic chain of potential receivers until one of them handles it.
 - Template method,
 - Composite
 - - **state**: soll input verarbeiten/MODUS/ETC
@@ -41,6 +41,23 @@ Refactoring Guru: https://refactoring.guru/design-patterns
 
 
 ## Behavioural
+- ### Observer Pattern ✅
+  > - https://refactoring.guru/design-patterns/observer
+  > - subscription mechanism to notify multiple objects about any events that happen to the object they’re observing
+  > - when changes to the state of one object may require changing other objects, and the actual set of objects is unknown beforehand or changes dynamically
+  > - when some objects in your app must observe others, but only for a limited time or in specific cases.
+  > - to establish dynamic one-way connections between objects, where some objects act as subordinates of others.
+  > - 
+- ### Mediator Pattern
+  > - https://refactoring.guru/design-patterns/mediator
+  > - **eliminates direct connections between senders and receivers, forcing them to communicate indirectly via a mediator object.**
+  > - when it’s hard to change some of the classes because they are tightly coupled to a bunch of other classes.
+  > - when you can’t reuse a component in a different program because it’s too dependent on other components.
+  > - when you find yourself creating tons of component subclasses just to reuse some basic behavior in various contexts.
+  > - to eliminate mutual dependencies among a set of system components. Instead, these components become dependent on a single mediator object.
+  > - you can permanently link all the components to the same mediator object.
+  > - **when relying on Observer,** it plays the role of publisher, and the components act as subscribers which subscribe to and unsubscribe from the mediator’s events.
+  > - 
 - ### Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen) abhängigkeit zw controller und view zu verbessern
   > - https://refactoring.guru/design-patterns/strategy
   > - usually describes different ways of doing the same thing, letting you swap these algorithms within a single context class.
@@ -57,13 +74,14 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - when you have a class polluted with massive conditionals that alter how the class behaves according to the current values of the class’s fields.
   > - when you have a lot of duplicate code across similar states and transitions of a condition-based state machine.
  
-- ### Command Pattern:
+- ### Command Pattern: 
   > - https://refactoring.guru/design-patterns/command
+  > - **unidirectional connections between senders and receivers**
   > - to convert any operation into an object. The operation’s parameters become fields of that object. The conversion lets you defer execution of the operation, queue it, store the history of commands, send commands to remote services, etc.
   > - to parametrize objects with operations
   > - to queue operations, schedule their execution, or execute them remotely.
-  > - _to implement reversible operations.(Lecture 8, DP II)_ \n
-  >  _**Warning:**_ _To be able to revert operations, you need to implement the history of performed operations. The command history is a stack that contains all executed command objects along with related backups of the application’s state._
+  > - _to implement reversible operations.(Lecture 8, DP II)_ 
+  > -  _**Warning:**_ _To be able to revert operations, you need to implement the history of performed operations. The command history is a stack that contains all executed command objects along with related backups of the application’s state._
 
   > _This method has two drawbacks. First, it isn’t that easy to save an application’s state because some of it can be private. This problem can be mitigated with the **Memento pattern**._
 
