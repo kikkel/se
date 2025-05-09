@@ -1,55 +1,8 @@
 package de.htwg.se.starrealms.model
 
-abstract class Card(
-  val name: String,
-  val cardType: String,
-  val faction: Option[Faction] = None,
-  val cost: Option[Int] = None,
-  val defense: Option[String] = None,
-  val primaryAbility: Option[Ability] = None,
-  val allyAbility: Option[Ability] = None,
-  val scrapAbility: Option[Ability] = None
-) {
-  def isBase: Boolean = cardType == "Base"
-  def isShip: Boolean = cardType == "Ship"
-  def getName: String = name
-  def getCardType: String = cardType
-  def getFaction: Option[Faction] = faction
-  def getCost: Option[Int] = cost
-  def getDefense: Option[String] = defense
-  def getPrimaryAbility: Option[Ability] = primaryAbility
-  def getAllyAbility: Option[Ability] = allyAbility
-  def getScrapAbility: Option[Ability] = scrapAbility
 
-  // toString
-/*   override def toString: String = {
-  s"$name ($cardType), Abilities: " +
-    s"Primary: ${primaryAbility.map(_.render()).getOrElse("None")}, " +
-    s"Ally: ${allyAbility.map(_.render()).getOrElse("None")}, " +
-    s"Scrap: ${scrapAbility.map(_.render()).getOrElse("None")}"
-} */
 
-  def render(): String = {
-    s"Card Name: $name, Card Type: $cardType, Faction: ${faction.map(_.render()).getOrElse("None")}, primaryAbility: ${primaryAbility.map(_.render()).getOrElse("None")}, allyAbility: ${allyAbility.map(_.render()).getOrElse("None")}, scrapAbility: ${scrapAbility.map(_.render()).getOrElse("None")}"
-  }
-}
 
-class Ship(
-  name: String,
-  cardType: String = "Ship",
-  faction: Option[Faction] = None,
-  cost: Option[Int] = None,
-  primaryAbility: Option[Ability] = None,
-  allyAbility: Option[Ability] = None,
-  scrapAbility: Option[Ability] = None
-) extends Card(name, cardType, faction, cost, None, primaryAbility, allyAbility, scrapAbility) {
-  override def toString: String = {
-  s"Ship: $name, Faction: ${faction.map(_.name).getOrElse("None")}, Cost: ${cost.getOrElse("Unknown")}, Abilities: " +
-    s"Primary: ${primaryAbility.map(_.render()).getOrElse("None")}, " +
-    s"Ally: ${allyAbility.map(_.render()).getOrElse("None")}, " +
-    s"Scrap: ${scrapAbility.map(_.render()).getOrElse("None")}"
-}
-}
 
 class Base(
   name: String,
@@ -79,7 +32,7 @@ class Base(
 
 
 //----------------------------------------------------------------------------------------
-abstract class Faction(val name: String) {
+/* abstract class Faction(val name: String) {
   def getName: String  // Diese Methode bleibt abstrakt
   def render(): String = getName
 }
@@ -98,7 +51,7 @@ class Blob extends Faction("Blob") {
 
 class MachineCult extends Faction("Machine Cult") {
   override def getName: String = "Machine Cult"
-}
+} */
 
 
 //----------------------------------------------------------------------------------------
