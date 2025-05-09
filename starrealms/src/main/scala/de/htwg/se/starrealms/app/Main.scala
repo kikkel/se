@@ -12,10 +12,7 @@ object Main extends App {
   val view = new ConsoleView(controller)
 
 
-
-
   // Application loop
-  var view: ConsoleView = _
   def run(inputProvider: () => String): Unit = {
     var continue = true
     while (continue) {
