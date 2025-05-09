@@ -7,6 +7,7 @@ import de.htwg.se.starrealms.view.ConsoleView
 object Main extends App {
 
   println("Welcome to Star Realms!")
+
   // Initialize the model, controller, and view
   val gameLogic = new GameLogic
   val deck = new DefaultDeck("DefaultDeck", "Default", List())

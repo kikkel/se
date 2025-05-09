@@ -17,6 +17,7 @@ class MainSpec extends AnyWordSpec with Matchers {
       }
       outStream.toString.trim should include("Welcome to Star Realms!")
     }
+
 		"contain a run method" in {
 		val gameLogic = new GameLogic
 		val deck = new DefaultDeck("DefaultDeck", "Default", List())
