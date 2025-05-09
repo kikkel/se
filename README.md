@@ -4,7 +4,7 @@
 Notes:
 Lecture 07 - Patterns
 
-Factory pattern - CardFactory (schon angefangen)
+- Factory pattern - CardFactory (schon angefangen)
   - use abstract factory for factions?/ship-base? 
     https://refactoring.guru/design-patterns/abstract-factory
   - create default cards separately to factions (scout, viper, explorer) 
@@ -13,11 +13,12 @@ Factory pattern - CardFactory (schon angefangen)
     - to divide and organize a monolithic class that has several variants of some functionality
     - to extend a class in several orthogonal (independent) dimensions
     - to be able to switch implementations at runtime
+    - This pairing is useful when some abstractions defined by Bridge can only work with specific implementations. In this case, Abstract Factory can encapsulate these relations and hide the complexity from the client code.
   
 
-Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen) abhängigkeit zw controller und view zu verbessern
+- Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen) abhängigkeit zw controller und view zu verbessern
 
-state: soll input verarbeiten/MODUS/ETC
+- state: soll input verarbeiten/MODUS/ETC
 
 Refactoring Guru: https://refactoring.guru/design-patterns
 
@@ -26,7 +27,7 @@ Template method,
 Composite
 
 
-[SOLID] OPEN/CLOSED: alle if statements mit strategy und andere design patterns ersetzen
+- [SOLID] OPEN/CLOSED: alle if statements mit strategy und andere design patterns ersetzen
 
 
 
