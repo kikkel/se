@@ -10,8 +10,8 @@ Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsst
 
 Refactoring Guru:
 
-Chain of responsibility
-Template method
+Chain of responsibility,
+Template method,
 Composite
 
 
