@@ -3,6 +3,11 @@
 
 Notes:
 ## Lecture 07 - Patterns
+Refactoring Guru: https://refactoring.guru/design-patterns
+
+- Chain of responsibility,
+- Template method,
+- Composite
 
 - ### Factory pattern - CardFactory (schon angefangen)
   - use abstract factory for factions?/ship-base? 
@@ -21,12 +26,6 @@ Notes:
 - ### Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen) abhängigkeit zw controller und view zu verbessern
 
 - **state**: soll input verarbeiten/MODUS/ETC
-
-Refactoring Guru: https://refactoring.guru/design-patterns
-
-Chain of responsibility,
-Template method,
-Composite
 
 
 - **[SOLID] OPEN/CLOSED:** alle if statements mit strategy und andere design patterns ersetzen
