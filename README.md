@@ -14,6 +14,13 @@ Lecture 07 - Patterns
     - to extend a class in several orthogonal (independent) dimensions
     - to be able to switch implementations at runtime
     - This pairing is useful when some abstractions defined by Bridge can only work with specific implementations. In this case, Abstract Factory can encapsulate these relations and hide the complexity from the client code.
+
+
+- Builder Pattern - DeckBuilder
+  - https://refactoring.guru/design-patterns/builder
+  - extract the object construction code out of its own class and move it to separate objects called builders.
+  - to create different representations of some product (for example, stone and wooden houses)
+  - to construct Composite trees or other complex objects
   
 
 - Strategy pattern - verschiedene Deckstufen für starrealms (wie Schwierigkeitsstufen) abhängigkeit zw controller und view zu verbessern
