@@ -34,10 +34,10 @@ Composite
 
 
 
-### BRIDGE Pattern: 
+- ### BRIDGE Pattern: 
   > https://refactoring.guru/design-patterns/bridge
   > - to divide and organize a monolithic class that has several variants of some functionality
   > - to extend a class in several orthogonal (independent) dimensions
   > - to be able to switch implementations at runtime
   > - This pairing is useful when some abstractions defined by Bridge can only work with specific implementations. In this case, Abstract Factory can encapsulate these relations and hide the complexity from the client code.
-- _use to connect GUI-APP_
+  - _use to connect GUI-APP_
