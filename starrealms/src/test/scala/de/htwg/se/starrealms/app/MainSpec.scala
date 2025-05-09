@@ -5,12 +5,20 @@ import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.starrealms.controller.Controller
 import de.htwg.se.starrealms.model._
 import de.htwg.se.starrealms.view.ConsoleView
+import java.io.{ByteArrayOutputStream, PrintStream}
 
 class MainSpec extends AnyWordSpec with Matchers {
   "Main" should {
 
-    "execute without exceptions" in {
-      noException should be thrownBy Main.main(Array.empty)
+    "print 'Welcome to Star Realms!' on startup" in {
+      // Umleiten der Standardausgabe
+      val outStream = new ByteArrayOutputStream()
+      Console.withOut(new PrintStream(outStream)) {
+        Main.main(Array.empty)
+      }
+
+      // Überprüfen, ob die Ausgabe korrekt ist
+      outStream.toString.trim should include("Welcome to Star Realms!")
     }
 
 		"contain a run method" in {
