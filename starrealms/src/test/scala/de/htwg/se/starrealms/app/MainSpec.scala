@@ -10,13 +10,6 @@ import java.io.{ByteArrayOutputStream, PrintStream}
 class MainSpec extends AnyWordSpec with Matchers {
   "Main" should {
 
-    /* "print 'Welcome to Star Realms!' on startup" in {
-      val outStream = new ByteArrayOutputStream()
-      Console.withOut(new PrintStream(outStream)) {
-        Main.main(Array.empty)
-      }
-      outStream.toString.trim should include("Welcome to Star Realms!")
-    } */
 
 		"contain a run method" in {
 		val gameLogic = new GameLogic
