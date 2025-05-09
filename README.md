@@ -10,10 +10,10 @@ Lecture 07 - Patterns
   - create default cards separately to factions (scout, viper, explorer) 
   - BRIDGE PATTERN lets you replace the implementation object inside the abstraction. It’s as easy as assigning a new value to a field.
     https://refactoring.guru/design-patterns/bridge
-    - to divide and organize a monolithic class that has several variants of some functionality
-    - to extend a class in several orthogonal (independent) dimensions
-    - to be able to switch implementations at runtime
-    - This pairing is useful when some abstractions defined by Bridge can only work with specific implementations. In this case, Abstract Factory can encapsulate these relations and hide the complexity from the client code.
+    > to divide and organize a monolithic class that has several variants of some functionality
+    > to extend a class in several orthogonal (independent) dimensions
+    > to be able to switch implementations at runtime
+    > This pairing is useful when some abstractions defined by Bridge can only work with specific implementations. In this case, Abstract Factory can encapsulate these relations and hide the complexity from the client code.
 
 
 - Builder Pattern - DeckBuilder
