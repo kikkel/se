@@ -4,7 +4,7 @@
 Notes:
 Lecture 07 - Patterns
 
-Factory method - CardFactory (schon angefangen)
+Factory pattern - CardFactory (schon angefangen)
   -use abstract factory for factions?/ship-base? 
     https://refactoring.guru/design-patterns/abstract-factory
   -create default cards separately to factions (scout, viper, explorer) 
@@ -24,3 +24,8 @@ Composite
 
 
 [SOLID] OPEN/CLOSED: alle if statements mit strategy und andere design patterns ersetzen
+
+
+
+
+BRIDGE: use to connect GUI-APP
