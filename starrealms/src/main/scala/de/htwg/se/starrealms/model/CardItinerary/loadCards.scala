@@ -11,8 +11,10 @@ object CardItineraryApp {
 
         val cardInstances = validCards.map(createCardInstance)
 
+        val groupedBySet = cardInstances.groupBy(_.set.nameOfSet)
+
         val outputFile = "src/main/scala/de/htwg/se/starrealms/model/CardItinerary/CardItinerary.scala"
-        writeClassesToFile(cardInstances.map(_.render()), outputFile)
+        writeClassesToFile(groupedBySet, outputFile)
 
         println(s"Generated ${cardInstances.size} card classes.")
     }
@@ -72,7 +74,11 @@ object CardItineraryApp {
     def writeClassesToFile(classes: List[String], outputFile: String): Unit = {
         val writer = new java.io.PrintWriter(new java.io.File(outputFile))
         try {
-            classes.foreach(writer.println)
+            groupedBySet.foreach { case (nameOfSet, cards) =>
+              writer.println(s"// $nameOfSet")
+              cards.foreach(card => writer.println(card.render()))
+              writer.println()
+            }
         } finally {
             writer.close()
         }

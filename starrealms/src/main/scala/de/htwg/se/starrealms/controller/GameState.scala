@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.controller
+/* package de.htwg.se.starrealms.controller
 
 import de.htwg.se.starrealms.model._
 import de.htwg.util._
@@ -21,4 +21,4 @@ class GameState extends Observable {
     field = List()
     notifyObservers()
   }
-}
+} */

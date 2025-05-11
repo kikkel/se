@@ -36,3 +36,17 @@ object Faction {
 
 // Example usage
 // val tradeFederation = Faction("trade federation")
+
+
+trait Set { def nameOfSet: String }
+
+private class CoreSet extends Set { 
+    override def nameOfSet: String = "Core Set"
+}
+
+object Set {
+    override def apply(nameOfSet: String): Set = nameOfSet.toLowerCase match {
+        case "core set" => new CoreSet
+        case _ => throw new IllegalArgumentException(s"Unknown set: $nameOfSet")
+    }
+}
