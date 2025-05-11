@@ -2,17 +2,20 @@ package de.htwg.se.starrealms.model.CardItinerary
 
 import de.htwg.se.starrealms.model._
 
-case class TradePod() extends FactionCard {
-  override def cardName = "Trade Pod"
-  override def cardType = new Base()
-  override def faction = Faction("blob")
-  override def cost = Some(2)
-  override def primaryAbility = Some(PrimaryAbility(List("3 coins")))
-  override def allyAbility = Some(AllyAbility(List("2 coins")))
+case class TradePod() extends FactionCard(
+  cardName = "Trade Pod",
+  cost = Some(2),
+  defense = None,
+  primaryAbility = Some(PrimaryAbility(List("3 coins"))),
+  allyAbility = Some(AllyAbility(List("2 coins"))),
+  scrapAbility = None,
+  faction = Faction("blob"),
+  cardType = new Base(isOutpost = false)
+) {
+  override val cardName: String = "Trade Pod"
   override def render(): String = {
-      s"$cardName, Cost: ${cost.getOrElse("N/A")}, " +
-          s"Primary Ability: ${primaryAbility.map(_.render()).getOrElse("N/A")}, " +
-          s"Ally Ability: ${allyAbility.map(_.render()).getOrElse("N/A")}} #Blob.scala"
+    s"FactionCard($cardName, $cost, $defense, $primaryAbility, " +
+      s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #blob.scala: TradePod"
   }
 }
 

@@ -37,7 +37,8 @@ class FactionCard(
     val cardType: CardType
     ) extends Card {
     override def render(): String = {
-        s"FactionCard($cardName, $cost, $defense, $primaryAbility, $allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #BRIDGE: FactionCard"
+        s"FactionCard($cardName, $cost, $defense, $primaryAbility, " +
+            s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #BRIDGE: FactionCard"
     }
 
 }

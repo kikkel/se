@@ -2,18 +2,20 @@ package de.htwg.se.starrealms.model.CardItinerary
 
 import de.htwg.se.starrealms.model._
 
-case class Corvette() extends FactionCard {
+case class Corvette() extends FactionCard(
+  cardName = "Corvette",
+  cost = Some(2),
+  defense = None,
+  primaryAbility = Some(PrimaryAbility(List("Gain 1 Combat", "Draw a card"))),
+  allyAbility = Some(AllyAbility(List("Gain 2 Combat"))),
+  scrapAbility = None,
+  faction = Faction("star empire"),
+  cardType = new Ship()
+) {
   override def cardName = "Corvette"
-  override def cardType = new Ship()
-  override def faction = Faction("star empire")
-  override def cost = Some(2)
-  override def primaryAbility = Some(PrimaryAbility(List("Gain 1 Combat", "Draw a card")))
-  override def allyAbility = Some(AllyAbility(List("Gain 2 Combat")))
-  override def scrapAbility = None
   override def render(): String = {
-    s"$cardName, Cost: ${cost.getOrElse("N/A")}, " +
-      s"Primary Ability: ${primaryAbility.map(_.render()).getOrElse("N/A")}, " +
-      s"Ally Ability: ${allyAbility.map(_.render()).getOrElse("N/A")}} #StarEmpire.scala"
+    s"FactionCard($cardName, $cost, $defense, $primaryAbility, " +
+      s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #StarEmpire.scala: Corvette"
   }
 }
 
