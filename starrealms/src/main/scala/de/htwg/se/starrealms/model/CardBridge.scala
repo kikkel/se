@@ -4,7 +4,6 @@ package de.htwg.se.starrealms.model
 
 trait Card {
     def name: String
-    def cardType: CardType
     def faction: Option[Faction]
     def cost: Option[Int]
     def defense: Option[String]
@@ -14,15 +13,18 @@ trait Card {
     def render(): String
 }
 trait CardType {
+    def cardType: String
     def description: String
     def render(): String
 }
 
 class Ship extends CardType {
+    override def cardType: String = "Ship"
     override def description: String = "pew pew #bridge"
     override def render(): String = "Ship #cardType"
 }
 class Base extends CardType {
+    override def cardType: String = "Base"
     override def description: String = "chilling #bridge"
     override def render(): String = "Base #cardType"
     def isOutpost: Boolean
