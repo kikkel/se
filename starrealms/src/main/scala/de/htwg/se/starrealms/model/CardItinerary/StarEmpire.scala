@@ -15,7 +15,6 @@ case class Corvette() extends FactionCard {
       s"Primary Ability: ${primaryAbility.map(_.render()).getOrElse("N/A")}, " +
       s"Ally Ability: ${allyAbility.map(_.render()).getOrElse("N/A")}} #StarEmpire.scala"
   }
-
 }
 
 

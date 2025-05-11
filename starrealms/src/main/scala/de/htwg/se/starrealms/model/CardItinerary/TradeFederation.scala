@@ -2,7 +2,6 @@ package de.htwg.se.starrealms.model.CardItinerary
 
 import de.htwg.se.starrealms.model._
 
-
 case class BarterWorld() extends FactionCard {
   override def cardName = "Barter World"
   override def cardType = new Base()
@@ -18,6 +17,5 @@ case class BarterWorld() extends FactionCard {
       s"Ally Ability: ${allyAbility.map(_.render()).getOrElse("N/A")}, " +
       s"Scrap Ability: ${scrapAbility.map(_.render()).getOrElse("N/A")} #TradeFederation.scala"
   }
-
 }
 

@@ -16,3 +16,6 @@ object Faction {
         case _ => throw new IllegalArgumentException(s"Unknown faction: $factionName")
     }
 }
+
+// Example usage
+// val tradeFederation = Faction("trade federation")

@@ -2,7 +2,6 @@ package de.htwg.se.starrealms.model.CardItinerary
 
 import de.htwg.se.starrealms.model._
 
-
 case class BattleStation() extends FactionCard {
   override def cardName = "Battle Station"
   override def cardType = new Base()
