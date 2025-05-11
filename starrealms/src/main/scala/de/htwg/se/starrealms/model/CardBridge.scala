@@ -20,15 +20,26 @@ class Ship extends CardType {
     override def cardType: String = "Ship"
     //override def render(): String = "Ship #cardType"
 }
-class Base extends CardType {
+class Base(val isOutpost: Boolean) extends CardType {
     override def cardType: String = "Base"
    // override def render(): String = "Base #cardType"
-    def isOutpost: Boolean
 
 }
 
-class FactionCard extends Card {
-    def faction: Faction
+class FactionCard(
+    override val cardName: String,
+    override val cost: Option[Int],
+    override val defense: Option[String],
+    override val primaryAbility: Option[Ability],
+    override val allyAbility: Option[Ability],
+    override val scrapAbility: Option[Ability],
+    val faction: Faction,
+    val cardType: CardType
+    ) extends Card {
+    override def render(): String = {
+        s"FactionCard($cardName, $cost, $defense, $primaryAbility, $allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #BRIDGE: FactionCard"
+    }
+
 }
 
 
