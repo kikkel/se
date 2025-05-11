@@ -6,3 +6,67 @@ Example: DefaultDeck, GameLogic, PlayingField, Player.
 
 Strategy Patterns:
     Game state
+
+
+### Bridge
+// The "abstraction" defines the interface for the "control"
+// part of the two class hierarchies. It maintains a reference
+// to an object of the "implementation" hierarchy and delegates
+// all of the real work to this object.
+class Card is
+    protected field cardType: CardType
+    constructor Card(cardType: CardType) is
+        this.cardType = cardType
+    method togglePower() is
+        if (cardType.isEnabled()) then
+            cardType.disable()
+        else
+            cardType.enable()
+    method volumeDown() is
+        cardType.setVolume(cardType.getVolume() - 10)
+    method volumeUp() is
+        cardType.setVolume(cardType.getVolume() + 10)
+    method channelDown() is
+        cardType.setChannel(cardType.getChannel() - 1)
+    method channelUp() is
+        cardType.setChannel(cardType.getChannel() + 1)
+
+
+// You can extend classes from the abstraction hierarchy
+// independently from cardType classes.
+class AdvancedCard extends Card is
+    method mute() is
+        cardType.setVolume(0)
+
+
+// The "implementation" interface declares methods common to all
+// concrete implementation classes. It doesn't have to match the
+// abstraction's interface. In fact, the two interfaces can be
+// entirely different. Typically the implementation interface
+// provides only primitive operations, while the abstraction
+// defines higher-level operations based on those primitives.
+interface CardType is
+    method isEnabled()
+    method enable()
+    method disable()
+    method getVolume()
+    method setVolume(percent)
+    method getChannel()
+    method setChannel(channel)
+
+
+// All CardTypes follow the same interface.
+class ship implements CardType is
+    // ...
+
+class base implements CardType is
+    // ...
+
+
+// Somewhere in client code.
+ship = new ship()
+card = new Card(ship)
+card.togglePower()
+
+base = new base()
+card = new AdvancedCard(base)
