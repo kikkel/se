@@ -36,6 +36,7 @@ class FactionCard(
     override val allyAbility: Option[Ability],
     override val scrapAbility: Option[Ability],
     val faction: Faction,
+    val colour: String,
     val cardType: CardType
     ) extends Card {
     override def render(): String = {

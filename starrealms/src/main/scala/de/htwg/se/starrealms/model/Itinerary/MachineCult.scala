@@ -10,9 +10,10 @@ case class BattleStation() extends FactionCard(
   allyAbility = Some(AllyAbility(List("2 damage"))),
   scrapAbility = Some(ScrapAbility(List("Draw a card"))),
   faction = Faction("Machine Cult"),
+  colour = "red",
   cardType = new Base("5", isOutpost = true)
 ) {
-  override def cardName = "Battle Station"
+  override val cardName: String = "Battle Station"
   override def render(): String = {
     s"FactionCard($cardName, $cost, $primaryAbility, " +
       s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #MachineCult.scala: BattleStation"

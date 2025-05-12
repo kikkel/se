@@ -10,9 +10,10 @@ case class Corvette() extends FactionCard(
   allyAbility = Some(AllyAbility(List("Gain 2 Combat"))),
   scrapAbility = None,
   faction = Faction("star empire"),
+  colour = "blue",
   cardType = new Ship()
 ) {
-  override def cardName = "Corvette"
+  override val cardName: String = "Corvette"
   override def render(): String = {
     s"FactionCard($cardName, $cost, $primaryAbility, " +
       s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #StarEmpire.scala: Corvette"

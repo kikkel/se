@@ -6,9 +6,9 @@ import de.htwg.util.Observable
 class Controller(gameLogic: GameLogic) extends Observable {
   def processCommand(cmd: String): String = {
     val command = cmd match {
-      case "s" => new DrawCardCommand(this, "Scout")
-      case "v" => new DrawCardCommand(this, "Viper")
-      case "r" => new ResetGameCommand(this)
+      case "s" => new DrawCardCommand(gameLogic, "Scout")
+      case "v" => new DrawCardCommand(gameLogic, "Viper")
+      case "r" => new ResetGameCommand(gameLogic)
       case _   => new InvalidCommand(cmd)
     }
     val result = command.execute()

@@ -1,43 +1,24 @@
-sealed trait Faction
-case object TradeFederation extends Faction
-case object Blob extends Faction
-case object StarEmpire extends Faction
-case object MachineCult extends Faction
+import de.htwg.se.starrealms.model._
+import de.htwg.util._
 
-sealed trait CardType
-case object Base extends CardType
-case object Outpost extends CardType
-case object Ship extends CardType
+trait Renderer[T] { def render(entity: T): String }
 
-case class Ability(description: String)
-case class AllyAbility(description: String)
-case class ScrapAbility(description: String)
+class CardRenderer extends Observable with Renderer[Card] {
+  override def render(card: Card): String =
+    card match {
+      case scout: Scout => s"Scout Card: ${scout.name}, Type: ${scout.cardType}, Ability: ${scout.primaryAbility.map(_.render()).getOrElse("None")}"
+      case viper: Viper => s"Viper Card: ${viper.name}, Type: ${viper.cardType}, Ability: ${viper.primaryAbility.map(_.render()).getOrElse("None")}"
+      case explorer: Explorer =>
+        s"Explorer Card: ${explorer.name}, Type: ${explorer.cardType}, Ability: ${explorer.primaryAbility.map(_.render()).getOrElse("None")}, Scrap Ability: ${explorer.scrapAbility.map(_.render()).getOrElse("None")}"
 
-case class Card(
-    name: String, faction: Faction, cardtype: CardType, cost: Int, ability: Option[Ability] = None, allyAbility: Option[AllyAbility] = None, scrapability: Option[ScrapAbility] = None
-)
+    }
+}
 
+class DeckRenderer extends Renderer[Deck] {
+  override def render(deck: Deck): String = {
+    val cards = deck.getCards.map(card => new CardRenderer().render(card)).mkString("\n")
+    s"Deck Name: ${deck.getName}\nCards:\n$cards"
+  }
+}
 
-case class Player(name: String, deck: List[Card], discardPile: List[Card] = List(), hand: List[Card] = List())
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-
-
-val sampleDeck: List[Card] = List(
-  Card("Trade Pod", Blob, Ship, 2, Some(Ability("Gain 3 Trade")), Some(AllyAbility("Gain extra 2 Trade"))),
-  Card("Battle Station", MachineCult, Outpost, 3, Some(Ability("4 Defense")), Some(AllyAbility("Gain 2 Combat")), Some(ScrapAbility("Gain 3 Combat"))),
-  Card("Freighter", TradeFederation, Ship, 4, Some(Ability("Gain 4 Trade"))),
-  Card("Survey Ship", StarEmpire, Ship, 3, Some(Ability("Draw a card")), Some(AllyAbility("Gain 1 Combat")))
-)
-
-
-val player1 = Player("Player 1", sampleDeck)
-val player2 = Player("Player 2", sampleDeck)
-
-
-// Game Setup
-val players = List(player1, player2)
-
-// Print Game Setup
-println(s"${players(0).name} has ${players(0).deck.length} cards in deck.")
-println(s"${players(1).name} has ${players(1).deck.length} cards in deck.")
+class GameStateRenderer extends Renderer[GameLogic] { override def render(gameLogic: GameLogic): String = gameLogic.optionsMenu() }

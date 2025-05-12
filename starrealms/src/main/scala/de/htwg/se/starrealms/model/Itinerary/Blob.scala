@@ -10,6 +10,7 @@ case class TradePod() extends FactionCard(
   allyAbility = Some(AllyAbility(List("2 coins"))),
   scrapAbility = None,
   faction = Faction("blob"),
+  colour = "green",
   cardType = new Base("", isOutpost = false)
 ) {
   override val cardName: String = "Trade Pod"

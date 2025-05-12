@@ -25,7 +25,7 @@ private class MachineCult extends Faction {
 }
 
 object Faction {
-    override def apply(factionName: String): Faction = factionName.toLowerCase match {
+    def apply(factionName: String): Faction = factionName.toLowerCase match {
         case "trade federation" => new TradeFederation
         case "star empire" => new StarEmpire
         case "blob" => new Blob
@@ -45,7 +45,7 @@ private class CoreSet extends Set {
 }
 
 object Set {
-    override def apply(nameOfSet: String): Set = nameOfSet.toLowerCase match {
+    def apply(nameOfSet: String): Set = nameOfSet.toLowerCase match {
         case "core set" => new CoreSet
         case _ => throw new IllegalArgumentException(s"Unknown set: $nameOfSet")
     }

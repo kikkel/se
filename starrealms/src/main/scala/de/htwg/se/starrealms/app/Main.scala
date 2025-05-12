@@ -9,11 +9,12 @@ object Main extends App {
   //println("Welcome to Star Realms!")
 
   val csvLoader = new CardCSVLoader("src/main/resources/CoreSet.csv")
-  val cards = csvLoader.loadCards
+  csvLoader.loadCardsFromFile()
+  val cards = csvLoader.getCardsForSet("Core Set")
 
   val deckbuilder = new DeckBuilder()
   val director = new Director()
-  director.constructFromCards(deckbuilder, "Core Set", cards)
+  director.constructTradeDeck(deckbuilder, "Core Set", cards)
   val deck = deckbuilder.getProduct()
 
   val logic = new GameLogic(deck)

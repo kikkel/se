@@ -10,9 +10,10 @@ case class BarterWorld() extends FactionCard(
   allyAbility = Some(AllyAbility(List("2 damage"))),
   scrapAbility = Some(ScrapAbility(List("Draw a card"))),
   faction = Faction("Trade Federation"),
+  colour = "yellow",
   cardType = new Base("5", isOutpost = true)
 ) {
-  override def cardName = "Barter World"
+  override val cardName: String = "Barter World"
   override def render(): String = {
     s"FactionCard($cardName, $cost, $primaryAbility, " +
       s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #tradefederation.scala: BarterWorld"

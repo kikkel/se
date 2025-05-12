@@ -27,10 +27,11 @@ class Deck {
         }
     }
     def resetDeck(): Unit = cards = List()
-    override def render(): String = {
-        val cardsString = cards.map(_.render()).mkString("\n")
-        s"Deck Name: $name\nCards:\n$cardsString"
+    def render(): String = {
+        val cardDescriptions = cards.map(_.render()).mkString(", ")
+        s"Deck: $name, Cards: [$cardDescriptions]"
     }
+    
 }
 
 
@@ -43,6 +44,7 @@ trait Builder {
     def setCards(cards: List[Card]): Unit
 
     def addCard(card: Card): Unit
+    def addCards(cards: List[Card]): Unit
     def getProduct(): Deck
 
 }
@@ -51,11 +53,12 @@ trait Builder {
 class DeckBuilder extends Builder {
     private var deck: Deck = new Deck()
 
-    override def reset() { deck = new Deck() }
-    override def setName(name: String) { deck.setName(name) } 
-    override def setCards(cards: List[Card]) { deck.setCards(cards) }
+    override def reset(): Unit = { deck = new Deck() }
+    override def setName(name: String): Unit = { deck.setName(name) } 
+    override def setCards(cards: List[Card]): Unit = { deck.setCards(cards) }
 
-    override def addCard(cards: List[Card]) { cards.foreach(deck.addCard) }
+    override def addCards(cards: List[Card]): Unit = { cards.foreach(deck.addCard) }
+    override def addCard(card: Card): Unit = { deck.addCard(card) }
     //override def addSet(set: List[Card]) { set.foreach(deck.addCard) }
 
     override def getProduct(): Deck = {
@@ -73,11 +76,11 @@ class Director {
         builder.setCards(List.fill(8)(new Scout()) ++ List.fill(2)(new Viper()))
     }
 
-    def constructTradeDeck(builder: Builder, setName: String): Unit = {
+    def constructTradeDeck(builder: Builder, setName: String, cards: List[Card]): Unit = {
         builder.reset()
         builder.setName(s"Trade Deck - $setName")
-        val cards = LoadCards.getCardsForSet(setName)
         builder.setCards(cards)
+        cards
     }
 }
 

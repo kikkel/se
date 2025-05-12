@@ -4,7 +4,7 @@ import de.htwg.se.starrealms.model._
 
 
 class Scout() extends Card {
-  override def name = "Scout"
+  override val name = "Scout"
   override def primaryAbility = Some(new Ability(List("1 coin")))
   override def cardType = new Ship()
   override def render(): String = s"Scout: $name, Type: $cardType, Ability: ${primaryAbility.map(_.render()).getOrElse("None")}"
