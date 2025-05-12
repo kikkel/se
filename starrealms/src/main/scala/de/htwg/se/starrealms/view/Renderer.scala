@@ -3,9 +3,7 @@ package de.htwg.se.starrealms.view
 import de.htwg.se.starrealms.model._
 import de.htwg.util._
 
-trait Renderer[T] {
-  def render(entity: T): String
-}
+trait Renderer[T] { def render(entity: T): String }
 
 class CardRenderer extends Observable with Renderer[Card] {
   override def render(card: Card): String =
@@ -19,6 +17,4 @@ class DeckRenderer extends Renderer[Deck] {
   }
 }
 
-class GameStateRenderer extends Renderer[GameLogic] {
-  override def render(gameLogic: GameLogic): String = gameLogic.optionsMenu()
-}
+class GameStateRenderer extends Renderer[GameLogic] { override def render(gameLogic: GameLogic): String = gameLogic.optionsMenu() }

@@ -65,6 +65,22 @@ class DeckBuilder extends Builder {
     }
 
 }
+
+class Director {
+    def constructDefaultDeck(builder: Builder): Unit = {
+        builder.reset()
+        builder.setName("Default Deck")
+        builder.setCards(List.fill(8)(new Scout()) ++ List.fill(2)(new Viper()))
+    }
+
+    def constructTradeDeck(builder: Builder, setName: String): Unit = {
+        builder.reset()
+        builder.setName(s"Trade Deck - $setName")
+        val cards = LoadCards.getCardsForSet(setName)
+        builder.setCards(cards)
+    }
+}
+
 // Unlike other creational patterns, builder lets you construct
 // products that don't follow the common interface.
 /* class DeckManualBuilder implements Builder is
@@ -92,22 +108,5 @@ class DeckBuilder extends Builder {
         // Return the manual and reset the builder.
 
  */
-
-class Director {
-    def constructDefaultDeck(builder: Builder): Unit = {
-        builder.reset()
-        builder.setName("Default Deck")
-        builder.setCards(List.fill(8)(new Scout()) ++ List.fill(2)(new Viper()))
-    }
-
-    def constructTradeDeck(builder: Builder, setName: String): Unit = {
-        builder.reset()
-        builder.setName(s"Trade Deck - $setName")
-        val cards = LoadCards.getCardsForSet(setName)
-        builder.setCards(cards)
-    }
-
-}
-
 
 
