@@ -103,28 +103,11 @@ class Director {
     def constructTradeDeck(builder: Builder, setName: String): Unit = {
         builder.reset()
         builder.setName(s"Trade Deck - $setName")
-        val cards = CardItinerary.getCardsForSet(setName)
+        val cards = LoadCards.getCardsForSet(setName)
         builder.setCards(cards)
     }
 
 }
 
 
-object Application {
-  def main(args: Array[String]): Unit = {
-    CardItinerary.loadCardsFromFile()
 
-    val director = new Director()
-    val deckBuilder = new DeckBuilder()
-
-    director.constructDefaultDeck(deckBuilder)
-    val defaultDeck = deckBuilder.getProduct()
-    println(defaultDeck.render())
-
-    val tradeDeckCards = List()
-    director.constructTradeDeck(deckBuilder, "Core Set")
-    val tradeDeck = deckBuilder.getProduct()
-    println(tradeDeck)
-
-  } 
-}

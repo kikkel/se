@@ -2,7 +2,10 @@ package de.htwg.se.starrealms.model
 
 import com.github.tototoshi.csv._
 
-object CardItineraryApp {
+class CardItineraryApp {
+    private var cardsBySet: Map[String, List[Card]] = Map()
+
+
     def main(args: Array[String]): Unit = {
         val filePath = "src/main/resources/CoreSet.csv"
         val rows = loadCsv(filePath)
@@ -19,6 +22,20 @@ object CardItineraryApp {
         println(s"Generated ${cardInstances.size} card classes.")
     }
 
+
+        
+
+    def loadCardsFromFile(): Unit = {
+        val filePath = "src/main/resources/CoreSet.csv"
+        val rows = loadCsv(filePath)
+        val validCards = filterValidCards(rows)
+        val cardInstances = validCards.map(createCardInstance)
+        cardsBySet = cardInstances.groupBy(_.set.nameOfSet)
+    }
+
+    def getCardsForSet(setName: String): List[Card] = {
+        cardsBySet.getOrElse(setName, List())
+    }
     // Load CSV
     def loadCsv(filePath: String): List[Map[String, String]] = {
         val reader = CSVReader.open(new java.io.File(filePath))
@@ -43,9 +60,10 @@ object CardItineraryApp {
         val cardType = card("CardType").toLowerCase match {
             case "ship" => new Ship()
             case "base" =>
+                val defense = card.get("Defense").getOrElse("error: base should ALWAYS have defense #loadCards.scala: createCardInstance()")
                 val isOutpost = card.get("Outpost").exists(_.toLowerCase == "true")
-                new Base(isOutpost)
-            case _ => throw new IllegalArgumentException(s"Unknown card type: ${card("CardType")} #createCardInstance")
+                new Base(defense, isOutpost)
+            case _ => throw new IllegalArgumentException(s"Unknown card type: ${card("CardType")} #loadCards.scala: createCardInstance()")
         }
 
         // Parse abilities from the "Text" field
@@ -59,9 +77,9 @@ object CardItineraryApp {
         val scrapAbility = abilities.find(_.startsWith("{Scrap}")).map(a => new Ability(List(a.stripPrefix("{Scrap}: ").trim)))
 
         new FactionCard(
+            set = Set(card("Set")),
             cardName = card("Name"),
             cost = card.get("Cost").map(_.toInt),
-            defense = card.get("Defense"),
             primaryAbility = primaryAbility,
             allyAbility = allyAbility,
             scrapAbility = scrapAbility,

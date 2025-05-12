@@ -10,24 +10,24 @@ trait GameLogicController {
 }
 
 trait DeckController {
-    val deck: DefaultDeck
+    val deck: Deck
     def drawCard(cardType: String): String = {
         deck.drawCard() match {
             case Some(card) => s"Drew card: $card"
             case None => s"No $cardType cards left in the deck."
         }
     }
-    def getDeckState: String = deck.getDeckState
+    //def getDeckState: String = deck.getDeckState
     def resetDeck(): Unit = deck.resetDeck()
 }
 
 
-class Controller (val gameLogic: GameLogic, val deck: DefaultDeck)
+class Controller (val gameLogic: GameLogic, val deck: Deck)
     extends Observable
     with GameLogicController
     with DeckController {
 
-        def drawScout(): Unit = {
+/*         def drawScout(): Unit = {
             val card = deck.drawCard()
             card match {
                 case Some(c) if c.name == "Scout" =>
@@ -49,7 +49,7 @@ class Controller (val gameLogic: GameLogic, val deck: DefaultDeck)
                 case None =>
                 println("No Viper cards left in the deck.")
             }
-        }
+        } */
 
         override def resetGame(): Unit = {
             deck.resetDeck()

@@ -20,7 +20,7 @@ class ResetGameCommand(controller: Controller) extends Command {
 }
 
 class ShowDeckCommand(controller: Controller) extends Command {
-  override def execute(): String = controller.getDeckState
+  //override def execute(): String = controller.getDeckState
 }
 
 class InvalidCommand(input: String) extends Command {

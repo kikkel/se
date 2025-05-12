@@ -1,10 +1,10 @@
-/* package de.htwg.se.starrealms.controller
+package de.htwg.se.starrealms.controller
 
 import de.htwg.se.starrealms.model._
 import de.htwg.util._
 
 class GameState extends Observable {
-  private var deck: DefaultDeck = new DefaultDeck("DefaultDeck", "Default", List())
+  private var deck: Deck = new Deck()
   private var discardPile: List[Card] = List()
   private var field: List[Card] = List()
 
@@ -21,4 +21,4 @@ class GameState extends Observable {
     field = List()
     notifyObservers()
   }
-} */
+}

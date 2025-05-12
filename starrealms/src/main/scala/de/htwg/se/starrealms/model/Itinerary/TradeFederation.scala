@@ -1,20 +1,20 @@
-package de.htwg.se.starrealms.model.CardItinerary
+package de.htwg.se.starrealms.model.Itinerary
 
 import de.htwg.se.starrealms.model._
 
 case class BarterWorld() extends FactionCard(
+  set = Set("CoreSet"),
   cardName = "Barter World",
   cost = Some(4),
-  defense = Some("5"),
   primaryAbility = Some(PrimaryAbility(List("2 damage"))),
   allyAbility = Some(AllyAbility(List("2 damage"))),
   scrapAbility = Some(ScrapAbility(List("Draw a card"))),
   faction = Faction("Trade Federation"),
-  cardType = new Base(isOutpost = true)
+  cardType = new Base("5", isOutpost = true)
 ) {
   override def cardName = "Barter World"
   override def render(): String = {
-    s"FactionCard($cardName, $cost, $defense, $primaryAbility, " +
+    s"FactionCard($cardName, $cost, $primaryAbility, " +
       s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #tradefederation.scala: BarterWorld"
   }
 }

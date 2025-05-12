@@ -3,27 +3,30 @@ package de.htwg.se.starrealms.model
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class FactionFactorySpec extends AnyWordSpec with Matchers {
-
-  "The Faction factory" should {
+class FactorySpec extends AnyWordSpec with Matchers {
+  "Faction Abstract Factory" should {
     "create a TradeFederation faction" in {
       val faction = Faction("trade federation")
-      faction shouldBe a[TradeFederation]
+      faction.factionName shouldBe "Trade Federation"
+      faction.colour shouldBe "Blue"
     }
 
     "create a StarEmpire faction" in {
       val faction = Faction("star empire")
-      faction shouldBe a[StarEmpire]
+      faction.factionName shouldBe "Star Empire"
+      faction.colour shouldBe "Yellow"
     }
 
     "create a Blob faction" in {
       val faction = Faction("blob")
-      faction shouldBe a[Blob]
+      faction.factionName shouldBe "Blob"
+      faction.colour shouldBe "Green"
     }
 
     "create a MachineCult faction" in {
       val faction = Faction("machine cult")
-      faction shouldBe a[MachineCult]
+      faction.factionName shouldBe "Machine Cult"
+      faction.colour shouldBe "Red"
     }
 
     "throw an exception for an unknown faction" in {
@@ -31,6 +34,20 @@ class FactionFactorySpec extends AnyWordSpec with Matchers {
         Faction("unknown faction")
       }
       exception.getMessage should include("Unknown faction: unknown faction")
+    }
+  }
+
+  "Set Abstract Factory" should {
+    "create a CoreSet" in {
+      val set = Set("core set")
+      set.nameOfSet shouldBe "Core Set"
+    }
+
+    "throw an exception for an unknown set" in {
+      val exception = intercept[IllegalArgumentException] {
+        Set("unknown set")
+      }
+      exception.getMessage should include("Unknown set: unknown set")
     }
   }
 }

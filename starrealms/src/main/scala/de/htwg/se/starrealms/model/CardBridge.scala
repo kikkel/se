@@ -3,9 +3,10 @@ package de.htwg.se.starrealms.model
 //bridge
 
 trait Card {
+    def set: Set
     def cardName: String
     def cost: Option[Int]
-    def defense: Option[String]
+    //def defense: Option[String]
     def primaryAbility: Option[Ability]
     def allyAbility: Option[Ability]
     def scrapAbility: Option[Ability]
@@ -20,16 +21,17 @@ class Ship extends CardType {
     override def cardType: String = "Ship"
     //override def render(): String = "Ship #cardType"
 }
-class Base(val isOutpost: Boolean) extends CardType {
+class Base(val defense: String, val isOutpost: Boolean) extends CardType {
     override def cardType: String = "Base"
    // override def render(): String = "Base #cardType"
 
 }
 
 class FactionCard(
+    override val set: Set,
     override val cardName: String,
     override val cost: Option[Int],
-    override val defense: Option[String],
+    //override val defense: Option[String],
     override val primaryAbility: Option[Ability],
     override val allyAbility: Option[Ability],
     override val scrapAbility: Option[Ability],
@@ -37,7 +39,7 @@ class FactionCard(
     val cardType: CardType
     ) extends Card {
     override def render(): String = {
-        s"FactionCard($cardName, $cost, $defense, $primaryAbility, " +
+        s"FactionCard($set, $cardName, $cost, $primaryAbility, " +
             s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #BRIDGE: FactionCard"
     }
 
