@@ -80,7 +80,7 @@ class Director {
         builder.reset()
         builder.setName(s"Trade Deck - $setName")
         builder.setCards(cards)
-        cards
+
     }
 }
 
