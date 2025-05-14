@@ -1,11 +1,11 @@
-package de.htwg.se.starrealms.model.Itinerary
+/* package de.htwg.se.starrealms.model.Itinerary
 
 import de.htwg.se.starrealms.model._
 
 case class TradePod() extends FactionCard(
   set = Set("CoreSet"),
   cardName = "Trade Pod",
-  cost = Some(2),
+  cost = 2,
   primaryAbility = Some(PrimaryAbility(List("3 coins"))),
   allyAbility = Some(AllyAbility(List("2 coins"))),
   scrapAbility = None,
@@ -21,3 +21,4 @@ case class TradePod() extends FactionCard(
 }
 
 
+ */

@@ -1,11 +1,11 @@
-package de.htwg.se.starrealms.model.Itinerary
+/* package de.htwg.se.starrealms.model.Itinerary
 
 import de.htwg.se.starrealms.model._
 
 case class Corvette() extends FactionCard(
   set = Set("CoreSet"),
   cardName = "Corvette",
-  cost = Some(2),
+  cost = 2,
   primaryAbility = Some(PrimaryAbility(List("Gain 1 Combat", "Draw a card"))),
   allyAbility = Some(AllyAbility(List("Gain 2 Combat"))),
   scrapAbility = None,
@@ -21,3 +21,4 @@ case class Corvette() extends FactionCard(
 }
 
 
+ */

@@ -1,11 +1,11 @@
-package de.htwg.se.starrealms.model.Itinerary
+/* package de.htwg.se.starrealms.model.Itinerary
 
 import de.htwg.se.starrealms.model._
 
 case class BattleStation() extends FactionCard(
   set = Set("CoreSet"),
   cardName = "Battle Station",
-  cost = Some(4),
+  cost = 4,
   primaryAbility = Some(PrimaryAbility(List("2 damage"))),
   allyAbility = Some(AllyAbility(List("2 damage"))),
   scrapAbility = Some(ScrapAbility(List("Draw a card"))),
@@ -21,3 +21,4 @@ case class BattleStation() extends FactionCard(
 }
 
 
+ */

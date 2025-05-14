@@ -3,13 +3,11 @@ package de.htwg.se.starrealms.model
 //bridge
 
 trait Card {
-    def set: Set
-    def cardName: String
-    def cost: Option[Int]
-    //def defense: Option[String]
-    def primaryAbility: Option[Ability]
-    def allyAbility: Option[Ability]
-    def scrapAbility: Option[Ability]
+    val set: Set
+    val cardName: String
+    val primaryAbility: Option[Ability]
+    val faction: Faction
+    def cardType: CardType
     def render(): String
 }
 trait CardType {
@@ -30,21 +28,40 @@ class Base(val defense: String, val isOutpost: Boolean) extends CardType {
 class FactionCard(
     override val set: Set,
     override val cardName: String,
-    override val cost: Option[Int],
-    //override val defense: Option[String],
+    val cost: Int,
     override val primaryAbility: Option[Ability],
-    override val allyAbility: Option[Ability],
-    override val scrapAbility: Option[Ability],
-    val faction: Faction,
-    val colour: String,
-    val cardType: CardType
+    val allyAbility: Option[Ability],
+    val scrapAbility: Option[Ability],
+    override val faction: Faction,
+    override val cardType: CardType
     ) extends Card {
-    override def render(): String = {
-        s"FactionCard($set, $cardName, $cost, $primaryAbility, " +
-            s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #BRIDGE: FactionCard"
+        override def render(): String = {
+            s"FactionCard($set, $cardName, $cost, $primaryAbility, " +
+                s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #BRIDGE: FactionCard"
     }
-
 }
 
+class DefaultCard(
+    override val set: Set,
+    override val cardName: String,
+    override val primaryAbility: Option[Ability],
+    override val faction: Faction,
+    override val cardType: CardType
+) extends Card {
+    override def render(): String = {
+        s"DefaultCard($set, $cardName, $primaryAbility, ${cardType.cardType}) #BRIDGE: DefaultCard"
+    }
+}
 
-
+class ExplorerCard(
+    override val set: Set,
+    override val cardName: String,
+    override val primaryAbility: Option[Ability],
+    val scrapAbility: Option[Ability],
+    override val faction: Faction,
+    override val cardType: CardType
+) extends Card {
+    override def render(): String = {
+        s"ExplorerCard($set, $cardName, $primaryAbility, $scrapAbility, ${cardType.cardType}) #BRIDGE: ExplorerCard"
+    }
+}

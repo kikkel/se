@@ -13,7 +13,7 @@ class CardRenderer extends Observable with Renderer[Card] {
       case explorer: Explorer =>
         s"Explorer Card: ${explorer.cardName}, Type: ${explorer.cardType}, Ability: ${explorer.primaryAbility.map(_.render()).getOrElse("None")}, Scrap Ability: ${explorer.scrapAbility.map(_.render()).getOrElse("None")}"
       case faction: FactionCard =>
-        s"Faction Card: ${faction.cardName}, Type: ${faction.cardType}, Cost: ${faction.cost.getOrElse("N/A")}, " +
+        s"Faction Card: ${faction.cardName}, Type: ${faction.cardType}, Cost: ${faction.cost}, " +
           s"Primary Ability: ${faction.primaryAbility.map(_.render()).getOrElse("None")}, " +
           s"Ally Ability: ${faction.allyAbility.map(_.render()).getOrElse("None")}, " +
           s"Scrap Ability: ${faction.scrapAbility.map(_.render()).getOrElse("None")}"
