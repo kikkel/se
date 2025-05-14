@@ -1,13 +1,11 @@
 package de.htwg.se.starrealms.model
 
-import com.github.tototoshi.csv._
+import scala.io.Source
 
 
-object LoadCards{
+object LoadCards {
   def loadFromResource(filename: String, setName: String): List[Card] = {
-    val resource = Option(getClass.getResource(s"/$filename"))
-      .getOrElse(throw new RuntimeException(s"Resource not found: $filename"))
-    val loader = new CardCSVLoader(resource.getPath)
+    val loader = new CardCSVLoader(s"/Users/kianimoon/se/se/starrealms/src/main/resources/$filename")
     loader.loadCardsFromFile()
     loader.getCardsForSet(setName) 
   }
@@ -17,17 +15,18 @@ class CardCSVLoader(filePath: String) {
     private var cardsBySet: Map[String, List[Card]] = Map()
 
     def loadCardsFromFile(): Unit = {
-        val reader = CSVReader.open(new java.io.File(filePath))
-        val rows = reader.allWithHeaders()
-        val validCards = filterValidCards(rows)
-        val cardInstances = validCards.map(createCardInstance)
-        cardsBySet = cardInstances.collect { case card: FactionCard => card }.groupBy(_.set.nameOfSet)
-        reader.close()
+        val lines = Source.fromFile(filePath).getLines().toList
+        if (lines.isEmpty) return
+        val headers = lines.head.split(",").map(_.trim)
+        val rows = lines.tail.map { line =>
+            val values = line.split(",", -1).map(_.trim)
+            headers.zipAll(values, "", "").toMap
+        }
     }
 
     def getCardsForSet(setName: String): List[Card] = {
-        if (cardsBySet.isEmpty) { loadCardsFromFile() }
-        cardsBySet.getOrElse(setName, List())
+            if (cardsBySet.isEmpty) { loadCardsFromFile() }
+            cardsBySet.getOrElse(setName, List())
     }
 
     private def filterValidCards(rows: List[Map[String, String]]): List[Map[String, String]] = {

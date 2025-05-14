@@ -14,9 +14,7 @@ lazy val root = (project in file("."))
       "org.scalameta" %% "munit" % "1.0.0" % Test,
       "org.scalactic" %% "scalactic" % "3.2.19",
       "org.scalatest" %% "scalatest" % "3.2.19" % "test",
-      "com.github.tototoshi" %% "scala-csv" % "1.3.10"
-    ),
-    Compile / resourceDirectory := baseDirectory.value / "src" / "main" / "resources" // Add this line here
+    )
   )
 
 
