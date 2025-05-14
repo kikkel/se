@@ -5,69 +5,71 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class CardBridgeSpec extends AnyWordSpec with Matchers {
 
-  "A Ship CardType" should {
-    "return its type" in {
+  "A Ship" should {
+    "return correct cardType" in {
       val ship = new Ship
       ship.cardType shouldBe "Ship"
     }
   }
 
-  "A Base CardType" should {
-    "return its type" in {
-      val base = new Base(isOutPost = true)
+  "A Base" should {
+    "return correct cardType and store defense and outpost flag" in {
+      val base = new Base("5", isOutpost = true)
       base.cardType shouldBe "Base"
+      base.defense shouldBe "5"
+      base.isOutpost shouldBe true
     }
   }
 
   "A FactionCard" should {
-    "render correctly with all attributes" in {
-      val faction = new Faction { override def render(): String = "FactionName" }
-      val primaryAbility = new Ability(List("Attack", "Heal"))
-      val allyAbility = new Ability(List("Boost"))
-      val scrapAbility = new Ability(List("Draw"))
-
-      val factionCard = new FactionCard(
-        cardName = "FactionBase",
-        cost = Some(5),
-        primaryAbility = Some(primaryAbility),
-        allyAbility = Some(allyAbility),
-        scrapAbility = Some(scrapAbility),
-        faction = faction,
-        cardType = new Base("5", isOutpost = true)
-      )
-
-      factionCard.render() should include("FactionBase")
-      factionCard.render() should include("Cost: Some(5)")
-      factionCard.render() should include("Primary Ability: Attack, Heal")
-      factionCard.render() should include("Ally Ability: Boost")
-      factionCard.render() should include("Scrap Ability: Draw")
-      factionCard.render() should include("FactionName")
-      factionCard.render() should include("Base")
-    }
-
-    "render correctly with missing optional attributes" in {
-      val faction = new Faction { override def render(): String = "FactionName" }
-      val primaryAbility = None
-      val allyAbility = None
-      val scrapAbility = None
-
-      val factionCard = new FactionCard(
-        cardName = "FactionShip",
-        cost = Some(5),
-        primaryAbility = None,
-        allyAbility = None,
-        scrapAbility = None,
-        faction = faction,
+    "render all fields correctly" in {
+      val card = new FactionCard(
+        set = new Set { def nameOfSet = "TestSet" },
+        cardName = "TestCard",
+        cost = 5,
+        primaryAbility = Some(new Ability(List("TestAbility"))),
+        allyAbility = Some(new Ability(List("TestAbility"))),
+        scrapAbility = Some(new Ability(List("TestAbility"))),
+        faction = Faction("Unaligned"),
         cardType = new Ship()
       )
+      val rendered = card.render()
+      rendered should include("TestCard")
+      rendered should include("5")
+      rendered should include("Unaligned")
+      rendered should include("Ship")
+    }
+  }
 
-      factionCard.render() should include("FactionShip")
-      factionCard.render() should include("Cost: Some(5)")
-      factionCard.render() should include("Primary Ability: None")
-      factionCard.render() should include("Ally Ability: None")
-      factionCard.render() should include("Scrap Ability: None")
-      factionCard.render() should include("FactionName")
-      factionCard.render() should include("Ship")
+  "A DefaultCard" should {
+    "render all fields correctly" in {
+      val card = new DefaultCard(
+        set = new Set { def nameOfSet = "TestSet" },
+        cardName = "TestCard",
+        primaryAbility = Some(new Ability(List("TestAbility"))),
+        faction = Faction("Unaligned"),
+        cardType = new Ship()
+      )
+      val rendered = card.render()
+      rendered should include("TestCard")
+      rendered should include("Unaligned")
+      rendered should include("Ship")
+    }
+  }
+  "An ExplorerCard" should {
+    "render all fields correctly" in {
+      val card = new ExplorerCard(
+        set = new Set { def nameOfSet = "TestSet" },
+        cardName = "Explorer",
+        primaryAbility = Some(new Ability(List("TestAbility"))),
+        scrapAbility = Some(new Ability(List("TestAbility"))),
+        faction = Faction("Unaligned"),
+        cardType = new Ship()
+      )
+      val rendered = card.render()
+      rendered should include("Explorer")
+      rendered should include("Unaligned")
+      rendered should include("Ship")
     }
   }
 }

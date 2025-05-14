@@ -4,7 +4,7 @@ import de.htwg.util.Observer
 import de.htwg.se.starrealms.controller._
 import de.htwg.se.starrealms.view.Renderer
 
-class ConsoleView (controller: Controller) extends Observer {
+class ConsoleView (controller: Controller, output: Unit) extends Observer {
   controller.addObserver(this) // Connect view to model
   
   def render(): Unit =
@@ -21,6 +21,6 @@ class ConsoleView (controller: Controller) extends Observer {
         true
 
     }
-    }
-    override def update: Unit = render()
   }
+  override def update: Unit = render()
+}

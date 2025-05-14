@@ -2,6 +2,7 @@ package de.htwg.se.starrealms.model
 
 trait Faction { 
     def factionName: String
+    def render(): String = s"$factionName #factory"
     //def apply()
 
 }
@@ -29,7 +30,7 @@ object Faction {
         case "blob" => new Blob
         case "machine cult" => new MachineCult
         case "unaligned" => new Unaligned
-        case _ => throw new IllegalArgumentException(s"Unknown faction: $factionName")
+        case _ => throw new IllegalArgumentException(s"You've been hijacked by $factionName!")
     }
 }
 
@@ -37,7 +38,11 @@ object Faction {
 // val tradeFederation = Faction("trade federation")
 
 
-trait Set { def nameOfSet: String }
+trait Set { 
+    def nameOfSet: String
+    def render(): String = s"$nameOfSet #factory"
+    //def apply()
+}
 
 private class CoreSet extends Set { 
     override def nameOfSet: String = "Core Set"

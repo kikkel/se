@@ -8,7 +8,7 @@ trait Command { def execute(): String }
 class DrawCardCommand(gameLogic: GameLogic, cardType: String) extends Command {
   override def execute(): String = gameLogic.drawCard() match {
     case Some(c) if c.cardName == cardType => s"Drew $cardType: ${c.render()}"
-    case Some(_) => s"Wrong catd drawn. #DrawCardCommand"
+    case Some(_) => s"Wrong card drawn. #DrawCardCommand"
     case None => s"No $cardType cards left. #DrawCardCommand" 
   }
 }

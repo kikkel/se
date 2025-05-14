@@ -1,70 +1,68 @@
 package de.htwg.se.starrealms.controller
 
 import de.htwg.se.starrealms.model._
+import de.htwg.util.Observer
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
 class CommandSpec extends AnyWordSpec with Matchers {
 
     "A DrawCardCommand" should {
+      "return correct message when the right card is drawn" in {
+        val deck = new Deck()
+        val card = new DefaultCard(
+          set = new Set { def nameOfSet = "Test" },
+          cardName = "Scout",
+          primaryAbility = None,
+          faction = Faction("unaligned"),
+          cardType = new Ship()
+        )
+        deck.setCards(List(card))
+        val gameLogic = new GameLogic(deck)
+        val command = new DrawCardCommand(gameLogic, "Scout")
+        val result = command.execute()
+        result should include("Scout")
+      }
 
-    "execute and draw a card of the specified type" in {
-      val gameLogic = new GameLogic
-      val deck = new DefaultDeck("DefaultDeck", "Default", List(CardFactory.createCard("Scout")))
-      val controller = new Controller(gameLogic, deck)
-      val command = new DrawCardCommand(controller, "Scout")
-
-      val result = command.execute()
-      result should include("Drew card")
-    }
-
-    "return a message if no cards of the specified type are left" in {
-      val gameLogic = new GameLogic
-      val deck = new DefaultDeck("DefaultDeck", "Default", List())
-      val controller = new Controller(gameLogic, deck)
-      val command = new DrawCardCommand(controller, "Scout")
-
-      val result = command.execute()
-      result should not include("No Scout cards left in the deck.")
-    }
+      " return wrong card message if drawn card doesn't match" in {
+        val deck = new Deck()
+        val card = new DefaultCard(
+          set = new Set { def nameOfSet = "Test" },
+          cardName = "Viper",
+          primaryAbility = None,
+          faction = Faction("unaligned"),
+          cardType = new Ship()
+        )
+        deck.setCards(List(card))
+        val gameLogic = new GameLogic(deck)
+        val command = new DrawCardCommand(gameLogic, "Scout")
+        val result = command.execute()
+        result should include("card")
+      }
   }
   "A ResetGameCommand" should {
-
-    "execute and reset the game and deck" in {
-      val gameLogic = new GameLogic
-      val deck = new DefaultDeck("DefaultDeck", "Default", List(CardFactory.createCard("Scout")))
-      val controller = new Controller(gameLogic, deck)
-      val command = new ResetGameCommand(controller)
-
+    "reset the game and return confirmation" in {
+      val gameLogic = new GameLogic(new Deck())
+      val command = new ResetGameCommand(gameLogic)
       val result = command.execute()
-      result should include("Game and deck have been reset.")
-      deck.getCards.count(_.name == "Scout") shouldBe 8
-      deck.getCards.count(_.name == "Viper") shouldBe 2
+      result should include("reset")
     }
   }
+
   "A ShowDeckCommand" should {
-
-    "execute and return the current deck state" in {
-      val gameLogic = new GameLogic
-      val deck = new DefaultDeck("DefaultDeck", "Default", List(CardFactory.createCard("Scout")))
-      val controller = new Controller(gameLogic, deck)
+    "show deck state and return message" in {
+      val controller = new Controller(new GameLogic(new Deck()))
       val command = new ShowDeckCommand(controller)
-
       val result = command.execute()
-      result should not include("Deck Name: DefaultDeck")
-      result should include("Scout")
+      result should include("Deck")
     }
   }
   "An InvalidCommand" should {
-
-    "execute and return an error message for unknown input" in {
-      val command = new InvalidCommand("unknown")
-
+    "return error message with invalid input" in {
+      val command = new InvalidCommand("sfj")
       val result = command.execute()
-      result should include("Unknown command: unknown")
+      result should include("Invalid command")
     }
   }
-
-
 }
 

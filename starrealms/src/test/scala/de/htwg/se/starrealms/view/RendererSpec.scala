@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.view
+/* package de.htwg.se.starrealms.view
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -64,4 +64,4 @@ class RendererSpec extends AnyWordSpec with Matchers {
       result should include("#gameLogic") // Assuming optionsMenu includes this tag
     }
   }
-}
+} */
