@@ -71,5 +71,8 @@ object LoadCardsSpec extends AnyWordSpec with Matchers {
       val loader = new CardCSVLoader(invalidCsvPath)
       an [IllegalArgumentException] should be thrownBy loader.loadCardsFromFile()
     }
+
+
   }
+
 }

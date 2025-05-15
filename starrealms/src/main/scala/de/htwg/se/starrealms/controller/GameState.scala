@@ -4,21 +4,18 @@ import de.htwg.se.starrealms.model._
 import de.htwg.util._
 
 class GameState extends Observable {
-  private var deck: Deck = new Deck()
-  private var discardPile: List[Card] = List()
-  private var field: List[Card] = List()
+  val deck: Deck = new Deck()
 
   def drawCard(cardType: String): Option[Card] = {
     val card = deck.drawCard()
-    card.foreach(discardPile :+= _)
+    //card.foreach(discardPile :+= _)
     notifyObservers()
     card
   }
 
   def reset(): Unit = {
     deck.resetDeck()
-    discardPile = List()
-    field = List()
+    //discardPile = List()
     notifyObservers()
   }
 }
