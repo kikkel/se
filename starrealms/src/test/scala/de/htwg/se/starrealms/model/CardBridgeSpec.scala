@@ -4,7 +4,8 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
 class CardBridgeSpec extends AnyWordSpec with Matchers {
-
+  val dummyFaction = Faction("Unaligned")
+  val  dummySet = Set("Test Set")
   "A Ship" should {
     "return correct cardType" in {
       val ship = new Ship
@@ -21,16 +22,18 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
     }
   }
 
+
   "A FactionCard" should {
     "render all fields correctly" in {
+      
       val card = new FactionCard(
-        set = new Set { def nameOfSet = "TestSet" },
+        set = dummySet,
         cardName = "TestCard",
         cost = 5,
         primaryAbility = Some(new Ability(List("TestAbility"))),
         allyAbility = Some(new Ability(List("TestAbility"))),
         scrapAbility = Some(new Ability(List("TestAbility"))),
-        faction = Faction("Unaligned"),
+        faction = dummyFaction,
         cardType = new Ship()
       )
       val rendered = card.render()
@@ -44,10 +47,10 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
   "A DefaultCard" should {
     "render all fields correctly" in {
       val card = new DefaultCard(
-        set = new Set { def nameOfSet = "TestSet" },
+        set = dummySet,
         cardName = "TestCard",
         primaryAbility = Some(new Ability(List("TestAbility"))),
-        faction = Faction("Unaligned"),
+        faction = dummyFaction,
         cardType = new Ship()
       )
       val rendered = card.render()
@@ -59,11 +62,12 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
   "An ExplorerCard" should {
     "render all fields correctly" in {
       val card = new ExplorerCard(
-        set = new Set { def nameOfSet = "TestSet" },
+        set = dummySet,
         cardName = "Explorer",
+        cost = 2,
         primaryAbility = Some(new Ability(List("TestAbility"))),
         scrapAbility = Some(new Ability(List("TestAbility"))),
-        faction = Faction("Unaligned"),
+        faction = dummyFaction,
         cardType = new Ship()
       )
       val rendered = card.render()

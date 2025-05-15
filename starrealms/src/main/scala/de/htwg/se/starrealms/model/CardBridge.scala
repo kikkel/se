@@ -56,12 +56,13 @@ class DefaultCard(
 class ExplorerCard(
     override val set: Set,
     override val cardName: String,
+    val cost: Int,
     override val primaryAbility: Option[Ability],
     val scrapAbility: Option[Ability],
     override val faction: Faction,
     override val cardType: CardType
 ) extends Card {
     override def render(): String = {
-        s"ExplorerCard($set, $cardName, $primaryAbility, $scrapAbility, ${cardType.cardType}) #BRIDGE: ExplorerCard"
+        s"ExplorerCard($set, $cardName, $cost, $primaryAbility, $scrapAbility, ${cardType.cardType}) #BRIDGE: ExplorerCard"
     }
 }
