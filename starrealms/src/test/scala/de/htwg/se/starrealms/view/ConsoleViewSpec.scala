@@ -17,7 +17,7 @@ class ConsoleViewSpec extends AnyWordSpec with Matchers {
             val outputBuffer = new ListBuffer[String]()
             val controller = new MockController()
             //val output = controller.getState
-            val view = new ConsoleView(controller, outputBuffer += _)
+            val view = new ConsoleView(controller, (s: String) => outputBuffer += s)
             view.render()
             outputBuffer.exists(_.contains("Deck:")) shouldBe true
         }
@@ -26,7 +26,7 @@ class ConsoleViewSpec extends AnyWordSpec with Matchers {
             val outputBuffer = new ListBuffer[String]()
             val controller = new MockController()
             val output = controller.getState
-            val view = new ConsoleView(controller, outputBuffer += _)
+            val view = new ConsoleView(controller, (s: String) => outputBuffer += s)
             
             view.processInput("s") shouldBe true
             outputBuffer.exists(_.contains("Processed")) shouldBe true
@@ -39,7 +39,7 @@ class ConsoleViewSpec extends AnyWordSpec with Matchers {
             val outputBuffer = new ListBuffer[String]()
             val controller = new MockController()
             val output = controller.getState
-            val view = new ConsoleView(controller, outputBuffer += _)
+            val view = new ConsoleView(controller, (s: String) => outputBuffer += s)
             
             view.processInput("x") shouldBe false
             outputBuffer.exists(_.contains("Exiting the game")) shouldBe true
@@ -48,7 +48,7 @@ class ConsoleViewSpec extends AnyWordSpec with Matchers {
             val outputBuffer = new ListBuffer[String]()
             val controller = new MockController()
             val output = controller.getState
-            val view = new ConsoleView(controller, outputBuffer += _)
+            val view = new ConsoleView(controller, (s: String) => outputBuffer += s)
 
             view.update
             outputBuffer.exists(_.contains("Deck:")) shouldBe true
