@@ -35,7 +35,9 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
         allyAbility = Some(abilities),
         scrapAbility = Some(abilities),
         faction = dummyFaction,
-        cardType = new Ship()
+        cardType = new Ship(),
+        qty = 1,
+        role = "Trade Deck"
       )
       val rendered = card.render()
       rendered should include("Core Set")
@@ -54,7 +56,9 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
         cardName = "TestCard",
         primaryAbility = Some(new Ability(List("TestAbility"))),
         faction = dummyFaction,
-        cardType = new Ship()
+        cardType = new Ship(),
+        qty = 1,
+        role = "Personal Deck"
       )
       val rendered = card.render()
       rendered should include("TestCard")
@@ -71,7 +75,9 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
         primaryAbility = Some(new Ability(List("TestAbility"))),
         scrapAbility = Some(new Ability(List("TestAbility"))),
         faction = dummyFaction,
-        cardType = new Ship()
+        cardType = new Ship(),
+        qty = 1,
+        role = "Explorer Deck"
       )
       val rendered = card.render()
       rendered should include("Explorer")

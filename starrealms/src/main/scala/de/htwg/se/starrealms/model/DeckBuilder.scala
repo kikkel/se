@@ -17,7 +17,7 @@ class Deck {
 
     def addCard(card: Card): Unit = cards = cards :+ card
     def removeCard(card: Card): Unit = cards = cards.filterNot(_ == card)
-    def shuffle(): Unit = cards = Random.shuffle(cards)
+    //def shuffle(): Unit = cards = Random.shuffle(cards)
     def drawCard(): Option[Card] = {
         cards match {
             case Nil => None

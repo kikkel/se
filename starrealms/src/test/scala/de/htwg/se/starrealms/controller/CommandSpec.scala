@@ -15,7 +15,9 @@ class CommandSpec extends AnyWordSpec with Matchers {
           cardName = "Scout",
           primaryAbility = None,
           faction = Faction("unaligned"),
-          cardType = new Ship()
+          cardType = new Ship(),
+          qty = 1,
+          role = "Personal Deck"
         )
         deck.setCards(List(card))
         val gameLogic = new GameLogic(deck)
@@ -31,7 +33,9 @@ class CommandSpec extends AnyWordSpec with Matchers {
           cardName = "Viper",
           primaryAbility = None,
           faction = Faction("unaligned"),
-          cardType = new Ship()
+          cardType = new Ship(),
+          qty = 1,
+          role = "Personal Deck"
         )
         deck.setCards(List(card))
         val gameLogic = new GameLogic(deck)

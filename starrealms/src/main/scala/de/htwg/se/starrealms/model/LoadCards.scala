@@ -1,6 +1,7 @@
 package de.htwg.se.starrealms.model
 
 import scala.io.Source
+import javax.management.relation.Role
 
 
 object LoadCards {
@@ -34,7 +35,8 @@ class CardCSVLoader(filePath: String) {
         rows.filter(row => 
             row.get("Name").exists(_.nonEmpty) &&
             row.get("CardType").exists(_.nonEmpty) &&
-            row.get("Set").exists(_.nonEmpty)
+            row.get("Set").exists(_.nonEmpty) &&
+            row.get("Role").exists(_.nonEmpty)
         )
     }
 
@@ -52,6 +54,13 @@ class CardCSVLoader(filePath: String) {
         val primaryAbility = abilities.headOption.map(a => new Ability(List(a)))
         val allyAbility = abilities.find(_.contains("Ally")).map(a => new Ability(List(a)))
         val scrapAbility = abilities.find(_.startsWith("{Scrap}")).map(a => new Ability(List(a.stripPrefix("{Scrap}").trim)))
+        val qty = card("Qty").map(_.toInt)
+        val role = card("Role") match {
+            case "Trade Deck" => "Trade Deck"
+            case "Explorer Pile" => "Explorer Deck"
+            case "Personal Deck" => "Personal Deck"
+            case _ => throw new IllegalArgumentException(s"Unknown role: ${card("Role")}")
+        }
 
         new FactionCard(
             set = Set(card("Set")),
@@ -61,7 +70,9 @@ class CardCSVLoader(filePath: String) {
             allyAbility = allyAbility,
             scrapAbility = scrapAbility,
             faction = faction,
-            cardType = cardType
+            cardType = cardType,
+            qty = card("Qty").toInt,
+            role = card("Role")
         )
 
 /*         new DefaultCard(

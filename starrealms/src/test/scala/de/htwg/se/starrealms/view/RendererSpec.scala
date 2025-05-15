@@ -1,67 +1,72 @@
-/* package de.htwg.se.starrealms.view
+package de.htwg.se.starrealms.view
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.starrealms.model._
 
 class RendererSpec extends AnyWordSpec with Matchers {
+  val dummySet: Set = Set("Core Set")
+  val dummyFaction: Faction = Faction("Unaligned")
+  val abilities = new Ability(List("TestAbility"))
+
   "A CardRenderer" should {
+    val renderer = new CardRenderer
+    
 
-    "render a card with abilities" in {
-      val primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade")))
-      val card = new Ship("Scout", primaryAbility = primaryAbility)
-      val renderer = new CardRenderer
-
-      val result = renderer.render(card)
-      result should include("Card Name: Scout")
-      result should include("Card Type: Ship")
-      result should include("Abilities: Gain 3 Trade")
+    "render a DefaultCard correctly" in {
+      val card = new DefaultCard(
+        set = dummySet,
+        cardName = "TestCard",
+        primaryAbility = Some(abilities),
+        faction = dummyFaction,
+        cardType = new Ship(),
+        qty = 1,
+        role = "Trade Deck"
+      )
+      val rendered = renderer.render(card)
+      rendered should include("TestCard")
+      rendered should include("TestAbility")
+      rendered should include("Ship")
     }
 
-    "render a card without abilities" in {
-      val card = new Ship("Scout")
-      val renderer = new CardRenderer
+    "render an ExplorerCard correctly" in {
+      val card = new ExplorerCard(
+        set = dummySet,
+        cardName = "Explorer",
+        cost = 2,
+        primaryAbility = Some(abilities),
+        scrapAbility = Some(abilities),
+        faction = dummyFaction,
+        cardType = new Ship(),
+        qty = 1,
+        role = "Trade Deck"
+      )
+      val rendered = renderer.render(card)
+      rendered should include("Explorer")
+      rendered should include("TestAbility")
+      rendered should include("2")
+      rendered should include("Ship")
+    }
 
-      val result = renderer.render(card)
-      result should include("Card Name: Scout")
-      result should include("Card Type: Ship")
-      result should include("Abilities: None")
+    "render a FactionCard correctly" in {
+      val card = new FactionCard(
+        set = dummySet,
+        cardName = "TestCard",
+        cost = 5,
+        primaryAbility = Some(abilities),
+        allyAbility = Some(abilities),
+        scrapAbility = Some(abilities),
+        faction = dummyFaction,
+        cardType = new Ship(),
+        qty = 1,
+        role = "Trade Deck"
+      )
+      val rendered = renderer.render(card)
+      rendered should include("TestCard")
+      rendered should include("5")
+      rendered should include("TestAbility")
+      rendered should include("Unaligned")
+      rendered should include("Ship")
     }
   }
-  "A DeckRenderer" should {
-
-    "render a deck with cards" in {
-      val card1 = new Ship("Scout", primaryAbility = Some(PrimaryAbility(List("Gain 3 Trade"))))
-      val card2 = new Ship("Viper", primaryAbility = Some(PrimaryAbility(List("Deal 3 Damage"))))
-      val deck = new DefaultDeck("TestDeck", "Default", List(card1, card2))
-      val renderer = new DeckRenderer
-
-      val result = renderer.render(deck)
-      result should include("Deck Name: TestDeck")
-      result should include("Card Name: Scout")
-      result should include("Card Name: Viper")
-      result should not include("Abilities: Gain 3 Trade")
-      result should not include("Abilities: Deal 3 Damage")
-    }
-
-    "render an empty deck" in {
-      val deck = new DefaultDeck("EmptyDeck", "Default", List())
-      val renderer = new DeckRenderer
-
-      val result = renderer.render(deck)
-      result should include("Deck Name: EmptyDeck")
-      result should include("Cards:")
-      result should include( "Card Name:")
-    }
-  }
-  "A GameStateRenderer" should {
-
-    "render the game state" in {
-      val gameLogic = new GameLogic
-      val renderer = new GameStateRenderer
-
-      val result = renderer.render(gameLogic)
-      result should include("#gameLogic") // Assuming optionsMenu includes this tag
-    }
-  }
-} */
+}

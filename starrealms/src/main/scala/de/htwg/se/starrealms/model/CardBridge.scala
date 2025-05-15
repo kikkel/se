@@ -8,6 +8,8 @@ trait Card {
     val primaryAbility: Option[Ability]
     val faction: Faction
     def cardType: CardType
+    val qty: Int
+    val role: String
     def render(): String
 }
 trait CardType {
@@ -33,7 +35,9 @@ class FactionCard(
     val allyAbility: Option[Ability],
     val scrapAbility: Option[Ability],
     override val faction: Faction,
-    override val cardType: CardType
+    override val cardType: CardType,
+    override val qty: Int,
+    override val role: String
     ) extends Card {
         override def render(): String = {
             s"FactionCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
@@ -47,7 +51,10 @@ class DefaultCard(
     override val cardName: String,
     override val primaryAbility: Option[Ability],
     override val faction: Faction,
-    override val cardType: CardType
+    override val cardType: CardType,
+    override val qty: Int,
+    override val role: String
+
 ) extends Card {
     override def render(): String = {
         s"DefaultCard(${set.nameOfSet}, $cardName, " +
@@ -62,7 +69,9 @@ class ExplorerCard(
     override val primaryAbility: Option[Ability],
     val scrapAbility: Option[Ability],
     override val faction: Faction,
-    override val cardType: CardType
+    override val cardType: CardType,
+    override val qty: Int,
+    override val role: String
 ) extends Card {
     override def render(): String = {
         s"ExplorerCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
