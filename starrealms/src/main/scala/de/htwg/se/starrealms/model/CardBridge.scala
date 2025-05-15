@@ -36,8 +36,9 @@ class FactionCard(
     override val cardType: CardType
     ) extends Card {
         override def render(): String = {
-            s"FactionCard($set, $cardName, $cost, $primaryAbility, " +
-                s"$allyAbility, $scrapAbility, ${faction.factionName}, ${cardType.cardType}) #BRIDGE: FactionCard"
+            s"FactionCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+                s"${allyAbility.map(_.render()).getOrElse("None")}, ${scrapAbility.map(_.render()).getOrElse("None")}, " +
+                s"${faction.factionName}, ${cardType.cardType}) #BRIDGE: FactionCard"
     }
 }
 
@@ -49,7 +50,8 @@ class DefaultCard(
     override val cardType: CardType
 ) extends Card {
     override def render(): String = {
-        s"DefaultCard($set, $cardName, $primaryAbility, ${cardType.cardType}) #BRIDGE: DefaultCard"
+        s"DefaultCard(${set.nameOfSet}, $cardName, " +
+        s"${primaryAbility.map(_.render()).getOrElse("None")}, ${faction.factionName} ${cardType.cardType}) #BRIDGE: DefaultCard"
     }
 }
 
@@ -63,6 +65,7 @@ class ExplorerCard(
     override val cardType: CardType
 ) extends Card {
     override def render(): String = {
-        s"ExplorerCard($set, $cardName, $cost, $primaryAbility, $scrapAbility, ${cardType.cardType}) #BRIDGE: ExplorerCard"
+        s"ExplorerCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+        s"${scrapAbility.map(_.render()).getOrElse("None")}, ${faction.factionName}, ${cardType.cardType}) #BRIDGE: ExplorerCard"
     }
 }

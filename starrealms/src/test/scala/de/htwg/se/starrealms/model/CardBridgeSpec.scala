@@ -5,7 +5,8 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class CardBridgeSpec extends AnyWordSpec with Matchers {
   val dummyFaction = Faction("Unaligned")
-  val  dummySet = Set("Test Set")
+  val dummySet = Set("Core Set")
+  val abilities = new Ability(List("TestAbility"))
   "A Ship" should {
     "return correct cardType" in {
       val ship = new Ship
@@ -30,15 +31,17 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
         set = dummySet,
         cardName = "TestCard",
         cost = 5,
-        primaryAbility = Some(new Ability(List("TestAbility"))),
-        allyAbility = Some(new Ability(List("TestAbility"))),
-        scrapAbility = Some(new Ability(List("TestAbility"))),
+        primaryAbility = Some(abilities),
+        allyAbility = Some(abilities),
+        scrapAbility = Some(abilities),
         faction = dummyFaction,
         cardType = new Ship()
       )
       val rendered = card.render()
+      rendered should include("Core Set")
       rendered should include("TestCard")
       rendered should include("5")
+      rendered should include("TestAbility")
       rendered should include("Unaligned")
       rendered should include("Ship")
     }
