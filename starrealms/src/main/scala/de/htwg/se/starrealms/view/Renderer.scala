@@ -3,22 +3,28 @@ package de.htwg.se.starrealms.view
 import de.htwg.se.starrealms.model._
 import de.htwg.util._
 
-trait Renderer[T] {
-  def render(entity: T): String
-}
+trait Renderer[T] { def render(entity: T): String }
 
 class CardRenderer extends Observable with Renderer[Card] {
   override def render(card: Card): String =
-    s"Card Name: ${card.getName}, Card Type: ${card.getCardType}, Abilities: ${card.getPrimaryAbility.map(_.getActions.mkString(", ")).getOrElse("None")}"
+    card match {
+      case default: DefaultCard =>
+        s"Default Card: ${default.cardName}, Type: ${default.cardType}, Ability: ${default.primaryAbility.map(_.render()).getOrElse("None")}"
+      case explorer: ExplorerCard =>
+        s"Explorer Card: ${explorer.cardName}, Cost: ${explorer.cost}, Type: ${explorer.cardType}, Ability: ${explorer.primaryAbility.map(_.render()).getOrElse("None")}, Scrap Ability: ${explorer.scrapAbility.map(_.render()).getOrElse("None")}"
+      case faction: FactionCard =>
+        s"Faction Card: ${faction.cardName}, Type: ${faction.cardType}, Cost: ${faction.cost}, " +
+          s"Primary Ability: ${faction.primaryAbility.map(_.render()).getOrElse("None")}, " +
+          s"Ally Ability: ${faction.allyAbility.map(_.render()).getOrElse("None")}, " +
+          s"Scrap Ability: ${faction.scrapAbility.map(_.render()).getOrElse("None")}, Faction: ${faction.faction.factionName} #Renderer.scala"
+    }
 }
 
-class DeckRenderer extends Renderer[Deck] {
+/* class DeckRenderer extends Renderer[Deck] {
   override def render(deck: Deck): String = {
     val cards = deck.getCards.map(card => new CardRenderer().render(card)).mkString("\n")
     s"Deck Name: ${deck.getName}\nCards:\n$cards"
   }
 }
 
-class GameStateRenderer extends Renderer[GameLogic] {
-  override def render(gameLogic: GameLogic): String = gameLogic.optionsMenu()
-}
+class GameStateRenderer extends Renderer[GameLogic] { override def render(gameLogic: GameLogic): String = gameLogic.getDeckState } */
