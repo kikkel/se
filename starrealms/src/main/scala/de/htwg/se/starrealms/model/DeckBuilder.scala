@@ -70,12 +70,6 @@ class DeckBuilder extends Builder {
 }
 
 class Director {
-    def constructDefaultDeck(builder: Builder): Unit = {
-        builder.reset()
-        builder.setName("Default Deck")
-        builder.setCards(List.fill(8)(new Scout()) ++ List.fill(2)(new Viper()))
-    }
-
     def constructTradeDeck(builder: Builder, setName: String, cards: List[Card]): Unit = {
         builder.reset()
         builder.setName(s"Trade Deck - $setName")

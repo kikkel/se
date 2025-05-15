@@ -8,9 +8,9 @@ trait Renderer[T] { def render(entity: T): String }
 class CardRenderer extends Observable with Renderer[Card] {
   override def render(card: Card): String =
     card match {
-      case scout: Scout => s"Scout Card: ${scout.cardName}, Type: ${scout.cardType}, Ability: ${scout.primaryAbility.map(_.render()).getOrElse("None")}"
-      case viper: Viper => s"Viper Card: ${viper.cardName}, Type: ${viper.cardType}, Ability: ${viper.primaryAbility.map(_.render()).getOrElse("None")}"
-      case explorer: Explorer =>
+      case default: DefaultCard =>
+        s"Default Card: ${default.cardName}, Type: ${default.cardType}, Ability: ${default.primaryAbility.map(_.render()).getOrElse("None")}"
+      case explorer: ExplorerCard =>
         s"Explorer Card: ${explorer.cardName}, Type: ${explorer.cardType}, Ability: ${explorer.primaryAbility.map(_.render()).getOrElse("None")}, Scrap Ability: ${explorer.scrapAbility.map(_.render()).getOrElse("None")}"
       case faction: FactionCard =>
         s"Faction Card: ${faction.cardName}, Type: ${faction.cardType}, Cost: ${faction.cost}, " +
