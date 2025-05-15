@@ -6,8 +6,9 @@ import javax.management.relation.Role
 
 object LoadCards {
   def loadFromResource(filename: String, setName: String): List[Card] = {
-    val loader = new CardCSVLoader(s"/Users/kianimoon/se/se/starrealms/src/main/resources/$filename")
     //val loader = new CardCSVLoader(s"/Users/kianimoon/se/se/starrealms/src/main/resources/$filename")
+    //val loader = new CardCSVLoader(s"/Users/kianimoon/se/se/starrealms/src/main/resources/$filename")
+    val loader = new CardCSVLoader(s"starrealms/src/main/resources/$filename")
     loader.loadCardsFromFile()
     loader.getCardsForSet(setName) 
   }
