@@ -1,4 +1,4 @@
-/* package de.htwg.se.starrealms.app
+package de.htwg.se.starrealms.app
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -9,4 +9,4 @@ class MainSpec extends AnyWordSpec with Matchers {
       noException should be thrownBy Main.main(Array.empty)
     }
   }
-} */
+}
