@@ -4,7 +4,7 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 
 # lec 8
 ## Notes:
-- use with deckbuilder to separate decks?
+-
 - create undo/redo mechanism with **command pattern**   <- **ASSIGNMENT**
   - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
   - invoker should be called UndoManager
@@ -15,6 +15,7 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 ### - chain of responsibility? -> maybe for handling attributes on cards?
 ### - proxy for filepath???
 ### - composite pattern
+ - use with deckbuilder to separate decks?
 ### - decorator pattern
 ### - monad for transporting and transforming monoids 
   - abbildung von einer menge auf eine andere menge
