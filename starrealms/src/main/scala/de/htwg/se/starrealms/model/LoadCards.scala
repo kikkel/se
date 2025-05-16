@@ -5,7 +5,7 @@ import java.io.File
 
 
 object LoadCards {
-  def loadFromResource(filename: String, setName: String): List[Card] = {
+  def loadFromResource(getCsvPath: String, setName: String): List[Card] = {
     val loader = new CardCSVLoader(getCsvPath)
     loader.loadCardsFromFile()
     loader.getCardsForSet(setName)

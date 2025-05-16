@@ -35,9 +35,7 @@ jobs:
           apps: sbt
 
       - name: Ensure FullCardItinerary.csv exists
-        run: |
-          mkdir -p starrealms/src/main/resources
-          echo "Set,Qty,Name,Text,CardType,Faction,Cost,Defense,Role,Notes" > starrealms/src/main/resources/FullCardItinerary.csv
+        run: echo "Set,Qty,Name,Text,CardType,Faction,Cost,Defense,Role,Notes" > starrealms/src/main/resources/FullCardItinerary.csv
 
       - name: Debug .git and build.sbt
         working-directory: starrealms
