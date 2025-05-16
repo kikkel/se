@@ -7,7 +7,7 @@ import de.htwg.se.starrealms.view.ConsoleView
 class GameApp(inputProvider: () => String, output: String => Unit = println) {
   def run(): Unit = {
     output("Welcome to Star Realms!")
-    val cards = LoadCards.loadFromResource("FullCardItinerary.csv", "Core Set")
+    val cards = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set")
 
     val deckbuilder = new DeckBuilder()
     val director = new Director()

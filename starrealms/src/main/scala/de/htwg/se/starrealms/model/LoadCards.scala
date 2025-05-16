@@ -1,17 +1,19 @@
 package de.htwg.se.starrealms.model
 
 import scala.io.Source
-import javax.management.relation.Role
+import java.io.File
 
 
 object LoadCards {
   def loadFromResource(filename: String, setName: String): List[Card] = {
-    //val loader = new CardCSVLoader(s"/Users/kianimoon/se/se/starrealms/src/main/resources/$filename")
-    //val loader = new CardCSVLoader(s"/Users/kianimoon/se/se/starrealms/src/main/resources/$filename")
-    val loader = new CardCSVLoader(s"se/starrealms/src/main/resources/$filename")
+    val loader = new CardCSVLoader(getCsvPath)
     loader.loadCardsFromFile()
-    loader.getCardsForSet(setName) 
+    loader.getCardsForSet(setName)
   }
+
+  def getCsvPath: String =
+    sys.env.getOrElse("CARDS_CSV_PATH", "starrealms/src/main/resources/FullCardItinerary.csv")
+
 }
 
 class CardCSVLoader(filePath: String) {
