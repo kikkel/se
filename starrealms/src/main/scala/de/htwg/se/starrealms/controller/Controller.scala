@@ -16,4 +16,6 @@ class Controller(gameLogic: GameLogic) extends Observable {
     result
 }
 def getState: String = gameLogic.getDeckState
+
+
 }
