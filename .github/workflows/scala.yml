@@ -34,6 +34,10 @@ jobs:
         with:
           apps: sbt
 
+      - name: Create .git symlink inside starrealms/
+        run: ln -s ../.git .git
+        working-directory: starrealms
+
       - name: Ensure FullCardItinerary.csv exists
         run: echo "Set,Qty,Name,Text,CardType,Faction,Cost,Defense,Role,Notes" > starrealms/src/main/resources/FullCardItinerary.csv
 
