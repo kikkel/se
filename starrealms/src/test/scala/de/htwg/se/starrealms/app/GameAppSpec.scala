@@ -1,4 +1,4 @@
-/* package de.htwg.se.starrealms.app
+package de.htwg.se.starrealms.app
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
@@ -26,4 +26,4 @@ class GameAppSpec extends AnyWordSpec with Matchers {
       output should include("Game exited") // clean shutdown
     }
   }
-} */
+}
