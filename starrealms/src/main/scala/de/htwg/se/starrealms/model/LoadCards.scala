@@ -5,14 +5,15 @@ import java.io.File
 
 
 object LoadCards {
-  def loadFromResource(getCsvPath: String, setName: String): List[Card] = {
-    val loader = new CardCSVLoader(getCsvPath)
-    loader.loadCardsFromFile()
-    loader.getCardsForSet(setName)
-  }
+    def loadFromResource(getCsvPath: String, setName: String): List[Card] = {
+        val loader = new CardCSVLoader(getCsvPath)
+        loader.loadCardsFromFile()
+        loader.getCardsForSet(setName)
+    }
 
-  def getCsvPath: String =
-    sys.env.getOrElse("CARDS_CSV_PATH", "starrealms/src/main/resources/FullCardItinerary.csv")
+    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    def getCsvPath: String =
+        sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath")
 
 }
 
