@@ -1,6 +1,18 @@
 [![Coverage Status](https://coveralls.io/repos/github/kikkel/se/badge.svg?branch=main)](https://coveralls.io/github/kikkel/se?branch=main)
 
 Notes:
+# lec 8
+## chain of responsibility? -> maybe for handling attributes on cards?
+## proxy for filepath???
+## composite pattern
+- use with deckbuilder to separate decks?
+- create undo/redo mechanism with **command pattern**
+  - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
+  - invoker should be called UndoManager
+
+
+## decorator pattern
+
 
 # Lecture 07 - Patterns
 
