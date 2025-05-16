@@ -7,13 +7,16 @@
 - create undo/redo mechanism with **command pattern** <- **ASSIGNMENT**
   - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
   - invoker should be called UndoManager
+- create monads for every **Option** and **TRY** implementation <- **ASSIGNMENT**: at least 1 Option and 1 Try!!
+- 
 
 
 ### - chain of responsibility? -> maybe for handling attributes on cards?
 ### - proxy for filepath???
 ### - composite pattern
 ### - decorator pattern
-### - monad for transporting and transforming monoids
+### - monad for transporting and transforming monoids 
+  - abbildung von einer menge auf eine andere menge
   - map,flatMap and filter MUST be implemented (example slide 15). handled by for comprehension
   - monad is the container for transporting monoids. use to parralelise creating decks, categorising cards in set, etc.
   - store **States**(goodState, badState):
