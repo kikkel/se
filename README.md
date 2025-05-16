@@ -1,4 +1,4 @@
-__COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES__
+_COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 [![Coverage Status](https://coveralls.io/repos/github/kikkel/se/badge.svg?branch=main)](https://coveralls.io/github/kikkel/se?branch=main)
 
 
