@@ -2,10 +2,6 @@
 
 
 # lec 8
-## chain of responsibility? -> maybe for handling attributes on cards?
-## proxy for filepath???
-## composite pattern
-
 ## Notes:
 - use with deckbuilder to separate decks?
 - create undo/redo mechanism with **command pattern**
@@ -13,7 +9,10 @@
   - invoker should be called UndoManager
 
 
-## decorator pattern
+### - chain of responsibility? -> maybe for handling attributes on cards?
+### - proxy for filepath???
+### - composite pattern
+### - decorator pattern
 
 
 # Lecture 07 - Patterns
