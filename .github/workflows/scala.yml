@@ -42,7 +42,7 @@ jobs:
         run: |
           echo "PWD: $(pwd)"
           ls -la
-          ls -la .git
+          if [ -d .git ]; then ls -la .git; else echo ".git directory not found here"; fi
           test -f build.sbt && echo "build.sbt found" || echo "build.sbt missing"
 
       - name: Run tests and report coverage to Coveralls
