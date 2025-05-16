@@ -11,7 +11,9 @@ object LoadCards {
         loader.getCardsForSet(setName)
     }
 
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
+
     def getCsvPath: String =
         sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath")
 
@@ -36,7 +38,7 @@ class CardCSVLoader(filePath: String) {
     }
 
     private def filterValidCards(rows: List[Map[String, String]]): List[Map[String, String]] = {
-        rows.filter(row => 
+        rows.filter(row =>
             row.get("Name").exists(_.nonEmpty) &&
             row.get("CardType").exists(_.nonEmpty) &&
             row.get("Set").exists(_.nonEmpty) &&
@@ -48,7 +50,7 @@ class CardCSVLoader(filePath: String) {
         val faction = Faction(card("Faction"))
         val cardType = card("CardType") match {
             case "Ship" => new Ship()
-            case "Base" => 
+            case "Base" =>
                 val defense = card.getOrElse("Defense", "0")
                 val isOutPost = card.get("Outpost").exists(_.toBoolean)
                 new Base(defense, isOutPost)
