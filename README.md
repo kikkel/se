@@ -4,7 +4,7 @@
 # lec 8
 ## Notes:
 - use with deckbuilder to separate decks?
-- create undo/redo mechanism with **command pattern**
+- create undo/redo mechanism with **command pattern** <- **ASSIGNMENT**
   - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
   - invoker should be called UndoManager
 
@@ -13,8 +13,15 @@
 ### - proxy for filepath???
 ### - composite pattern
 ### - decorator pattern
-### - monad -> when map,flatMap AND filter are implemented (example slide 15). handled by for comprehension
-  - all collections in scala are monads
+### - monad for transporting and transforming monoids
+  - map,flatMap and filter MUST be implemented (example slide 15). handled by for comprehension
+  - monad is the container for transporting monoids. use to parralelise creating decks, categorising cards in set, etc.
+  - store **States**(goodState, badState):
+      - Option(Some, None) <- **ASSIGNMENT**
+      - Try(Success,Failure) <- **ASSIGNMENT**
+      - Either(Right, Left)
+      - Future(Success, NotCompleted, Failure)
+      - 
 
 
 # Lecture 07 - Patterns
