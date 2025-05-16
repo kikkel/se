@@ -39,13 +39,13 @@ Refactoring Guru: https://refactoring.guru/design-patterns
 
 ## Creational
 
-- ### Abstract Factory pattern - FactionFactory
+- **Abstract Factory pattern - FactionFactory ✅**
 
   - > https://refactoring.guru/design-patterns/abstract-factory
   - create default cards separately to factions (scout, viper, explorer)
   - **BRIDGE PATTERN** lets you replace the implementation object inside the abstraction. It’s as easy as assigning a new value to a field.
 
-- ### Builder Pattern - DeckBuilder
+- **Builder Pattern - DeckBuilder ✅**
   > https://refactoring.guru/design-patterns/builder
   >
   > - extract the object construction code out of its own class and move it to separate objects called builders.
@@ -54,7 +54,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
 
 ## Structural
 
-- ### BRIDGE Pattern: CardType (Ship/Base)
+- **BRIDGE Pattern: CardType (Ship/Base) ✅**
   > https://refactoring.guru/design-patterns/bridge
   >
   > - to divide and organize a monolithic class that has several variants of some functionality
@@ -65,7 +65,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
 
 ## Behavioural
 
-- ### Observer Pattern ✅
+-  **Observer Pattern ✅**
   > https://refactoring.guru/design-patterns/observer
   >
   > - subscription mechanism to notify multiple objects about any events that happen to the object they’re observing
