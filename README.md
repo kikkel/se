@@ -13,7 +13,7 @@
 ### - proxy for filepath???
 ### - composite pattern
 ### - decorator pattern
-### - monad -> when map,flatMap AND filter are implemented. handled by for comprehension
+### - monad -> when map,flatMap AND filter are implemented (example slide 15). handled by for comprehension
   - all collections in scala are monads
 
 
