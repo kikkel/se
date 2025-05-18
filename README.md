@@ -23,7 +23,7 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
       - 
 
 
-# Lecture 07 - Patterns
+# Patterns
 
 Refactoring Guru: https://refactoring.guru/design-patterns
 
