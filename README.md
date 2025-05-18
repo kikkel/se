@@ -20,18 +20,21 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
       - Try(Success,Failure)   <- **ASSIGNMENT** ⭕️
       - Either(Right, Left)
       - Future(Success, NotCompleted, Failure)
-      - 
 
-
-# Patterns
-
-Refactoring Guru: https://refactoring.guru/design-patterns
+      
+lec 7 notes
 
 - Chain of responsibility- passes a request sequentially along a dynamic chain of potential receivers until one of them handles it.
 - Template method,
 - Composite
 - - **state**: soll input verarbeiten/MODUS/ETC
 - **[SOLID] OPEN/CLOSED:** alle if statements mit strategy und andere design patterns ersetzen
+
+
+
+# Patterns
+
+Refactoring Guru: https://refactoring.guru/design-patterns
 
 ## Creational
 
