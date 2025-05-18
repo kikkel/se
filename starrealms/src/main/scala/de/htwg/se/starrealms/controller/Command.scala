@@ -7,58 +7,99 @@ trait Command {
   def doMove: Unit
   def undoMove: Unit
   def redoMove: Unit
-  def execute: String 
-}
-
-
-class SetCommand(row: Int, col: Int, value: Int, controller: Controller) extends Command {
-  override def doMove: Unit = controller.grid = controller.grid.set(row, col, value)
-  override def undoMove: Unit = controller.grid = controller.grid.set(row, col, 0)
-  override def redoMove: Unit = controller.grid = controller.grid.set(row, col, value)
-  override def execute: String = { doMove; s"Set value at ($row, $col) to $value" }
 }
 
 class UndoManager {
   private var undoStack: List[Command] = Nil
   private var redoStack: List[Command] = Nil
+
   def doMove(command: Command) = {
     undoStack = command :: undoStack
+    redoStack = Nil
     command.doMove
   }
+
   def undoMove = {
     undoStack match {
-      case Nil => "up tp date"
-      case head::stack => {
+      case Nil => println("up tp date")
+      case head::stack => 
         head.undoMove
         undoStack = stack
         redoStack = head :: redoStack
-      }
     }
   } 
-}
 
-class DrawCardCommand(gameLogic: GameLogic, cardType: String) extends Command {
-  override def execute(): String = gameLogic.drawCard() match {
-    case Some(c) if c.cardName == cardType => s"Drew $cardType: ${c.render()}"
-    case Some(_) => s"Wrong card drawn. #DrawCardCommand"
-    case None => s"No $cardType cards left. #DrawCardCommand" 
+  def redoMove = {
+    redoStack match {
+      case Nil => println("up to date")
+      case head::stack => 
+        head.redoMove
+        redoStack = stack
+        undoStack = head :: undoStack
+    }
   }
 }
 
-class ResetGameCommand(gameLogic: GameLogic) extends Command {
-  override def execute(): String = {
-    gameLogic.resetGame()
-    "Game and deck have been reset."
+class DrawCardCommand(controller: Controller) extends Command {
+  private var drawnCard: Option[Card] = None
+
+  override def doMove: Unit = { drawnCard = controller.gameState.drawCard() }
+
+  override def undoMove: Unit = {
+    drawnCard.foreach(controller.gameState.returnCardToDeck)
+    drawnCard = None
   }
+
+  override def redoMove: Unit = { doMove }
+}
+
+class PlayCardCommand(controller: Controller, card: Card) extends Command {
+  override def doMove: Unit = controller.gameState.playCard(card)
+
+  override def undoMove: Unit = controller.gameState.returnCardToHand(card)
+
+  override def redoMove: Unit = doMove
+
+}
+
+class BuyCardCommand(controller: Controller, card: Card) extends Command {
+  override def doMove: Unit = controller.gameState.buyCard(card)
+
+  override def undoMove: Unit = controller.gameState.returnCardToTradeDeck(card)
+
+  override def redoMove: Unit = doMove
+}
+
+class EndTurnCommand(controller: Controller) extends Command {
+  override def doMove: Unit = controller.gameState.endTurn()
+
+  override def undoMove: Unit = controller.gameState.undoEndTurn()
+
+  override def redoMove: Unit = doMove
+
+}
+
+
+class ResetGameCommand(controller: Controller) extends Command {
+  override def doMove: Unit = controller.gameState.resetGame()
+
+  override def undoMove: Unit = controller.gameState.undoResetGame()
+
+  override def redoMove: Unit = doMove
 }
 
 class ShowDeckCommand(controller: Controller) extends Command {
-  override def execute(): String = {
-    controller.getState
-    "Deck shown."
-  }
+  override def doMove: Unit = println(controller.gameState.getDeckState)
+
+  override def undoMove: Unit = {}
+
+  override def redoMove: Unit = doMove
 }
 
 class InvalidCommand(input: String) extends Command {
-  override def execute(): String = s"Invalid command: $input"
+  override def doMove: Unit = println(s"Invalid command: $input")
+
+  override def undoMove: Unit = {}
+
+  override def redoMove: Unit = doMove
 }
