@@ -11,8 +11,6 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 - create monads for every **Option**  and **TRY** implementation   <- **ASSIGNMENT**: at least 1 Option and 1 Try!!
 - 
 
-
-### - chain of responsibility? -> maybe for handling attributes on cards?
 ### - proxy for filepath???
 ### - decorator pattern
 ### - monad for transporting and transforming monoids 
@@ -53,6 +51,11 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - to construct Composite trees or other complex objects
 
 ## Structural
+- ### DECORATOR Pattern:
+  > - https://refactoring.guru/design-patterns/decorator
+  > - to be able to assign extra behaviors to objects at runtime without breaking the code that uses these objects
+  > - when it’s awkward or not possible to extend an object’s behavior using inheritance.
+  > - Decorator lets you change the skin of an object, while Strategy lets you change the guts.
 
 - ### COMPOSITE Pattern: ABILITIES?/Attributes?/SEPARATE DECKS(with deckbuilder)?
   > - https://refactoring.guru/design-patterns/composite
