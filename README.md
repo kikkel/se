@@ -59,11 +59,14 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - to implement a tree-like object structure
   > - when you want the client code to treat both simple and complex elements uniformly.
   > - use Builder when creating complex Composite trees because you can program its construction steps to work recursively
-  > - Composite and Decorator have similar structure diagrams since both rely on recursive composition to organize an open-ended number of objects.
->
-    > A Decorator is like a Composite but only has one child component. There’s another significant difference: Decorator adds additional responsibilities to the wrapped object, while Composite just “sums up” its children’s results.
->
-    > However, the patterns can also cooperate: you can use Decorator to extend the behavior of a specific object in the Composite tree
+  > - Composite and Decorator have similar structure diagrams since both rely
+  >   on recursive composition to organize an open-ended number of objects.
+  >
+  >   A Decorator is like a Composite but only has one child component.
+  >   There’s another significant difference: Decorator adds additional responsibilities to the wrapped object,
+  >   while Composite just “sums up” its children’s results.
+  >
+  >   However, the patterns can also cooperate: you can use Decorator to extend the behavior of a specific object in the Composite tree
 
 - **BRIDGE Pattern: CardType (Ship/Base) ✅**
   > https://refactoring.guru/design-patterns/bridge
@@ -81,15 +84,20 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - when your program is expected to process different kinds of requests in various ways, but the exact types of requests and their sequences are unknown beforehand
   > - when it’s essential to execute several handlers in a particular order.
   > - when the set of handlers and their order are supposed to change at runtime.
-  > - Chain of Responsibility is often used in conjunction with Composite. In this case, when a leaf component gets a request, it may pass it through the chain of all of the parent components down to the root of the object tree.
->
+  > - Chain of Responsibility is often used in conjunction with Composite.
+  >   In this case, when a leaf component gets a request, it may pass it through the chain of all of the parent components down to the root of the object tree.
+  >
   > - Handlers in Chain of Responsibility can be implemented as Commands. In this case, you can execute a lot of different operations over the same context object, represented by a request.
->
-  > - However, there’s another approach, where the request itself is a Command object. In this case, you can execute the same operation in a series of different contexts linked into a chain.
->
-  > - Chain of Responsibility and Decorator have very similar class structures. Both patterns rely on recursive composition to pass the execution through a series of objects. However, there are several crucial differences.
->
-  > - The CoR handlers can execute arbitrary operations independently of each other. They can also stop passing the request further at any point. On the other hand, various Decorators can extend the object’s behavior while keeping it consistent with the base interface. In addition, decorators aren’t allowed to break the flow of the request.
+  >
+  >   However, there’s another approach, where the request itself is a Command object. In this case, you can execute the same operation in a series of different contexts linked into a chain.
+  >
+  > - Chain of Responsibility and Decorator have very similar class structures.
+  >   Both patterns rely on recursive composition to pass the execution through a series of objects.
+  >   However, there are several crucial differences.
+  >
+  > - The CoR handlers can execute arbitrary operations independently of each other. They can also stop passing the request further at any point.
+  >   On the other hand, various Decorators can extend the object’s behavior while keeping it consistent with the base interface.
+  >   In addition, decorators aren’t allowed to break the flow of the request.
 
 -  **Observer Pattern ✅**
   > https://refactoring.guru/design-patterns/observer
