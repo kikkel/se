@@ -36,21 +36,6 @@ lec 7 notes
 
 Refactoring Guru: https://refactoring.guru/design-patterns
 
-## Creational
-
-- **Abstract Factory pattern - FactionFactory ✅**
-
-  - > https://refactoring.guru/design-patterns/abstract-factory
-  - create default cards separately to factions (scout, viper, explorer)
-  - **BRIDGE PATTERN** lets you replace the implementation object inside the abstraction. It’s as easy as assigning a new value to a field.
-
-- **Builder Pattern - DeckBuilder ✅**
-  > https://refactoring.guru/design-patterns/builder
-  >
-  > - extract the object construction code out of its own class and move it to separate objects called builders.
-  > - to create different representations of some product (for example, stone and wooden houses)
-  > - to construct Composite trees or other complex objects
-
 ## Structural
 - ### DECORATOR Pattern:
   > - https://refactoring.guru/design-patterns/decorator
@@ -164,3 +149,21 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - save and restore the previous state of an object without revealing the details of its implementation
   > - to produce snapshots of the object’s state to be able to restore a previous state of the object.
   > - when direct access to the object’s fields/getters/setters violates its encapsulation.
+  
+
+## Creational
+
+- **Abstract Factory pattern - FactionFactory ✅**
+
+  - > https://refactoring.guru/design-patterns/abstract-factory
+  - create default cards separately to factions (scout, viper, explorer)
+  - **BRIDGE PATTERN** lets you replace the implementation object inside the abstraction. It’s as easy as assigning a new value to a field.
+
+- **Builder Pattern - DeckBuilder ✅**
+  > https://refactoring.guru/design-patterns/builder
+  >
+  > - extract the object construction code out of its own class and move it to separate objects called builders.
+  > - to create different representations of some product (for example, stone and wooden houses)
+  > - to construct Composite trees or other complex objects
+
+
