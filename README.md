@@ -5,10 +5,10 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 # lec 8
 ## Notes:
 -
-- create undo/redo mechanism with **command pattern**   <- **ASSIGNMENT**
+- create undo/redo mechanism with **command pattern**   <- **ASSIGNMENT** ✅
   - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
   - invoker should be called UndoManager
-- create monads for every **Option** and **TRY** implementation   <- **ASSIGNMENT**: at least 1 Option and 1 Try!!
+- create monads for every **Option**  and **TRY** implementation   <- **ASSIGNMENT**: at least 1 Option and 1 Try!!
 - 
 
 
@@ -22,8 +22,8 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
   - map,flatMap and filter MUST be implemented (example slide 15). handled by for comprehension
   - monad is the container for transporting monoids. use to parralelise creating decks, categorising cards in set, etc.
   - store **States**(goodState, badState):
-      - Option(Some, None)   <- **ASSIGNMENT**
-      - Try(Success,Failure)   <- **ASSIGNMENT**
+      - Option(Some, None)   <- **ASSIGNMENT** ✅
+      - Try(Success,Failure)   <- **ASSIGNMENT** ⭕️
       - Either(Right, Left)
       - Future(Success, NotCompleted, Failure)
       - 
