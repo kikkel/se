@@ -3,47 +3,49 @@ package de.htwg.se.starrealms.model
 import de.htwg.se.starrealms.model._
 
 class Ability(val actions: List[String]) {
-  def getActions: List[String] = actions // Return the list of actions
-  def hasActions: Boolean = actions.nonEmpty // Check if the list is not empty
+  def getActions: List[String] = actions
+  def hasActions: Boolean = actions.nonEmpty
 
   def render(): String = {
-    if (actions.isEmpty) {
-      "No actions available"
-    } else {
-      actions.mkString(", ")
-    }
-  } // Return a string representation of the actions
-
-
+    val result = actions
+        .filter(_.nonEmpty)
+        .map(_.mkString(", "))
+        .headOption
+        .getOrElse("No actions available")
+    result
+  }
 }
 
 case class PrimaryAbility(override val actions: List[String]) extends Ability(actions) {
   override def render(): String = {
-    if (actions.isEmpty) {
-      "No primary actions available"
-    } else {
-      actions.mkString(", ")
-    }
-  } // Return a string representation of the primary actions
+    val result = actions
+        .filter(_.nonEmpty)
+        .map(_.mkString(", "))
+        .headOption
+        .getOrElse("No primary actions available")
+    result
+  } 
 }
 
 case class AllyAbility(override val actions: List[String]) extends Ability(actions) {
   override def render(): String = {
-    if (actions.isEmpty) {
-      "No ally actions available"
-    } else {
-      actions.mkString(", ")
-    }
-  } // Return a string representation of the ally actions
+    val result = actions
+        .filter(_.nonEmpty)
+        .map(_.mkString(", "))
+        .headOption
+        .getOrElse("No ally actions available")
+    result
+  } 
 }
 case class ScrapAbility(override val actions: List[String]) extends Ability(actions) {
   override def render(): String = {
-    if (actions.isEmpty) {
-      "No scrap actions available"
-    } else {
-      actions.mkString(", ")
-    }
-  } // Return a string representation of the scrap actions
+    val result = actions
+        .filter(_.nonEmpty)
+        .map(_.mkString(", "))
+        .headOption
+        .getOrElse("No scrap actions available")
+    result
+  } 
 }
 
 //----------------------------------------------------------------------------------------
