@@ -83,7 +83,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
 
 ## Behavioural
 
-- **Chain Of Command Pattern: handling attributes?**
+-  ### Chain Of Command Pattern: handling attributes?
   > - https://refactoring.guru/design-patterns/chain-of-responsibility
   > - when your program is expected to process different kinds of requests in various ways, but the exact types of requests and their sequences are unknown beforehand
   > - when it’s essential to execute several handlers in a particular order.
