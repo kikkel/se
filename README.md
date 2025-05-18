@@ -11,8 +11,6 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 - create monads for every **Option**  and **TRY** implementation   <- **ASSIGNMENT**: at least 1 Option and 1 Try!!
 - 
 
-### - proxy for filepath???
-### - decorator pattern
 ### - monad for transporting and transforming monoids 
   - abbildung von einer menge auf eine andere menge
   - map,flatMap and filter MUST be implemented (example slide 15). handled by for comprehension
