@@ -97,14 +97,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   >   On the other hand, various Decorators can extend the object’s behavior while keeping it consistent with the base interface.
   >   In addition, decorators aren’t allowed to break the flow of the request.
 
-- **Observer Pattern ✅**
-  > https://refactoring.guru/design-patterns/observer
-  >
-  > - subscription mechanism to notify multiple objects about any events that happen to the object they’re observing
-  > - when changes to the state of one object may require changing other objects, and the actual set of objects is unknown beforehand or changes dynamically
-  > - when some objects in your app must observe others, but only for a limited time or in specific cases.
-  > - to establish dynamic one-way connections between objects, where some objects act as subordinates of others.
-  > -
+
 - ### Mediator Pattern
   > https://refactoring.guru/design-patterns/mediator
   >
@@ -134,7 +127,14 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - to produce snapshots of the object’s state to be able to restore a previous state of the object.
   > - when direct access to the object’s fields/getters/setters violates its encapsulation.
   
-
+- **Observer Pattern ✅**
+  > https://refactoring.guru/design-patterns/observer
+  >
+  > - subscription mechanism to notify multiple objects about any events that happen to the object they’re observing
+  > - when changes to the state of one object may require changing other objects, and the actual set of objects is unknown beforehand or changes dynamically
+  > - when some objects in your app must observe others, but only for a limited time or in specific cases.
+  > - to establish dynamic one-way connections between objects, where some objects act as subordinates of others.
+  
 
 - **State Pattern: an extension of _Strategy Pattern_  ✅**
 
