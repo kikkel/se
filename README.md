@@ -26,8 +26,8 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
   - map,flatMap and filter MUST be implemented (example slide 15). handled by for comprehension
   - monad is the container for transporting monoids. use to parralelise creating decks, categorising cards in set, etc.
   - store **States**(goodState, badState):
-      - Option(Some, None)   <- **ASSIGNMENT** ✅
-      - Try(Success,Failure)   <- **ASSIGNMENT** ⭕️
+      - Option(Some, None)   <- **ASSIGNMENT** ✅ (Attributes.scala, DeckBuilder.scala)
+      - Try(Success,Failure)   <- **ASSIGNMENT** ✅ (loadCards.scala, CardBridge.scala)
       - Either(Right, Left)
       - Future(Success, NotCompleted, Failure)
 
