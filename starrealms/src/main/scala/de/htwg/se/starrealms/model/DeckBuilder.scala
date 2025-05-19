@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.model
 
 import de.htwg.se.starrealms.model._
-import scala.util.Random
+import org.scalactic.Fail
 
 
 

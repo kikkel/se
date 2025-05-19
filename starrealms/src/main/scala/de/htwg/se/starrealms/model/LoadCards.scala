@@ -1,6 +1,7 @@
 package de.htwg.se.starrealms.model
 
 import scala.io.Source
+import scala.util.{Failure, Try, Success}
 import java.io.File
 
 
@@ -23,12 +24,16 @@ class CardCSVLoader(filePath: String) {
     private var cardsBySet: Map[String, List[Card]] = Map()
 
     def loadCardsFromFile(): Unit = {
-        val lines = Source.fromFile(filePath).getLines().toList
-        if (lines.isEmpty) return
-        val headers = lines.head.split(",").map(_.trim)
-        val rows = lines.tail.map { line =>
-            val values = line.split(",", -1).map(_.trim)
-            headers.zipAll(values, "", "").toMap
+        Try(Source.fromFile(filePath).getLines().toList) match {
+            case Success(lines) if lines.nonEmpty =>
+                val headers = lines.head.split(",").map(_.trim)
+                val rows = lines.tail.map { line =>
+                    val values = line.split(",", -1).map(_.trim)
+                    headers.zipAll(values, "", "").toMap
+                }
+            case Success(_) => // Handle empty file case if needed
+            case Failure(exception) =>
+                println(s"Failed to load cards from file: ${exception.getMessage}")
         }
     }
 
@@ -48,14 +53,16 @@ class CardCSVLoader(filePath: String) {
 
     private def createCardInstance(card: Map[String, String]): Card = {
         val faction = Faction(card("Faction"))
-        val cardType = card("CardType") match {
-            case "Ship" => new Ship()
-            case "Base" =>
-                val defense = card.getOrElse("Defense", "0")
-                val isOutPost = card.get("Outpost").exists(_.toBoolean)
-                new Base(defense, isOutPost)
-            case _ => throw new IllegalArgumentException(s"Unknown card type: ${card("CardType")}")
-        }
+        val cardType: Try[CardType] = Try {
+            card("CardType") match {
+                case "Ship" => new Ship()
+                case "Base" =>
+                    val defense = card.getOrElse("Defense", "0")
+                    val isOutPost = card.get("Outpost").exists(_.toBoolean)
+                    new Base(defense, isOutPost)
+                case _ => throw new IllegalArgumentException(s"Unknown card type: ${card("CardType")}")
+            }
+        } 
         val abilities = card.get("Text").map(_.split("<hr>").map(_.trim).toList).getOrElse(List())
         val primaryAbility = abilities.headOption.map(a => new Ability(List(a)))
         val allyAbility = abilities.find(_.contains("Ally")).map(a => new Ability(List(a)))
@@ -65,7 +72,7 @@ class CardCSVLoader(filePath: String) {
             case "Trade Deck" => "Trade Deck"
             case "Explorer Pile" => "Explorer Deck"
             case "Personal Deck" => "Personal Deck"
-            case _ => throw new IllegalArgumentException(s"Unknown role: ${card("Role")}")
+            case _ => Failure(new IllegalArgumentException(s"Unknown role: ${card("Role")}"))
         }
 
         new FactionCard(
