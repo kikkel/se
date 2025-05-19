@@ -8,7 +8,7 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 - create undo/redo mechanism with **command pattern**   <- **ASSIGNMENT** ✅
   - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
   - invoker should be called UndoManager
-- !!! MVC issues:
+- **_!!! current MVC issues:_**
     - Tight Coupling:
 
       The ConsoleView directly interacts with the Controller and calls its methods. This could make it harder to replace the ConsoleView with another type of view (e.g., GUI).
