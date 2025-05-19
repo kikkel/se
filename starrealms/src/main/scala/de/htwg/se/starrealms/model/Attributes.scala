@@ -2,9 +2,17 @@ package de.htwg.se.starrealms.model
 
 import de.htwg.se.starrealms.model._
 
-class Ability(val actions: List[String]) {
+trait Action { def doMove: Unit }
+
+class CoinAction(amount: Int) extends Action { override def doMove: Unit = println(s"$amount coins") }
+class CombatAction(amount: Int) extends Action { override def doMove: Unit = println(s"$amount damage") }
+class HealingAction(amount: Int) extends Action { override def doMove: Unit = println(s"heal $amount") }
+class ComplexAction(description: String) extends Action { override def doMove: Unit = println(description) }
+
+class Ability(val actions: List[Action]) {
   def getActions: List[String] = actions
   def hasActions: Boolean = actions.nonEmpty
+  def executeActions(): Unit = actions.foreach(_.doMove)
 
   def render(): String = {
     val result = actions
@@ -48,24 +56,4 @@ case class ScrapAbility(override val actions: List[String]) extends Ability(acti
   } 
 }
 
-//----------------------------------------------------------------------------------------
-class CardCost(val cost: Int) {
-  def getCost: Int = cost 
-  def isFree: Boolean = cost == 0 
-}
-//----------------------------------------------------------------------------------------
-class CardDamage(val damage: Int) {
-  def getDamage: Int = damage 
-  def isNoDamage: Boolean = damage == 0 
-}
-//----------------------------------------------------------------------------------------
-class CardDefense(val defense: Int) {
-  def getDefense: Int = defense 
-  def isNoDefense: Boolean = defense == 0 
-}
-//----------------------------------------------------------------------------------------
 
-class Healing(val healing: Int) {
-  def getHealing: Int = healing 
-  def isNoHealing: Boolean = healing == 0 
-}

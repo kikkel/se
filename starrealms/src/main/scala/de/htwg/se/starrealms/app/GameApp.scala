@@ -16,7 +16,8 @@ class GameApp(inputProvider: () => String, output: String => Unit = println) {
 
     val logic = new GameLogic(deck)
     val controller = new Controller(logic)
-    val view = new ConsoleView(controller, output)
+    val commandHandler = new CommandHandler(controller)
+    val view = new ConsoleView(commandHandler)
 
     var running = true
     while (running) {

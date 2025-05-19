@@ -10,6 +10,27 @@ trait Command {
   def redoMove: Unit
 }
 
+trait CommandProcessor { def processCommand(input: String): String } //Strategy
+
+class CommandHandler(controller: Controller) extends CommandProcessor {
+  override def processCommand(input: String): String = {
+    input match {
+      case "s" =>
+        controller.drawCard()
+        "Drew a Scout"
+      case "v" =>
+        controller.drawCard()
+        "Drew a Viper"
+      case "r" =>
+        controller.resetGame()
+        "Game reset"
+      case "x" =>
+        "Exiting game"
+      case _ =>
+        "Invalid command"
+    }
+  }
+}
 class UndoManager {
   private var undoStack: List[Command] = Nil
   private var redoStack: List[Command] = Nil

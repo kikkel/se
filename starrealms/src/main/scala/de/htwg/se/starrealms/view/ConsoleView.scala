@@ -1,15 +1,19 @@
 package de.htwg.se.starrealms.view
 
 import de.htwg.util.Observer
-import de.htwg.se.starrealms.controller._
-import de.htwg.se.starrealms.view.Renderer
+import de.htwg.se.starrealms.controller.CommandProcessor
 
-class ConsoleView (controller: Controller, output: Unit) extends Observer {
-  controller.addObserver(this) // Connect view to model
+class ConsoleView(processor: CommandProcessor) extends Observer {
   
-  def render(): Unit =
-    //println("Rendering game state... #ConsoleView") // Placeholder for actual rendering logic
-    println(controller.getState)
+  def render(): Unit = {
+    println("\n\n")
+    println("Welcome to Star Realms!")
+    println("Enter 's' to draw a Scout")
+    println("Enter 'v' to draw a Viper")
+    println("Enter 'r' to reset the game")
+    println("Enter 'x' to exit the game")
+    print("Your command: ")
+  }
 
   def processInput(input: String): Boolean = {
     input match {
@@ -17,7 +21,7 @@ class ConsoleView (controller: Controller, output: Unit) extends Observer {
         println("\n\nExiting the game... #ConsoleView")
         false 
       case _ =>
-        println(controller.processCommand(input))
+        println(processor.processCommand(input))
         true
 
     }

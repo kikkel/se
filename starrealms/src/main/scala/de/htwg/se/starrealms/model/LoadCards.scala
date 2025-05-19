@@ -9,7 +9,15 @@ object LoadCards {
     def loadFromResource(getCsvPath: String, setName: String): List[Card] = {
         val loader = new CardCSVLoader(getCsvPath)
         loader.loadCardsFromFile()
-        loader.getCardsForSet(setName)
+        val cards = loader.getCardsForSet(setName)
+
+        val groupedCards = cards.groupBy(_.role)
+        groupedCards.map { case (role, cards) =>
+            val deck = new Deck()
+            deck.setName(role)
+            deck.setCards(cards)
+            role -> deck
+            }
     }
 
     val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
@@ -49,6 +57,15 @@ class CardCSVLoader(filePath: String) {
             row.get("Set").exists(_.nonEmpty) &&
             row.get("Role").exists(_.nonEmpty)
         )
+    }
+    private def parseActions(text: String): List[Action] = {
+        text.split("<hr>").map {
+            case action if action.contains("Gain") => 
+                case action if action.contains("Combat") => new CombatAction(action.filter(_.isDigit).toInt)
+                case action if action.contains("Trade") => new CoinAction(action.filter(_.isDigit).toInt)
+                case action if action.contains("Authority") => new HealingAction(action.filter(_.isDigit).toInt)
+            case _ => new ComplexAction(action)
+        }
     }
 
     private def createCardInstance(card: Map[String, String]): Card = {

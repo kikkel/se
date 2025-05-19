@@ -1,6 +1,5 @@
-package de.htwg.se.starrealms.controller
+package de.htwg.se.starrealms.model
 
-import de.htwg.se.starrealms.model._
 import de.htwg.util._
 
 class GameState extends Observable {
