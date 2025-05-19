@@ -62,6 +62,27 @@ class UndoManager {
   }
 }
 
+class DrawCardsCommand(controller: Controller, count: Int) extends Command {
+  private var drawnCards: List[Card] = Nil
+
+  override def doMove: Unit = { drawnCards = controller.gameState.drawCards(count) }
+
+  override def undoMove: Unit = {
+    drawnCards.foreach(controller.gameState.returnCardToDeck)
+    drawnCards = Nil
+  }
+
+  override def redoMove: Unit = { doMove }
+}
+
+class ReplenishTradeRowCommand(controller: Controller, count: Int) extends Command {
+  override def doMove: Unit = controller.gameState.replenishTradeRow(count)
+  private var drawnCards: List[Card] = Nil
+
+  override def undoMove: Unit = { drawnCards.foreach(controller.gameState.returnCardToDeck); drawnCards = Nil }
+
+  override def redoMove: Unit = doMove
+}
 class DrawCardCommand(controller: Controller) extends Command {
   private var drawnCard: Option[Card] = None
 

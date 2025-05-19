@@ -5,7 +5,25 @@ import de.htwg.util._
 class GameState extends Observable {
   private var deck: List[Card] = List()
   private var hand: List[Card] = List()
+  private var tradeRow: List[Card] = List()
   private var discardPile: List[Card] = List()
+
+  def drawCards(count: Int): List[Card] = {
+    val drawnCards = deck.take(count)
+    deck = deck.drop(count)
+    hand = drawnCards ++ hand
+    notifyObservers()
+    drawnCards
+  }
+
+  def replenishTradeRow(count: Int): Unit = {
+    val newCards = deck.take(count)
+    deck = deck.drop(5)
+    tradeRow = newCards ++ tradeRow
+    notifyObservers()
+
+  }
+  
 
   def drawCard(): Option[Card] = {
     deck match {

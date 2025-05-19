@@ -7,6 +7,8 @@ class Controller(gameLogic: GameLogic) extends Observable with CommandProcessor 
   val gameState: GameState = new GameState()
   val undoManager: UndoManager = new UndoManager()
 
+  def drawCards(count: Int): Unit = { val command = new DrawCardsCommand(this, count); undoManager.doMove(command); notifyObservers() }
+  def replenishTradeRow(count: Int): Unit = { val command = new ReplenishTradeRowCommand(this, count); undoManager.doMove(command); notifyObservers() }
   def drawCard(): Unit = { val command = new DrawCardCommand(this); undoManager.doMove(command); notifyObservers() }
   def playCard(card: Card): Unit = { val command = new PlayCardCommand(this, card); undoManager.doMove(command); notifyObservers() }
   def buyCard(card: Card): Unit = { val command = new BuyCardCommand(this, card); undoManager.doMove(command); notifyObservers() }
@@ -17,6 +19,8 @@ class Controller(gameLogic: GameLogic) extends Observable with CommandProcessor 
 
   override def processCommand(input: String): String = {
     input.toLowerCase match {
+      case "start turn" => drawCards(5); "Turn started."
+      case "replenish" => replenishTradeRow(count); "Trade row replenished."
       case "draw" => drawCard(); "Card drawn."
       case "play" => "Specify a card to play."
       case "buy" => "Specify a card to buy."

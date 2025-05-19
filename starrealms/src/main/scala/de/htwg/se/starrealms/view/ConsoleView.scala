@@ -8,8 +8,9 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
   def render(): Unit = {
     println("\n\n")
     println("Welcome to Star Realms!")
-    println("Enter 's' to draw a Scout")
-    println("Enter 'v' to draw a Viper")
+    println("Enter 's' to start your turn")
+    println("Enter 't' to replenish the trade row")
+    println("Enter 'd' to draw a card")
     println("Enter 'r' to reset the game")
     println("Enter 'x' to exit the game")
     print("Your command: ")
