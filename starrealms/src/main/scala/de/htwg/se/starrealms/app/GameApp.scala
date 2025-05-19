@@ -7,22 +7,22 @@ import de.htwg.se.starrealms.view.ConsoleView
 class GameApp(inputProvider: () => String, output: String => Unit = println) {
   def run(): Unit = {
     output("Welcome to Star Realms!")
-    val cards = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set")
+    val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set")
 
     val deckbuilder = new DeckBuilder()
     val director = new Director()
-    director.constructTradeDeck(deckbuilder, "Core Set", cards)
-    val deck = deckbuilder.getProduct()
+val constructedDecks = director.constructDecks(deckbuilder, decksByRole)
 
-    val logic = new GameLogic(deck)
+
+    val tradeDeck = constructedDecks.getOrElse("Trade Deck", new Deck())
+    val logic = new GameLogic(tradeDeck)
     val controller = new Controller(logic)
     val commandHandler = new CommandHandler(controller)
     val view = new ConsoleView(commandHandler)
 
     var running = true
     while (running) {
-      view.render()
-      output("Options:\n\t's' draw Scout\n\t'v' draw Viper\n\t'r' reset game\n\t'x' quit game\n\t #main")
+      output(s"${view.render}\n")
       running = view.processInput(inputProvider())
     }
 

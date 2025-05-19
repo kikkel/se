@@ -20,7 +20,7 @@ class Controller(gameLogic: GameLogic) extends Observable with CommandProcessor 
   override def processCommand(input: String): String = {
     input.toLowerCase match {
       case "start turn" => drawCards(5); "Turn started."
-      case "replenish" => replenishTradeRow(count); "Trade row replenished."
+      case "replenish" => replenishTradeRow(1); "Trade row replenished."
       case "draw" => drawCard(); "Card drawn."
       case "play" => "Specify a card to play."
       case "buy" => "Specify a card to buy."

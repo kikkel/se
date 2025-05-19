@@ -6,7 +6,7 @@ import java.io.File
 
 
 object LoadCards {
-    def loadFromResource(getCsvPath: String, setName: String): List[Card] = {
+    def loadFromResource(getCsvPath: String, setName: String): Map[String, Deck] = {
         val loader = new CardCSVLoader(getCsvPath)
         loader.loadCardsFromFile()
         val cards = loader.getCardsForSet(setName)
@@ -59,13 +59,43 @@ class CardCSVLoader(filePath: String) {
         )
     }
     private def parseActions(text: String): List[Action] = {
-        text.split("<hr>").map {
-            case action if action.contains("Gain") => 
-                case action if action.contains("Combat") => new CombatAction(action.filter(_.isDigit).toInt)
-                case action if action.contains("Trade") => new CoinAction(action.filter(_.isDigit).toInt)
-                case action if action.contains("Authority") => new HealingAction(action.filter(_.isDigit).toInt)
-            case _ => new ComplexAction(action)
+        val actionMap: Map[String, String => Action] = Map(
+            "Trade" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Trade")),
+            "Combat" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Combat")),
+            "Authority" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Authority")),
+            "Draw a card" -> (_ => SimpleAction("Draw a card")),
+            "Target opponent discards a card" -> (_ => SimpleAction("Target opponent discards a card"))
+        )
+
+        text.split("<hr>").toList.map { actions =>
+            if (text.contains("OR")) {
+                val conditions = text.split("OR").map(_.trim)
+                ConditionalAction(parseSingleAction(conditions(0)), parseSingleAction(conditions(1)))
+            } else if (text.contains("Whenever")) {
+                val parts = text.split(", gain").map(_.trim)
+                TriggeredAction(parts(0), parseSingleAction(parts(1)))
+            } else if (text.contains("then")) {
+                val steps = text.split("then").map(_.trim).toList
+                CompositeAction(steps.map(parseSingleAction))
+            } else {
+                parseSingleAction(text)
+            }
         }
+    }
+
+    private def parseSingleAction(text: String): Action = {
+        val actionMap: Map[String, String => Action] = Map(
+            "Trade" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Trade")),
+            "Combat" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Combat")),
+            "Authority" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Authority")),
+            "Draw a card" -> (_ => SimpleAction("Draw a card")),
+            "Target opponent discards a card" -> (_ => SimpleAction("Target opponent discards a card"))
+        )
+
+        actionMap
+        .find { case (keyword, _) => text.contains(keyword) }
+        .map { case (_, constructor) => constructor(text) }
+        .getOrElse(SimpleAction(text)) 
     }
 
     private def createCardInstance(card: Map[String, String]): Card = {
@@ -81,9 +111,10 @@ class CardCSVLoader(filePath: String) {
             }
         } 
         val abilities = card.get("Text").map(_.split("<hr>").map(_.trim).toList).getOrElse(List())
-        val primaryAbility = abilities.headOption.map(a => new Ability(List(a)))
-        val allyAbility = abilities.find(_.contains("Ally")).map(a => new Ability(List(a)))
-        val scrapAbility = abilities.find(_.startsWith("{Scrap}")).map(a => new Ability(List(a.stripPrefix("{Scrap}").trim)))
+        val primaryAbility = abilities.headOption.filter(_.nonEmpty).map(a => new Ability(parseActions(a)))
+        val allyAbility = abilities.find(_.contains("Ally")).map(a => new Ability(parseActions(a)))
+        val scrapAbility = abilities.find(_.startsWith("{Scrap}")).map(a => new Ability(parseActions(a.stripPrefix("{Scrap}").trim)) )    
+
         val qty = card("Qty").map(_.toInt)
         val role = card("Role") match {
             case "Trade Deck" => "Trade Deck"

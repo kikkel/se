@@ -70,12 +70,20 @@ class DeckBuilder extends Builder {
 }
 
 class Director {
-    def constructTradeDeck(builder: Builder, setName: String, cards: List[Card]): Unit = {
+    def constructDecks(builder: Builder, decksByRole: Map[String, Deck]): Map[String, Deck] = {
+        decksByRole.map { case (role, deck) =>
+            builder.reset()
+            builder.setName(role)
+            builder.setCards(deck.getCards)
+            role -> builder.getProduct()
+        }
+    }
+/*     def constructTradeDeck(builder: Builder, decksByRole: Map[String, Deck]): Map[String, Deck] = {
         builder.reset()
         builder.setName(s"Trade Deck - $setName")
         builder.setCards(cards)
 
-    }
+    } */
 }
 
 // Unlike other creational patterns, builder lets you construct
