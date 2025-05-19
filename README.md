@@ -45,7 +45,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - when it’s awkward or not possible to extend an object’s behavior using inheritance.
   > - Decorator lets you change the skin of an object, while Strategy lets you change the guts.
 
-- ### COMPOSITE Pattern: ABILITIES?/Attributes?/SEPARATE DECKS(with deckbuilder)?
+- **COMPOSITE Pattern: ABILITIES?/Attributes?/SEPARATE DECKS(with deckbuilder)?**  ✅
   > - https://refactoring.guru/design-patterns/composite
   > - to implement a tree-like object structure
   > - when you want the client code to treat both simple and complex elements uniformly.
