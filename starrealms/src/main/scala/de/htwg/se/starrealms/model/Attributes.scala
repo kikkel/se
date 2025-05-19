@@ -49,22 +49,23 @@ case class ScrapAbility(override val actions: List[String]) extends Ability(acti
 }
 
 //----------------------------------------------------------------------------------------
-// Kosten einer Karte
 class CardCost(val cost: Int) {
-  def getCost: Int = cost // Return the cost of the card
-  def isFree: Boolean = cost == 0 // Check if the card is free
+  def getCost: Int = cost 
+  def isFree: Boolean = cost == 0 
 }
 //----------------------------------------------------------------------------------------
-//Schaden einer Karte festlegen
 class CardDamage(val damage: Int) {
-  def getDamage: Int = damage // Return the damage of the card
-  def isNoDamage: Boolean = damage == 0 // Check if the card has no damage
+  def getDamage: Int = damage 
+  def isNoDamage: Boolean = damage == 0 
 }
 //----------------------------------------------------------------------------------------
-//defense einer Karte festlegen
 class CardDefense(val defense: Int) {
-  def getDefense: Int = defense // Return the defense of the card
-  def isNoDefense: Boolean = defense == 0 // Check if the card has no defense
+  def getDefense: Int = defense 
+  def isNoDefense: Boolean = defense == 0 
 }
 //----------------------------------------------------------------------------------------
 
+class Healing(val healing: Int) {
+  def getHealing: Int = healing 
+  def isNoHealing: Boolean = healing == 0 
+}

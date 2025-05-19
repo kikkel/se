@@ -10,7 +10,17 @@ class GameLogic(var deck: Deck) extends Observable {
     notifyObservers()
     card
   }
+
+  def purchaseCard(card: Card): Unit = {
+    deck.removeCard(card)
+    notifyObservers()
+  }
   
+  def playCard(card: Card): Unit = {
+    deck.removeCard(card)
+    notifyObservers()
+  }
+
 
   def resetGame(): Unit = {
     deck.resetDeck()
