@@ -126,6 +126,15 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > - when you have a lot of similar classes that only differ in the way they execute some behavior.
   > - **to isolate the business logic of a class from the implementation details of algorithms that may not be as important in the context of that logic.**\_\_
   > - when your class has a massive conditional statement that switches between different variants of the same algorithm.
+  
+- ### Memento Pattern:
+  > https://refactoring.guru/design-patterns/memento
+  >
+  > - save and restore the previous state of an object without revealing the details of its implementation
+  > - to produce snapshots of the object’s state to be able to restore a previous state of the object.
+  > - when direct access to the object’s fields/getters/setters violates its encapsulation.
+  
+
 
 - **State Pattern: an extension of _Strategy Pattern_  ✅**
 
@@ -151,14 +160,6 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   > _This method has two drawbacks. First, it isn’t that easy to save an application’s state because some of it can be private. This problem can be mitigated with the **Memento pattern**._
   >
   > _Second, the state backups may consume quite a lot of RAM. Therefore, sometimes you can resort to an alternative implementation: instead of restoring the past state, the command performs the inverse operation. The reverse operation also has a price: it may turn out to be hard or even impossible to implement._
-
-- ### Memento Pattern:
-  > https://refactoring.guru/design-patterns/memento
-  >
-  > - save and restore the previous state of an object without revealing the details of its implementation
-  > - to produce snapshots of the object’s state to be able to restore a previous state of the object.
-  > - when direct access to the object’s fields/getters/setters violates its encapsulation.
-  
 
 ## Creational
 
