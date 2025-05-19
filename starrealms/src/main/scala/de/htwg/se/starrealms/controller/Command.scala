@@ -14,20 +14,17 @@ trait CommandProcessor { def processCommand(input: String): String } //Strategy
 
 class CommandHandler(controller: Controller) extends CommandProcessor {
   override def processCommand(input: String): String = {
-    input match {
-      case "s" =>
-        controller.drawCard()
-        "Drew a Scout"
-      case "v" =>
-        controller.drawCard()
-        "Drew a Viper"
-      case "r" =>
-        controller.resetGame()
-        "Game reset"
-      case "x" =>
-        "Exiting game"
-      case _ =>
-        "Invalid command"
+    input.toLowerCase match {
+      case "s" => controller.drawCards(5); "Turn started."
+      case "t" => controller.replenishTradeRow(1); "Trade row replenished."
+      case "d" => controller.drawCard(); "Card drawn."
+      case "p" => "Specify a card to play."
+      case "b" => "Specify a card to buy."
+      case "e" => controller.endTurn(); "Turn ended."
+      case "r" => controller.resetGame(); "Game reset."
+      case "z" => controller.undo(); "Undo performed."
+      case "y" => controller.redo(); "Redo performed."
+      case _ => "Unknown command."
     }
   }
 }

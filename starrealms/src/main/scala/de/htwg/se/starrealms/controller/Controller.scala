@@ -3,7 +3,7 @@ package de.htwg.se.starrealms.controller
 import de.htwg.se.starrealms.model._
 import de.htwg.util.Observable
 
-class Controller(gameLogic: GameLogic) extends Observable with CommandProcessor {
+class Controller(gameLogic: GameLogic) extends Observable {
   val gameState: GameState = new GameState()
   val undoManager: UndoManager = new UndoManager()
 
@@ -16,21 +16,6 @@ class Controller(gameLogic: GameLogic) extends Observable with CommandProcessor 
   def resetGame(): Unit = { val command = new ResetGameCommand(this); undoManager.doMove(command); notifyObservers() }
   def undo(): Unit = { undoManager.undoMove; notifyObservers() }
   def redo(): Unit = { undoManager.redoMove; notifyObservers() }
-
-  override def processCommand(input: String): String = {
-    input.toLowerCase match {
-      case "start turn" => drawCards(5); "Turn started."
-      case "replenish" => replenishTradeRow(1); "Trade row replenished."
-      case "draw" => drawCard(); "Card drawn."
-      case "play" => "Specify a card to play."
-      case "buy" => "Specify a card to buy."
-      case "end" => endTurn(); "Turn ended."
-      case "reset" => resetGame(); "Game reset."
-      case "undo" => undo(); "Undo performed."
-      case "redo" => redo(); "Redo performed."
-      case _ => "Unknown command."
-    }
-  }
 
   def getState: Unit = gameState.getDeckState
 
