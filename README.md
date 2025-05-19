@@ -77,7 +77,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
 
 ## Behavioural
 
--  ### Chain Of Command Pattern: handling attributes?
+- ### Chain Of Command Pattern: handling attributes?
   > - https://refactoring.guru/design-patterns/chain-of-responsibility
   > - when your program is expected to process different kinds of requests in various ways, but the exact types of requests and their sequences are unknown beforehand
   > - when it’s essential to execute several handlers in a particular order.
@@ -97,7 +97,7 @@ Refactoring Guru: https://refactoring.guru/design-patterns
   >   On the other hand, various Decorators can extend the object’s behavior while keeping it consistent with the base interface.
   >   In addition, decorators aren’t allowed to break the flow of the request.
 
--  **Observer Pattern ✅**
+- **Observer Pattern ✅**
   > https://refactoring.guru/design-patterns/observer
   >
   > - subscription mechanism to notify multiple objects about any events that happen to the object they’re observing
