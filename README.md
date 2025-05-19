@@ -9,7 +9,17 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
   - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
   - invoker should be called UndoManager
 - create monads for every **Option**  and **TRY** implementation   <- **ASSIGNMENT**: at least 1 Option and 1 Try!!
-- 
+- !!! MVC issues:
+    - Tight Coupling:
+
+      The ConsoleView directly interacts with the Controller and calls its methods. This could make it harder to replace the ConsoleView with another type of view (e.g., GUI).
+      The Controller directly calls notifyObservers() in some cases, which should ideally be handled by the Model.
+    - Separation of Concerns:
+
+      Some logic in the Controller (e.g., processCommand) could be delegated to the Model or a dedicated command handler.
+    - Testing:
+
+      The ConsoleView is tightly coupled with the Controller, making it harder to test independently.
 
 ### - monad for transporting and transforming monoids 
   - abbildung von einer menge auf eine andere menge
