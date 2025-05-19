@@ -8,7 +8,6 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 - create undo/redo mechanism with **command pattern**   <- **ASSIGNMENT** ✅
   - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
   - invoker should be called UndoManager
-- create monads for every **Option**  and **TRY** implementation   <- **ASSIGNMENT**: at least 1 Option and 1 Try!!
 - !!! MVC issues:
     - Tight Coupling:
 
