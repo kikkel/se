@@ -10,7 +10,7 @@ class GameApp(inputProvider: () => String, output: String => Unit = println) {
 
     val deckbuilder = new DeckBuilder()
     val director = new Director()
-val constructedDecks = director.constructDecks(deckbuilder, decksByRole)
+    val constructedDecks = director.constructDecks(deckbuilder, decksByRole)
 
 
     val tradeDeck = constructedDecks.getOrElse("Trade Deck", new Deck())

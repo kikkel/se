@@ -4,6 +4,8 @@ import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
 import de.htwg.se.starrealms.model._
 
+
+//--------------------------------------------------------------------Strategy
 trait DrawStrategy { def draw(deck: Deck, count: Int): List[Card] }
 
 class StartTurnStrategy extends DrawStrategy {
@@ -18,6 +20,8 @@ class TradeRowReplenishStrategy extends DrawStrategy {
     cards
   }
 }
+
+//--------------------------------------------------------------------GameLogic
 class GameLogic(var deck: Deck) extends Observable {
   private val tradeRowDeck = new Deck()
   private val replenishStrategy = new TradeRowReplenishStrategy()
@@ -57,3 +61,4 @@ class GameLogic(var deck: Deck) extends Observable {
 
   def getDeckState: String = deck.render()
 }
+
