@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model
 
-import de.htwg.se.starrealms.model._
+
 import org.scalactic.Fail
 
 

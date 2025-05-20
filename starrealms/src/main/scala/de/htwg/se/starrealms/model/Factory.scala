@@ -4,24 +4,13 @@ trait Faction {
     def factionName: String
     def render(): String = s"$factionName #factory"
     //def apply()
-
 }
 
-private class TradeFederation extends Faction { 
-    override def factionName: String = "Trade Federation"
-}
-private class StarEmpire extends Faction { 
-    override def factionName: String = "Star Empire"
-}
-private class Blob extends Faction { 
-    override def factionName: String = "Blob"
-}
-private class MachineCult extends Faction { 
-    override def factionName: String = "Machine Cult" 
-}
-private class Unaligned extends Faction { 
-    override def factionName: String = "Unaligned" 
-}
+private class TradeFederation extends Faction { override def factionName: String = "Trade Federation" }
+private class StarEmpire extends Faction { override def factionName: String = "Star Empire" }
+private class Blob extends Faction { override def factionName: String = "Blob" }
+private class MachineCult extends Faction { override def factionName: String = "Machine Cult" }
+private class Unaligned extends Faction { override def factionName: String = "Unaligned" }
 
 object Faction {
     def apply(factionName: String): Faction = factionName.toLowerCase match {
@@ -44,9 +33,7 @@ trait Set {
     //def apply()
 }
 
-private class CoreSet extends Set { 
-    override def nameOfSet: String = "Core Set"
-}
+private class CoreSet extends Set { override def nameOfSet: String = "Core Set" }
 
 object Set {
     def apply(nameOfSet: String): Set = nameOfSet.toLowerCase match {
