@@ -6,6 +6,7 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 ## Notes:
 - to do:
     - incorporate shuffle directly into deck?
+    - **_RENDERER_** isnt implemented properly! render() defined independently in consoleview and separate to renderer.render()...
     - Potential Improvements
         1. Code Duplication:
         There is some duplication in the rendering logic for ExplorerCard and FactionCard (e.g., handling of primaryAbility and scrapAbility).
