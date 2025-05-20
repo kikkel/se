@@ -19,8 +19,6 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
         If the game needs to support multiple languages, the hardcoded strings in the render method should be replaced with localized resources.
 
 - create undo/redo mechanism with **command pattern**   <- **ASSIGNMENT** ✅
-  - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
-  - invoker should be called UndoManager
 - **_!!! current MVC issues:_**
   - 
 
