@@ -6,6 +6,16 @@ _COVERALLS DISFUNCTIONAL DUE TO PATHFILE .CSV READER ISSUES!!_
 ## Notes:
 - to do:
     - incorporate shuffle directly into deck?
+    - 7. Potential Improvements
+        1. Code Duplication:
+        There is some duplication in the rendering logic for ExplorerCard and FactionCard (e.g., handling of primaryAbility and scrapAbility).
+        Consider extracting common rendering logic into helper methods.
+        2. Scalability:
+        If more card types are added, the render method could become unwieldy. Consider using a more modular approach, such as delegating rendering to specific classes for each card type.
+        3. Testing:
+        Ensure unit tests cover all card types and edge cases (e.g., cards with missing abilities).
+        4. Localization:
+        If the game needs to support multiple languages, the hardcoded strings in the render method should be replaced with localized resources.
 
 - create undo/redo mechanism with **command pattern**   <- **ASSIGNMENT** ✅
   - **execute()** should actually be undoStep:Unit (see slide 10), do/redo are natural accessories to undo
