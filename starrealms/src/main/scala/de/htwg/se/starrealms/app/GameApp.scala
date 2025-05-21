@@ -15,7 +15,7 @@ class GameApp(inputProvider: () => String, output: String => Unit = println) {
 
     val tradeDeck = constructedDecks.getOrElse("Trade Deck", new Deck())
     val logic = new GameLogic(tradeDeck)
-    val controller = new Controller(logic)
+    val controller = new Controller()
     val commandHandler = new CommandHandler(controller)
     val view = new ConsoleView(commandHandler)
 

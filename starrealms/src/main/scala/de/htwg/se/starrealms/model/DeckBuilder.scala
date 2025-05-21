@@ -1,8 +1,7 @@
 package de.htwg.se.starrealms.model
 
-
+import scala.util.Random
 import org.scalactic.Fail
-
 
 
 class Deck {
@@ -17,7 +16,7 @@ class Deck {
 
     def addCard(card: Card): Unit = cards = cards :+ card
     def removeCard(card: Card): Unit = cards = cards.filterNot(_ == card)
-    //def shuffle(): Unit = cards = Random.shuffle(cards)
+    def shuffle(): Unit = cards = Random.shuffle(cards)
     def drawCard(): Option[Card] = {
         cards match {
             case Nil => None
@@ -31,7 +30,36 @@ class Deck {
         val cardDescriptions = cards.map(_.render()).mkString(", ")
         s"Deck: $name, Cards: [$cardDescriptions]"
     }
-    
+}
+
+object Deck {
+    // Erstellt ein Standard-Playerdeck (8 Scouts, 2 Vipers) mit Bridge-Pattern
+    def standardPlayerDeck(): Deck = {
+        val deck = new Deck()
+        val coreSet = Set("Core Set")
+        val unaligned = Faction("Unaligned")
+        val scout = new DefaultCard(
+            set = coreSet,
+            cardName = "Scout",
+            primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
+            faction = unaligned,
+            cardType = scala.util.Success(new Ship()),
+            qty = 1,
+            role = "Personal Deck"
+        )
+        val viper = new DefaultCard(
+            set = coreSet,
+            cardName = "Viper",
+            primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Combat")))),
+            faction = unaligned,
+            cardType = scala.util.Success(new Ship()),
+            qty = 1,
+            role = "Personal Deck"
+        )
+        deck.setName("Player Deck")
+        deck.setCards(scala.util.Random.shuffle(List.fill(8)(scout) ++ List.fill(2)(viper)))
+        deck
+    }
 }
 
 
@@ -54,7 +82,7 @@ class DeckBuilder extends Builder {
     private var deck: Deck = new Deck()
 
     override def reset(): Unit = { deck = new Deck() }
-    override def setName(name: String): Unit = { deck.setName(name) } 
+    override def setName(name: String): Unit = { deck.setName(name) }
     override def setCards(cards: List[Card]): Unit = { deck.setCards(cards) }
 
     override def addCards(cards: List[Card]): Unit = { cards.foreach(deck.addCard) }

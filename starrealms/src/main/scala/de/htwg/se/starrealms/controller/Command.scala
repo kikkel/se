@@ -4,7 +4,7 @@ import de.htwg.se.starrealms.model._
 import de.htwg.util.Observable
 import scala.util.Failure
 
-trait Command { 
+trait Command {
   def doMove: Unit
   def undoMove: Unit
   def redoMove: Unit
@@ -16,7 +16,7 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
   override def processCommand(input: String): String = {
     input.toLowerCase match {
       case "s" => controller.drawCards(5); "Turn started."
-      case "t" => controller.replenishTradeRow(1); "Trade row replenished."
+      case "t" => controller.replenishTradeRow(); "Trade row replenished."
       case "d" => controller.drawCard(); "Card drawn."
       case "p" => "Specify a card to play."
       case "b" => "Specify a card to buy."
@@ -24,10 +24,12 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
       case "r" => controller.resetGame(); "Game reset."
       case "z" => controller.undo(); "Undo performed."
       case "y" => controller.redo(); "Redo performed."
+      case "show" => controller.getState // <-- HIER: gibt den Spielzustand als String zurück!
       case _ => "Unknown command."
     }
   }
 }
+
 class UndoManager {
   private var undoStack: List[Command] = Nil
   private var redoStack: List[Command] = Nil
@@ -41,17 +43,17 @@ class UndoManager {
   def undoMove = {
     undoStack match {
       case Nil => Failure(new NoSuchElementException("No moves to undo #Command"))
-      case head::stack => 
+      case head::stack =>
         head.undoMove
         undoStack = stack
         redoStack = head :: redoStack
     }
-  } 
+  }
 
   def redoMove = {
     redoStack match {
       case Nil => Failure(new NoSuchElementException("No moves to redo #Command"))
-      case head::stack => 
+      case head::stack =>
         head.redoMove
         redoStack = stack
         undoStack = head :: undoStack
@@ -72,8 +74,8 @@ class DrawCardsCommand(controller: Controller, count: Int) extends Command {
   override def redoMove: Unit = { doMove }
 }
 
-class ReplenishTradeRowCommand(controller: Controller, count: Int) extends Command {
-  override def doMove: Unit = controller.gameState.replenishTradeRow(count)
+class ReplenishTradeRowCommand(controller: Controller) extends Command {
+  override def doMove: Unit = controller.gameState.replenishTradeRow()
   private var drawnCards: List[Card] = Nil
 
   override def undoMove: Unit = { drawnCards.foreach(controller.gameState.returnCardToDeck); drawnCards = Nil }

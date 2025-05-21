@@ -20,8 +20,8 @@ object LoadCards {
             }
     }
 
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
-    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
 
     def getCsvPath: String =
         sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath")
@@ -95,7 +95,7 @@ class CardCSVLoader(filePath: String) {
         actionMap
         .find { case (keyword, _) => text.contains(keyword) }
         .map { case (_, constructor) => constructor(text) }
-        .getOrElse(SimpleAction(text)) 
+        .getOrElse(SimpleAction(text))
     }
 
     private def createCardInstance(card: Map[String, String]): Card = {
@@ -109,11 +109,11 @@ class CardCSVLoader(filePath: String) {
                     new Base(defense, isOutPost)
                 case _ => throw new IllegalArgumentException(s"Unknown card type: ${card("CardType")}")
             }
-        } 
+        }
         val abilities = card.get("Text").map(_.split("<hr>").map(_.trim).toList).getOrElse(List())
         val primaryAbility = abilities.headOption.filter(_.nonEmpty).map(a => new Ability(parseActions(a)))
         val allyAbility = abilities.find(_.contains("Ally")).map(a => new Ability(parseActions(a)))
-        val scrapAbility = abilities.find(_.startsWith("{Scrap}")).map(a => new Ability(parseActions(a.stripPrefix("{Scrap}").trim)) )    
+        val scrapAbility = abilities.find(_.startsWith("{Scrap}")).map(a => new Ability(parseActions(a.stripPrefix("{Scrap}").trim)) )
 
         val qty = card("Qty").map(_.toInt)
         val role = card("Role") match {
