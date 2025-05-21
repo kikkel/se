@@ -14,17 +14,44 @@ trait CommandProcessor { def processCommand(input: String): String } //Strategy
 
 class CommandHandler(controller: Controller) extends CommandProcessor {
   override def processCommand(input: String): String = {
-    input.toLowerCase match {
-      case "s" => controller.drawCards(5); "Turn started."
-      case "t" => controller.replenishTradeRow(); "Trade row replenished."
-      case "d" => controller.drawCard(); "Card drawn."
-      case "p" => "Specify a card to play."
-      case "b" => "Specify a card to buy."
-      case "e" => controller.endTurn(); "Turn ended."
-      case "r" => controller.resetGame(); "Game reset."
-      case "z" => controller.undo(); "Undo performed."
-      case "y" => controller.redo(); "Redo performed."
-      case "show" => controller.getState // <-- HIER: gibt den Spielzustand als String zurück!
+    val tokens = input.trim.toLowerCase.split("\\s+")
+    tokens match {
+      case Array("p", num) if num.forall(_.isDigit) =>
+        val idx = num.toInt - 1
+        val hand = controller.gameState.getHand
+        if (idx >= 0 && idx < hand.size) {
+          controller.undoManager.doMove(new PlayCardCommand(controller, hand(idx)))
+          s"Played card: ${hand(idx).cardName}"
+        } else {
+          "Ungültige Kartennummer."
+        }
+      case Array("b", num) if num.forall(_.isDigit) =>
+        val idx = num.toInt - 1
+        val tradeRow = controller.gameState.getTradeRow
+        if (idx >= 0 && idx < tradeRow.size) {
+          controller.undoManager.doMove(new BuyCardCommand(controller, tradeRow(idx)))
+          s"Bought card: ${tradeRow(idx).cardName}"
+        } else {
+          "Ungültige Kartennummer."
+        }
+      case Array("p") => "Bitte gib die Nummer der Karte an, die du spielen willst (z.B. 'p 1')."
+      case Array("b") => "Bitte gib die Nummer der Karte an, die du kaufen willst (z.B. 'b 2')."
+      case Array(cmd) => cmd match {
+        case "s" => controller.undoManager.doMove(new DrawCardsCommand(controller, 5))
+          "Turn started."
+        case "t" => controller.undoManager.doMove(new ReplenishTradeRowCommand(controller))
+          "Trade row replenished."
+        case "d" => controller.undoManager.doMove(new DrawCardCommand(controller))
+          "Card drawn."
+        case "e" => controller.undoManager.doMove(new EndTurnCommand(controller))
+          "Turn ended."
+        case "r" => controller.undoManager.doMove(new ResetGameCommand(controller))
+          "Game reset."
+        case "z" => controller.undo(); "Undo performed."
+        case "y" => controller.redo(); "Redo performed."
+        case "show" => controller.getState
+        case _ => "Unknown command."
+      }
       case _ => "Unknown command."
     }
   }

@@ -220,6 +220,9 @@ class GameState extends Observable {
     notifyObservers()
   }
 
+  def getHand: List[Card] = hand
+  def getTradeRow: List[Card] = tradeRow
+
   def getDeckState: String = {
     def cardLine(card: Card): String = {
       val name = card.cardName

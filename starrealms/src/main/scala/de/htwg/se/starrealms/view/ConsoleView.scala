@@ -17,8 +17,14 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
       println("Enter 'd' to draw a card")
       println("Enter 'r' to reset the game")
       println("Enter 'x' to exit the game")
-    } else {
-      println("Du bist im Play-Modus. Gib die Nummer der Karte an, die du ausspielen willst (z.B. 1), oder 'e' für End Turn.")
+    } else if (inPlayPhase) {
+      println("Its your turn!")
+      println("Enter 'p <number>' to play a card from your hand")
+      println("Enter 'b <number>' to buy a card from the trade row")
+      println("Enter 'e' to end your turn")
+      println("Enter 'z' to undo the last action")
+      println("Enter 'y' to redo the last undone action")
+      println("Enter 'x' to exit the game")
     }
     print("Your command: ")
   }
@@ -29,26 +35,50 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
         case "x" =>
           println("\n\nExiting the game... #ConsoleView")
           false
-        case "d" =>
-          println(processor.processCommand("draw"))
+        case "s" =>
+          println(processor.processCommand("s"))
           inPlayPhase = true
           render()
           true
-        case "show" =>
-          println(processor.processCommand("show"))
+        case "z" =>
+          println(processor.processCommand("z"))
+          render()
+          true
+        case "y" =>
+          println(processor.processCommand("y"))
+          render()
           true
         case _ =>
           println(processor.processCommand(input))
           true
       }
     } else {
-      input match {
-        case "e" =>
-          println(processor.processCommand("end"))
+      val tokens = input.trim.toLowerCase.split("\\s+")
+      tokens match {
+        case Array("x") =>
+          println("\n\nExiting the game... #ConsoleView")
+          false
+        case Array("e") =>
+          println(processor.processCommand("e"))
           inPlayPhase = false
+          render()
           true
-        case num if num.forall(_.isDigit) =>
-          println(processor.processCommand(s"play $num"))
+        case Array("z") =>
+          println(processor.processCommand("z"))
+          render()
+          true
+        case Array("y") =>
+          println(processor.processCommand("y"))
+          render()
+          true
+        case Array("p", num) if num.forall(_.isDigit) =>
+          println(processor.processCommand(s"p $num"))
+          true
+        case Array("b", num) if num.forall(_.isDigit) =>
+          println(processor.processCommand(s"b $num"))
+          true
+        case Array(num) if num.forall(_.isDigit) =>
+          println(processor.processCommand(s"p $num"))
           true
         case _ =>
           println("Ungültiger Befehl im Play-Modus.")
@@ -56,6 +86,7 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
       }
     }
   }
-
-  override def update: Unit = render()
+  override def update: Unit = {
+    render()
+  }
 }
