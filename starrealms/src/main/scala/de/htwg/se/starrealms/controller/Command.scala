@@ -5,9 +5,9 @@ import de.htwg.util.Observable
 import scala.util.Failure
 
 trait Command {
-  def doMove: Unit
-  def undoMove: Unit
-  def redoMove: Unit
+  def doMove(): Unit
+  def undoMove(): Unit
+  def redoMove(): Unit
 }
 
 trait CommandProcessor { def processCommand(input: String): String } //Strategy
@@ -88,12 +88,10 @@ class UndoManager {
 
 class DrawCardsCommand(controller: Controller, count: Int) extends Command {
   private var drawnCards: List[Card] = Nil
+  val undoManager = new UndoManager
 
   override def doMove: Unit = { drawnCards = controller.gameState.drawCards(count) }
-
-  override def undoMove: Unit = {
-    drawnCards.foreach(controller.gameState.returnCardToPlayerDeck)
-    drawnCards = Nil
+  undoManager.
   }
 
   override def redoMove: Unit = { doMove }

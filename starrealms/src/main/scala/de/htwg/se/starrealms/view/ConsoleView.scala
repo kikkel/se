@@ -9,7 +9,7 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
 
   def render(): Unit = {
     println("\n\n")
-    println(processor.processCommand("show")) // Gibt PlayerDeck, Hand usw. aus
+    println(processor.processCommand("show"))
     if (!inPlayPhase) {
       println("Enter 's' to start your turn")
       println("Enter 't' to replenish the trade row")
@@ -43,6 +43,10 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
           true
         case "y" =>
           println(processor.processCommand("y"))
+          render
+          true
+        case "t" =>
+          println(processor.processCommand("t"))
           render
           true
         case _ =>
