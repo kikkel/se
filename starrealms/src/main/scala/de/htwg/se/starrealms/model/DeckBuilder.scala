@@ -60,6 +60,7 @@ object Deck {
         deck.setCards(scala.util.Random.shuffle(List.fill(8)(scout) ++ List.fill(2)(viper)))
         deck
     }
+
 }
 
 

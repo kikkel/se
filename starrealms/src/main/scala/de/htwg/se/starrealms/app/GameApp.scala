@@ -22,7 +22,7 @@ class GameApp(inputProvider: () => String, output: String => Unit = println) {
 
     var running = true
     while (running) {
-      output(s"\n\n${view.render}\n\nYour command:\n\n")
+      output(s"\n\n${view.render()}\n\nYour command:\n\n")
       running = view.processInput(inputProvider())
     }
 

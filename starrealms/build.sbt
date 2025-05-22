@@ -9,6 +9,7 @@ enablePlugins(CoverallsPlugin)
 lazy val root = (project in file("."))
   .settings(
     name := "StarRealms",
+    scalacOptions += "-deprecation",
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.16" % Test,
       "org.scalameta" %% "munit" % "1.0.0" % Test,

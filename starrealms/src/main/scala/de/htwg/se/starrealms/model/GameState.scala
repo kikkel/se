@@ -8,7 +8,6 @@ class GameState extends Observable {
   val blob: Faction = Faction("Blob")
   val federation: Faction = Faction("Trade Federation")
 
-  // Scout und Viper als DefaultCard (angepasst an dein Bridge-Pattern)
   val scout: Card = new DefaultCard(
     set = coreSet,
     cardName = "Scout",
@@ -62,7 +61,7 @@ class GameState extends Observable {
       qty = 1,
       role = "Trade Deck"
     )
-    // Drei weitere Beispielkarten hinzufügen:
+    
     val base2 = new FactionCard(
       set = coreSet,
       cardName = "Blob World",
@@ -107,6 +106,10 @@ class GameState extends Observable {
   private var hand: List[Card] = List()
   private var discardPile: List[Card] = List()
   private var tradeRow: List[Card] = List()
+  def removeCard(cards: List[Card], card: Card): List[Card] = {
+    val (before, after) = cards.span(_ != card)
+    before ++ after.drop(1) 
+  }
 
   def initTradeRow(): Unit = {
     tradeRow = (1 to 5).flatMap(_ => tradeDeck.drawCard()).toList
@@ -135,7 +138,7 @@ class GameState extends Observable {
   }
 
   def playCard(card: Card): Unit = {
-    hand = hand.filterNot(_ == card)
+    hand = removeCard(hand, card)
     discardPile = card :: discardPile
     notifyObservers()
   }
@@ -144,12 +147,11 @@ class GameState extends Observable {
     if (tradeRow.contains(card)) {
       tradeRow = tradeRow.filterNot(_ == card)
       discardPile = card :: discardPile
-      replenishTradeRow() // <-- Trade Row wieder auffüllen!
+      replenishTradeRow() 
       notifyObservers()
     }
   }
 
-  // Undo/Redo Hilfsmethoden
   def returnCardToPlayerDeck(card: Card): Unit = {
     playerDeck.addCard(card)
     hand = hand.filterNot(_ == card)
@@ -157,12 +159,12 @@ class GameState extends Observable {
     notifyObservers()
   }
   def returnCardToHand(card: Card): Unit = {
+    discardPile = removeCard(discardPile, card)
     hand = card :: hand
-    discardPile = discardPile.filterNot(_ == card)
     notifyObservers()
   }
   def undoReplenish(card: Card): Unit = {
-    tradeRow = tradeRow.filterNot(card => tradeDeck.getCards.contains(card))
+    tradeRow = tradeRow.filterNot(_ => tradeDeck.getCards.contains(card))
     notifyObservers()
   }
   def returnCardToTradeRow(card: Card): Unit = {
@@ -186,7 +188,7 @@ class GameState extends Observable {
     playerDeck.setCards(scala.util.Random.shuffle(List.fill(8)(scout) ++ List.fill(2)(viper)))
     playerDeck.shuffle()
     tradeDeck.setCards(List(
-      // Hier wieder echte Card-Objekte!
+
       new FactionCard(
         set = coreSet,
         cardName = "Blob Wheel",
