@@ -46,7 +46,7 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
           render
           true
         case _ =>
-          println(processor.processCommand(input))
+          println("Invalid command. Please try again.")
           true
       }
     } else {
