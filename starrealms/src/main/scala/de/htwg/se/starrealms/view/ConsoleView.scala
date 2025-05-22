@@ -14,7 +14,6 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
     if (!inPlayPhase) {
       println("Enter 's' to start your turn")
       println("Enter 't' to replenish the trade row")
-      println("Enter 'd' to draw a card")
       println("Enter 'r' to reset the game")
       println("Enter 'x' to exit the game")
     } else if (inPlayPhase) {

@@ -41,8 +41,6 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
           "Turn started."
         case "t" => controller.undoManager.doMove(new ReplenishTradeRowCommand(controller))
           "Trade row replenished."
-        case "d" => controller.undoManager.doMove(new DrawCardCommand(controller))
-          "Card drawn."
         case "e" => controller.undoManager.doMove(new EndTurnCommand(controller))
           "Turn ended."
         case "r" => controller.undoManager.doMove(new ResetGameCommand(controller))
