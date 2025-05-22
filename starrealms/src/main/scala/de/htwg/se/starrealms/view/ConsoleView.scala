@@ -16,7 +16,7 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
       println("Enter 't' to replenish the trade row")
       println("Enter 'r' to reset the game")
       println("Enter 'x' to exit the game")
-    } else if (inPlayPhase) {
+    } else {
       println("Its your turn!")
       println("Enter 'p <number>' to play a card from your hand")
       println("Enter 'b <number>' to buy a card from the trade row")
