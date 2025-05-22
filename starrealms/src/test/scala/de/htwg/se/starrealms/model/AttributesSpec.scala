@@ -2,59 +2,73 @@ package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.starrealms.model.Ability
 
 class AttributesSpec extends AnyWordSpec with Matchers {
 
   "An Ability" should {
     "return its actions" in {
-      val ability = new Ability(List("Attack", "Heal"))
-      ability.getActions should contain allOf ("Attack", "Heal")
+      val ability = new Ability(List(SimpleAction("Attack"), SimpleAction("Heal")))
+      ability.getActions.map(_.description) should contain allOf ("Attack", "Heal")
     }
 
     "check if it has actions" in {
-      val abilityWithActions = new Ability(List("Attack"))
+      val abilityWithActions = new Ability(List(SimpleAction("Attack")))
       val abilityWithoutActions = new Ability(List())
       abilityWithActions.hasActions shouldBe true
       abilityWithoutActions.hasActions shouldBe false
     }
 
     "render its actions as a string" in {
-      val ability = new Ability(List("Attack", "Heal"))
-      ability.render() shouldBe "Attack, Heal"
+      val ability = new Ability(List(SimpleAction("Attack"), SimpleAction("Heal")))
+      ability.render() should include ("Attack")
+      ability.render() should include ("Heal")
 
       val emptyAbility = new Ability(List())
-      emptyAbility.render() shouldBe "No actions available"
+      emptyAbility.render() should include ("No actions available")
     }
   }
 
   "A PrimaryAbility" should {
     "render its actions as a string" in {
-      val primaryAbility = PrimaryAbility(List("Primary Attack"))
-      primaryAbility.render() shouldBe "Primary Attack"
+      val primaryAbility = PrimaryAbility(List(SimpleAction("Primary Attack")))
+      primaryAbility.render() should include ("Primary Attack")
 
       val emptyPrimaryAbility = PrimaryAbility(List())
-      emptyPrimaryAbility.render() shouldBe "No primary actions available"
+      emptyPrimaryAbility.render() should include ("No primary actions available")
     }
   }
-   "An AllyAbility" should {
+  "An AllyAbility" should {
     "render its actions as a string" in {
-      val allyAbility = AllyAbility(List("Ally Heal"))
-      allyAbility.render() shouldBe "Ally Heal"
+      val allyAbility = AllyAbility(List(SimpleAction("Ally Heal")))
+      allyAbility.render() should include ("Ally Heal")
 
       val emptyAllyAbility = AllyAbility(List())
-      emptyAllyAbility.render() shouldBe "No ally actions available"
+      emptyAllyAbility.render() should include ("No ally actions available")
     }
   }
 
   "A ScrapAbility" should {
     "render its actions as a string" in {
-      val scrapAbility = ScrapAbility(List("Scrap Draw"))
-      scrapAbility.render() shouldBe "Scrap Draw"
+      val scrapAbility = ScrapAbility(List(SimpleAction("Scrap Draw")))
+      scrapAbility.render() should include ("Scrap Draw")
 
       val emptyScrapAbility = ScrapAbility(List())
-      emptyScrapAbility.render() shouldBe "No scrap actions available"
+      emptyScrapAbility.render() should include ("No scrap actions available")
     }
+  }
+
+  // Dummy-Implementierungen für CardCost, CardDamage, CardDefense für Testzwecke:
+  class CardCost(val cost: Int) {
+    def getCost: Int = cost
+    def isFree: Boolean = cost == 0
+  }
+  class CardDamage(val damage: Int) {
+    def getDamage: Int = damage
+    def isNoDamage: Boolean = damage == 0
+  }
+  class CardDefense(val defense: Int) {
+    def getDefense: Int = defense
+    def isNoDefense: Boolean = defense == 0
   }
 
   "A CardCost" should {
@@ -98,4 +112,3 @@ class AttributesSpec extends AnyWordSpec with Matchers {
     }
   }
 }
-

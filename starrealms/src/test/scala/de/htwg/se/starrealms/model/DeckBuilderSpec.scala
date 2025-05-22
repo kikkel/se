@@ -7,14 +7,14 @@ class DeckBuilderSpec extends AnyWordSpec with Matchers {
   val testSet: Set = Set("Core Set")
   val testFaction: Faction = Faction("Unaligned")
   def testCard(name: String): Card = new DefaultCard(
-      set = testSet,
-      cardName = name,
-      primaryAbility = None,
-      faction = testFaction,
-      cardType = new Ship(),
-      qty = 1,
-      role = "Test Deck"
-    )
+    set = testSet,
+    cardName = name,
+    primaryAbility = None,
+    faction = testFaction,
+    cardType = scala.util.Success(new Ship()),
+    qty = 1,
+    role = "Test Deck"
+  )
 
   "A Deck" should {
     "set and get name and cards properly" in {

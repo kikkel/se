@@ -3,15 +3,19 @@ package de.htwg.se.starrealms.view
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.starrealms.model._
+import scala.util.Success
 
 class RendererSpec extends AnyWordSpec with Matchers {
-  val dummySet: Set = Set("Core Set")
+  object DummySet extends de.htwg.se.starrealms.model.Set {
+    override def nameOfSet: String = "Core Set"
+  }
+  val dummySet: de.htwg.se.starrealms.model.Set = DummySet
   val dummyFaction: Faction = Faction("Unaligned")
-  val abilities = new Ability(List("TestAbility"))
+  val abilities = new Ability(List(SimpleAction("TestAbility")))
+
 
   "A CardRenderer" should {
     val renderer = new CardRenderer
-    
 
     "render a DefaultCard correctly" in {
       val card = new DefaultCard(
@@ -19,7 +23,7 @@ class RendererSpec extends AnyWordSpec with Matchers {
         cardName = "TestCard",
         primaryAbility = Some(abilities),
         faction = dummyFaction,
-        cardType = new Ship(),
+        cardType = Success(new Ship()),
         qty = 1,
         role = "Trade Deck"
       )
@@ -37,7 +41,7 @@ class RendererSpec extends AnyWordSpec with Matchers {
         primaryAbility = Some(abilities),
         scrapAbility = Some(abilities),
         faction = dummyFaction,
-        cardType = new Ship(),
+        cardType = Success(new Ship()),
         qty = 1,
         role = "Trade Deck"
       )
@@ -57,7 +61,7 @@ class RendererSpec extends AnyWordSpec with Matchers {
         allyAbility = Some(abilities),
         scrapAbility = Some(abilities),
         faction = dummyFaction,
-        cardType = new Ship(),
+        cardType = Success(new Ship()),
         qty = 1,
         role = "Trade Deck"
       )

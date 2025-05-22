@@ -2,11 +2,16 @@ package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import scala.util.Success
 
 class CardBridgeSpec extends AnyWordSpec with Matchers {
   val dummyFaction = Faction("Unaligned")
-  val dummySet = Set("Core Set")
-  val abilities = new Ability(List("TestAbility"))
+  object DummySet extends de.htwg.se.starrealms.model.Set {
+    override def nameOfSet: String = "Core Set"
+  }
+  val dummySet: de.htwg.se.starrealms.model.Set = DummySet
+  val abilities = new Ability(List(SimpleAction("TestAbility")))
+
   "A Ship" should {
     "return correct cardType" in {
       val ship = new Ship
@@ -23,10 +28,8 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
     }
   }
 
-
   "A FactionCard" should {
     "render all fields correctly" in {
-      
       val card = new FactionCard(
         set = dummySet,
         cardName = "TestCard",
@@ -35,7 +38,7 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
         allyAbility = Some(abilities),
         scrapAbility = Some(abilities),
         faction = dummyFaction,
-        cardType = new Ship(),
+        cardType = Success(new Ship()),
         qty = 1,
         role = "Trade Deck"
       )
@@ -54,9 +57,9 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
       val card = new DefaultCard(
         set = dummySet,
         cardName = "TestCard",
-        primaryAbility = Some(new Ability(List("TestAbility"))),
+        primaryAbility = Some(new Ability(List(SimpleAction("TestAbility")))),
         faction = dummyFaction,
-        cardType = new Ship(),
+        cardType = Success(new Ship()),
         qty = 1,
         role = "Personal Deck"
       )
@@ -66,16 +69,17 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
       rendered should include("Ship")
     }
   }
+
   "An ExplorerCard" should {
     "render all fields correctly" in {
       val card = new ExplorerCard(
         set = dummySet,
         cardName = "Explorer",
         cost = 2,
-        primaryAbility = Some(new Ability(List("TestAbility"))),
-        scrapAbility = Some(new Ability(List("TestAbility"))),
+        primaryAbility = Some(new Ability(List(SimpleAction("TestAbility")))),
+        scrapAbility = Some(new Ability(List(SimpleAction("TestAbility")))),
         faction = dummyFaction,
-        cardType = new Ship(),
+        cardType = Success(new Ship()),
         qty = 1,
         role = "Explorer Deck"
       )
