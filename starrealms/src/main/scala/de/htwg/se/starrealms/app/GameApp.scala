@@ -6,6 +6,7 @@ import de.htwg.se.starrealms.view.ConsoleView
 
 class GameApp(inputProvider: () => String, output: String => Unit = println) {
   def run(): Unit = {
+
     val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set")
 
     val deckbuilder = new DeckBuilder()
@@ -21,7 +22,7 @@ class GameApp(inputProvider: () => String, output: String => Unit = println) {
 
     var running = true
     while (running) {
-      output(s"\n\n${view.render}\n")
+      output(s"\n\n${view.render}\n\nYour command:\n\n")
       running = view.processInput(inputProvider())
     }
 

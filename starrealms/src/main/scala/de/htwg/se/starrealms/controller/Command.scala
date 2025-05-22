@@ -21,36 +21,36 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
         val hand = controller.gameState.getHand
         if (idx >= 0 && idx < hand.size) {
           controller.undoManager.doMove(new PlayCardCommand(controller, hand(idx)))
-          s"Played card: ${hand(idx).cardName}"
+          s"Played card: ${hand(idx).cardName}\n\n"
         } else {
-          "Ungültige Kartennummer."
+          "Invalid card index.\n\n"
         }
       case Array("b", num) if num.forall(_.isDigit) =>
         val idx = num.toInt - 1
         val tradeRow = controller.gameState.getTradeRow
         if (idx >= 0 && idx < tradeRow.size) {
           controller.undoManager.doMove(new BuyCardCommand(controller, tradeRow(idx)))
-          s"Bought card: ${tradeRow(idx).cardName}"
+          s"Bought card: ${tradeRow(idx).cardName}\n\n"
         } else {
-          "Ungültige Kartennummer."
+          "Invalid card index."
         }
-      case Array("p") => "Bitte gib die Nummer der Karte an, die du spielen willst (z.B. 'p 1')."
-      case Array("b") => "Bitte gib die Nummer der Karte an, die du kaufen willst (z.B. 'b 2')."
+      case Array("p") => "Enter the number of the card you want to play (e.g. 'p 2').\n\n"
+      case Array("b") => "Enter the number of the card you want to buy (e.g. 'b 3').\n\n"
       case Array(cmd) => cmd match {
         case "s" => controller.undoManager.doMove(new DrawCardsCommand(controller, 5))
-          "Turn started."
+          "Turn started.\n\n"
         case "t" => controller.undoManager.doMove(new ReplenishTradeRowCommand(controller))
-          "Trade row replenished."
+          "Trade row replenished.\n\n"
         case "e" => controller.undoManager.doMove(new EndTurnCommand(controller))
-          "Turn ended."
+          "Turn ended.\n\n"
         case "r" => controller.undoManager.doMove(new ResetGameCommand(controller))
-          "Game reset."
-        case "z" => controller.undo(); "Undo performed."
-        case "y" => controller.redo(); "Redo performed."
+          "Game reset.\n\n"
+        case "z" => controller.undo(); "Undo performed.\n\n"
+        case "y" => controller.redo(); "Redo performed.\n\n"
         case "show" => controller.getState
-        case _ => "Unknown command."
+        case _ => "Unknown command.\n\n"
       }
-      case _ => "Unknown command."
+      case _ => "Unknown command.\n\n"
     }
   }
 }
@@ -92,7 +92,7 @@ class DrawCardsCommand(controller: Controller, count: Int) extends Command {
   override def doMove: Unit = { drawnCards = controller.gameState.drawCards(count) }
 
   override def undoMove: Unit = {
-    drawnCards.foreach(controller.gameState.returnCardToDeck)
+    drawnCards.foreach(controller.gameState.returnCardToPlayerDeck)
     drawnCards = Nil
   }
 
@@ -101,9 +101,10 @@ class DrawCardsCommand(controller: Controller, count: Int) extends Command {
 
 class ReplenishTradeRowCommand(controller: Controller) extends Command {
   override def doMove: Unit = controller.gameState.replenishTradeRow()
-  private var drawnCards: List[Card] = Nil
+  //private var rep: List[Card] = Nil
+  private var repCard: Option[Card] = None
 
-  override def undoMove: Unit = { drawnCards.foreach(controller.gameState.returnCardToDeck); drawnCards = Nil }
+  override def undoMove: Unit = { repCard.foreach(controller.gameState.undoReplenish); repCard = None }
 
   override def redoMove: Unit = doMove
 }
@@ -113,7 +114,7 @@ class DrawCardCommand(controller: Controller) extends Command {
   override def doMove: Unit = { drawnCard = controller.gameState.drawCard() }
 
   override def undoMove: Unit = {
-    drawnCard.foreach(controller.gameState.returnCardToDeck)
+    drawnCard.foreach(controller.gameState.returnCardToPlayerDeck)
     drawnCard = None
   }
 
@@ -132,7 +133,7 @@ class PlayCardCommand(controller: Controller, card: Card) extends Command {
 class BuyCardCommand(controller: Controller, card: Card) extends Command {
   override def doMove: Unit = controller.gameState.buyCard(card)
 
-  override def undoMove: Unit = controller.gameState.returnCardToTradeDeck(card)
+  override def undoMove: Unit = controller.gameState.returnCardToTradeRow(card)
 
   override def redoMove: Unit = doMove
 }

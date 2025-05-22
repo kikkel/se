@@ -9,13 +9,12 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
 
   def render(): Unit = {
     println("\n\n")
-    println("Welcome to Star Realms!" + "\n")
     println(processor.processCommand("show")) // Gibt PlayerDeck, Hand usw. aus
     if (!inPlayPhase) {
       println("Enter 's' to start your turn")
       println("Enter 't' to replenish the trade row")
       println("Enter 'r' to reset the game")
-      println("Enter 'x' to exit the game")
+      println("Enter 'x' to exit the game\n\n")
     } else {
       println("Its your turn!")
       println("Enter 'p <number>' to play a card from your hand")
@@ -25,7 +24,6 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
       println("Enter 'y' to redo the last undone action")
       println("Enter 'x' to exit the game")
     }
-    print("Your command: ")
   }
 
   def processInput(input: String): Boolean = {
@@ -37,15 +35,15 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
         case "s" =>
           println(processor.processCommand("s"))
           inPlayPhase = true
-          render()
+          render
           true
         case "z" =>
           println(processor.processCommand("z"))
-          render()
+          render
           true
         case "y" =>
           println(processor.processCommand("y"))
-          render()
+          render
           true
         case _ =>
           println(processor.processCommand(input))
@@ -60,15 +58,15 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
         case Array("e") =>
           println(processor.processCommand("e"))
           inPlayPhase = false
-          render()
+          render
           true
         case Array("z") =>
           println(processor.processCommand("z"))
-          render()
+          render
           true
         case Array("y") =>
           println(processor.processCommand("y"))
-          render()
+          render
           true
         case Array("p", num) if num.forall(_.isDigit) =>
           println(processor.processCommand(s"p $num"))
@@ -80,12 +78,12 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
           println(processor.processCommand(s"p $num"))
           true
         case _ =>
-          println("Ungültiger Befehl im Play-Modus.")
+          println("Invalid command. Please try again.")
           true
       }
     }
   }
   override def update: Unit = {
-    render()
+    render
   }
 }

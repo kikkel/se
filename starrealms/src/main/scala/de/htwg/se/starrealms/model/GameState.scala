@@ -150,7 +150,7 @@ class GameState extends Observable {
   }
 
   // Undo/Redo Hilfsmethoden
-  def returnCardToDeck(card: Card): Unit = {
+  def returnCardToPlayerDeck(card: Card): Unit = {
     playerDeck.addCard(card)
     hand = hand.filterNot(_ == card)
     discardPile = discardPile.filterNot(_ == card)
@@ -161,8 +161,12 @@ class GameState extends Observable {
     discardPile = discardPile.filterNot(_ == card)
     notifyObservers()
   }
-  def returnCardToTradeDeck(card: Card): Unit = {
-    tradeDeck.addCard(card)
+  def undoReplenish(card: Card): Unit = {
+    tradeRow = tradeRow.filterNot(card => tradeDeck.getCards.contains(card))
+    notifyObservers()
+  }
+  def returnCardToTradeRow(card: Card): Unit = {
+    tradeRow = card :: tradeRow
     discardPile = discardPile.filterNot(_ == card)
     notifyObservers()
   }
@@ -216,7 +220,6 @@ class GameState extends Observable {
     notifyObservers()
   }
   def undoResetGame(): Unit = {
-    // Hier könnte man einen Snapshot-Mechanismus einbauen
     notifyObservers()
   }
 
@@ -236,10 +239,11 @@ class GameState extends Observable {
       s"$name | $faction | $typ | Cost: $cost | Ability: $ability"
     }
 
-    "PlayerDeck:\n" + playerDeck.getCards.map(cardLine).mkString("\n") + "\n" +
-    "Hand:\n" + hand.zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n" +
-    "Discard Pile:\n" + discardPile.map(cardLine).mkString("\n") + "\n" +
-    "TradeRow:\n" + tradeRow.map(cardLine).mkString("\n") + "\n" +
-    "TradeDeck:\n" + tradeDeck.getCards.map(cardLine).mkString("\n") + "\n"
+    "PlayerDeck:\n" + playerDeck.getCards.map(cardLine).mkString("\n") + "\n\n\n" +
+    "Hand:\n" + hand.zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n\n\n" +
+    "Discard Pile:\n" + discardPile.map(cardLine).mkString("\n") + "\n\n\n" +
+    "TradeRow:\n" + tradeRow.map(cardLine).mkString("\n") + "\n\n\n" +
+    "TradeDeck:\n" + tradeDeck.getCards.map(cardLine).mkString("\n") + "\n\n\n"
   }
+
 }
