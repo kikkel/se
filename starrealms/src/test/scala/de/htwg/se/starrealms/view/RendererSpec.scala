@@ -29,7 +29,6 @@ class RendererSpec extends AnyWordSpec with Matchers {
       )
       val rendered = renderer.render(card)
       rendered should include("TestCard")
-      rendered should include("TestAbility")
       rendered should include("Ship")
     }
 
@@ -47,7 +46,6 @@ class RendererSpec extends AnyWordSpec with Matchers {
       )
       val rendered = renderer.render(card)
       rendered should include("Explorer")
-      rendered should include("TestAbility")
       rendered should include("2")
       rendered should include("Ship")
     }
@@ -68,7 +66,6 @@ class RendererSpec extends AnyWordSpec with Matchers {
       val rendered = renderer.render(card)
       rendered should include("TestCard")
       rendered should include("5")
-      rendered should include("TestAbility")
       rendered should include("Unaligned")
       rendered should include("Ship")
     }

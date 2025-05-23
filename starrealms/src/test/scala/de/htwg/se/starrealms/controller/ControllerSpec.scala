@@ -43,7 +43,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       observer.notified = false
       // Lege eine Karte auf die Hand, falls leer
       val card = new DefaultCard(
-        set = Set("Test"),
+        set = Set("Core Set"),
         cardName = "Scout",
         primaryAbility = None,
         faction = Faction("unaligned"),
@@ -60,7 +60,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       observer.notified = false
       // Lege eine Karte in die TradeRow, falls leer
       val card = new DefaultCard(
-        set = Set("Test"),
+        set = Set("Core Set"),
         cardName = "Scout",
         primaryAbility = None,
         faction = Faction("unaligned"),

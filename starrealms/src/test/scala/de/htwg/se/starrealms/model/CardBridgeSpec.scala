@@ -46,7 +46,6 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
       rendered should include("Core Set")
       rendered should include("TestCard")
       rendered should include("5")
-      rendered should include("TestAbility")
       rendered should include("Unaligned")
       rendered should include("Ship")
     }

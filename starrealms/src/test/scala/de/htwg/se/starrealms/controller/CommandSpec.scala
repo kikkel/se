@@ -12,7 +12,7 @@ class CommandSpec extends AnyWordSpec with Matchers {
     "draw a card and allow undo" in {
       val controller = new Controller()
       val card = new DefaultCard(
-        set = Set("Test"),
+        set = Set("Core Set"),
         cardName = "Scout",
         primaryAbility = None,
         faction = Faction("unaligned"),
@@ -20,9 +20,7 @@ class CommandSpec extends AnyWordSpec with Matchers {
         qty = 1,
         role = "Personal Deck"
       )
-      // Hand leeren
       controller.gameState.getHand.foreach(controller.gameState.playCard)
-      // Karte ins Deck legen
       controller.gameState.returnCardToPlayerDeck(card)
       val command = new DrawCardCommand(controller)
       command.doMove
