@@ -13,7 +13,7 @@ class CommandSpec extends AnyWordSpec with Matchers {
       val controller = new Controller()
       val card = new DefaultCard(
         set = Set("Core Set"),
-        cardName = "Scout",
+        cardName = "Viper",
         primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
         faction = Faction("Unaligned"),
         cardType = Success(new Ship()),
