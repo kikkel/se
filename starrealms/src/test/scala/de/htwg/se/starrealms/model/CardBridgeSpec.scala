@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import scala.util.Success
+import scala.util.{Success, Failure, Try}
 
 class CardBridgeSpec extends AnyWordSpec with Matchers {
   val dummyFaction = Faction("Unaligned")
@@ -29,7 +29,7 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
   }
 
   "A FactionCard" should {
-    "render all fields correctly" in {
+    "render all fields correctly (Success)" in {
       val card = new FactionCard(
         set = dummySet,
         cardName = "TestCard",
@@ -48,15 +48,32 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
       rendered should include("5")
       rendered should include("Unaligned")
       rendered should include("Ship")
+      rendered should include("#BRIDGE: FactionCard")
+    }
+    "render error if cardType is Failure" in {
+      val card = new FactionCard(
+        set = dummySet,
+        cardName = "TestCard",
+        cost = 5,
+        primaryAbility = None,
+        allyAbility = None,
+        scrapAbility = None,
+        faction = dummyFaction,
+        cardType = Failure(new Exception("failtype")),
+        qty = 1,
+        role = "Trade Deck"
+      )
+      val rendered = card.render()
+      rendered should include("Error: failtype")
     }
   }
 
   "A DefaultCard" should {
-    "render all fields correctly" in {
-      val card = new DefaultCard(
+    "render all fields correctly (Success)" in {
+      val card = DefaultCard(
         set = dummySet,
         cardName = "TestCard",
-        primaryAbility = Some(new Ability(List(SimpleAction("TestAbility")))),
+        primaryAbility = Some(abilities),
         faction = dummyFaction,
         cardType = Success(new Ship()),
         qty = 1,
@@ -66,17 +83,31 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
       rendered should include("TestCard")
       rendered should include("Unaligned")
       rendered should include("Ship")
+      rendered should include("#BRIDGE: DefaultCard")
+    }
+    "render error if cardType is Failure" in {
+      val card = DefaultCard(
+        set = dummySet,
+        cardName = "TestCard",
+        primaryAbility = None,
+        faction = dummyFaction,
+        cardType = Failure(new Exception("failtype")),
+        qty = 1,
+        role = "Personal Deck"
+      )
+      val rendered = card.render()
+      rendered should include("Error: failtype")
     }
   }
 
   "An ExplorerCard" should {
-    "render all fields correctly" in {
+    "render all fields correctly (Success)" in {
       val card = new ExplorerCard(
         set = dummySet,
         cardName = "Explorer",
         cost = 2,
-        primaryAbility = Some(new Ability(List(SimpleAction("TestAbility")))),
-        scrapAbility = Some(new Ability(List(SimpleAction("TestAbility")))),
+        primaryAbility = Some(abilities),
+        scrapAbility = Some(abilities),
         faction = dummyFaction,
         cardType = Success(new Ship()),
         qty = 1,
@@ -86,6 +117,22 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
       rendered should include("Explorer")
       rendered should include("Unaligned")
       rendered should include("Ship")
+      rendered should include("#BRIDGE: ExplorerCard")
+    }
+    "render error if cardType is Failure" in {
+      val card = new ExplorerCard(
+        set = dummySet,
+        cardName = "Explorer",
+        cost = 2,
+        primaryAbility = None,
+        scrapAbility = None,
+        faction = dummyFaction,
+        cardType = Failure(new Exception("failtype")),
+        qty = 1,
+        role = "Explorer Deck"
+      )
+      val rendered = card.render()
+      rendered should include("Error: failtype")
     }
   }
 }
