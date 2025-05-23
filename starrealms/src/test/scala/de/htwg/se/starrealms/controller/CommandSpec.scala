@@ -4,7 +4,7 @@ import de.htwg.se.starrealms.model._
 import de.htwg.util.Observer
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import scala.util.Success
+import scala.util.{Try, Success, Failure}
 
 class CommandSpec extends AnyWordSpec with Matchers {
 
@@ -144,4 +144,30 @@ class CommandSpec extends AnyWordSpec with Matchers {
       noException should be thrownBy command.undoMove
     }
   }
+"undoMove" should {
+
+    "return a message when there are no moves to undo" in {
+      val manager = new UndoManager
+      manager.getUndoStack shouldBe empty
+
+      val result = manager.undoMove
+
+      result shouldBe "No moves to undo #Command"
+      manager.getRedoStack shouldBe empty
+    }
+  }
+
+  "redoMove" should {
+
+    "return a message when there are no moves to redo" in {
+      val manager = new UndoManager
+      manager.getRedoStack shouldBe empty
+
+      val result = manager.redoMove
+
+      result shouldBe "No moves to redo #Command"
+      manager.getUndoStack shouldBe empty
+    }
+  }
+
 }

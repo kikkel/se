@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.controller
 
 import de.htwg.se.starrealms.model._
 import de.htwg.util.Observable
-import scala.util.Failure
+
 
 trait Command {
   def doMove: Unit
@@ -16,6 +16,9 @@ class UndoManager {
   private var undoStack: List[Command] = Nil
   private var redoStack: List[Command] = Nil
 
+  def getUndoStack: List[Command] = undoStack
+  def getRedoStack: List[Command] = redoStack
+  
   def doMove(command: Command) = {
     undoStack = command :: undoStack
     redoStack = Nil
@@ -24,7 +27,7 @@ class UndoManager {
 
   def undoMove = {
     undoStack match {
-      case Nil => Failure(new NoSuchElementException("No moves to undo #Command"))
+      case Nil => "No moves to undo #Command"
       case head::stack =>
         head.undoMove
         undoStack = stack
@@ -34,7 +37,7 @@ class UndoManager {
 
   def redoMove = {
     redoStack match {
-      case Nil => Failure(new NoSuchElementException("No moves to redo #Command"))
+      case Nil => "No moves to redo #Command"
       case head::stack =>
         head.redoMove
         redoStack = stack
