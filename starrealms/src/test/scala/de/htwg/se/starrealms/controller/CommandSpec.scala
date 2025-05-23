@@ -24,7 +24,7 @@ class CommandSpec extends AnyWordSpec with Matchers {
       controller.gameState.returnCardToPlayerDeck(card)
       val command = new DrawCardCommand(controller)
       command.doMove
-      controller.gameState.getHand.map(_.cardName) should contain ("Scout")
+      controller.gameState.getHand.map(_.cardName) should contain ("Viper")
       command.undoMove
       controller.gameState.getHand.map(_.cardName) should not contain ("Scout")
     }
