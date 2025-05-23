@@ -106,6 +106,9 @@ class GameStateSpec extends AnyWordSpec with Matchers {
       if (gameState.getTradeRow.nonEmpty) {
         val cardToUndo = gameState.getTradeRow.head
         gameState.undoReplenish(cardToUndo)
+        gameState.getTradeRow should not contain cardToUndo
+        gameState.tradeDeck.getCards should contain(cardToUndo)
+
       }
 
       // returnCardToTradeRow
@@ -130,5 +133,6 @@ class GameStateSpec extends AnyWordSpec with Matchers {
       gameState.getTradeRow shouldBe a [List[_]]
       gameState.getDeckState shouldBe a [String]
     }
+    
   }
 }
