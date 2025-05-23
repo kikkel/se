@@ -1,0 +1,99 @@
+kianimoon@Kianis-MacBook-Air starrealms % sbt clean compile run
+[info] welcome to sbt 1.10.11 (Eclipse Adoptium Java 21.0.5)
+[info] loading settings for project starrealms-build-build-build-build from metals.sbt...
+[info] loading project definition from /Users/kianimoon/se/se/starrealms/project/project/project/project
+[info] loading settings for project starrealms-build-build-build from metals.sbt...
+[info] loading project definition from /Users/kianimoon/se/se/starrealms/project/project/project
+[success] Generated .bloop/starrealms-build-build-build.json
+[success] Total time: 1 s, completed 23 May 2025, 16:11:04
+[info] loading settings for project starrealms-build-build from metals.sbt...
+[info] loading project definition from /Users/kianimoon/se/se/starrealms/project/project
+[success] Generated .bloop/starrealms-build-build.json
+[success] Total time: 0 s, completed 23 May 2025, 16:11:05
+[info] loading settings for project starrealms-build from metals.sbt, plugins.sbt...
+[info] loading project definition from /Users/kianimoon/se/se/starrealms/project
+[success] Generated .bloop/starrealms-build.json
+[success] Total time: 1 s, completed 23 May 2025, 16:11:05
+[info] loading settings for project root from build.sbt...
+[info] set current project to StarRealms (in build file:/Users/kianimoon/se/se/starrealms/)
+[info] Executing in batch mode. For better performance use sbt's shell
+[success] Total time: 0 s, completed 23 May 2025, 16:11:06
+[info] compiling 15 Scala sources to /Users/kianimoon/se/se/starrealms/target/scala-2.13/classes ...
+[success] Total time: 3 s, completed 23 May 2025, 16:11:09
+[info] running de.htwg.se.starrealms.app.Main 
+Welcome to Star Realms!
+Failed to create card for row: HashMap( -> , Set -> Core Set, CardType -> then scrap a card from your hand.", Notes -> Trade Deck, Qty -> 1, Role -> 6 Outpost, Name -> Machine Base, Faction -> Base, Text -> "Draw a card, Defense -> 7, Cost -> Machine Cult). Error: For input string: "Machine Cult"
+Failed to create card for row: HashMap( -> "<a href=""https://www.starrealms.com/faq/#errata"">Errata</a> - Only ships played while Fleet HQ is in play gain the 1 combat bonus.", Set -> Core Set, CardType -> gain {1 Combat}", Notes -> Trade Deck, Qty -> 1, Role -> 8, Name -> Fleet HQ, Faction -> Base, Text -> "Whenever you play a ship, Defense -> 8, Cost -> Star Empire). Error: Index 1 out of bounds for length 1
+Failed to create card for row: HashMap(Set -> Core Set, CardType -> Ship, Notes -> , Qty -> 16, Role -> Personal Deck, Name -> Scout, Faction -> Unaligned, Text -> {Gain 1 Trade}, Defense -> , Cost -> ). Error: For input string: ""
+Failed to create card for row: HashMap(Set -> Core Set, CardType -> Ship, Notes -> , Qty -> 4, Role -> Personal Deck, Name -> Viper, Faction -> Unaligned, Text -> {Gain 1 Combat}, Defense -> , Cost -> ). Error: For input string: ""
+Failed to create card for row: HashMap(Set -> Core Set (First Edition), CardType -> Scorecard, Notes -> , Qty -> 6, Role -> Scorecard, Name -> Scorecard (10) | Scorecard (20), Faction -> , Text -> , Defense -> , Cost -> ). Error: Unknown set: Core Set (First Edition)
+Failed to create card for row: HashMap(Set -> Core Set (First Edition), CardType -> Scorecard, Notes -> , Qty -> 12, Role -> Scorecard, Name -> Scorecard (1) | Scorecard (5), Faction -> , Text -> , Defense -> , Cost -> ). Error: Unknown set: Core Set (First Edition)
+Failed to create card for row: HashMap(Set -> Core Set (Second Edition), CardType -> Scorecard, Notes -> , Qty -> 1, Role -> Scorecard, Name -> Scorecard (40-70) | Scorecard (00-30), Faction -> Red, Text -> , Defense -> , Cost -> ). Error: Unknown set: Core Set (Second Edition)
+Failed to create card for row: HashMap(Set -> Core Set (Second Edition), CardType -> Scorecard, Notes -> , Qty -> 1, Role -> Scorecard, Name -> Scorecard (00-09) | Scorecard (80-89), Faction -> Red, Text -> , Defense -> , Cost -> ). Error: Unknown set: Core Set (Second Edition)
+Failed to create card for row: HashMap(Set -> Core Set (Second Edition), CardType -> Scorecard, Notes -> , Qty -> 1, Role -> Scorecard, Name -> Scorecard (40-70) | Scorecard (00-30), Faction -> Yellow, Text -> , Defense -> , Cost -> ). Error: Unknown set: Core Set (Second Edition)
+Failed to create card for row: HashMap(Set -> Core Set (Second Edition), CardType -> Scorecard, Notes -> , Qty -> 1, Role -> Scorecard, Name -> Scorecard (00-09) | Scorecard (80-89), Faction -> Yellow, Text -> , Defense -> , Cost -> ). Error: Unknown set: Core Set (Second Edition)
+Loaded Sets: Core Set
+Total cards loaded: 5
+All cards parsed successfully.
+Requested set: Core Set. Available sets: Core Set
+
+
+Deck loaded: Trade Deck
+
+
+
+
+
+PlayerDeck:
+Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
+Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
+Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+
+
+Hand:
+
+
+
+Discard Pile:
+
+
+
+TradeRow:
+
+
+
+TradeDeck:
+Federation Shuttle | Trade Federation | Ship | Cost: 1 | Ability: Gain 2 Trade
+Blob World | Blob | Base | Cost: 3 | Ability: Gain 3 Trade
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Imperial Frigate | Trade Federation | Ship | Cost: 2 | Ability: Gain 4 Combat
+Blob Wheel | Blob | Base | Cost: 1 | Ability: Gain 1 Trade
+
+
+
+Enter 's' to start your turn
+Enter 't' to replenish the trade row
+Enter 'r' to reset the game
+Enter 'x' to exit the game
+
+
+
+Your command:
+
+x
+
+
+Exiting the game... #ConsoleView
+
+
+Game exited. Goodbye! #main
+
+[success] Total time: 39 s, completed 23 May 2025, 16:11:48
+kianimoon@Kianis-MacBook-Air starrealms % 

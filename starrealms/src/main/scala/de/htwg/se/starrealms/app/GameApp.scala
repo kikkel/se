@@ -6,8 +6,14 @@ import de.htwg.se.starrealms.view.ConsoleView
 
 class GameApp(inputProvider: () => String, output: String => Unit = println) {
   def run(): Unit = {
+    //val inputProvider = () => "exit"
 
     val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set")
+    if (decksByRole.isEmpty) {
+      output("No decks found. Exiting the game.")
+      return
+    }
+    println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
 
     val deckbuilder = new DeckBuilder()
     val director = new Director()
@@ -29,4 +35,5 @@ class GameApp(inputProvider: () => String, output: String => Unit = println) {
     output("\n\nGame exited. Goodbye! #main\n\n")
   }
 }
+
 

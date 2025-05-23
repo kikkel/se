@@ -2,13 +2,14 @@ package de.htwg.se.starrealms.model
 
 import scala.io.Source
 import scala.util.{Failure, Try, Success}
-import java.io.File
 
 
 object LoadCards {
     def loadFromResource(getCsvPath: String, setName: String): Map[String, Deck] = {
         val loader = new CardCSVLoader(getCsvPath)
         loader.loadCardsFromFile()
+        loader.testCardParsing()
+
         val cards = loader.getCardsForSet(setName)
 
         val groupedCards = cards.groupBy(_.role)
@@ -20,7 +21,8 @@ object LoadCards {
             }
     }
 
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/CoreSet.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
     //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
 
     def getCsvPath: String =
@@ -39,7 +41,19 @@ class CardCSVLoader(filePath: String) {
                     val values = line.split(",", -1).map(_.trim)
                     headers.zipAll(values, "", "").toMap
                 }
-            case Success(_) => // Handle empty file case if needed
+                val validRows = filterValidCards(rows)                 
+                val cards = validRows.flatMap { row =>
+                    Try(createParsedCard(row)) match {
+                        case Success(card) => Some(card)
+                        case Failure(exception) =>
+                            println(s"Failed to create card for row: $row. Error: ${exception.getMessage}")
+                            None
+                    }
+                }
+                cardsBySet = cards.groupBy(_.set.nameOfSet)
+                println(s"Loaded Sets: ${cardsBySet.keys.mkString(", ")}")
+            case Success(_) =>
+                println("The file is empty. No cards loaded.")
             case Failure(exception) =>
                 println(s"Failed to load cards from file: ${exception.getMessage}")
         }
@@ -47,7 +61,9 @@ class CardCSVLoader(filePath: String) {
 
     def getCardsForSet(setName: String): List[Card] = {
             if (cardsBySet.isEmpty) { loadCardsFromFile() }
+            println(s"Requested set: $setName. Available sets: ${cardsBySet.keys.mkString(", ")}")
             cardsBySet.getOrElse(setName, List())
+            
     }
 
     private def filterValidCards(rows: List[Map[String, String]]): List[Map[String, String]] = {
@@ -98,62 +114,104 @@ class CardCSVLoader(filePath: String) {
         .getOrElse(SimpleAction(text))
     }
 
-    private def createCardInstance(card: Map[String, String]): Card = {
-        val faction = Faction(card("Faction"))
-        val cardType: Try[CardType] = Try {
-            card("CardType") match {
-                case "Ship" => new Ship()
-                case "Base" =>
-                    val defense = card.getOrElse("Defense", "0")
-                    val isOutPost = card.get("Outpost").exists(_.toBoolean)
-                    new Base(defense, isOutPost)
-                case _ => throw new IllegalArgumentException(s"Unknown card type: ${card("CardType")}")
-            }
-        }
+    private def createParsedCard(card: Map[String, String]): ParsedCard = {
         val abilities = card.get("Text").map(_.split("<hr>").map(_.trim).toList).getOrElse(List())
         val primaryAbility = abilities.headOption.filter(_.nonEmpty).map(a => new Ability(parseActions(a)))
         val allyAbility = abilities.find(_.contains("Ally")).map(a => new Ability(parseActions(a)))
         val scrapAbility = abilities.find(_.startsWith("{Scrap}")).map(a => new Ability(parseActions(a.stripPrefix("{Scrap}").trim)) )
 
-        val qty = card("Qty").map(_.toInt)
-        val role = card("Role") match {
-            case "Trade Deck" => "Trade Deck"
-            case "Explorer Pile" => "Explorer Deck"
-            case "Personal Deck" => "Personal Deck"
-            case _ => Failure(new IllegalArgumentException(s"Unknown role: ${card("Role")}"))
-        }
-
-        new FactionCard(
+        ParsedCard(
             set = Set(card("Set")),
             cardName = card("Name"),
-            cost = card.get("Cost").map(_.toInt).getOrElse(0),
+            cost = card.get("Cost").map(_.toInt),
             primaryAbility = primaryAbility,
             allyAbility = allyAbility,
             scrapAbility = scrapAbility,
-            faction = faction,
-            cardType = cardType,
-            qty = card("Qty").toInt,
-            role = card("Role")
+            faction = Faction(card("Faction")),
+            cardType = Try {
+                card("CardType") match {
+                    case "Ship" => new Ship()
+                    case "Base" =>
+                        val defense = card.getOrElse("Defense", "0")
+                        val isOutPost = card.get("Outpost").exists(_.toBoolean)
+                        new Base(defense, isOutPost)
+                    case _ => throw new IllegalArgumentException(s"Unknown card type: ${card("CardType")}")
+                }
+            },
+            qty = card.get("Qty").map(_.toInt).getOrElse(0),
+            role = card("Role"),
+            notes = card.get("Notes").getOrElse("")
         )
-
-/*         new DefaultCard(
-            set = Set(card("Set")),
-            cardName = card("Scout") || card("Viper"),
-            primaryAbility = primaryAbility,
-            faction = faction,
-            cardType = cardType
-        )
-
-        new ExplorerCard(
-            set = Set(card("Set")),
-            cardName = card("Explorer"),
-            primaryAbility = primaryAbility,
-            scrapAbility = scrapAbility,
-            faction = faction,
-            cardType = cardType
-        ) */
     }
-    def getAllCards: List[Card] = cardsBySet.values.flatten.toList
+    def transformToSpecificCard(parsedCard: ParsedCard): Option[Card] = {
+        parsedCard.role match {
+            case "Trade Deck" =>
+                Some(FactionCard(
+                    set = parsedCard.set,
+                    cardName = parsedCard.cardName,
+                    cost = parsedCard.cost.getOrElse(0),
+                    primaryAbility = parsedCard.primaryAbility,
+                    allyAbility = parsedCard.allyAbility,
+                    scrapAbility = parsedCard.scrapAbility,
+                    faction = parsedCard.faction,
+                    cardType = parsedCard.cardType,
+                    qty = parsedCard.qty,
+                    role = parsedCard.role
+                ))
+            case "Personal Deck" =>
+                Some(DefaultCard(
+                    set = parsedCard.set,
+                    cardName = parsedCard.cardName,
+                    primaryAbility = parsedCard.primaryAbility,
+                    faction = parsedCard.faction,
+                    cardType = parsedCard.cardType,
+                    qty = parsedCard.qty,
+                    role = parsedCard.role
+                ))
+            case "Explorer Pile" =>
+                Some(ExplorerCard(
+                    set = parsedCard.set,
+                    cardName = parsedCard.cardName,
+                    cost = parsedCard.cost.getOrElse(0),
+                    primaryAbility = parsedCard.primaryAbility,
+                    scrapAbility = parsedCard.scrapAbility,
+                    faction = parsedCard.faction,
+                    cardType = parsedCard.cardType,
+                    qty = parsedCard.qty,
+                    role = parsedCard.role
+                ))
+            case _ =>
+                println(s"Unknown role: ${parsedCard.role}. Ignoring card.")
+                None
+        }
+    }
+
+    def getAllCards: List[Card] = cardsBySet.values.flatten.toList; 
+
+    def testCardParsing(): Unit = {
+        if (cardsBySet.isEmpty) {
+            println("Card data is empty. Attempting to load cards...")
+            loadCardsFromFile()
+        }
+
+        val allCards = getAllCards
+        println(s"Total cards loaded: ${allCards.length}")
+
+        val invalidCards = allCards.filter(card =>
+            card.cardName.isEmpty || 
+            card.role.isEmpty || 
+            card.cardType.isFailure
+        )
+
+        if (invalidCards.nonEmpty) {
+            println(s"Warning: Found ${invalidCards.length} cards with potential issues.")
+            invalidCards.foreach(card =>
+                println(s"Issue in card: ${card.cardName}, Role: ${card.role}, CardType: ${card.cardType}")
+            )
+        } else {
+            println("All cards parsed successfully.")
+        }
+    }
 }
 
 

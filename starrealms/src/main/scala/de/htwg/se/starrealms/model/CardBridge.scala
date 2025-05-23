@@ -29,7 +29,7 @@ class Base(val defense: String, val isOutpost: Boolean) extends CardType {
 
 }
 
-class FactionCard(
+case class FactionCard(
     override val set: Set,
     override val cardName: String,
     val cost: Int,
@@ -72,7 +72,7 @@ case class DefaultCard(
     }
 }
 
-class ExplorerCard(
+case class ExplorerCard(
     override val set: Set,
     override val cardName: String,
     val cost: Int,
@@ -90,5 +90,29 @@ class ExplorerCard(
         }
         s"ExplorerCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
         s"${scrapAbility.map(_.render()).getOrElse("None")}, ${faction.factionName}, $cardTypeStr) #BRIDGE: ExplorerCard"
+    }
+}
+
+case class ParsedCard(
+    set: Set,
+    cardName: String,
+    cost: Option[Int],
+    primaryAbility: Option[Ability],
+    allyAbility: Option[Ability],
+    scrapAbility: Option[Ability],
+    faction: Faction,
+    cardType: Try[CardType],
+    qty: Int,
+    role: String,
+    notes: String
+) extends Card {
+    override def render(): String = {
+        val cardTypeStr = cardType match {
+            case scala.util.Success(value) => value.toString
+            case scala.util.Failure(exception) => s"Error: ${exception.getMessage}"
+        }
+        s"ParsedCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+        s"${allyAbility.map(_.render()).getOrElse("None")}, ${scrapAbility.map(_.render()).getOrElse("None")}, " +
+        s"${faction.factionName}, $cardTypeStr) #BRIDGE: ParsedCard"
     }
 }

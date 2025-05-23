@@ -303,7 +303,7 @@ Command Deck: The Unity,1,Mech Wurm,"You may scrap up to two cards from your han
 {Unity Ally (Blob or Machine Cult)}: Draw a card.",Ship,Blob / Machine Cult,8,,Trade Deck,
 Command Deck: The Unity,1,Cluster Viper,"{Gain 2 Combat}
 <hr>
-{Blob Ally}: {Gain 1 Combat}",Ship,Unaligned,,,Trade Deck,
+{Blob Ally}: {Gain 1 Combat}",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Unity,1,Laser Drone,"{Gain 2 Combat}
 <hr>
 {Machine Cult Ally}: {Gain 1 Combat}
@@ -313,14 +313,14 @@ Command Deck: The Unity,1,Protopod,"{Gain 2 Trade}
 <hr>
 {Blob Ally}: {Gain 1 Combat}",Ship,Blob,,,Trade Deck,
 Command Deck: The Unity,1,Ranger,{Gain 1 Trade} OR {Gain 2 Combat},Ship,Unaligned,,,Trade Deck,
-Command Deck: The Unity,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Unity,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Unity,1,Scout Bot,"{Gain 1 Trade}
 <hr>
-{Machine Cult Ally}: Choose a card of cost two or less in your discard pile. Put it on top of your deck.",Ship,Unaligned,,,Trade Deck,
+{Machine Cult Ally}: Choose a card of cost two or less in your discard pile. Put it on top of your deck.",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Unity,1,Swarmling,"{Gain 2 Combat}
 <hr>
 {Blob Ally}: {Gain 1 Combat} You may scrap a card in the trade row.",Ship,Blob,,,Trade Deck,
-Command Deck: The Unity,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Unity,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Unity,1,Welder Drone,{Gain 2 Trade} OR {Gain 2 Combat},Ship,Machine Cult,,,Trade Deck,
 Command Deck: The Unity,1,Walsh's Stratagem | Rules (Part 1 of 3),"{Scrap}:
 {Gain 2 Trade} {Gain a Machine Cult Ally} {Gain a Blob Ally}
@@ -338,10 +338,10 @@ Command Deck: The Union,1,Meganaut,"{Gain 7 Combat} Draw a card.
 {Scrap}: {Gain 6 Combat}",Ship,Blob / Star Empire,8,,Trade Deck,
 Command Deck: The Union,1,Cluster Viper,"{Gain 2 Combat}
 <hr>
-{Blob Ally}: {Gain 1 Combat}",Ship,Unaligned,,,Trade Deck,
+{Blob Ally}: {Gain 1 Combat}",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Union,1,Imperial Scout,"{Gain 1 Trade}
 <hr>
-{Star Empire Ally}: {Gain 2 Combat}",Ship,Unaligned,,,Trade Deck,
+{Star Empire Ally}: {Gain 2 Combat}",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Union,1,Imperial Talon,"{Gain 2 Combat}
 <hr>
 {Star Empire Ally}: {Gain 2 Combat}",Ship,Star Empire,,,Trade Deck,
@@ -350,10 +350,10 @@ Command Deck: The Union,1,Protopod,"{Gain 2 Trade}
 {Blob Ally}: {Gain 1 Combat}",Ship,Blob,,,Trade Deck,
 Command Deck: The Union,1,Ranger,{Gain 1 Trade} OR {Gain 2 Combat},Ship,Unaligned,,,Trade Deck,
 Command Deck: The Union,1,Ripper,{Gain 3 Combat},Ship,Blob,,,Trade Deck,
-Command Deck: The Union,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Union,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Union,1,Tribute Transport,"{Gain 2 Trade}
 OR draw a card, then discard a card.",Ship,Star Empire,,,Trade Deck,
-Command Deck: The Union,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Union,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Union,1,McCready's Maneuver | Rules (Part 1 of 3),"{Scrap}:
 {Gain 5 Combat} {Gain a Blob Ally} {Gain a Star Empire Ally}
 Draw a card.",Gambit | Rules,,,,Gambit | Rules,
@@ -368,22 +368,22 @@ Command Deck: The Pact,1,Super Carrier,"You may acquire a ship for free and put 
 {Pact Ally (Blob or Trade Federation)}: Draw a card.",Ship,Blob / Trade Federation,8,,Trade Deck,
 Command Deck: The Pact,1,Cluster Scout,"{Gain 1 Trade}
 <hr>
-{Blob Ally}: {Gain 1 Combat} You may scrap a card in the trade row.",Ship,Unaligned,,,Trade Deck,
+{Blob Ally}: {Gain 1 Combat} You may scrap a card in the trade row.",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Pact,1,Diplomatic Shuttle,{Gain 1 Trade} OR {Gain 5 Authority},Ship,Trade Federation,,,Trade Deck,
 Command Deck: The Pact,1,Escort Viper,"{Gain 1 Combat}
 <hr>
-{Trade Federation Ally}: {Gain 1 Trade}",Ship,Unaligned,,,Trade Deck,
+{Trade Federation Ally}: {Gain 1 Trade}",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Pact,1,Frontier Tug,"{Gain 2 Trade}
 <hr>
 {Trade Federation Ally}: Shuffle the next base you acquire this turn into your deck.",Ship,Trade Federation,,,Trade Deck,
 Command Deck: The Pact,1,Ranger,{Gain 1 Trade} OR {Gain 2 Combat},Ship,Unaligned,,,Trade Deck,
 Command Deck: The Pact,1,Ripper,{Gain 3 Combat},Ship,Blob,,,Trade Deck,
-Command Deck: The Pact,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Pact,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Pact,1,Swarmling,"{Gain 2 Combat}
 <hr>
 {Blob Ally}: {Gain 1 Combat} You may scrap a card in the trade row.
 ",Ship,Blob,,,Trade Deck,
-Command Deck: The Pact,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Pact,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Pact,1,Newburg’s Game | Rules (Part 1 of 3),"{Scrap}:
 {Gain 3 Combat} {Gain 4 Authority} {Gain a Blob Ally} {Gain a Trade Federation Ally}
 Draw a card.",Gambit | Rules,,,,Gambit | Rules,
@@ -399,7 +399,7 @@ Command Deck: The Coalition,1,Cargo Boat,"{Gain 2 Trade}
 {Trade Federation Ally}: {Gain 2 Authority}",Ship,Trade Federation,,,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Errata</a> - This card's secondary ability is a Trade Federation ally ability."
 Command Deck: The Coalition,1,Federation Scout,"{Gain 1 Trade}
 <hr>
-{Trade Federation Ally}: The next {Trade Federation} card you acquire this turn costs {1 Trade} less.",Ship,Unaligned,,,Trade Deck,
+{Trade Federation Ally}: The next {Trade Federation} card you acquire this turn costs {1 Trade} less.",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Coalition,1,Frontier Tug,"{Gain 2 Trade}
 <hr>
 {Trade Federation Ally}: Shuffle the next base you acquire this turn into your deck.",Ship,Trade Federation,,,Trade Deck,
@@ -411,11 +411,11 @@ Command Deck: The Coalition,1,Laser Drone,"{Gain 2 Combat}
 Command Deck: The Coalition,1,Ranger,{Gain 1 Trade} OR {Gain 2 Combat},Ship,,,,Trade Deck,
 Command Deck: The Coalition,1,Salvage Drone,"{Gain 1 Trade}
 OR scrap a card in your hand or discard pile.",Ship,Machine Cult,,,Trade Deck,
-Command Deck: The Coalition,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Trade Deck,
-Command Deck: The Coalition,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Coalition,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Personal Deck,
+Command Deck: The Coalition,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Coalition,1,Viper Bot,"{Gain 2 Combat}
 <hr>
-{Machine Cult Ally}: If you’ve scrapped a card from your hand or discard pile this turn, gain {3 Combat}",Ship,Unaligned,,,Trade Deck,
+{Machine Cult Ally}: If you’ve scrapped a card from your hand or discard pile this turn, gain {3 Combat}",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Coalition,1,Valken’s Enterprise | Coalition Stronghold,"{Scrap}: Flip this gambit over and put it into play as a base.
 |
 {Gain 2 Combat} OR {Gain 2 Authority}
@@ -434,18 +434,18 @@ Command Deck: The Alliance,1,Cargo Boat,"{Gain 2 Trade}
 Command Deck: The Alliance,1,Diplomatic Shuttle,{Gain 1 Trade} OR {Gain 5 Authority},Ship,Trade Federation,,,Trade Deck,
 Command Deck: The Alliance,1,Federation Scout,"{Gain 1 Trade}
 <hr>
-{Trade Federation Ally}: The next {Trade Federation} card you acquire this turn costs {1 Trade} less.",Ship,Unaligned,,,Trade Deck,
+{Trade Federation Ally}: The next {Trade Federation} card you acquire this turn costs {1 Trade} less.",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Alliance,1,Imperial Viper,"{Gain 1 Combat}
 <hr>
-{Star Empire Ally}: You may discard a card. If you do, draw a card.",Ship,Unaligned,,,Trade Deck,
+{Star Empire Ally}: You may discard a card. If you do, draw a card.",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Alliance,1,Ranger,{Gain 1 Trade} OR {Gain 2 Combat},Ship,Unaligned,,,Trade Deck,
-Command Deck: The Alliance,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Alliance,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Alliance,1,Stellar Falcon,"{Gain 2 Combat}
 <hr>
 {Star Empire Ally}: Target opponent discards a card.",Ship,Star Empire,,,Trade Deck,
 Command Deck: The Alliance,1,Tribute Transport,"{Gain 2 Trade}
 OR draw a card, then discard a card.",Ship,Star Empire,,,Trade Deck,
-Command Deck: The Alliance,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Alliance,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Alliance,1,Nandi’s Onslaught | Rules (Part 1 of 3),"{Scrap}:
 {Gain a Star Empire Ally} {Gain a Trade Federation Ally}
 Draw two cards, then you and each opponent discard a card.",Gambit | Rules,,,,Gambit | Rules,
@@ -461,18 +461,18 @@ Command Deck: The Alignment,1,Imperial Talon,"{Gain 2 Combat}
 {Star Empire Ally}: {Gain 2 Combat}",Ship,Star Empire,,,Trade Deck,
 Command Deck: The Alignment,1,Imperial Viper,"{Gain 1 Combat}
 <hr>
-{Star Empire Ally}: You may discard a card. If you do, draw a card.",Ship,Unaligned,,,Trade Deck,
+{Star Empire Ally}: You may discard a card. If you do, draw a card.",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Alignment,1,Ranger,{Gain 1 Trade} OR {Gain 2 Combat},Ship,Unaligned,,,Trade Deck,
 Command Deck: The Alignment,1,Salvage Drone,"{Gain 1 Trade}
 OR scrap a card in your hand or discard pile.",Ship,Machine Cult,,,Trade Deck,
-Command Deck: The Alignment,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Alignment,4,Scout,{Gain 1 Trade},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Alignment,1,Scout Bot,"{Gain 1 Trade}
 <hr>
-{Machine Cult Ally}: Choose a card of cost two or less in your discard pile. Put it on top of your deck.",Ship,Unaligned,,,Trade Deck,
+{Machine Cult Ally}: Choose a card of cost two or less in your discard pile. Put it on top of your deck.",Ship,Unaligned,,,Personal Deck,
 Command Deck: The Alignment,1,Stellar Falcon,"{Gain 2 Combat}
 <hr>
 {Star Empire Ally}: Target opponent discards a card.",Ship,Star Empire,,,Trade Deck,
-Command Deck: The Alignment,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Trade Deck,
+Command Deck: The Alignment,1,Viper,{Gain 1 Combat},Ship,Unaligned,,,Personal Deck,
 Command Deck: The Alignment,1,Welder Drone,{Gain 2 Trade} OR {Gain 2 Combat},Ship,Machine Cult,,,Trade Deck,
 Command Deck: The Alignment,1,Le's Foray | Rules (Part 1 of 3),"{Scrap}:
 {Gain a Star Empire Ally} {Gain a Machine Cult Ally}
@@ -736,9 +736,9 @@ Frontiers,2,Patrol Boat,"{Gain 4 Combat} {Gain 3 Authority}
 Frontiers,1,Transit Nexus,{Gain 3 Combat} {Gain 4 Trade} {Gain 5 Authority},Base,Trade Federation,8,6,Trade Deck,
 Frontiers,16,Explorer,"{Gain 2 Trade}
 <hr>
-{Scrap}: {Gain 2 Combat}",Ship,Unaligned,2,,Trade Deck,
-Frontiers,32,Scout,{Gain 1 Trade},Ship,Unaligned,,,Trade Deck,
-Frontiers,8,Viper,{Gain 1 Combat},Ship,Unaligned,,,Trade Deck,
+{Scrap}: {Gain 2 Combat}",Ship,Unaligned,2,,Explorer Pile,
+Frontiers,32,Scout,{Gain 1 Trade},Ship,Unaligned,,,Personal Deck,
+Frontiers,8,Viper,{Gain 1 Combat},Ship,Unaligned,,,Personal Deck,
 Frontiers,1,Scorecard (40-70) | Scorecard (00-30),,Scorecard,Green,,,Scorecard,
 Frontiers,1,Scorecard (00-09) | Scorecard (80-89),,Scorecard,Green,,,Scorecard,
 Frontiers,1,Scorecard (40-70) | Scorecard (00-30),,Scorecard,Red,,,Scorecard,
@@ -1353,6 +1353,6 @@ Promos (Imperial Fighter Deck Box)",1,Mercenary Garrison,"{Star Empire Ally}: {G
 Promos (Dice Tower 2016),1,Security Craft,"{Gain 4 Combat} {Gain 3 Authority}
 <hr>
 {Trade Federation Ally}: {Gain 3 Trade}",Ship,Trade Federation,4,,Trade Deck,
-Promos (Mech Cruiser Storage Box ),1,Merc Battlecruiser,"{Gain 6 Combat}
+Promos (Mech Cruiser Storage Box),1,Merc Battlecruiser,"{Gain 6 Combat}
 Draw a card.
 Choose a faction as you play Merc Battlecruiser. Merc Battlecruiser is that faction.",Ship,Unaligned,6,,Trade Deck,
