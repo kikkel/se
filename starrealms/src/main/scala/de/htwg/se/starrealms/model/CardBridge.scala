@@ -43,8 +43,8 @@ case class FactionCard(
     ) extends Card {
         override def render(): String = {
             val cardTypeStr = cardType match {
-                case scala.util.Success(value) => value.toString
-                case scala.util.Failure(exception) => s"Error: ${exception.getMessage}"
+                case Success(value) => value.toString
+                case Failure(exception) => s"Error: ${exception.getMessage}"
             }
             s"FactionCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
                 s"${allyAbility.map(_.render()).getOrElse("None")}, ${scrapAbility.map(_.render()).getOrElse("None")}, " +
@@ -64,8 +64,8 @@ case class DefaultCard(
 ) extends Card {
     override def render(): String = {
         val cardTypeStr = cardType match {
-            case scala.util.Success(value) => value.toString
-            case scala.util.Failure(exception) => s"Error: ${exception.getMessage}"
+            case Success(value) => value.toString
+            case Failure(exception) => s"Error: ${exception.getMessage}"
         }
         s"DefaultCard(${set.nameOfSet}, $cardName, " +
         s"${primaryAbility.map(_.render()).getOrElse("None")}, ${faction.factionName} $cardTypeStr) #BRIDGE: DefaultCard"
@@ -85,8 +85,8 @@ case class ExplorerCard(
 ) extends Card {
     override def render(): String = {
         val cardTypeStr = cardType match {
-            case scala.util.Success(value) => value.toString
-            case scala.util.Failure(exception) => s"Error: ${exception.getMessage}"
+            case Success(value) => value.toString
+            case Failure(exception) => s"Error: ${exception.getMessage}"
         }
         s"ExplorerCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
         s"${scrapAbility.map(_.render()).getOrElse("None")}, ${faction.factionName}, $cardTypeStr) #BRIDGE: ExplorerCard"
@@ -107,8 +107,8 @@ case class ParsedCard(
 ) extends Card {
     override def render(): String = {
         val cardTypeStr = cardType match {
-            case scala.util.Success(value) => value.toString
-            case scala.util.Failure(exception) => s"Error: ${exception.getMessage}"
+            case Success(value) => value.toString
+            case Failure(exception) => s"Error: ${exception.getMessage}"
         }
         s"ParsedCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
         s"${allyAbility.map(_.render()).getOrElse("None")}, ${scrapAbility.map(_.render()).getOrElse("None")}, " +

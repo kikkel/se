@@ -6,33 +6,40 @@ import org.scalactic.Fail
 
 class Deck {
     private var name: String = ""
-    private var cards: List[Card] = List()
+    private var cards: Map[Card, Int] = Map()
 
     def setName(name: String): Unit = this.name = name
-    def setCards(cards: List[Card]): Unit = this.cards = cards
+    def setCards(newCards: List[Card]): Unit = { cards = newCards.groupBy(identity).view.mapValues(_.size).toMap }
 
     def getName: String = name
-    def getCards: List[Card] = cards
+    def getCards: List[Card] = cards.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
 
-    def addCard(card: Card): Unit = cards = cards :+ card
-    def removeCard(card: Card): Unit = cards = cards.filterNot(_ == card)
-    def shuffle(): Unit = cards = Random.shuffle(cards)
+    def addCard(card: Card): Unit = { cards = cards.updated(card, cards.getOrElse(card, 0) + 1) }
+
+    def removeCard(card: Card): Unit = {
+        cards.get(card) match {
+            case Some(qty) if qty > 1 => cards = cards.updated(card, qty - 1)
+            case Some(_) => cards = cards - card
+            case None => println(s"Card $card not found in deck.")
+        }
+    }
+    def shuffle(): Unit = { val shuffleCards = Random.shuffle(getCards); setCards(shuffleCards) }
     def drawCard(): Option[Card] = {
-        cards match {
+        getCards match {
             case Nil => None
             case head :: tail =>
-                cards = tail
+                removeCard(head)
                 Some(head)
         }
     }
-    def resetDeck(): Unit = cards = List()
+    def resetDeck(): Unit = cards = Map()
     def render(): String = {
-        val cardDescriptions = cards.map(_.render()).mkString(", ")
+        val cardDescriptions = cards.map { case (card, qty) => s"${card.render()} (x$qty)" }.mkString(", ")
         s"Deck: $name, Cards: [$cardDescriptions]"
     }
 }
 
-object Deck {
+/* object Deck {
     // Erstellt ein Standard-Playerdeck (8 Scouts, 2 Vipers) mit Bridge-Pattern
     def standardPlayerDeck(): Deck = {
         val deck = new Deck()
@@ -43,7 +50,7 @@ object Deck {
             cardName = "Scout",
             primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
             faction = unaligned,
-            cardType = scala.util.Success(new Ship()),
+            cardType = Success(new Ship()),
             qty = 1,
             role = "Personal Deck"
         )
@@ -52,16 +59,16 @@ object Deck {
             cardName = "Viper",
             primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Combat")))),
             faction = unaligned,
-            cardType = scala.util.Success(new Ship()),
+            cardType = Success(new Ship()),
             qty = 1,
             role = "Personal Deck"
         )
         deck.setName("Player Deck")
-        deck.setCards(scala.util.Random.shuffle(List.fill(8)(scout) ++ List.fill(2)(viper)))
+        deck.setCards(Random.shuffle(List.fill(8)(scout) ++ List.fill(2)(viper)))
         deck
     }
 
-}
+} */
 
 
 /* class Manual { } */

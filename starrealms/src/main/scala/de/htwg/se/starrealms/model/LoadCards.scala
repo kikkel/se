@@ -52,11 +52,11 @@ class CardCSVLoader(filePath: String) {
                     }
                 }
                 cardsBySet = cards.groupBy(_.set.nameOfSet)
-                println(s"\nLoaded Sets: \n${cardsBySet.keys.mkString(", ")}")
+                println(s"\nLoaded Sets: \n${cardsBySet.keys.mkString(",\n")}")
             case Success(_) =>
-                println("The file is empty. No cards loaded.")
+                println("\nThe file is empty. No cards loaded.\n")
             case Failure(exception) =>
-                println(s"Failed to load cards from file: ${exception.getMessage}")
+                println(s"\nFailed to load cards from file: ${exception.getMessage}\n")
         }
     }
 
@@ -141,7 +141,7 @@ class CardCSVLoader(filePath: String) {
                     role = parsedCard.role
                 ))
             case _ =>
-                println(s"Unknown role: ${parsedCard.role}. Ignoring card.")
+                println(s"Unknown role: ${parsedCard.role}. Ignoring card.\n")
                 None
         }
     }
@@ -178,7 +178,7 @@ class CardCSVLoader(filePath: String) {
     }
     def getCardsForSet(setName: String): List[Card] = {
             if (cardsBySet.isEmpty) { loadCardsFromFile() }
-            println(s"\nRequested set: $setName.\nAvailable sets: \n${cardsBySet.keys.mkString(", ")}\n\n")
+            println(s"\n\nRequested set: $setName.\nAvailable sets: \n${cardsBySet.keys.mkString(",\n ")}\n\n")
             cardsBySet.getOrElse(setName, List())
             
     }
@@ -187,7 +187,7 @@ class CardCSVLoader(filePath: String) {
 
     def testCardParsing(): Unit = {
         if (cardsBySet.isEmpty) {
-            println("Card data is empty. Attempting to load cards...")
+            println("\nCard data is empty. Attempting to load cards...\n")
             loadCardsFromFile()
         }
 
@@ -201,7 +201,7 @@ class CardCSVLoader(filePath: String) {
         )
 
         if (invalidCards.nonEmpty) {
-            println(s"Warning: Found ${invalidCards.length} cards with potential issues.")
+            println(s"\nWarning: Found ${invalidCards.length} cards with potential issues.\n")
             invalidCards.foreach(card =>
                 println(s"Issue in card: ${card.cardName}, Role: ${card.role}, CardType: ${card.cardType}")
             )
