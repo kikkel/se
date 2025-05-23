@@ -38,44 +38,28 @@ class Ability(val actions: List[Action]) {
   def executeActions(): Unit = actions.foreach(_.doMove)
 
   def render(): String = {
-    val result = actions
-        .map(_.toString)
-        .mkString(", ")
-        .headOption
-        .getOrElse("No actions available")
-    result.toString()
+    if (actions.isEmpty) "No actions available"
+    else actions.map(_.description).mkString(", ")
   }
 }
 
 case class PrimaryAbility(override val actions: List[Action]) extends Ability(actions) {
   override def render(): String = {
-    val result = actions
-        .map(_.toString)
-        .mkString(", ")
-        .headOption
-        .getOrElse("No primary actions available")
-    result.toString()
+    if (actions.isEmpty) "No primary actions available"
+    else actions.map(_.description).mkString(", ")
   } 
 }
 
 case class AllyAbility(override val actions: List[Action]) extends Ability(actions) {
   override def render(): String = {
-    val result = actions
-        .map(_.toString)
-        .mkString(", ")
-        .headOption
-        .getOrElse("No ally actions available")
-    result.toString()
-  } 
+    if (actions.isEmpty) "No ally actions available"
+    else actions.map(_.description).mkString(", ")
+  }
 }
 case class ScrapAbility(override val actions: List[Action]) extends Ability(actions) {
   override def render(): String = {
-    val result = actions
-        .map(_.toString)
-        .mkString(", ")
-        .headOption
-        .getOrElse("No scrap actions available")
-    result.toString()
+    if (actions.isEmpty) "No scrap actions available"
+    else actions.map(_.description).mkString(", ")
   } 
 }
 
