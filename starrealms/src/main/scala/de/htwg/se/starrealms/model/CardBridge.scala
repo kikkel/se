@@ -52,7 +52,7 @@ class FactionCard(
         }
 }
 
-class DefaultCard(
+case class DefaultCard(
     override val set: Set,
     override val cardName: String,
     override val primaryAbility: Option[Ability],

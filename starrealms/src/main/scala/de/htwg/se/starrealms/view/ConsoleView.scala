@@ -7,24 +7,26 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
 
   private var inPlayPhase = false
 
-  def render(): Unit = {
-    println("\n\n")
-    println(processor.processCommand("show"))
-    if (!inPlayPhase) {
-      println("Enter 's' to start your turn")
-      println("Enter 't' to replenish the trade row")
-      println("Enter 'r' to reset the game")
-      println("Enter 'x' to exit the game\n\n")
-    } else {
-      println("Its your turn!")
-      println("Enter 'p <number>' to play a card from your hand")
-      println("Enter 'b <number>' to buy a card from the trade row")
-      println("Enter 'e' to end your turn")
-      println("Enter 'z' to undo the last action")
-      println("Enter 'y' to redo the last undone action")
-      println("Enter 'x' to exit the game")
-    }
+  def render(): String = {
+  val sb = new StringBuilder
+  sb.append("\n\n")
+  sb.append(processor.processCommand("show")).append("\n")
+  if (!inPlayPhase) {
+    sb.append("Enter 's' to start your turn\n")
+    sb.append("Enter 't' to replenish the trade row\n")
+    sb.append("Enter 'r' to reset the game\n")
+    sb.append("Enter 'x' to exit the game\n\n")
+  } else {
+    sb.append("Its your turn!\n")
+    sb.append("Enter 'p <number>' to play a card from your hand\n")
+    sb.append("Enter 'b <number>' to buy a card from the trade row\n")
+    sb.append("Enter 'e' to end your turn\n")
+    sb.append("Enter 'z' to undo the last action\n")
+    sb.append("Enter 'y' to redo the last undone action\n")
+    sb.append("Enter 'x' to exit the game\n")
   }
+  sb.toString()
+}
 
   def processInput(input: String): Boolean = {
     if (!inPlayPhase) {

@@ -39,15 +39,36 @@ class Ability(val actions: List[Action]) {
 
   def render(): String = {
     if (actions.isEmpty) "No actions available"
-    else actions.map(_.description).mkString(", ")
+    else actions.map(a => s"${a.getClass.getSimpleName}(${a.description})").mkString(", ")
   }
 }
 
 case class PrimaryAbility(override val actions: List[Action]) extends Ability(actions) {
   override def render(): String = {
     if (actions.isEmpty) "No primary actions available"
+    else actions.map(a => s"${a.getClass.getSimpleName}(${a.description})").mkString(", ")
+  }
+}
+
+case class AllyAbility(override val actions: List[Action]) extends Ability(actions) {
+  override def render(): String = {
+    if (actions.isEmpty) "No ally actions available"
+    else actions.map(a => s"${a.getClass.getSimpleName}(${a.description})").mkString(", ")
+  }
+}
+
+case class ScrapAbility(override val actions: List[Action]) extends Ability(actions) {
+  override def render(): String = {
+    if (actions.isEmpty) "No scrap actions available"
+    else actions.map(a => s"${a.getClass.getSimpleName}(${a.description})").mkString(", ")
+  }
+}
+
+/* case class PrimaryAbility(override val actions: List[Action]) extends Ability(actions) {
+  override def render(): String = {
+    if (actions.isEmpty) "No primary actions available"
     else actions.map(_.description).mkString(", ")
-  } 
+  }
 }
 
 case class AllyAbility(override val actions: List[Action]) extends Ability(actions) {
@@ -60,7 +81,7 @@ case class ScrapAbility(override val actions: List[Action]) extends Ability(acti
   override def render(): String = {
     if (actions.isEmpty) "No scrap actions available"
     else actions.map(_.description).mkString(", ")
-  } 
-}
+  }
+} */
 
 

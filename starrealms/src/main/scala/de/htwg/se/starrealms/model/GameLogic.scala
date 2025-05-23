@@ -26,7 +26,7 @@ class GameLogic(var deck: Deck) extends Observable {
   private val tradeRowDeck = new Deck()
   private val replenishStrategy = new TradeRowReplenishStrategy()
   private val startTurnStrategy = new StartTurnStrategy()
-  
+
   def drawCards(count: Int): List[Card] = {
     val cards = startTurnStrategy.draw(deck, count)
     notifyObservers()
@@ -47,7 +47,7 @@ class GameLogic(var deck: Deck) extends Observable {
     deck.removeCard(card)
     notifyObservers()
   }
-  
+
   def playCard(card: Card): Unit = {
     deck.removeCard(card)
     notifyObservers()
@@ -59,6 +59,6 @@ class GameLogic(var deck: Deck) extends Observable {
     notifyObservers()
   }
 
-  def getDeckState: String = deck.render()
+  def getDeckState: String = deck.getCards.map(_.cardName).mkString(", ")
 }
 

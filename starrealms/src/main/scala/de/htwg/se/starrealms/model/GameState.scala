@@ -61,7 +61,7 @@ class GameState extends Observable {
       qty = 1,
       role = "Trade Deck"
     )
-    
+
     val base2 = new FactionCard(
       set = coreSet,
       cardName = "Blob World",
@@ -108,7 +108,7 @@ class GameState extends Observable {
   private var tradeRow: List[Card] = List()
   def removeCard(cards: List[Card], card: Card): List[Card] = {
     val (before, after) = cards.span(_ != card)
-    before ++ after.drop(1) 
+    before ++ after.drop(1)
   }
 
   def initTradeRow(): Unit = {
@@ -147,7 +147,7 @@ class GameState extends Observable {
     if (tradeRow.contains(card)) {
       tradeRow = tradeRow.filterNot(_ == card)
       discardPile = card :: discardPile
-      replenishTradeRow() 
+      replenishTradeRow()
       notifyObservers()
     }
   }
@@ -185,10 +185,8 @@ class GameState extends Observable {
     notifyObservers()
   }
   def resetGame(): Unit = {
-    playerDeck.setCards(scala.util.Random.shuffle(List.fill(8)(scout) ++ List.fill(2)(viper)))
-    playerDeck.shuffle()
+    playerDeck.resetDeck()
     tradeDeck.setCards(List(
-
       new FactionCard(
         set = coreSet,
         cardName = "Blob Wheel",

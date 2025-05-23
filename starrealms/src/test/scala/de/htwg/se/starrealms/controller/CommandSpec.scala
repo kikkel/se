@@ -14,8 +14,8 @@ class CommandSpec extends AnyWordSpec with Matchers {
       val card = new DefaultCard(
         set = Set("Core Set"),
         cardName = "Scout",
-        primaryAbility = None,
-        faction = Faction("unaligned"),
+        primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
+        faction = Faction("Unaligned"),
         cardType = Success(new Ship()),
         qty = 1,
         role = "Personal Deck"
@@ -60,10 +60,10 @@ class CommandSpec extends AnyWordSpec with Matchers {
     "play and undo a card" in {
       val controller = new Controller()
       val card = new DefaultCard(
-        set = Set("Test"),
+        set = Set("Core Set"),
         cardName = "Scout",
-        primaryAbility = None,
-        faction = Faction("unaligned"),
+        primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
+        faction = Faction("Unaligned"),
         cardType = Success(new Ship()),
         qty = 1,
         role = "Personal Deck"
@@ -84,10 +84,10 @@ class CommandSpec extends AnyWordSpec with Matchers {
     "buy and undo a card" in {
       val controller = new Controller()
       val card = new DefaultCard(
-        set = Set("Test"),
+        set = Set("Core Set"),
         cardName = "Scout",
-        primaryAbility = None,
-        faction = Faction("unaligned"),
+        primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
+        faction = Faction("Unaligned"),
         cardType = Success(new Ship()),
         qty = 1,
         role = "Personal Deck"
@@ -119,10 +119,10 @@ class CommandSpec extends AnyWordSpec with Matchers {
     "draw multiple cards and undo" in {
       val controller = new Controller()
       val card = new DefaultCard(
-        set = Set("Test"),
+        set = Set("Core Set"),
         cardName = "Scout",
-        primaryAbility = None,
-        faction = Faction("unaligned"),
+        primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
+        faction = Faction("Unaligned"),
         cardType = Success(new Ship()),
         qty = 1,
         role = "Personal Deck"

@@ -28,20 +28,27 @@ class ConsoleViewSpec extends AnyWordSpec with Matchers {
       view.processInput("s") shouldBe true
       processor.lastCommand shouldBe "s"
 
+      val playPhaseField = view.getClass.getDeclaredField("inPlayPhase")
+      playPhaseField.setAccessible(true)
+      playPhaseField.set(view, false)
+
       view.processInput("t") shouldBe true
       processor.lastCommand shouldBe "t"
 
+      playPhaseField.set(view, false)
       view.processInput("z") shouldBe true
       processor.lastCommand shouldBe "z"
 
+      playPhaseField.set(view, false)
       view.processInput("y") shouldBe true
       processor.lastCommand shouldBe "y"
 
+      playPhaseField.set(view, false)
       view.processInput("x") shouldBe false
 
+      playPhaseField.set(view, false)
       view.processInput("unknown") shouldBe true
     }
-
     "process input correctly for game commands (in play phase)" in {
       val processor = new MockProcessor
       val view = new ConsoleView(processor)
