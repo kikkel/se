@@ -18,7 +18,7 @@ class UndoManager {
 
   def getUndoStack: List[Command] = undoStack
   def getRedoStack: List[Command] = redoStack
-  
+
   def doMove(command: Command) = {
     undoStack = command :: undoStack
     redoStack = Nil
@@ -54,6 +54,7 @@ class DrawCardsCommand(controller: Controller, count: Int) extends Command {
 
 class ReplenishTradeRowCommand(controller: Controller) extends Command {
   private var rep: List[Card] = Nil
+  def setRep(cards: List[Card]): Unit = { rep = cards }
   override def doMove: Unit = controller.gameState.replenishTradeRow()
   override def undoMove: Unit = { rep.foreach(controller.gameState.undoReplenish); rep = Nil }
 }

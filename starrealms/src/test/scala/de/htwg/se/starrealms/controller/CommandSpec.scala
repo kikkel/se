@@ -9,7 +9,7 @@ import scala.util.{Try, Success, Failure}
 class CommandSpec extends AnyWordSpec with Matchers {
 
   "A DrawCardCommand" should {
-    "draw a card and allow undo" in {
+     "store the drawn card on doMove"  in {
       val controller = new Controller()
       val card = new DefaultCard(
         set = Set("Core Set"),
@@ -24,6 +24,29 @@ class CommandSpec extends AnyWordSpec with Matchers {
       controller.gameState.returnCardToPlayerDeck(card)
       val command = new DrawCardCommand(controller)
       command.doMove
+    }
+    "return the drawn card on undoMove and clear it" in {
+      val controller = new Controller()
+      val card = new DefaultCard(
+        set = Set("Core Set"),
+        cardName = "Viper",
+        primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
+        faction = Faction("Unaligned"),
+        cardType = Success(new Ship()),
+        qty = 1,
+        role = "Personal Deck"
+      )
+      controller.gameState.getHand.foreach(controller.gameState.playCard)
+      controller.gameState.returnCardToPlayerDeck(card)
+      val command = new DrawCardCommand(controller)
+      command.doMove
+      command.undoMove
+    }
+    "not fail when undoMove is called without a drawn card" in {
+      val controller = new Controller()
+      val command = new DrawCardCommand(controller)
+      command.undoMove // should be a no-op
+
     }
   }
 
@@ -137,11 +160,75 @@ class CommandSpec extends AnyWordSpec with Matchers {
   }
 
   "A ReplenishTradeRowCommand" should {
-    "replenish and undo" in {
+    "call replenishTradeRow on doMove" in {
       val controller = new Controller()
       val command = new ReplenishTradeRowCommand(controller)
-      noException should be thrownBy command.doMove
-      noException should be thrownBy command.undoMove
+      val card = new FactionCard(
+        set = Set("Core Set"),
+        cardName = "Card A",
+        cost = 1,
+        primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
+        allyAbility = None,
+        scrapAbility = None,
+        faction = Faction("Unaligned"),
+        cardType = Success(new Ship()),
+        qty = 1,
+        role = "Trade Row"
+      )
+
+      command.doMove
+
+    }
+    "call undoReplenish for each card on undoMove" in {
+      val controller = new Controller()
+      val command = new ReplenishTradeRowCommand(controller)
+      val card1 = new FactionCard(
+        set = Set("Core Set"),
+        cardName = "Card A",
+        cost = 1,
+        primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
+        allyAbility = None,
+        scrapAbility = None,
+        faction = Faction("Unaligned"),
+        cardType = Success(new Ship()),
+        qty = 1,
+        role = "Trade Row"
+      )
+      val card2 = new FactionCard(
+        set = Set("Core Set"),
+        cardName = "Card B",
+        cost = 2,
+        primaryAbility = Some(new Ability(List(SimpleAction("Gain 2 Trade")))),
+        allyAbility = None,
+        scrapAbility = None,
+        faction = Faction("Unaligned"),
+        cardType = Success(new Ship()),
+        qty = 1,
+        role = "Trade Row"
+      )
+
+      command.setRep(List(card1, card2))
+      command.undoMove
+    }
+
+    "call replenishTradeRow on redoMove" in {
+      val controller = new Controller()
+      val command = new ReplenishTradeRowCommand(controller)
+      val card = new FactionCard(
+        set = Set("Core Set"),
+        cardName = "Card A",
+        cost = 1,
+        primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
+        allyAbility = None,
+        scrapAbility = None,
+        faction = Faction("Unaligned"),
+        cardType = Success(new Ship()),
+        qty = 1,
+        role = "Trade Row"
+      )
+
+      command.doMove
+      command.redoMove
     }
   }
 "undoMove" should {
