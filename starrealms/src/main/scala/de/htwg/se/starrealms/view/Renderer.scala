@@ -7,7 +7,7 @@ trait Renderer[T] { def render(entity: T): String }
 
 //class WelcomeRenderer extends Renderer
 
-class OptionsMenuRender extends Renderer[OptionsMenu] {
+/* class OptionsMenuRender extends Renderer[OptionsMenu] {
   override def render(menu: OptionsMenu): String = {
     val options = menu.getOptions.map(_.render()).mkString("\n")
     s"Options Menu:\n$options"
@@ -19,7 +19,7 @@ class MainMenuRenderer extends Renderer[MainMenu] {
     s"Main Menu:\n$options"
   }
 }
-
+ */
 
 class CardRenderer extends Observable with Renderer[Card] {
   override def render(card: Card): String = card match {

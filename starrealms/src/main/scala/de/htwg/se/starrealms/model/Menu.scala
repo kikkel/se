@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+/* package de.htwg.se.starrealms.model
 
 import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
@@ -48,3 +48,4 @@ class MainMenu extends Observable {
     s"Main Menu:\n$optionsString"
   }
 }
+ */
