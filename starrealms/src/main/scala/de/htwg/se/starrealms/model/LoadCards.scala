@@ -2,6 +2,7 @@ package de.htwg.se.starrealms.model
 
 import scala.io.Source
 import scala.util.{Failure, Try, Success}
+import scala.util.matching.Regex
 
 
 object LoadCards {
@@ -21,8 +22,8 @@ object LoadCards {
             }
     }
 
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/CoreSet.csv"
-    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/CoreSet.csv"
+    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
     //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
 
     def getCsvPath: String =
@@ -36,9 +37,9 @@ class CardCSVLoader(filePath: String) {
     def loadCardsFromFile(): Unit = {
         Try(Source.fromFile(filePath).getLines().toList) match {
             case Success(lines) if lines.nonEmpty =>
-                val headers = lines.head.split(",").map(_.trim)
+                val headers = parseCSVLine(lines.head)
                 val rows = lines.tail.map { line =>
-                    val values = line.split(",", -1).map(_.trim)
+                    val values = parseCSVLine(line)
                     headers.zipAll(values, "", "").toMap
                 }
                 val validRows = filterValidCards(rows)                 
@@ -51,7 +52,7 @@ class CardCSVLoader(filePath: String) {
                     }
                 }
                 cardsBySet = cards.groupBy(_.set.nameOfSet)
-                println(s"Loaded Sets: ${cardsBySet.keys.mkString(", ")}")
+                println(s"\nLoaded Sets: \n${cardsBySet.keys.mkString(", ")}")
             case Success(_) =>
                 println("The file is empty. No cards loaded.")
             case Failure(exception) =>
@@ -59,11 +60,11 @@ class CardCSVLoader(filePath: String) {
         }
     }
 
-    def getCardsForSet(setName: String): List[Card] = {
-            if (cardsBySet.isEmpty) { loadCardsFromFile() }
-            println(s"Requested set: $setName. Available sets: ${cardsBySet.keys.mkString(", ")}")
-            cardsBySet.getOrElse(setName, List())
-            
+    private def parseCSVLine(line: String): List[String] = {
+        val regex: Regex = """"([^"]*)"|([^,]+)""".r
+        regex.findAllMatchIn(line).map { m =>
+            if (m.group(1) != null) m.group(1) else m.group(2)
+        }.toList
     }
 
     private def filterValidCards(rows: List[Map[String, String]]): List[Map[String, String]] = {
@@ -74,46 +75,6 @@ class CardCSVLoader(filePath: String) {
             row.get("Role").exists(_.nonEmpty)
         )
     }
-    private def parseActions(text: String): List[Action] = {
-        val actionMap: Map[String, String => Action] = Map(
-            "Trade" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Trade")),
-            "Combat" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Combat")),
-            "Authority" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Authority")),
-            "Draw a card" -> (_ => SimpleAction("Draw a card")),
-            "Target opponent discards a card" -> (_ => SimpleAction("Target opponent discards a card"))
-        )
-
-        text.split("<hr>").toList.map { actions =>
-            if (text.contains("OR")) {
-                val conditions = text.split("OR").map(_.trim)
-                ConditionalAction(parseSingleAction(conditions(0)), parseSingleAction(conditions(1)))
-            } else if (text.contains("Whenever")) {
-                val parts = text.split(", gain").map(_.trim)
-                TriggeredAction(parts(0), parseSingleAction(parts(1)))
-            } else if (text.contains("then")) {
-                val steps = text.split("then").map(_.trim).toList
-                CompositeAction(steps.map(parseSingleAction))
-            } else {
-                parseSingleAction(text)
-            }
-        }
-    }
-
-    private def parseSingleAction(text: String): Action = {
-        val actionMap: Map[String, String => Action] = Map(
-            "Trade" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Trade")),
-            "Combat" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Combat")),
-            "Authority" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Authority")),
-            "Draw a card" -> (_ => SimpleAction("Draw a card")),
-            "Target opponent discards a card" -> (_ => SimpleAction("Target opponent discards a card"))
-        )
-
-        actionMap
-        .find { case (keyword, _) => text.contains(keyword) }
-        .map { case (_, constructor) => constructor(text) }
-        .getOrElse(SimpleAction(text))
-    }
-
     private def createParsedCard(card: Map[String, String]): ParsedCard = {
         val abilities = card.get("Text").map(_.split("<hr>").map(_.trim).toList).getOrElse(List())
         val primaryAbility = abilities.headOption.filter(_.nonEmpty).map(a => new Ability(parseActions(a)))
@@ -139,8 +100,7 @@ class CardCSVLoader(filePath: String) {
                 }
             },
             qty = card.get("Qty").map(_.toInt).getOrElse(0),
-            role = card("Role"),
-            notes = card.get("Notes").getOrElse("")
+            role = card("Role")
         )
     }
     def transformToSpecificCard(parsedCard: ParsedCard): Option[Card] = {
@@ -186,6 +146,43 @@ class CardCSVLoader(filePath: String) {
         }
     }
 
+    private def parseActions(text: String): List[Action] = {
+        text.split("<hr>").toList.map { action =>
+            if (action.contains("OR")) {
+                val conditions = action.split("OR").map(_.trim)
+                ConditionalAction(parseSingleAction(conditions(0)), parseSingleAction(conditions(1)))
+            } else if (action.contains("Whenever")) {
+                val parts = action.split(", gain").map(_.trim)
+                TriggeredAction(parts(0), parseSingleAction(parts(1)))
+            } else if (action.contains("then")) {
+                val steps = action.split("then").map(_.trim).toList
+                CompositeAction(steps.map(parseSingleAction))
+            } else {
+                parseSingleAction(action)
+            }
+        }
+    }
+    private def parseSingleAction(text: String): Action = {
+        val actionMap: Map[String, String => Action] = Map(
+            "Trade" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Trade")),
+            "Combat" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Combat")),
+            "Authority" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Authority")),
+            "Draw a card" -> (_ => SimpleAction("Draw a card")),
+            "Target opponent discards a card" -> (_ => SimpleAction("Target opponent discards a card"))
+        )
+
+        actionMap
+        .find { case (keyword, _) => text.contains(keyword) }
+        .map { case (_, constructor) => constructor(text) }
+        .getOrElse(SimpleAction(text))
+    }
+    def getCardsForSet(setName: String): List[Card] = {
+            if (cardsBySet.isEmpty) { loadCardsFromFile() }
+            println(s"\nRequested set: $setName.\nAvailable sets: \n${cardsBySet.keys.mkString(", ")}\n\n")
+            cardsBySet.getOrElse(setName, List())
+            
+    }
+
     def getAllCards: List[Card] = cardsBySet.values.flatten.toList; 
 
     def testCardParsing(): Unit = {
@@ -195,7 +192,7 @@ class CardCSVLoader(filePath: String) {
         }
 
         val allCards = getAllCards
-        println(s"Total cards loaded: ${allCards.length}")
+        println(s"\nTotal cards loaded: \n${allCards.length}\n")
 
         val invalidCards = allCards.filter(card =>
             card.cardName.isEmpty || 
@@ -209,7 +206,7 @@ class CardCSVLoader(filePath: String) {
                 println(s"Issue in card: ${card.cardName}, Role: ${card.role}, CardType: ${card.cardType}")
             )
         } else {
-            println("All cards parsed successfully.")
+            println("\nAll cards parsed successfully.\n")
         }
     }
 }

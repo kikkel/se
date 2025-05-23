@@ -396,7 +396,7 @@ Command Deck: The Coalition,1,Mech Command Ship,"You may scrap up to two cards f
 {Coalition Ally (Machine Cult or Trade Federation)}: Draw a card. You may destroy target base.",Ship,Machine Cult / Trade Federation,8,,Trade Deck,
 Command Deck: The Coalition,1,Cargo Boat,"{Gain 2 Trade}
 <hr>
-{Trade Federation Ally}: {Gain 2 Authority}",Ship,Trade Federation,,,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Errata</a> - This card's secondary ability is a Trade Federation ally ability."
+{Trade Federation Ally}: {Gain 2 Authority}",Ship,Trade Federation,,,Trade Deck,
 Command Deck: The Coalition,1,Federation Scout,"{Gain 1 Trade}
 <hr>
 {Trade Federation Ally}: The next {Trade Federation} card you acquire this turn costs {1 Trade} less.",Ship,Unaligned,,,Personal Deck,
@@ -430,7 +430,7 @@ Draw two cards.
 {Alliance Ally (Star Empire or Trade Federation)}: Draw a card.",Ship,Star Empire / Trade Federation,8,,Trade Deck,
 Command Deck: The Alliance,1,Cargo Boat,"{Gain 2 Trade}
 <hr>
-{Trade Federation Ally}: {Gain 2 Authority}",Ship,Trade Federation,,,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Errata</a> - This card's secondary ability is a Trade Federation ally ability."
+{Trade Federation Ally}: {Gain 2 Authority}",Ship,Trade Federation,,,Trade Deck,
 Command Deck: The Alliance,1,Diplomatic Shuttle,{Gain 1 Trade} OR {Gain 5 Authority},Ship,Trade Federation,,,Trade Deck,
 Command Deck: The Alliance,1,Federation Scout,"{Gain 1 Trade}
 <hr>
@@ -768,7 +768,7 @@ Scenarios,1,Frontier Expedition,,Scenario,Unaligned,,,Scenario,
 Scenarios,1,Maximum Warp,,Scenario,Unaligned,,,Scenario,
 Scenarios,1,Picking Sides,,Scenario,Unaligned,,,Scenario,
 Scenarios,1,Prolonged Conflict,,Scenario,Unaligned,,,Scenario,
-Scenarios,1,Rapid Construction,,Scenario,Unaligned,,,Scenario,"<a href=""https://www.starrealms.com/faq/#errata"">Errata</a> - A card only goes on top of your deck if it would normally go to your discard pile. Heroes enter play as normal."
+Scenarios,1,Rapid Construction,,Scenario,Unaligned,,,Scenario,
 Scenarios,1,Ready Reserves,,Scenario,Unaligned,,,Scenario,
 Scenarios,1,Recruiting Drive,,Scenario,Unaligned,,,Scenario,
 Scenarios,1,Rushed Defenses,,Scenario,Unaligned,,,Scenario,
@@ -787,7 +787,7 @@ United: Missions,1,Exterminate,,Mission,Unaligned,,,Mission,
 United: Missions,1,Influence,,Mission,Unaligned,,,Mission,
 United: Missions,1,Monopolize,,Mission,Unaligned,,,Mission,
 United: Missions,1,Rule,,Mission,Unaligned,,,Mission,
-United: Missions,1,Unite,,Mission,Unaligned,,,Mission,"<a href=""https://www.starrealms.com/faq/#errata"">Errata</a> - Objective clarified."
+United: Missions,1,Unite,,Mission,Unaligned,,,Mission,
 United: Missions,1,Rules (Missions) | Ad (Hero Realms),,Rules,,,,Rules,
 United: Heroes,1,CEO Shaner,"{Gain a Trade Federation Ally}
 You may acquire a ship or base of cost three or less for free and put it on top of your deck.
@@ -1067,8 +1067,7 @@ Crisis: Fleets and Fortresses,2,Customs Frigate,"You may acquire a ship of cost 
 {Trade Federation Ally}: {Gain 4 Combat}
 <hr>
 {Scrap}: Draw a card.",Ship,Trade Federation,4,,Trade Deck,
-Crisis: Fleets and Fortresses,1,Death World,"{Gain 4 Combat}
-You may scrap a Trade Federation, Machine Cult, or Star Empire card from your hand or discard pile. If you do, draw a card.",Base,Blob,7,6,Trade Deck,
+Crisis: Fleets and Fortresses,1,Death World,"{Gain 4 Combat}\nYou may scrap a Trade Federation, Machine Cult, or Star Empire card from your hand or discard pile. If you do, draw a card.",Base,Blob,7,6,Trade Deck,
 Crisis: Fleets and Fortresses,2,Patrol Bot,"{Gain 2 Trade} OR {Gain 4 Combat}
 <hr>
 {Machine Cult Ally}: Scrap a card in your hand or discard pile.",Ship,Machine Cult,2,,Trade Deck,
@@ -1117,7 +1116,7 @@ Crisis: Bases & Battleships,2,Trade Wheel,"{Gain 1 Trade}
 {Blob Ally}: {Gain 2 Combat}",Base,Blob,3,5,Trade Deck,
 Gambit,3,Merc Cruiser,,Ship,Unaligned,3,,Trade Deck,
 Gambit,1,Bold Raid,,Gambit,Unaligned,,,Gambit,
-Gambit,2,Energy Shield,,Gambit,Unaligned,,,Gambit,"<a href=""https://www.starrealms.com/faq/#errata"">Optional Errata</a> - This card now has the secondary ability ""{Scrap}: Draw a card."""
+Gambit,2,Energy Shield,,Gambit,Unaligned,,,Gambit,
 Gambit,2,Frontier Fleet,,Gambit,Unaligned,,,Gambit,
 Gambit,1,Political Maneuver,,Gambit,Unaligned,,,Gambit,
 Gambit,2,Rise to Power,,Gambit,Unaligned,,,Gambit,
@@ -1138,11 +1137,11 @@ You may scrap up to five cards currently in the trade row.
 <hr>
 {Blob Ally}: {Gain 2 Trade}",Ship,Blob,4,,Trade Deck,
 Promo Pack 1,1,Breeding Site,"If you played a base this turn (including this one), gain {5 Combat}",Base,Blob,4,7,Trade Deck,
-Promo Pack 1,2,Fortress Oblivion,"If you played a base this turn (including this one), you may scrap a card in your hand or discard pile.",Base,Machine Cult,3,4 Outpost,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Errata</a> - Added reminder text."
+Promo Pack 1,2,Fortress Oblivion,"If you played a base this turn (including this one), you may scrap a card in your hand or discard pile.",Base,Machine Cult,3,4 Outpost,Trade Deck,
 Promo Pack 1,1,Megahauler,"{Gain 5 Authority}
 You may acquire any ship without paying its cost and put it on top of your deck.
 <hr>
-{Trade Federation Ally}: Draw a card.",Ship,Trade Federation,7,,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Optional Errata</a> - You don't have to acquire a ship if you don't want to."
+{Trade Federation Ally}: Draw a card.",Ship,Trade Federation,7,,Trade Deck,
 Promo Pack 1,1,Mercenary Garrison,"{Star Empire Ally}: {2 Combat}
 <hr>
 {Machine Cult Ally}: Scrap a card from your hand or discard pile.
@@ -1154,37 +1153,29 @@ Promo Pack 1,2,Security Craft,"{Gain 4 Combat} {Gain 3 Authority}
 <hr>
 {Trade Federation Ally}: {Gain 3 Trade}",Ship,Trade Federation,4,,Trade Deck,
 Promo Pack 1,1,Starbase Omega,"If you played a base this turn (including this one), draw a card.",Base,Star Empire,4,6,Trade Deck,
-Promo Pack 1,2,Starmarket,"If you played a base this turn (including this one), gain {5 Authority} OR {3 Trade}",Base,Trade Federation,4,6,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Optional Errata</a> - This card costs 4 to acquire."
+Promo Pack 1,2,Starmarket,"If you played a base this turn (including this one), gain {5 Authority} OR {3 Trade}",Base,Trade Federation,4,6,Trade Deck,
 Promo Pack 1,1,The Ark,"{Gain 5 Combat}
 You may scrap up to two cards in your hand and/or discard pile. For each card scrapped this way, draw a card.
 <hr>
 {Scrap}: Destroy target base.",Ship,Machine Cult,7,,Trade Deck,
 1st Kickstarter Promo Pack,1,Merc Cruiser,"{Gain 5 Combat}
 Choose a faction as you play Merc Cruiser. Merc Cruiser has that faction.",Ship,Unaligned,3,,Trade Deck,
-"1st Kickstarter Promo Pack,
-Organized Play Season 4",2,Battle Barge,"{Gain 5 Combat}
+1st Kickstarter Promo Pack,2,Battle Barge,"{Gain 5 Combat}
 Target opponent discards a card.
 If you have two or more bases in play, gain an additional {3 Combat} and you may return target base in play to its owner's hand.",Ship,Star Empire,4,,Trade Deck,
-"1st Kickstarter Promo Pack,
-Organized Play Season 1",2,Battle Screecher,"{Gain 5 Combat}
+1st Kickstarter Promo Pack,2,Battle Screecher,"{Gain 5 Combat}
 You may scrap up to five cards currently in the trade row.
 <hr>
 {Blob Ally}: {Gain 2 Trade}",Ship,Blob,4,,Trade Deck,
-"1st Kickstarter Promo Pack,
-Organized Play Season 4",1,Breeding Site,"If you played a base this turn (including this one), gain {5 Combat}",Base,Blob,4,7,Trade Deck,
-"1st Kickstarter Promo Pack,
-Organized Play Season 2",2,Fortress Oblivion,"If you played a base this turn (including this one), you may scrap a card in your hand or discard pile.",Base,Machine Cult,3,4 Outpost,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Errata</a> - Added reminder text."
-"1st Kickstarter Promo Pack,
-Organized Play Season 1",1,Megahauler,"{Gain 5 Authority}
+1st Kickstarter Promo Pack,1,Breeding Site,"If you played a base this turn (including this one), gain {5 Combat}",Base,Blob,4,7,Trade Deck,
+1st Kickstarter Promo Pack,2,Fortress Oblivion,"If you played a base this turn (including this one), you may scrap a card in your hand or discard pile.",Base,Machine Cult,3,4 Outpost,Trade Deck,
+1st Kickstarter Promo Pack,1,Megahauler,"{Gain 5 Authority}
 You may acquire any ship without paying its cost and put it on top of your deck.
 <hr>
-{Trade Federation Ally}: Draw a card.",Ship,Trade Federation,7,,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Optional Errata</a> - You don't have to acquire a ship if you don't want to."
-"1st Kickstarter Promo Pack,
-Organized Play Season 2",1,Starbase Omega,"If you played a base this turn (including this one), draw a card.",Base,Star Empire,4,6,Trade Deck,
-"1st Kickstarter Promo Pack,
-Organized Play Season 3",2,Starmarket,"If you played a base this turn (including this one), gain {5 Authority} OR {3 Trade}",Base,Trade Federation,4,6,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Optional Errata</a> - This card costs 4 to acquire."
-"1st Kickstarter Promo Pack,
-Organized Play Season 3",1,The Ark,"{Gain 5 Combat}
+{Trade Federation Ally}: Draw a card.",Ship,Trade Federation,7,,Trade Deck,
+1st Kickstarter Promo Pack,1,Starbase Omega,"If you played a base this turn (including this one), draw a card.",Base,Star Empire,4,6,Trade Deck,
+1st Kickstarter Promo Pack,2,Starmarket,"If you played a base this turn (including this one), gain {5 Authority} OR {3 Trade}",Base,Trade Federation,4,6,Trade Deck,
+1st Kickstarter Promo Pack,1,The Ark,"{Gain 5 Combat}
 You may scrap up to two cards in your hand and/or discard pile. For each card scrapped this way, draw a card.
 <hr>
 {Scrap}: Destroy target base.",Ship,Machine Cult,7,,Trade Deck,
@@ -1268,7 +1259,7 @@ Core Set,1,Dreadnaught,"{Gain 7 Combat}
 Draw a card.
 <hr>
 {Scrap}: {Gain 5 Combat}",Ship,Star Empire,7,,Trade Deck,
-Core Set,1,Fleet HQ,"Whenever you play a ship, gain {1 Combat}",Base,Star Empire,8,8,Trade Deck,"<a href=""https://www.starrealms.com/faq/#errata"">Errata</a> - Only ships played while Fleet HQ is in play gain the 1 combat bonus."
+Core Set,1,Fleet HQ,"Whenever you play a ship, gain {1 Combat}",Base,Star Empire,8,8,Trade Deck,
 Core Set,3,Imperial Fighter,"{Gain 2 Combat}
 Target opponent discards a card.
 <hr>

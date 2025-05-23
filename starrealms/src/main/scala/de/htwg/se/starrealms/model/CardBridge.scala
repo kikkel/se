@@ -103,8 +103,7 @@ case class ParsedCard(
     faction: Faction,
     cardType: Try[CardType],
     qty: Int,
-    role: String,
-    notes: String
+    role: String
 ) extends Card {
     override def render(): String = {
         val cardTypeStr = cardType match {

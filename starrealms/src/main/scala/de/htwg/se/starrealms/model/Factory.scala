@@ -2,24 +2,34 @@ package de.htwg.se.starrealms.model
 
 trait Faction { 
     def factionName: String
+    def matches(other: Faction): Boolean
     def render(): String = s"$factionName #factory"
     //def apply()
 }
 
-private class TradeFederation extends Faction { override def factionName: String = "Trade Federation" }
-private class StarEmpire extends Faction { override def factionName: String = "Star Empire" }
-private class Blob extends Faction { override def factionName: String = "Blob" }
-private class MachineCult extends Faction { override def factionName: String = "Machine Cult" }
-private class Unaligned extends Faction { override def factionName: String = "Unaligned" }
+private class TradeFederation extends Faction { override def factionName: String = "Trade Federation"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class StarEmpire extends Faction { override def factionName: String = "Star Empire"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class Blob extends Faction { override def factionName: String = "Blob"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class MachineCult extends Faction { override def factionName: String = "Machine Cult"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class CompositeFaction(factions: List[Faction]) extends Faction { override def factionName: String = factions.map(_.factionName).mkString(" / "); override def matches(other: Faction): Boolean = factions.exists(_.matches(other)) }
+private class Unaligned extends Faction { override def factionName: String = "Unaligned"; override def matches(other: Faction): Boolean = false }
 
 object Faction {
-    def apply(factionName: String): Faction = factionName.toLowerCase match {
-        case "trade federation" => new TradeFederation
-        case "star empire" => new StarEmpire
-        case "blob" => new Blob
-        case "machine cult" => new MachineCult
-        case "unaligned" => new Unaligned
-        case _ => throw new IllegalArgumentException(s"You've been hijacked by $factionName!")
+    def apply(factionName: String): Faction = {
+        if (factionName.contains("/")) {
+            val factionParts = factionName.split("/").map(_.trim)
+            val factions = factionParts.map(apply).toList
+            new CompositeFaction(factions)
+        } else {
+            factionName.toLowerCase match {
+                case "trade federation" => new TradeFederation
+                case "star empire" => new StarEmpire
+                case "blob" => new Blob
+                case "machine cult" => new MachineCult
+                case "unaligned" => new Unaligned
+                case _ => throw new IllegalArgumentException(s"You've been hijacked by $factionName!")
+            }
+        }
     }
 }
 
@@ -66,7 +76,6 @@ private class CrisisBasesAndBattleships extends Set { override def nameOfSet: St
 private class Gambit extends Set { override def nameOfSet: String = "Gambit" }
 private class PromoPack1 extends Set { override def nameOfSet: String = "Promo Pack 1" }
 private class FirstKickstarterPromoPack extends Set { override def nameOfSet: String = "1st Kickstarter Promo Pack" }
-private class FirstKickstarterPromoPackOrganizedPlaySeason4 extends Set { override def nameOfSet: String = "1st Kickstarter Promo Pack,\nOrganized Play Season 4" }
 private class PromosBattlecruiserStorageBox extends Set { override def nameOfSet: String = "Promos (Battlecruiser Storage Box),\nPromos (Imperial Fighter Deck Box)" }
 private class PromosDiceTower2016 extends Set { override def nameOfSet: String = "Promos (Dice Tower 2016)" }
 private class PromosMechCruiserStorageBox extends Set { override def nameOfSet: String = "Promos (Mech Cruiser Storage Box)" }
@@ -74,7 +83,7 @@ private class PromosMechCruiserStorageBox extends Set { override def nameOfSet: 
 object Set {
     def apply(nameOfSet: String): Set = nameOfSet.toLowerCase match {
         case "core set" => new CoreSet
-/*         case "high alert: first strike" => new HighAlertFirstStrike
+        case "high alert: first strike" => new HighAlertFirstStrike
         case "high alert: tech" => new HighAlertTech
         case "high alert: requisition" => new HighAlertRequisition
         case "high alert: invasion" => new HighAlertInvasion
@@ -106,10 +115,9 @@ object Set {
         case "gambit" => new Gambit
         case "promo pack 1" => new PromoPack1
         case "1st kickstarter promo pack" => new FirstKickstarterPromoPack
-        case "1st kickstarter promo pack,\norganized play season 4" => new FirstKickstarterPromoPackOrganizedPlaySeason4
         case "promos (battlecruiser storage box),\npromos (imperial fighter deck box)" => new PromosBattlecruiserStorageBox
         case "promos (dice tower 2016)" => new PromosDiceTower2016
-        case "promos (mech cruiser storage box)" => new PromosMechCruiserStorageBox */
+        case "promos (mech cruiser storage box)" => new PromosMechCruiserStorageBox
         case _ => throw new IllegalArgumentException(s"Unknown set: $nameOfSet")
     }
 }

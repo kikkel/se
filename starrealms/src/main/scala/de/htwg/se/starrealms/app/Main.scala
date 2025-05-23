@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.app
 
 object Main extends App {
-  println("Welcome to Star Realms!")
+  println("\n\nWelcome to Star Realms!\n\n")
   new GameApp(() => scala.io.StdIn.readLine()).run()
 }
