@@ -13,7 +13,7 @@ object LoadCards {
 
         val cards = loader.getCardsForSet(setName)
 
-        val groupedCards = cards.groupBy(_.role)
+        val groupedCards = cards.groupBy(_.role.trim)
         groupedCards.map { case (role, cards) =>
             val deck = new Deck()
             deck.setName(role)
@@ -23,8 +23,8 @@ object LoadCards {
     }
 
     //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/CoreSet.csv"
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
-    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
 
     def getCsvPath: String =
         sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath")
@@ -42,7 +42,7 @@ class CardCSVLoader(filePath: String) {
                     val values = parseCSVLine(line)
                     headers.zipAll(values, "", "").toMap
                 }
-                val validRows = filterValidCards(rows)                 
+                val validRows = filterValidCards(rows)
                 val cards = validRows.flatMap { row =>
                     Try(createParsedCard(row)) match {
                         case Success(card) => Some(card)
@@ -180,10 +180,10 @@ class CardCSVLoader(filePath: String) {
             if (cardsBySet.isEmpty) { loadCardsFromFile() }
             println(s"\n\nRequested set: $setName.\nAvailable sets: \n${cardsBySet.keys.mkString(",\n ")}\n\n")
             cardsBySet.getOrElse(setName, List())
-            
+
     }
 
-    def getAllCards: List[Card] = cardsBySet.values.flatten.toList; 
+    def getAllCards: List[Card] = cardsBySet.values.flatten.toList;
 
     def testCardParsing(): Unit = {
         if (cardsBySet.isEmpty) {
@@ -195,8 +195,8 @@ class CardCSVLoader(filePath: String) {
         println(s"\nTotal cards loaded: \n${allCards.length}\n")
 
         val invalidCards = allCards.filter(card =>
-            card.cardName.isEmpty || 
-            card.role.isEmpty || 
+            card.cardName.isEmpty ||
+            card.role.isEmpty ||
             card.cardType.isFailure
         )
 

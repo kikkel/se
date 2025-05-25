@@ -10,19 +10,21 @@ class GameState extends Observable {
   private var playerDeck: Deck = new Deck()
   private var tradeDeck: Deck = new Deck()
 
+  loadDecksFromCSV("Core Set") // Später dann als Strategy zum wählen von Sets
+
   def removeCardFrom(cards: List[Card], card: Card): List[Card] = {
     val (before, after) = cards.span(_ != card)
-    before ++ after.drop(1) 
+    before ++ after.drop(1)
   }
 
-  def loadDecks(setName: String): Unit = {
-    val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, setName)
+  def loadDecksFromCSV(setName: String): Unit = {
+    val decks = LoadCards.loadFromResource(LoadCards.getCsvPath, setName)
+    playerDeck = decks.getOrElse("Personal Deck", new Deck())
+    tradeDeck = decks.getOrElse("Trade Deck", new Deck())
 
-    decksByRole.get("TradeDeck").foreach { deck => tradeDeck = deck }
-    decksByRole.get("PlayerDeck").foreach { deck => playerDeck = deck; this.deck = deck.getCards }
     notifyObservers()
   }
-  
+
   def getDeck: List[Card] = deck
   def getHand: List[Card] = hand
   def getTradeRow: List[Card] = tradeRow
@@ -76,7 +78,7 @@ class GameState extends Observable {
     if (tradeRow.contains(card)) {
       tradeRow = tradeRow.filterNot(_ == card)
       discardPile = card :: discardPile
-      replenishTradeRow() 
+      replenishTradeRow()
       notifyObservers()
     }
   }

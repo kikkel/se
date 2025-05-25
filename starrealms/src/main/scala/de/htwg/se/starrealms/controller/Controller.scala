@@ -7,7 +7,7 @@ class Controller() extends Observable {
   val gameState: GameState = new GameState()
   val undoManager: UndoManager = new UndoManager()
 
-  gameState.loadDecks("Core Set")
+  gameState.loadDecksFromCSV("Core Set")
   println(gameState.getDeckState)
 
   def drawCards(count: Int): Unit = { val command = new DrawCardsCommand(this, count); undoManager.doMove(command); notifyObservers() }
