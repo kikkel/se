@@ -76,7 +76,8 @@ private class CrisisBasesAndBattleships extends Set { override def nameOfSet: St
 private class Gambit extends Set { override def nameOfSet: String = "Gambit" }
 private class PromoPack1 extends Set { override def nameOfSet: String = "Promo Pack 1" }
 private class FirstKickstarterPromoPack extends Set { override def nameOfSet: String = "1st Kickstarter Promo Pack" }
-private class PromosBattlecruiserStorageBox extends Set { override def nameOfSet: String = "Promos (Battlecruiser Storage Box),\nPromos (Imperial Fighter Deck Box)" }
+private class PromosBattlecruiserStorageBox extends Set { override def nameOfSet: String = "Promos (Battlecruiser Storage Box)" }
+private class PromosImperialFighterDeckBox extends Set { override def nameOfSet: String = "Promos (Imperial Fighter Deck Box)" }
 private class PromosDiceTower2016 extends Set { override def nameOfSet: String = "Promos (Dice Tower 2016)" }
 private class PromosMechCruiserStorageBox extends Set { override def nameOfSet: String = "Promos (Mech Cruiser Storage Box)" }
 
@@ -115,7 +116,8 @@ object Set {
         case "gambit" => new Gambit
         case "promo pack 1" => new PromoPack1
         case "1st kickstarter promo pack" => new FirstKickstarterPromoPack
-        case "promos (battlecruiser storage box),\npromos (imperial fighter deck box)" => new PromosBattlecruiserStorageBox
+        case "promos (battlecruiser storage box)" => new PromosBattlecruiserStorageBox
+        case "promos (imperial fighter deck box)" => new PromosImperialFighterDeckBox
         case "promos (dice tower 2016)" => new PromosDiceTower2016
         case "promos (mech cruiser storage box)" => new PromosMechCruiserStorageBox
         case _ => throw new IllegalArgumentException(s"Unknown set: $nameOfSet")
