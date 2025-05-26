@@ -1,25 +1,26 @@
 package de.htwg.se.starrealms.model
 
+
+//import kantan.csv._
+//import kantan.csv.ops._
 import scala.io.Source
 import scala.util.{Failure, Try, Success}
 import scala.util.matching.Regex
 
 
 object LoadCards {
-    def loadFromResource(getCsvPath: String, setName: String): Map[String, Deck] = {
+    def loadFromResource(getCsvPath: String, setName: String, debug: Boolean = false): Map[String, Deck] = {
         val loader = new CardCSVLoader(getCsvPath)
         loader.loadCardsFromFile()
-        loader.testCardParsing()
-
-        val cards = loader.getCardsForSet(setName)
-
-        val groupedCards = cards.groupBy(_.role)
+        if (debug) loader.testCardParsing()
+        val cards = loader.getAllCards.filter(_.set.nameOfSet.trim.equalsIgnoreCase(setName.trim))
+        val groupedCards = cards.groupBy(_.role.trim)
         groupedCards.map { case (role, cards) =>
             val deck = new Deck()
             deck.setName(role)
             deck.setCards(cards)
             role -> deck
-            }
+        }
     }
 
     //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/CoreSet.csv"
@@ -42,10 +43,16 @@ class CardCSVLoader(filePath: String) {
                     val values = parseCSVLine(line)
                     headers.zipAll(values, "", "").toMap
                 }
-                val validRows = filterValidCards(rows)                 
+                val validRows = filterValidCards(rows)
                 val cards = validRows.flatMap { row =>
                     Try(createParsedCard(row)) match {
-                        case Success(card) => Some(card)
+                        case Success(parsedCard) =>
+                            transformToSpecificCard(parsedCard) match {
+                                case Some(card) => Some(card)
+                                case None =>
+                                    println(s"Unknown role or error in card: $row")
+                                    None
+                            }
                         case Failure(exception) =>
                             println(s"Failed to create card for row: $row. Error: ${exception.getMessage}")
                             None
@@ -177,26 +184,29 @@ class CardCSVLoader(filePath: String) {
         .getOrElse(SimpleAction(text))
     }
     def getCardsForSet(setName: String): List[Card] = {
-            if (cardsBySet.isEmpty) { loadCardsFromFile() }
-            println(s"\n\nRequested set: $setName.\nAvailable sets: \n${cardsBySet.keys.mkString(",\n ")}\n\n")
-            cardsBySet.getOrElse(setName, List())
-            
+        if (cardsBySet.isEmpty) { loadCardsFromFile() }
+
+        cardsBySet.filter { case (key, _) => key.trim.toLowerCase.contains(setName.trim.toLowerCase) }
+            .values.flatten.toList
     }
 
-    def getAllCards: List[Card] = cardsBySet.values.flatten.toList; 
+    def getAllCards: List[Card] = cardsBySet.values.flatten.toList;
 
     def testCardParsing(): Unit = {
         if (cardsBySet.isEmpty) {
             println("\nCard data is empty. Attempting to load cards...\n")
             loadCardsFromFile()
+            getAllCards.groupBy(_.role).foreach { case (role, cards) =>
+            println(s"Role: $role, Anzahl: ${cards.size}")
+            }
         }
 
         val allCards = getAllCards
         println(s"\nTotal cards loaded: \n${allCards.length}\n")
 
         val invalidCards = allCards.filter(card =>
-            card.cardName.isEmpty || 
-            card.role.isEmpty || 
+            card.cardName.isEmpty ||
+            card.role.isEmpty ||
             card.cardType.isFailure
         )
 

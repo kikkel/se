@@ -14,7 +14,8 @@ lazy val root = (project in file("."))
       "org.scalatest" %% "scalatest" % "3.2.16" % Test,
       "org.scalameta" %% "munit" % "1.0.0" % Test,
       "org.scalactic" %% "scalactic" % "3.2.19",
-      "org.scalatest" %% "scalatest" % "3.2.19" % "test",
+      "com.nrinaudo" %% "kantan.csv" % "0.6.1",
+      "com.nrinaudo" %% "kantan.csv-generic" % "0.6.1" // <--- HINZUGEFÜGT
     )
   )
 

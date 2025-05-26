@@ -10,19 +10,31 @@ class GameState extends Observable {
   private var playerDeck: Deck = new Deck()
   private var tradeDeck: Deck = new Deck()
 
+  loadDecksFromCSV("Core Set") // Später dann als Strategy zum wählen von Sets
+
   def removeCardFrom(cards: List[Card], card: Card): List[Card] = {
     val (before, after) = cards.span(_ != card)
-    before ++ after.drop(1) 
+    before ++ after.drop(1)
   }
 
-  def loadDecks(setName: String): Unit = {
-    val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, setName)
+  def loadDecksFromCSV(setName: String): Unit = {
+    val decks = LoadCards.loadFromResource(LoadCards.getCsvPath, setName)
+    val allPersonal = decks.getOrElse("Personal Deck", new Deck()).getCards
 
-    decksByRole.get("TradeDeck").foreach { deck => tradeDeck = deck }
-    decksByRole.get("PlayerDeck").foreach { deck => playerDeck = deck; this.deck = deck.getCards }
+    // Hole 8 Scouts und 2 Vipers
+    val scouts  = allPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
+    val vipers  = allPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
+    val playerCards = scouts ++ vipers
+
+    playerDeck = new Deck()
+    playerDeck.setName("Personal Deck")
+    playerDeck.setCards(scala.util.Random.shuffle(playerCards))
+
+    tradeDeck = decks.getOrElse("Trade Deck", new Deck())
+
     notifyObservers()
   }
-  
+
   def getDeck: List[Card] = deck
   def getHand: List[Card] = hand
   def getTradeRow: List[Card] = tradeRow
@@ -76,7 +88,7 @@ class GameState extends Observable {
     if (tradeRow.contains(card)) {
       tradeRow = tradeRow.filterNot(_ == card)
       discardPile = card :: discardPile
-      replenishTradeRow() 
+      replenishTradeRow()
       notifyObservers()
     }
   }
@@ -97,8 +109,7 @@ class GameState extends Observable {
     notifyObservers()
   }
   def resetGame(): Unit = {
-    playerDeck.resetDeck()
-    tradeDeck.resetDeck()
+    loadDecksFromCSV("Core Set") // <-- Das lädt Scouts und Vipers aus der CSV!
     hand = List()
     discardPile = List()
     tradeRow = List()
@@ -106,6 +117,7 @@ class GameState extends Observable {
     replenishTradeRow()
     notifyObservers()
   }
+
   def undoResetGame(): Unit = {
     // Logic to undo reset game
     notifyObservers()
