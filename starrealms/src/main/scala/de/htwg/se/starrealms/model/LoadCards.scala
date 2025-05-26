@@ -23,8 +23,8 @@ object LoadCards {
     }
 
     //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/CoreSet.csv"
-    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
-    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
 
     def getCsvPath: String =
         sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath")
