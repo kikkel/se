@@ -19,7 +19,17 @@ class GameState extends Observable {
 
   def loadDecksFromCSV(setName: String): Unit = {
     val decks = LoadCards.loadFromResource(LoadCards.getCsvPath, setName)
-    playerDeck = decks.getOrElse("Personal Deck", new Deck())
+    val allPersonal = decks.getOrElse("Personal Deck", new Deck()).getCards
+
+    // Hole 8 Scouts und 2 Vipers
+    val scouts  = allPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
+    val vipers  = allPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
+    val playerCards = scouts ++ vipers
+
+    playerDeck = new Deck()
+    playerDeck.setName("Personal Deck")
+    playerDeck.setCards(scala.util.Random.shuffle(playerCards))
+
     tradeDeck = decks.getOrElse("Trade Deck", new Deck())
 
     notifyObservers()
@@ -99,8 +109,7 @@ class GameState extends Observable {
     notifyObservers()
   }
   def resetGame(): Unit = {
-    playerDeck.resetDeck()
-    tradeDeck.resetDeck()
+    loadDecksFromCSV("Core Set") // <-- Das lädt Scouts und Vipers aus der CSV!
     hand = List()
     discardPile = List()
     tradeRow = List()
@@ -108,6 +117,7 @@ class GameState extends Observable {
     replenishTradeRow()
     notifyObservers()
   }
+
   def undoResetGame(): Unit = {
     // Logic to undo reset game
     notifyObservers()
