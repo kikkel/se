@@ -15,14 +15,14 @@ object LoadCards {
         groupedCards.map { case (role, cards) =>
             val deck = new Deck()
             deck.setName(role)
-            val cardMap = cards.groupBy(identity).view.mapValues(_.size).toMap
+            val cardMap = cards.map(card => card -> card.qty).toMap
             deck.setCards(cardMap)
             role -> deck
         }
     }
 
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
+    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
 
 
     def getCsvPath: String =

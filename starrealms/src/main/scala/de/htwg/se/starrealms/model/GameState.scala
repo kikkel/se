@@ -13,10 +13,22 @@ class GameState(decksByRole: Map[String, Deck]) extends Observable {
 
   initializeDecks(decksByRole)
 
-  private def initializeDecks(decks: Map[String, Deck]): Unit = { 
-    playerDeck = decks.getOrElse("Personal Deck", new Deck()); 
-    playerDeck.shuffle() 
-    
+  private def initializeDecks(decks: Map[String, Deck]): Unit = {
+    // Alle Karten aus dem Personal Deck holen und gemäß qty vervielfachen
+    val allPersonal = decks.getOrElse("Personal Deck", new Deck()).getCards
+    val expandedPersonal = allPersonal.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
+
+    // 8 Scouts und 2 Vipers auswählen
+    val scouts = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
+    val vipers = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
+    val playerCards = scala.util.Random.shuffle(scouts ++ vipers)
+
+    playerDeck = new Deck()
+    playerDeck.setName("Personal Deck")
+    // Map[Card, Int] aus der Liste erzeugen:
+    val playerCardMap = playerCards.groupBy(identity).view.mapValues(_.size).toMap
+    playerDeck.setCards(playerCardMap)
+
     tradeDeck = decks.getOrElse("Trade Deck", new Deck())
     tradeDeck.shuffle()
 
@@ -24,6 +36,8 @@ class GameState(decksByRole: Map[String, Deck]) extends Observable {
 
     notifyObservers()
   }
+
+
 
   def removeCardFrom(cards: List[Card], card: Card): List[Card] = {
     val (before, after) = cards.span(_ != card)
