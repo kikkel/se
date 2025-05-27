@@ -13,7 +13,7 @@ object LoadCards {
         val loader = new CardCSVLoader(getCsvPath)
         loader.loadCardsFromFile()
         if (debug) loader.testCardParsing()
-        val cards = loader.getAllCards.filter(_.set.nameOfSet.trim.equalsIgnoreCase(setName.trim))
+        val cards = loader.getAllCards.filter(_.edition.nameOfEdition.trim.equalsIgnoreCase(setName.trim))
         val groupedCards = cards.groupBy(_.role.trim)
         groupedCards.map { case (role, cards) =>
             val deck = new Deck()
@@ -23,9 +23,9 @@ object LoadCards {
         }
     }
 
-    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/CoreSet.csv"
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/FullCardItinerary.csv"
-    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/FullCardItinerary.csv"
+    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
+    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
+
 
     def getCsvPath: String =
         sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath")
@@ -33,7 +33,9 @@ object LoadCards {
 }
 
 class CardCSVLoader(filePath: String) {
-    private var cardsBySet: Map[String, List[Card]] = Map()
+    private var cardsByEdition: Map[String, List[Card]] = Map()
+    private val validRoles = Set("Trade Deck", "Personal Deck", "Explorer Pile")
+
 
     def loadCardsFromFile(): Unit = {
         Try(Source.fromFile(filePath).getLines().toList) match {
@@ -41,7 +43,8 @@ class CardCSVLoader(filePath: String) {
                 val headers = parseCSVLine(lines.head)
                 val rows = lines.tail.map { line =>
                     val values = parseCSVLine(line)
-                    headers.zipAll(values, "", "").toMap
+                    val paddedValues = values.padTo(headers.length, "")
+                    headers.zip(paddedValues).toMap
                 }
                 val validRows = filterValidCards(rows)
                 val cards = validRows.flatMap { row =>
@@ -50,16 +53,16 @@ class CardCSVLoader(filePath: String) {
                             transformToSpecificCard(parsedCard) match {
                                 case Some(card) => Some(card)
                                 case None =>
-                                    println(s"Unknown role or error in card: $row")
+                                    println(s"Unknown role or error in card: $row\n")
                                     None
                             }
                         case Failure(exception) =>
-                            println(s"Failed to create card for row: $row. Error: ${exception.getMessage}")
+                            println(s"Failed to create card for row: $row. Error: ${exception.getMessage}\n #loadCardsFromFile")
                             None
                     }
                 }
-                cardsBySet = cards.groupBy(_.set.nameOfSet)
-                println(s"\nLoaded Sets: \n${cardsBySet.keys.mkString(",\n")}")
+                cardsByEdition = cards.groupBy(_.edition.nameOfEdition)
+                println(s"\nLoaded Editions: \n${cardsByEdition.keys.mkString(",\n")}")
             case Success(_) =>
                 println("\nThe file is empty. No cards loaded.\n")
             case Failure(exception) =>
@@ -68,17 +71,16 @@ class CardCSVLoader(filePath: String) {
     }
 
     private def parseCSVLine(line: String): List[String] = {
-        val regex: Regex = """"([^"]*)"|([^,]+)""".r
-        regex.findAllMatchIn(line).map { m =>
-            if (m.group(1) != null) m.group(1) else m.group(2)
-        }.toList
+        val fields = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")
+        fields.map(_.trim.replaceAll("^\"|\"$", "")).toList
+
     }
 
     private def filterValidCards(rows: List[Map[String, String]]): List[Map[String, String]] = {
         rows.filter(row =>
             row.get("Name").exists(_.nonEmpty) &&
             row.get("CardType").exists(_.nonEmpty) &&
-            row.get("Set").exists(_.nonEmpty) &&
+            row.get("Edition").exists(_.nonEmpty) &&
             row.get("Role").exists(_.nonEmpty)
         )
     }
@@ -89,9 +91,9 @@ class CardCSVLoader(filePath: String) {
         val scrapAbility = abilities.find(_.startsWith("{Scrap}")).map(a => new Ability(parseActions(a.stripPrefix("{Scrap}").trim)) )
 
         ParsedCard(
-            set = Set(card("Set")),
+            edition = Edition(card("Edition")),
             cardName = card("Name"),
-            cost = card.get("Cost").map(_.toInt),
+            cost = card.get("Cost").flatMap(c => Try(c.toInt).toOption).orElse(None),
             primaryAbility = primaryAbility,
             allyAbility = allyAbility,
             scrapAbility = scrapAbility,
@@ -107,14 +109,20 @@ class CardCSVLoader(filePath: String) {
                 }
             },
             qty = card.get("Qty").map(_.toInt).getOrElse(0),
-            role = card("Role")
+            role = card.get("Role").getOrElse(""),
+            notes = card.get("Notes").filter(_.nonEmpty)
         )
     }
     def transformToSpecificCard(parsedCard: ParsedCard): Option[Card] = {
+        if (!validRoles.contains(parsedCard.role)) {
+            println(s"Unknown role: ${parsedCard.role}. Ignoring card.\n")
+            return None
+        }
+
         parsedCard.role match {
             case "Trade Deck" =>
                 Some(FactionCard(
-                    set = parsedCard.set,
+                    edition = parsedCard.edition,
                     cardName = parsedCard.cardName,
                     cost = parsedCard.cost.getOrElse(0),
                     primaryAbility = parsedCard.primaryAbility,
@@ -123,11 +131,12 @@ class CardCSVLoader(filePath: String) {
                     faction = parsedCard.faction,
                     cardType = parsedCard.cardType,
                     qty = parsedCard.qty,
-                    role = parsedCard.role
+                    role = parsedCard.role,
+                    notes = parsedCard.notes
                 ))
             case "Personal Deck" =>
                 Some(DefaultCard(
-                    set = parsedCard.set,
+                    edition = parsedCard.edition,
                     cardName = parsedCard.cardName,
                     primaryAbility = parsedCard.primaryAbility,
                     faction = parsedCard.faction,
@@ -137,7 +146,7 @@ class CardCSVLoader(filePath: String) {
                 ))
             case "Explorer Pile" =>
                 Some(ExplorerCard(
-                    set = parsedCard.set,
+                    edition = parsedCard.edition,
                     cardName = parsedCard.cardName,
                     cost = parsedCard.cost.getOrElse(0),
                     primaryAbility = parsedCard.primaryAbility,
@@ -147,9 +156,6 @@ class CardCSVLoader(filePath: String) {
                     qty = parsedCard.qty,
                     role = parsedCard.role
                 ))
-            case _ =>
-                println(s"Unknown role: ${parsedCard.role}. Ignoring card.\n")
-                None
         }
     }
 
@@ -183,17 +189,17 @@ class CardCSVLoader(filePath: String) {
         .map { case (_, constructor) => constructor(text) }
         .getOrElse(SimpleAction(text))
     }
-    def getCardsForSet(setName: String): List[Card] = {
-        if (cardsBySet.isEmpty) { loadCardsFromFile() }
+    def getCardsForEdition(nameOfEdition: String): List[Card] = {
+        if (cardsByEdition.isEmpty) { loadCardsFromFile() }
 
-        cardsBySet.filter { case (key, _) => key.trim.toLowerCase.contains(setName.trim.toLowerCase) }
+        cardsByEdition.filter { case (key, _) => key.trim.toLowerCase.contains(nameOfEdition.trim.toLowerCase) }
             .values.flatten.toList
     }
 
-    def getAllCards: List[Card] = cardsBySet.values.flatten.toList;
+    def getAllCards: List[Card] = cardsByEdition.values.flatten.toList;
 
     def testCardParsing(): Unit = {
-        if (cardsBySet.isEmpty) {
+        if (cardsByEdition.isEmpty) {
             println("\nCard data is empty. Attempting to load cards...\n")
             loadCardsFromFile()
             getAllCards.groupBy(_.role).foreach { case (role, cards) =>

@@ -5,7 +5,7 @@ import scala.util.{Try, Success, Failure}
 //bridge
 
 trait Card {
-    val set: Set
+    val edition: Edition
     val cardName: String
     val primaryAbility: Option[Ability]
     val faction: Faction
@@ -30,7 +30,7 @@ class Base(val defense: String, val isOutpost: Boolean) extends CardType {
 }
 
 case class FactionCard(
-    override val set: Set,
+    override val edition: Edition,
     override val cardName: String,
     val cost: Int,
     override val primaryAbility: Option[Ability],
@@ -39,41 +39,43 @@ case class FactionCard(
     override val faction: Faction,
     override val cardType: Try[CardType],
     override val qty: Int,
-    override val role: String
+    override val role: String,
+    val notes: Option[String]
     ) extends Card {
         override def render(): String = {
             val cardTypeStr = cardType match {
                 case Success(value) => value.toString
-                case Failure(exception) => s"Error: ${exception.getMessage}"
+                case Failure(exception) => s"Error: ${exception.getMessage} #FactionCard"
             }
-            s"FactionCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+            s"FactionCard(${edition.nameOfEdition}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
                 s"${allyAbility.map(_.render()).getOrElse("None")}, ${scrapAbility.map(_.render()).getOrElse("None")}, " +
-                s"${faction.factionName}, $cardTypeStr) #BRIDGE: FactionCard"
+                s"${faction.factionName}, $cardTypeStr), ${notes.getOrElse("No notes")}) #BRIDGE: FactionCard"
         }
 }
 
 case class DefaultCard(
-    override val set: Set,
+    override val edition: Edition,
     override val cardName: String,
     override val primaryAbility: Option[Ability],
     override val faction: Faction,
     override val cardType: Try[CardType],
     override val qty: Int,
     override val role: String
+    
 
 ) extends Card {
     override def render(): String = {
         val cardTypeStr = cardType match {
             case Success(value) => value.toString
-            case Failure(exception) => s"Error: ${exception.getMessage}"
+            case Failure(exception) => s"Error: ${exception.getMessage} #DefaultCard"
         }
-        s"DefaultCard(${set.nameOfSet}, $cardName, " +
+        s"DefaultCard(${edition.nameOfEdition}, $cardName, " +
         s"${primaryAbility.map(_.render()).getOrElse("None")}, ${faction.factionName} $cardTypeStr) #BRIDGE: DefaultCard"
     }
 }
 
 case class ExplorerCard(
-    override val set: Set,
+    override val edition: Edition,
     override val cardName: String,
     val cost: Int,
     override val primaryAbility: Option[Ability],
@@ -86,15 +88,15 @@ case class ExplorerCard(
     override def render(): String = {
         val cardTypeStr = cardType match {
             case Success(value) => value.toString
-            case Failure(exception) => s"Error: ${exception.getMessage}"
+            case Failure(exception) => s"Error: ${exception.getMessage} #ExplorerCard"
         }
-        s"ExplorerCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+        s"ExplorerCard(${edition.nameOfEdition}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
         s"${scrapAbility.map(_.render()).getOrElse("None")}, ${faction.factionName}, $cardTypeStr) #BRIDGE: ExplorerCard"
     }
 }
 
 case class ParsedCard(
-    set: Set,
+    edition: Edition,
     cardName: String,
     cost: Option[Int],
     primaryAbility: Option[Ability],
@@ -103,15 +105,16 @@ case class ParsedCard(
     faction: Faction,
     cardType: Try[CardType],
     qty: Int,
-    role: String
+    role: String,
+    notes: Option[String]
 ) extends Card {
     override def render(): String = {
         val cardTypeStr = cardType match {
             case Success(value) => value.toString
-            case Failure(exception) => s"Error: ${exception.getMessage}"
+            case Failure(exception) => s"Error: ${exception.getMessage} #ParsedCard"
         }
-        s"ParsedCard(${set.nameOfSet}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
+        s"ParsedCard(${edition.nameOfEdition}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
         s"${allyAbility.map(_.render()).getOrElse("None")}, ${scrapAbility.map(_.render()).getOrElse("None")}, " +
-        s"${faction.factionName}, $cardTypeStr) #BRIDGE: ParsedCard"
+        s"${faction.factionName}, $cardTypeStr), ${notes.getOrElse("No notes")}) #BRIDGE: ParsedCard"
     }
 }

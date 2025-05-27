@@ -10,7 +10,7 @@ class GameState extends Observable {
   private var playerDeck: Deck = new Deck()
   private var tradeDeck: Deck = new Deck()
 
-  loadDecksFromCSV("Core Set") // Später dann als Strategy zum wählen von Sets
+  loadDecksFromCSV("Core Set") // Später dann als Strategy zum wählen von Editions
 
   def removeCardFrom(cards: List[Card], card: Card): List[Card] = {
     val (before, after) = cards.span(_ != card)

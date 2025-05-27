@@ -27,7 +27,7 @@ object Faction {
                 case "blob" => new Blob
                 case "machine cult" => new MachineCult
                 case "unaligned" => new Unaligned
-                case _ => throw new IllegalArgumentException(s"You've been hijacked by $factionName!")
+                case _ => throw new IllegalArgumentException(s"Faction not recognized: $factionName #Factory.scala: objectFaction")
             }
         }
     }
@@ -37,52 +37,52 @@ object Faction {
 // val tradeFederation = Faction("trade federation")
 
 
-trait Set { 
-    def nameOfSet: String
-    def render(): String = s"$nameOfSet #factory"
+trait Edition { 
+    def nameOfEdition: String
+    def render(): String = s"$nameOfEdition #factory"
     //def apply()
 }
 
-private class CoreSet extends Set { override def nameOfSet: String = "Core Set" }
-private class HighAlertFirstStrike extends Set { override def nameOfSet: String = "High Alert: First Strike" }
-private class HighAlertTech extends Set { override def nameOfSet: String = "High Alert: Tech" }
-private class HighAlertRequisition extends Set { override def nameOfSet: String = "High Alert: Requisition" }
-private class HighAlertInvasion extends Set { override def nameOfSet: String = "High Alert: Invasion" }
-private class HighAlertHeroes extends Set { override def nameOfSet: String = "High Alert: Heroes" }
-private class UniversalStorageBox extends Set { override def nameOfSet: String = "Universal Storage Box" }
-private class StellarAllies extends Set { override def nameOfSet: String = "Stellar Allies" }
-private class CommandDeckLostFleet extends Set { override def nameOfSet: String = "Command Deck: Lost Fleet" }
-private class CommandDeckTheUnity extends Set { override def nameOfSet: String = "Command Deck: The Unity" }
-private class CommandDeckTheUnion extends Set { override def nameOfSet: String = "Command Deck: The Union" }
-private class CommandDeckThePact extends Set { override def nameOfSet: String = "Command Deck: The Pact" }
-private class CommandDeckTheCoalition extends Set { override def nameOfSet: String = "Command Deck: The Coalition" }
-private class CommandDeckTheAlliance extends Set { override def nameOfSet: String = "Command Deck: The Alliance" }
-private class CommandDeckTheAlignment extends Set { override def nameOfSet: String = "Command Deck: The Alignment" }
-private class FrontiersKickstarterPromoPack extends Set { override def nameOfSet: String = "Frontiers Kickstarter Promo Pack" }
-private class Year2PromoPackOrganizedPlaySeason5 extends Set { override def nameOfSet: String = "Year 2 Promo Pack,\nOrganized Play Season 5" }
-private class Year2PromoPack extends Set { override def nameOfSet: String = "Year 2 Promo Pack" }
-private class Frontiers extends Set { override def nameOfSet: String = "Frontiers" }
-private class Scenarios extends Set { override def nameOfSet: String = "Scenarios" }
-private class UnitedMissions extends Set { override def nameOfSet: String = "United: Missions" }
-private class UnitedHeroes extends Set { override def nameOfSet: String = "United: Heroes" }
-private class UnitedCommand extends Set { override def nameOfSet: String = "United: Command" }
-private class UnitedAssault extends Set { override def nameOfSet: String = "United: Assault" }
-private class ColonyWars extends Set { override def nameOfSet: String = "Colony Wars" }
-private class CosmicGambit extends Set { override def nameOfSet: String = "Cosmic Gambit" }
-private class CrisisHeroes extends Set { override def nameOfSet: String = "Crisis: Heroes" }
-private class CrisisFleetsAndFortresses extends Set { override def nameOfSet: String = "Crisis: Fleets and Fortresses" }
-private class CrisisEvents extends Set { override def nameOfSet: String = "Crisis: Events" }
-private class CrisisBasesAndBattleships extends Set { override def nameOfSet: String = "Crisis: Bases & Battleships" }
-private class Gambit extends Set { override def nameOfSet: String = "Gambit" }
-private class PromoPack1 extends Set { override def nameOfSet: String = "Promo Pack 1" }
-private class FirstKickstarterPromoPack extends Set { override def nameOfSet: String = "1st Kickstarter Promo Pack" }
-private class PromosBattlecruiserStorageBox extends Set { override def nameOfSet: String = "Promos (Battlecruiser Storage Box)" }
-private class PromosImperialFighterDeckBox extends Set { override def nameOfSet: String = "Promos (Imperial Fighter Deck Box)" }
-private class PromosDiceTower2016 extends Set { override def nameOfSet: String = "Promos (Dice Tower 2016)" }
-private class PromosMechCruiserStorageBox extends Set { override def nameOfSet: String = "Promos (Mech Cruiser Storage Box)" }
+private class CoreSet extends Edition { override def nameOfEdition: String = "Core Set" }
+private class HighAlertFirstStrike extends Edition { override def nameOfEdition: String = "High Alert: First Strike" }
+private class HighAlertTech extends Edition { override def nameOfEdition: String = "High Alert: Tech" }
+private class HighAlertRequisition extends Edition { override def nameOfEdition: String = "High Alert: Requisition" }
+private class HighAlertInvasion extends Edition { override def nameOfEdition: String = "High Alert: Invasion" }
+private class HighAlertHeroes extends Edition { override def nameOfEdition: String = "High Alert: Heroes" }
+private class UniversalStorageBox extends Edition { override def nameOfEdition: String = "Universal Storage Box" }
+private class StellarAllies extends Edition { override def nameOfEdition: String = "Stellar Allies" }
+private class CommandDeckLostFleet extends Edition { override def nameOfEdition: String = "Command Deck: Lost Fleet" }
+private class CommandDeckTheUnity extends Edition { override def nameOfEdition: String = "Command Deck: The Unity" }
+private class CommandDeckTheUnion extends Edition { override def nameOfEdition: String = "Command Deck: The Union" }
+private class CommandDeckThePact extends Edition { override def nameOfEdition: String = "Command Deck: The Pact" }
+private class CommandDeckTheCoalition extends Edition { override def nameOfEdition: String = "Command Deck: The Coalition" }
+private class CommandDeckTheAlliance extends Edition { override def nameOfEdition: String = "Command Deck: The Alliance" }
+private class CommandDeckTheAlignment extends Edition { override def nameOfEdition: String = "Command Deck: The Alignment" }
+private class FrontiersKickstarterPromoPack extends Edition { override def nameOfEdition: String = "Frontiers Kickstarter Promo Pack" }
+private class Year2PromoPackOrganizedPlaySeason5 extends Edition { override def nameOfEdition: String = "Year 2 Promo Pack,\nOrganized Play Season 5" }
+private class Year2PromoPack extends Edition { override def nameOfEdition: String = "Year 2 Promo Pack" }
+private class Frontiers extends Edition { override def nameOfEdition: String = "Frontiers" }
+private class Scenarios extends Edition { override def nameOfEdition: String = "Scenarios" }
+private class UnitedMissions extends Edition { override def nameOfEdition: String = "United: Missions" }
+private class UnitedHeroes extends Edition { override def nameOfEdition: String = "United: Heroes" }
+private class UnitedCommand extends Edition { override def nameOfEdition: String = "United: Command" }
+private class UnitedAssault extends Edition { override def nameOfEdition: String = "United: Assault" }
+private class ColonyWars extends Edition { override def nameOfEdition: String = "Colony Wars" }
+private class CosmicGambit extends Edition { override def nameOfEdition: String = "Cosmic Gambit" }
+private class CrisisHeroes extends Edition { override def nameOfEdition: String = "Crisis: Heroes" }
+private class CrisisFleetsAndFortresses extends Edition { override def nameOfEdition: String = "Crisis: Fleets and Fortresses" }
+private class CrisisEvents extends Edition { override def nameOfEdition: String = "Crisis: Events" }
+private class CrisisBasesAndBattleships extends Edition { override def nameOfEdition: String = "Crisis: Bases & Battleships" }
+private class Gambit extends Edition { override def nameOfEdition: String = "Gambit" }
+private class PromoPack1 extends Edition { override def nameOfEdition: String = "Promo Pack 1" }
+private class FirstKickstarterPromoPack extends Edition { override def nameOfEdition: String = "1st Kickstarter Promo Pack" }
+private class PromosBattlecruiserStorageBox extends Edition { override def nameOfEdition: String = "Promos (Battlecruiser Storage Box)" }
+private class PromosImperialFighterDeckBox extends Edition { override def nameOfEdition: String = "Promos (Imperial Fighter Deck Box)" }
+private class PromosDiceTower2016 extends Edition { override def nameOfEdition: String = "Promos (Dice Tower 2016)" }
+private class PromosMechCruiserStorageBox extends Edition { override def nameOfEdition: String = "Promos (Mech Cruiser Storage Box)" }
 
-object Set {
-    def apply(nameOfSet: String): Set = nameOfSet.toLowerCase match {
+object Edition {
+    def apply(nameOfEdition: String): Edition = nameOfEdition.toLowerCase match {
         case "core set" => new CoreSet
         case "high alert: first strike" => new HighAlertFirstStrike
         case "high alert: tech" => new HighAlertTech
@@ -120,6 +120,6 @@ object Set {
         case "promos (imperial fighter deck box)" => new PromosImperialFighterDeckBox
         case "promos (dice tower 2016)" => new PromosDiceTower2016
         case "promos (mech cruiser storage box)" => new PromosMechCruiserStorageBox
-        case _ => throw new IllegalArgumentException(s"Unknown set: $nameOfSet")
+        case _ => throw new IllegalArgumentException(s"Unknown Edition: $nameOfEdition")
     }
 }

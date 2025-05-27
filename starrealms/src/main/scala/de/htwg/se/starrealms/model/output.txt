@@ -1,96 +1,46 @@
-kianimoon@Kianis-MacBook-Air starrealms % sbt clean compile run
-[info] welcome to sbt 1.10.11 (Eclipse Adoptium Java 21.0.5)
-[info] loading settings for project starrealms-build-build-build-build from metals.sbt...
-[info] loading project definition from /Users/kianimoon/se/se/starrealms/project/project/project/project
-[info] loading settings for project starrealms-build-build-build from metals.sbt...
-[info] loading project definition from /Users/kianimoon/se/se/starrealms/project/project/project
-[success] Generated .bloop/starrealms-build-build-build.json
-[success] Total time: 1 s, completed 23 May 2025, 16:52:34
-[info] loading settings for project starrealms-build-build from metals.sbt...
-[info] loading project definition from /Users/kianimoon/se/se/starrealms/project/project
-[success] Generated .bloop/starrealms-build-build.json
-[success] Total time: 0 s, completed 23 May 2025, 16:52:34
-[info] loading settings for project starrealms-build from metals.sbt, plugins.sbt...
-[info] loading project definition from /Users/kianimoon/se/se/starrealms/project
-[success] Generated .bloop/starrealms-build.json
-[success] Total time: 1 s, completed 23 May 2025, 16:52:35
-[info] loading settings for project root from build.sbt...
-[info] set current project to StarRealms (in build file:/Users/kianimoon/se/se/starrealms/)
-[info] Executing in batch mode. For better performance use sbt's shell
-[success] Total time: 0 s, completed 23 May 2025, 16:52:35
-[info] compiling 15 Scala sources to /Users/kianimoon/se/se/starrealms/target/scala-2.13/classes ...
-[success] Total time: 3 s, completed 23 May 2025, 16:52:38
-[info] running de.htwg.se.starrealms.app.Main 
-
-
-Welcome to Star Realms!
-
-Failed to create card for row: HashMap(Set -> Stellar Allies, CardType -> Base, Notes -> , Qty -> 1, Role -> Trade Deck, Name -> Summit Site, Faction -> Blob / Trade Federation, Text -> Draw two cards., Defense -> 6, Cost -> 8). Error: You've been hijacked by Blob / Trade Federation!
-Failed to create card for row: HashMap(Set -> Stellar Allies, CardType -> Base, Notes -> , Qty -> 1, Role -> Trade Deck, Name -> The Citadel, Faction -> Machine Cult / Star Empire, Text -> Target opponent discards a card. You may scrap a card in your hand or discard pile., Defense -> 7 Outpost, Cost -> 7). Error: You've been hijacked by Machine Cult / Star Empire!
-Failed to create card for row: HashMap(Set -> United: Assault, CardType -> Base, Notes -> , Qty -> 1, Role -> Trade Deck, Name -> Embassy Base, Faction -> Star Empire / Trade Federation, Text -> Draw two cards, then discard a card., Defense -> 6, Cost -> 8). Error: You've been hijacked by Star Empire / Trade Federation!
-Failed to create card for row: HashMap(Set -> United: Assault, CardType -> Base, Notes -> , Qty -> 1, Role -> Trade Deck, Name -> Lookout Post, Faction -> Machine Cult / Trade Federation, Text -> Draw a card., Defense -> 6 Outpost, Cost -> 7). Error: You've been hijacked by Machine Cult / Trade Federation!
-Loaded Sets: Crisis: Bases & Battleships, High Alert: Invasion, Core Set, Frontiers, 1st Kickstarter Promo Pack, Crisis: Fleets and Fortresses, Colony Wars, Promo Pack 1
-Total cards loaded: 25
-All cards parsed successfully.
-Requested set: Core Set. Available sets: Crisis: Bases & Battleships, High Alert: Invasion, Core Set, Frontiers, 1st Kickstarter Promo Pack, Crisis: Fleets and Fortresses, Colony Wars, Promo Pack 1
-
-
-Deck loaded: Trade Deck
-
-
-
-
-
-PlayerDeck:
-Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-
-
-Hand:
-
-
-
-Discard Pile:
-
-
-
-TradeRow:
-
-
-
-TradeDeck:
-Blob Wheel | Blob | Base | Cost: 1 | Ability: Gain 1 Trade
+Space Station | Star Empire | Base | Cost: 4 | Ability: Gain 2 Combat
+Command Ship | Trade Federation | Ship | Cost: 8 | Ability: Gain 45 Combat
+Defense Center | Trade Federation | Base | Cost: 5 | Ability: Condition: SimpleAction(Gain 3 Authority), SimpleAction(Gain 2 Combat)
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Royal Redoubt | Star Empire | Base | Cost: 6 | Ability: Gain 3 Combat
+Patrol Mech | Machine Cult | Ship | Cost: 4 | Ability: Condition: SimpleAction(Gain 3 Trade), SimpleAction(Gain 5 Combat)
 Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-Blob World | Blob | Base | Cost: 3 | Ability: Gain 3 Trade
-Imperial Frigate | Trade Federation | Ship | Cost: 2 | Ability: Gain 4 Combat
-Federation Shuttle | Trade Federation | Ship | Cost: 1 | Ability: Gain 2 Trade
-
-
-
-Enter 's' to start your turn
-Enter 't' to replenish the trade row
-Enter 'r' to reset the game
-Enter 'x' to exit the game
-
-
-
-Your command:
-
-x
-
-
-Exiting the game... #ConsoleView
-
-
-Game exited. Goodbye! #main
-
-[success] Total time: 3 s, completed 23 May 2025, 16:52:41
-kianimoon@Kianis-MacBook-Air starrealms % 
+Battle Mech | Machine Cult | Ship | Cost: 5 | Ability: Gain 4 Combat
+Battle Pod | Blob | Ship | Cost: 2 | Ability: Gain 4 Combat
+Brain World | Machine Cult | Base | Cost: 8 | Ability: Draw a card
+Blob World | Blob | Base | Cost: 8 | Ability: Condition: SimpleAction(Gain 5 Combat), SimpleAction(Draw a card)
+Imperial Frigate | Star Empire | Ship | Cost: 3 | Ability: Gain 4 Combat
+Blob Destroyer | Blob | Ship | Cost: 4 | Ability: Gain 6 Combat
+Blob Carrier | Blob | Ship | Cost: 6 | Ability: Gain 7 Combat
+Stealth Needle | Machine Cult | Ship | Cost: 4 | Ability: Copy another ship you've played this turn. Stealth Needle has that ship's faction in addition to Machine Cult.
+Ram | Blob | Ship | Cost: 3 | Ability: Gain 5 Combat
+Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
+Imperial Fighter | Star Empire | Ship | Cost: 1 | Ability: Gain 2 Combat
+Trade Pod | Blob | Ship | Cost: 2 | Ability: Gain 3 Trade
+Trade Bot | Machine Cult | Ship | Cost: 1 | Ability: Gain 1 Trade
+Freighter | Trade Federation | Ship | Cost: 4 | Ability: Gain 4 Trade
+Mech World | Machine Cult | Base | Cost: 5 | Ability: Mech World counts as an ally for all factions.
+Flagship | Trade Federation | Ship | Cost: 6 | Ability: Gain 5 Combat
+Fleet HQ | Star Empire | Base | Cost: 8 | Ability: Triggered by Whenever you play a ship: SimpleAction(Gain 1 Combat)
+Junkyard | Machine Cult | Base | Cost: 6 | Ability: Scrap a card in your hand or discard pile.
+Machine Base | Machine Cult | Base | Cost: 7 | Ability: Composite action: Draw a card, scrap a card from your hand.
+Supply Bot | Machine Cult | Ship | Cost: 3 | Ability: Gain 2 Trade
+Barter World | Trade Federation | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 2 Authority), SimpleAction(Gain 2 Trade)
+Trade Escort | Trade Federation | Ship | Cost: 5 | Ability: Gain 44 Combat
+Federation Shuttle | Trade Federation | Ship | Cost: 1 | Ability: Gain 24 Trade
+Dreadnaught | Star Empire | Ship | Cost: 7 | Ability: Gain 7 Combat
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Mothership | Blob | Ship | Cost: 7 | Ability: Gain 6 Combat
+Survey Ship | Star Empire | Ship | Cost: 3 | Ability: Gain 1 Trade
+Missile Mech | Machine Cult | Ship | Cost: 6 | Ability: Gain 6 Combat
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Corvette | Star Empire | Ship | Cost: 2 | Ability: Gain 1 Combat
+The Hive | Blob | Base | Cost: 5 | Ability: Gain 3 Combat
+War World | Star Empire | Base | Cost: 5 | Ability: Gain 3 Combat
+Battle Station | Machine Cult | Base | Cost: 3 | Ability: Gain 5 Combat
+Port of Call | Trade Federation | Base | Cost: 6 | Ability: Gain 3 Trade
+Trading Post | Trade Federation | Base | Cost: 3 | Ability: Condition: SimpleAction(Gain 1 Authority), SimpleAction(Gain 1 Trade)
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
+Battle Blob | Blob | Ship | Cost: 6 | Ability: Gain 8 Combat
+Embassy Yacht | Trade Federation | Ship | Cost: 3 | Ability: Gain 32 Trade
+Blob Wheel | Blob | Base | Cost: 3 | Ability: Gain 1 Combat

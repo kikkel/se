@@ -39,38 +39,6 @@ class Deck {
     }
 }
 
-/* object Deck {
-    // Erstellt ein Standard-Playerdeck (8 Scouts, 2 Vipers) mit Bridge-Pattern
-    def standardPlayerDeck(): Deck = {
-        val deck = new Deck()
-        val coreSet = Set("Core Set")
-        val unaligned = Faction("Unaligned")
-        val scout = new DefaultCard(
-            set = coreSet,
-            cardName = "Scout",
-            primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Trade")))),
-            faction = unaligned,
-            cardType = Success(new Ship()),
-            qty = 1,
-            role = "Personal Deck"
-        )
-        val viper = new DefaultCard(
-            set = coreSet,
-            cardName = "Viper",
-            primaryAbility = Some(new Ability(List(SimpleAction("Gain 1 Combat")))),
-            faction = unaligned,
-            cardType = Success(new Ship()),
-            qty = 1,
-            role = "Personal Deck"
-        )
-        deck.setName("Player Deck")
-        deck.setCards(Random.shuffle(List.fill(8)(scout) ++ List.fill(2)(viper)))
-        deck
-    }
-
-} */
-
-
 /* class Manual { } */
 
 
@@ -95,7 +63,7 @@ class DeckBuilder extends Builder {
 
     override def addCards(cards: List[Card]): Unit = { cards.foreach(deck.addCard) }
     override def addCard(card: Card): Unit = { deck.addCard(card) }
-    //override def addSet(set: List[Card]) { set.foreach(deck.addCard) }
+    //override def addEdition(edition: List[Card]) { edition.foreach(deck.addCard) }
 
     override def getProduct(): Deck = {
         val product = deck
