@@ -16,16 +16,13 @@ trait Card {
 }
 trait CardType {
     def cardType: String
-    //def render(): String
 }
 
 class Ship extends CardType {
     override def cardType: String = "Ship"
-    //override def render(): String = "Ship #cardType"
 }
 class Base(val defense: String, val isOutpost: Boolean) extends CardType {
     override def cardType: String = "Base"
-   // override def render(): String = "Base #cardType"
 
 }
 

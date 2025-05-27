@@ -37,19 +37,15 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
         case "s" =>
           println(processor.processCommand("s"))
           inPlayPhase = true
-          //render()
           true
         case "z" =>
           println(processor.processCommand("z"))
-          //render()
           true
         case "y" =>
           println(processor.processCommand("y"))
-          //render()
           true
         case "t" =>
           println(processor.processCommand("t"))
-          //render()
           true
         case _ =>
           println("Invalid command. Please try again.")
@@ -64,15 +60,12 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
         case Array("e") =>
           println(processor.processCommand("e"))
           inPlayPhase = false
-          //render()
           true
         case Array("z") =>
           println(processor.processCommand("z"))
-          //render()
           true
         case Array("y") =>
           println(processor.processCommand("y"))
-          //render()
           true
         case Array("p", num) if num.forall(_.isDigit) =>
           println(processor.processCommand(s"p $num"))

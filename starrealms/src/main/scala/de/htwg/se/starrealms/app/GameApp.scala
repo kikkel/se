@@ -14,8 +14,7 @@ class GameApp(inputProvider: () => String, output: String => Unit = println) {
     println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
 
     val gameState = new GameState(decksByRole)
-    val logic = new GameLogic(gameState.getDeck, gameState.getTradeDeck, gameState.getPersonalDeck)
-    val controller = new Controller()
+    val controller = new Controller(gameState)
     val commandHandler = new CommandHandler(controller)
     val view = new ConsoleView(commandHandler)
 

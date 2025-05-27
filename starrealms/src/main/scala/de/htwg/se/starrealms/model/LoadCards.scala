@@ -1,8 +1,6 @@
 package de.htwg.se.starrealms.model
 
 
-//import kantan.csv._
-//import kantan.csv.ops._
 import scala.io.Source
 import scala.util.{Failure, Try, Success}
 import scala.util.matching.Regex
@@ -17,7 +15,8 @@ object LoadCards {
         groupedCards.map { case (role, cards) =>
             val deck = new Deck()
             deck.setName(role)
-            deck.setCards(cards)
+            val cardMap = cards.groupBy(identity).view.mapValues(_.size).toMap
+            deck.setCards(cardMap)
             role -> deck
         }
     }
@@ -189,7 +188,6 @@ class CardCSVLoader(filePath: String) {
         .getOrElse(SimpleAction(text))
     }
     def getCardsForEdition(nameOfEdition: String): List[Card] = {
-        //if (cardsByEdition.isEmpty) { loadCardsFromFile() }
 
         cardsByEdition.filter { case (key, _) => key.trim.toLowerCase.contains(nameOfEdition.trim.toLowerCase) }
             .values.flatten.toList

@@ -22,43 +22,49 @@ class TradeRowReplenishStrategy extends DrawStrategy {
 }
 
 //--------------------------------------------------------------------GameLogic
-class GameLogic(var deck: Deck) extends Observable {
-  private val tradeRowDeck = new Deck()
+class GameLogic(var decks: Map[String, Deck]) extends Observable {
   private val replenishStrategy = new TradeRowReplenishStrategy()
   private val startTurnStrategy = new StartTurnStrategy()
 
-  def drawCards(count: Int): List[Card] = {
+  def drawCards(deckName: String, count: Int): List[Card] = {
+    val deck = decks.getOrElse(deckName, throw new NoSuchElementException(s"Deck $deckName not found #GL.scala: drawCards"))
     val cards = startTurnStrategy.draw(deck, count)
     notifyObservers()
     cards
   }
   def replenishTradeRow(): Unit = {
-    replenishStrategy.draw(tradeRowDeck, 5)
+    val tradeDeck = decks.getOrElse("Trade Deck", throw new NoSuchElementException("Trade Deck not found #GL.scala: replenishTradeRow"))
+    replenishStrategy.draw(tradeDeck, 5)
     notifyObservers()
   }
 
-  def drawCard(): Option[Card] = {
+  def drawCard(deckName: String): Option[Card] = {
+    val deck = decks.getOrElse(deckName, throw new NoSuchElementException(s"Deck $deckName not found #GL.scala: drawCard"))
     val card = deck.drawCard()
     notifyObservers()
     card
   }
 
-  def purchaseCard(card: Card): Unit = {
+  def purchaseCard(deckName: String, card: Card): Unit = {
+    val deck = decks.getOrElse(deckName, throw new NoSuchElementException(s"Deck $deckName not found #GL.scala: purchaseCard"))
     deck.removeCard(card)
     notifyObservers()
   }
 
   def playCard(card: Card): Unit = {
+    val deck = decks.getOrElse("Personal Deck", throw new NoSuchElementException("Personal Deck not found #GL.scala: playCard"))
     deck.removeCard(card)
     notifyObservers()
   }
 
 
   def resetGame(): Unit = {
-    deck.resetDeck()
+    decks.values.foreach(_.resetDeck())
     notifyObservers()
   }
 
-  def getDeckState: String = deck.getCards.map(_.cardName).mkString(", ")
+  def getDeckState: String = { decks.map { case (name, deck) => 
+    s"$name:\n${deck.getExpandedCards.map(_.render()).mkString("\n")}"
+    }.mkString("\n") 
+  }
 }
-

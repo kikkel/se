@@ -9,6 +9,7 @@ class GameState(decksByRole: Map[String, Deck]) extends Observable {
   private var discardPile: List[Card] = List()
   private var playerDeck: Deck = new Deck()
   private var tradeDeck: Deck = new Deck()
+  private var explorerPile = new Deck()
 
   initializeDecks(decksByRole)
 
@@ -19,6 +20,8 @@ class GameState(decksByRole: Map[String, Deck]) extends Observable {
     tradeDeck = decks.getOrElse("Trade Deck", new Deck())
     tradeDeck.shuffle()
 
+    explorerPile = decks.getOrElse("Explorer Pile", new Deck())
+
     notifyObservers()
   }
 
@@ -27,7 +30,16 @@ class GameState(decksByRole: Map[String, Deck]) extends Observable {
     before ++ after.drop(1)
   }
 
-  def getDeck: List[Card] = deck
+  def getPlayerDeck: Deck = playerDeck
+  def getTradeDeck: Deck = tradeDeck
+  def getExplorerPile: Deck = explorerPile
+  def getDecks: Map[String, Deck] = {
+    Map(
+      "Personal Deck" -> playerDeck,
+      "Trade Deck" -> tradeDeck,
+      "Explorer Pile" -> explorerPile
+    )
+  }
   def getHand: List[Card] = hand
   def getTradeRow: List[Card] = tradeRow
   def getDiscardPile: List[Card] = discardPile
@@ -115,23 +127,28 @@ class GameState(decksByRole: Map[String, Deck]) extends Observable {
     notifyObservers()
   }
 
-  def getDeckState: String = {
-    def cardLine(card: Card): String = {
-      val name = card.cardName
-      val faction = card.faction.factionName
-      val typ = card.cardType.map(_.cardType).getOrElse("Unknown")
-      val cost = card match {
-        case c: FactionCard => c.cost.toString
-        case _ => "-"
-      }
-      val ability = card.primaryAbility.map(_.actions.map(_.description).mkString(", ")).getOrElse("-")
-      s"$name | $faction | $typ | Cost: $cost | Ability: $ability"
+def getDeckState: String = {
+  def cardLine(card: Card): String = {
+    val name = card.cardName
+    val faction = card.faction.factionName
+    val typ = card.cardType.map(_.cardType).getOrElse("Unknown")
+    val cost = card match {
+      case c: FactionCard => c.cost.toString
+      case _ => "-"
     }
+    val ability = card.primaryAbility.map(_.actions.map(_.description).mkString(", ")).getOrElse("-")
+    s"$name | $faction | $typ | Cost: $cost | Ability: $ability"
+  }
 
-    "PlayerDeck:\n" + playerDeck.getCards.map(cardLine).mkString("\n") + "\n" +
-    "Hand:\n" + hand.zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n" +
-    "Discard Pile:\n" + discardPile.map(cardLine).mkString("\n") + "\n" +
-    "TradeRow:\n" + tradeRow.map(cardLine).mkString("\n") + "\n" +
-    "TradeDeck:\n" + tradeDeck.getCards.map(cardLine).mkString("\n") + "\n"
+  "PlayerDeck:\n" +
+    playerDeck.getExpandedCards.map(cardLine).mkString("\n") + "\n" +
+  "Hand:\n" +
+    hand.zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n" +
+  "Discard Pile:\n" +
+    discardPile.map(cardLine).mkString("\n") + "\n" +
+  "TradeRow:\n" +
+    tradeRow.map(cardLine).mkString("\n") + "\n" +
+  "TradeDeck:\n" +
+    tradeDeck.getExpandedCards.map(cardLine).mkString("\n") + "\n"
   }
 }

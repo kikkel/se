@@ -3,11 +3,9 @@ package de.htwg.se.starrealms.controller
 import de.htwg.se.starrealms.model._
 import de.htwg.util.Observable
 
-class Controller() extends Observable {
-  val gameState: GameState = new GameState()
+class Controller(val gameState: GameState) extends Observable {
   val undoManager: UndoManager = new UndoManager()
 
-  gameState.loadDecksFromCSV("Core Set")
   println(gameState.getDeckState)
 
   def drawCards(count: Int): Unit = { val command = new DrawCardsCommand(this, count); undoManager.doMove(command); notifyObservers() }
