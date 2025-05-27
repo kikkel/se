@@ -9,12 +9,13 @@ class Deck {
     private var cards: Map[Card, Int] = Map()
 
     def setName(name: String): Unit = this.name = name
-    def setCards(newCards: List[Card]): Unit = { cards = newCards.groupBy(identity).view.mapValues(_.size).toMap }
+    def setCards(newCards: Map[Card, Int]): Unit = { cards = newCards }
 
     def getName: String = name
-    def getCards: List[Card] = cards.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
+    def getCards: Map[Card, Int] = cards
 
     def addCard(card: Card): Unit = { cards = cards.updated(card, cards.getOrElse(card, 0) + 1) }
+    def addCards(cardsToAdd: List[Card]): Unit = { cardsToAdd.foreach(addCard) }
 
     def removeCard(card: Card): Unit = {
         cards.get(card) match {
@@ -23,7 +24,7 @@ class Deck {
             case None => println(s"Card $card not found in deck.")
         }
     }
-    def shuffle(): Unit = { val shuffleCards = Random.shuffle(getCards); setCards(shuffleCards) }
+    def shuffle(): Unit = { val shuffleCards = Random.shuffle(getCards); setCards(shuffleCards.groupBy(identity).view.mapValues(_.size).toMap) }
     def drawCard(): Option[Card] = {
         getCards match {
             case Nil => None
@@ -59,11 +60,12 @@ class DeckBuilder extends Builder {
 
     override def reset(): Unit = { deck = new Deck() }
     override def setName(name: String): Unit = { deck.setName(name) }
-    override def setCards(cards: List[Card]): Unit = { deck.setCards(cards) }
-
+    override def setCards(newCards: List[Card]): Unit = {
+        val cardMap = newCards.groupBy(identity).view.mapValues(_.size).toMap
+        deck.setCards(cardMap)
+    }
     override def addCards(cards: List[Card]): Unit = { cards.foreach(deck.addCard) }
     override def addCard(card: Card): Unit = { deck.addCard(card) }
-    //override def addEdition(edition: List[Card]) { edition.foreach(deck.addCard) }
 
     override def getProduct(): Deck = {
         val product = deck

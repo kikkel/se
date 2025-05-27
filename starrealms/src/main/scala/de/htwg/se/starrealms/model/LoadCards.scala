@@ -9,10 +9,9 @@ import scala.util.matching.Regex
 
 
 object LoadCards {
-    def loadFromResource(getCsvPath: String, setName: String, debug: Boolean = false): Map[String, Deck] = {
+    def loadFromResource(getCsvPath: String, setName: String): Map[String, Deck] = {
         val loader = new CardCSVLoader(getCsvPath)
         loader.loadCardsFromFile()
-        if (debug) loader.testCardParsing()
         val cards = loader.getAllCards.filter(_.edition.nameOfEdition.trim.equalsIgnoreCase(setName.trim))
         val groupedCards = cards.groupBy(_.role.trim)
         groupedCards.map { case (role, cards) =>
@@ -190,7 +189,7 @@ class CardCSVLoader(filePath: String) {
         .getOrElse(SimpleAction(text))
     }
     def getCardsForEdition(nameOfEdition: String): List[Card] = {
-        if (cardsByEdition.isEmpty) { loadCardsFromFile() }
+        //if (cardsByEdition.isEmpty) { loadCardsFromFile() }
 
         cardsByEdition.filter { case (key, _) => key.trim.toLowerCase.contains(nameOfEdition.trim.toLowerCase) }
             .values.flatten.toList
@@ -198,33 +197,6 @@ class CardCSVLoader(filePath: String) {
 
     def getAllCards: List[Card] = cardsByEdition.values.flatten.toList;
 
-    def testCardParsing(): Unit = {
-        if (cardsByEdition.isEmpty) {
-            println("\nCard data is empty. Attempting to load cards...\n")
-            loadCardsFromFile()
-            getAllCards.groupBy(_.role).foreach { case (role, cards) =>
-            println(s"Role: $role, Anzahl: ${cards.size}")
-            }
-        }
-
-        val allCards = getAllCards
-        println(s"\nTotal cards loaded: \n${allCards.length}\n")
-
-        val invalidCards = allCards.filter(card =>
-            card.cardName.isEmpty ||
-            card.role.isEmpty ||
-            card.cardType.isFailure
-        )
-
-        if (invalidCards.nonEmpty) {
-            println(s"\nWarning: Found ${invalidCards.length} cards with potential issues.\n")
-            invalidCards.foreach(card =>
-                println(s"Issue in card: ${card.cardName}, Role: ${card.role}, CardType: ${card.cardType}")
-            )
-        } else {
-            println("\nAll cards parsed successfully.\n")
-        }
-    }
 }
 
 
