@@ -5,19 +5,58 @@ import de.htwg.util._
 
 trait Renderer[T] { def render(entity: T): String }
 
+//class WelcomeRenderer extends Renderer
+
+class OptionsMenuRender extends Renderer[OptionsMenu] {
+  override def render(menu: OptionsMenu): String = {
+    val options = menu.getOptions.map(_.render()).mkString("\n")
+    s"Options Menu:\n$options"
+  }
+}
+class MainMenuRenderer extends Renderer[MainMenu] {
+  override def render(menu: MainMenu): String = {
+    val options = menu.getOptions.map(_.render()).mkString("\n")
+    s"Main Menu:\n$options"
+  }
+}
+
+
 class CardRenderer extends Observable with Renderer[Card] {
-  override def render(card: Card): String =
-    card match {
-      case default: DefaultCard =>
-        s"Default Card: ${default.cardName}, Type: ${default.cardType}, Ability: ${default.primaryAbility.map(_.render()).getOrElse("None")}"
-      case explorer: ExplorerCard =>
-        s"Explorer Card: ${explorer.cardName}, Cost: ${explorer.cost}, Type: ${explorer.cardType}, Ability: ${explorer.primaryAbility.map(_.render()).getOrElse("None")}, Scrap Ability: ${explorer.scrapAbility.map(_.render()).getOrElse("None")}"
-      case faction: FactionCard =>
-        s"Faction Card: ${faction.cardName}, Type: ${faction.cardType}, Cost: ${faction.cost}, " +
-          s"Primary Ability: ${faction.primaryAbility.map(_.render()).getOrElse("None")}, " +
-          s"Ally Ability: ${faction.allyAbility.map(_.render()).getOrElse("None")}, " +
-          s"Scrap Ability: ${faction.scrapAbility.map(_.render()).getOrElse("None")}, Faction: ${faction.faction.factionName} #Renderer.scala"
-    }
+  override def render(card: Card): String = card match {
+    case default: DefaultCard => renderDefaultCard(default)
+    case explorer: ExplorerCard => renderExplorerCard(explorer)
+    case faction: FactionCard => renderFactionCard(faction)
+  }
+
+  private def renderDefaultCard(card: DefaultCard): String =
+    s"""
+       |  Name: ${card.cardName}
+       |  Type: ${card.cardType}
+       |  Ability: ${renderAbility(card.primaryAbility)}
+       |""".stripMargin
+
+  private def renderExplorerCard(card: ExplorerCard): String =
+    s"""
+       |  Name: ${card.cardName}
+       |  Cost: ${card.cost}
+       |  Type: ${card.cardType}
+       |  Ability: ${renderAbility(card.primaryAbility)}
+       |  Scrap Ability: ${renderAbility(card.scrapAbility)}
+       |""".stripMargin
+
+  private def renderFactionCard(card: FactionCard): String =
+    s"""
+       |  Name: ${card.cardName}
+       |  Type: ${card.cardType}
+       |  Cost: ${card.cost}
+       |  Primary Ability: ${renderAbility(card.primaryAbility)}
+       |  Ally Ability: ${renderAbility(card.allyAbility)}
+       |  Scrap Ability: ${renderAbility(card.scrapAbility)}
+       |  Faction: ${card.faction.factionName}
+       |""".stripMargin
+
+  private def renderAbility(ability: Option[Ability]): String =
+    ability.map(_.render()).getOrElse("None")
 }
 
 /* class DeckRenderer extends Renderer[Deck] {

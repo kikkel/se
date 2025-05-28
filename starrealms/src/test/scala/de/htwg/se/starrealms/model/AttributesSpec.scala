@@ -1,101 +1,108 @@
 package de.htwg.se.starrealms.model
 
-import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.starrealms.model.Ability
+import org.scalatest.matchers.should.Matchers
 
-class AttributesSpec extends AnyWordSpec with Matchers {
+class AbilitySpec extends AnyWordSpec with Matchers {
+
+  "A SimpleAction" should {
+    "print its description and return correct description" in {
+      val action = SimpleAction("Gain 2 coins")
+      noException should be thrownBy action.doMove
+      action.description shouldBe "Gain 2 coins"
+    }
+  }
+
+  "A ConditionalAction" should {
+    "execute both condition actions and return a combined description" in {
+      val a1 = SimpleAction("Deal 3 damage")
+      val a2 = SimpleAction("Heal 2")
+      val condAction = ConditionalAction(a1, a2)
+
+      noException should be thrownBy condAction.doMove
+      condAction.description should include("Condition")
+      condAction.description should include(a1.toString)
+      condAction.description should include(a2.toString)
+    }
+  }
+
+  "A TriggeredAction" should {
+    "print trigger info and execute its inner action" in {
+      val action = SimpleAction("Draw a card")
+      val triggered = TriggeredAction("OnPlay", action)
+
+      noException should be thrownBy triggered.doMove
+      triggered.description should include("Triggered by OnPlay")
+      triggered.description should include(action.toString)
+    }
+  }
+
+  "A CompositeAction" should {
+    "execute all contained actions and return combined description" in {
+      val a1 = SimpleAction("Gain 1 coin")
+      val a2 = SimpleAction("Deal 2 damage")
+      val composite = CompositeAction(List(a1, a2))
+
+      noException should be thrownBy composite.doMove
+      composite.description should include("Composite action")
+      composite.description should include(a1.description)
+      composite.description should include(a2.description)
+    }
+  }
 
   "An Ability" should {
-    "return its actions" in {
-      val ability = new Ability(List("Attack", "Heal"))
-      ability.getActions should contain allOf ("Attack", "Heal")
+    "return its list of actions and execute them" in {
+      val actions = List(SimpleAction("Test 1"), SimpleAction("Test 2"))
+      val ability = new Ability(actions)
+
+      ability.getActions shouldEqual actions
+      ability.hasActions shouldBe true
+      noException should be thrownBy ability.executeActions()
+      ability.render() should include("SimpleAction")
     }
 
-    "check if it has actions" in {
-      val abilityWithActions = new Ability(List("Attack"))
-      val abilityWithoutActions = new Ability(List())
-      abilityWithActions.hasActions shouldBe true
-      abilityWithoutActions.hasActions shouldBe false
-    }
-
-    "render its actions as a string" in {
-      val ability = new Ability(List("Attack", "Heal"))
-      ability.render() shouldBe "Attack, Heal"
-
+    "handle an empty action list gracefully" in {
       val emptyAbility = new Ability(List())
+      emptyAbility.getActions shouldBe empty
+      emptyAbility.hasActions shouldBe false
+      noException should be thrownBy emptyAbility.executeActions()
       emptyAbility.render() shouldBe "No actions available"
     }
   }
 
   "A PrimaryAbility" should {
-    "render its actions as a string" in {
-      val primaryAbility = PrimaryAbility(List("Primary Attack"))
-      primaryAbility.render() shouldBe "Primary Attack"
+    "render actions correctly" in {
+      val primary = PrimaryAbility(List(SimpleAction("Primary")))
+      primary.render() should include("SimpleAction")
+    }
 
-      val emptyPrimaryAbility = PrimaryAbility(List())
-      emptyPrimaryAbility.render() shouldBe "No primary actions available"
+    "render fallback message when empty" in {
+      val primary = PrimaryAbility(List())
+      primary.render() shouldBe "No primary actions available"
     }
   }
-   "An AllyAbility" should {
-    "render its actions as a string" in {
-      val allyAbility = AllyAbility(List("Ally Heal"))
-      allyAbility.render() shouldBe "Ally Heal"
 
-      val emptyAllyAbility = AllyAbility(List())
-      emptyAllyAbility.render() shouldBe "No ally actions available"
+  "An AllyAbility" should {
+    "render actions correctly" in {
+      val ally = AllyAbility(List(SimpleAction("Ally")))
+      ally.render() should include("SimpleAction")
+    }
+
+    "render fallback message when empty" in {
+      val ally = AllyAbility(List())
+      ally.render() shouldBe "No ally actions available"
     }
   }
 
   "A ScrapAbility" should {
-    "render its actions as a string" in {
-      val scrapAbility = ScrapAbility(List("Scrap Draw"))
-      scrapAbility.render() shouldBe "Scrap Draw"
-
-      val emptyScrapAbility = ScrapAbility(List())
-      emptyScrapAbility.render() shouldBe "No scrap actions available"
-    }
-  }
-
-  "A CardCost" should {
-    "return its cost" in {
-      val cardCost = new CardCost(5)
-      cardCost.getCost shouldBe 5
+    "render actions correctly" in {
+      val scrap = ScrapAbility(List(SimpleAction("Scrap")))
+      scrap.render() should include("SimpleAction")
     }
 
-    "check if the card is free" in {
-      val freeCard = new CardCost(0)
-      val paidCard = new CardCost(3)
-      freeCard.isFree shouldBe true
-      paidCard.isFree shouldBe false
-    }
-  }
-  "A CardDamage" should {
-    "return its damage" in {
-      val cardDamage = new CardDamage(10)
-      cardDamage.getDamage shouldBe 10
-    }
-
-    "check if the card has no damage" in {
-      val noDamageCard = new CardDamage(0)
-      val damageCard = new CardDamage(5)
-      noDamageCard.isNoDamage shouldBe true
-      damageCard.isNoDamage shouldBe false
-    }
-  }
-
-  "A CardDefense" should {
-    "return its defense" in {
-      val cardDefense = new CardDefense(8)
-      cardDefense.getDefense shouldBe 8
-    }
-
-    "check if the card has no defense" in {
-      val noDefenseCard = new CardDefense(0)
-      val defenseCard = new CardDefense(4)
-      noDefenseCard.isNoDefense shouldBe true
-      defenseCard.isNoDefense shouldBe false
+    "render fallback message when empty" in {
+      val scrap = ScrapAbility(List())
+      scrap.render() shouldBe "No scrap actions available"
     }
   }
 }
-

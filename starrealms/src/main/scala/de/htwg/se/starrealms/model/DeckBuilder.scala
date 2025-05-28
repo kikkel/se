@@ -1,39 +1,70 @@
 package de.htwg.se.starrealms.model
 
-import de.htwg.se.starrealms.model._
 import scala.util.Random
-
+import org.scalactic.Fail
 
 
 class Deck {
     private var name: String = ""
-    private var cards: List[Card] = List()
+    private var cards: Map[Card, Int] = Map()
+    private var cardStack: List[Card] = List() // <- Reihenfolge der Karten
 
     def setName(name: String): Unit = this.name = name
-    def setCards(cards: List[Card]): Unit = this.cards = cards
+    def setCards(newCards: Map[Card, Int]): Unit = {
+        cards = newCards
+        cardStack = cards.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
+    }
+
+    def setCardStack(newStack: List[Card]): Unit = {
+        cardStack = newStack
+        cards = cardStack.groupBy(identity).view.mapValues(_.size).toMap
+    }
 
     def getName: String = name
-    def getCards: List[Card] = cards
+    def getCards: Map[Card, Int] = cardStack.groupBy(identity).view.mapValues(_.size).toMap
+    def getExpandedCards: List[Card] = cardStack
 
-    def addCard(card: Card): Unit = cards = cards :+ card
-    def removeCard(card: Card): Unit = cards = cards.filterNot(_ == card)
-    //def shuffle(): Unit = cards = Random.shuffle(cards)
+    def addCard(card: Card): Unit = {
+        cards = cards.updated(card, cards.getOrElse(card, 0) + 1)
+        cardStack = cardStack :+ card
+    }
+    def addCards(cardsToAdd: List[Card]): Unit = { cardsToAdd.foreach(addCard) }
+
+    def removeCard(card: Card): Unit = {
+        cards.get(card) match {
+            case Some(qty) if qty > 1 => cards = cards.updated(card, qty - 1)
+            case Some(_) => cards = cards - card
+            case None => println(s"Card $card not found in deck.")
+        }
+        val idx = cardStack.indexOf(card)
+        if (idx >= 0) cardStack = cardStack.patch(idx, Nil, 1)
+    }
+
+    def shuffle(): Unit = {
+        cardStack = scala.util.Random.shuffle(cardStack)
+        cards = cardStack.groupBy(identity).view.mapValues(_.size).toMap
+    }
+
     def drawCard(): Option[Card] = {
-        cards match {
-            case Nil => None
+        cardStack match {
             case head :: tail =>
-                cards = tail
+                cardStack = tail
+                cards = cardStack.groupBy(identity).view.mapValues(_.size).toMap
                 Some(head)
+            case Nil =>
+                println("No cards left in the deck.")
+                None
         }
     }
-    def resetDeck(): Unit = cards = List()
-    def render(): String = {
-        val cardDescriptions = cards.map(_.render()).mkString(", ")
-        s"Deck: $name, Cards: [$cardDescriptions]"
+    def resetDeck(): Unit = {
+        cards = Map()
+        cardStack = List()
     }
-    
+    def render(): String = {
+        val cardDescriptions = getExpandedCards.map(_.render()).mkString("\n")
+        s"Deck:\n$name\nCards:\n[$cardDescriptions]"
+    }
 }
-
 
 /* class Manual { } */
 
@@ -41,7 +72,7 @@ class Deck {
 trait Builder {
     def reset(): Unit
     def setName(name: String): Unit
-    def setCards(cards: List[Card]): Unit
+    def setCards(cards: Map[Card, Int]): Unit
 
     def addCard(card: Card): Unit
     def addCards(cards: List[Card]): Unit
@@ -54,12 +85,12 @@ class DeckBuilder extends Builder {
     private var deck: Deck = new Deck()
 
     override def reset(): Unit = { deck = new Deck() }
-    override def setName(name: String): Unit = { deck.setName(name) } 
-    override def setCards(cards: List[Card]): Unit = { deck.setCards(cards) }
-
+    override def setName(name: String): Unit = { deck.setName(name) }
+    override def setCards(newCards: Map[Card, Int]): Unit = {
+        deck.setCards(newCards)
+    }
     override def addCards(cards: List[Card]): Unit = { cards.foreach(deck.addCard) }
     override def addCard(card: Card): Unit = { deck.addCard(card) }
-    //override def addSet(set: List[Card]) { set.foreach(deck.addCard) }
 
     override def getProduct(): Deck = {
         val product = deck
@@ -70,12 +101,20 @@ class DeckBuilder extends Builder {
 }
 
 class Director {
-    def constructTradeDeck(builder: Builder, setName: String, cards: List[Card]): Unit = {
+    def constructDecks(builder: Builder, decksByRole: Map[String, Deck]): Map[String, Deck] = {
+        decksByRole.map { case (role, deck) =>
+            builder.reset()
+            builder.setName(role)
+            builder.setCards(deck.getCards)
+            role -> builder.getProduct()
+        }
+    }
+/*     def constructTradeDeck(builder: Builder, decksByRole: Map[String, Deck]): Map[String, Deck] = {
         builder.reset()
         builder.setName(s"Trade Deck - $setName")
         builder.setCards(cards)
 
-    }
+    } */
 }
 
 // Unlike other creational patterns, builder lets you construct

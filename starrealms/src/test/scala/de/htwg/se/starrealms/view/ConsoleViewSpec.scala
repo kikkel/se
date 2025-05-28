@@ -2,60 +2,89 @@ package de.htwg.se.starrealms.view
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
-import de.htwg.se.starrealms.controller.Controller
-import de.htwg.se.starrealms.model._
-import scala.collection.mutable.ListBuffer
+import de.htwg.se.starrealms.controller.CommandProcessor
 
 class ConsoleViewSpec extends AnyWordSpec with Matchers {
-    class MockController extends Controller(new GameLogic(new Deck())) {
-        override def getState: String = "Deck:"
-        override def processCommand(cmd: String): String = s"Processed: $cmd"
+
+  class MockProcessor extends CommandProcessor {
+    var lastCommand: String = ""
+    override def processCommand(input: String): String = {
+      lastCommand = input
+      s"Processed: $input"
+    }
+  }
+
+  "A ConsoleView" should {
+    "render the game state when updated" in {
+      val processor = new MockProcessor
+      val view = new ConsoleView(processor)
+      noException should be thrownBy view.render()
     }
 
-    "A ConsoleView" should {
-        "render the game state when updated" in {
-            val outputBuffer = new ListBuffer[String]()
-            val controller = new MockController()
-            //val output = controller.getState
-            val view = new ConsoleView(controller, (s: String) => outputBuffer += s)
-            view.render()
-            outputBuffer.exists(_.contains("")) shouldBe false
-        }
+    "process input correctly for game commands (not in play phase)" in {
+      val processor = new MockProcessor
+      val view = new ConsoleView(processor)
 
-        "process input correctly for game commands" in {
-            val outputBuffer = new ListBuffer[String]()
-            val controller = new MockController()
-            val output = controller.getState
-            val view = new ConsoleView(controller, (s: String) => outputBuffer += s)
-            
-            view.processInput("s") shouldBe true
-            outputBuffer.exists(_.contains("")) shouldBe false
+      view.processInput("s") shouldBe true
+      processor.lastCommand shouldBe "s"
 
-            view.processInput("r") shouldBe true
-            outputBuffer.exists(_.contains("Processed")) shouldBe false
-        }
+      val playPhaseField = view.getClass.getDeclaredField("inPlayPhase")
+      playPhaseField.setAccessible(true)
+      playPhaseField.set(view, false)
 
-        "process input correctly for exit command" in {
-            val outputBuffer = new ListBuffer[String]()
-            val controller = new MockController()
-            val output = controller.getState
-            val view = new ConsoleView(controller, (s: String) => outputBuffer += s)
-            
-            view.processInput("x") shouldBe false
-            outputBuffer.exists(_.contains("Exiting the game")) shouldBe false
-        }
+      view.processInput("t") shouldBe true
+      processor.lastCommand shouldBe "t"
 
-        "update view when model notifies it" in {
-            val outputBuffer = new ListBuffer[String]()
-            val controller = new MockController()
-            val output = controller.getState
-            val view = new ConsoleView(controller, (s: String) => outputBuffer += s)
+      playPhaseField.set(view, false)
+      view.processInput("z") shouldBe true
+      processor.lastCommand shouldBe "z"
 
-            view.update
-            outputBuffer.exists(_.contains("Deck:")) shouldBe false
-        }
+      playPhaseField.set(view, false)
+      view.processInput("y") shouldBe true
+      processor.lastCommand shouldBe "y"
 
-        
+      playPhaseField.set(view, false)
+      view.processInput("x") shouldBe false
+
+      playPhaseField.set(view, false)
+      view.processInput("unknown") shouldBe true
     }
+    "process input correctly for game commands (in play phase)" in {
+      val processor = new MockProcessor
+      val view = new ConsoleView(processor)
+      // Setze Playphase
+      val playPhaseField = view.getClass.getDeclaredField("inPlayPhase")
+      playPhaseField.setAccessible(true)
+      playPhaseField.set(view, true)
+
+      view.processInput("x") shouldBe false
+
+      playPhaseField.set(view, true)
+      view.processInput("e") shouldBe true
+      processor.lastCommand shouldBe "e"
+      playPhaseField.set(view, true)
+      view.processInput("z") shouldBe true
+      processor.lastCommand shouldBe "z"
+      playPhaseField.set(view, true)
+      view.processInput("y") shouldBe true
+      processor.lastCommand shouldBe "y"
+      playPhaseField.set(view, true)
+      view.processInput("p 2") shouldBe true
+      processor.lastCommand shouldBe "p 2"
+      playPhaseField.set(view, true)
+      view.processInput("b 3") shouldBe true
+      processor.lastCommand shouldBe "b 3"
+      playPhaseField.set(view, true)
+      view.processInput("1") shouldBe true
+      processor.lastCommand shouldBe "p 1"
+      playPhaseField.set(view, true)
+      view.processInput("foo") shouldBe true
+    }
+
+    "update view when model notifies it" in {
+      val processor = new MockProcessor
+      val view = new ConsoleView(processor)
+      noException should be thrownBy view.update
+    }
+  }
 }
-

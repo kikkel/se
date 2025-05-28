@@ -4,51 +4,94 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.starrealms.model._
 import de.htwg.util.Observer
-import scala.collection.mutable.ListBuffer
 
 class ControllerSpec extends AnyWordSpec with Matchers {
 
-	class TestObserver extends Observer {
-		var notified = false
-		override def update: Unit = notified = true
-	}
+  class TestObserver extends Observer {
+    var notified = false
+    override def update: Unit = notified = true
+  }
 
-	"A Controller" should {
-		val logic = new GameLogic(new Deck())
-		val controller = new Controller(logic)
-		val observer = new TestObserver()
-		controller.addObserver(observer)
+  "A Controller" should {
+    val controller = new Controller()
+    val observer = new TestObserver()
+    controller.addObserver(observer)
 
-		"return correct state string" in {
-			controller.getState should include ("Deck")
-		}
+    "return correct state string" in {
+      controller.getState should include ("Deck")
+    }
 
-		"execute Scout command" in {
-			observer.notified = false
-			val result = controller.processCommand("s")
-			result should (include ("Scout") or include ("No Scout cards"))
-			observer.notified should be (true)
-		}
+    "draw cards and notify observers" in {
+      observer.notified = false
+      controller.drawCards(2)
+      observer.notified shouldBe true
+    }
 
-		"execute Viper command" in {
-			observer.notified = false
-			val result = controller.processCommand("v")
-			result should (include ("Viper") or include ("No Viper cards"))
-			observer.notified should be (true)
-		}
+    "replenish trade row and notify observers" in {
+      observer.notified = false
+      controller.replenishTradeRow()
+      observer.notified shouldBe true
+    }
 
-		"execute Reset command" in {
-			observer.notified = false
-			val result = controller.processCommand("r")
-			result should (include ("reset") or include ("reset"))
-			observer.notified should be (true)
-		}
+    "draw a card and notify observers" in {
+      observer.notified = false
+      controller.drawCard()
+      observer.notified shouldBe true
+    }
 
-		"handle invalid command" in {
-			observer.notified = false
-			val result = controller.processCommand("invalid")
-			result should include ("Invalid")
-			observer.notified should be (true)
-		}
-	}
+    "play a card and notify observers" in {
+      observer.notified = false
+      // Lege eine Karte auf die Hand, falls leer
+      val card = new DefaultCard(
+        set = Set("Core Set"),
+        cardName = "Scout",
+        primaryAbility = None,
+        faction = Faction("unaligned"),
+        cardType = scala.util.Success(new Ship()),
+        qty = 1,
+        role = "Personal Deck"
+      )
+      controller.gameState.returnCardToHand(card)
+      controller.playCard(card)
+      observer.notified shouldBe true
+    }
+
+    "buy a card and notify observers" in {
+      observer.notified = false
+      // Lege eine Karte in die TradeRow, falls leer
+      val card = new DefaultCard(
+        set = Set("Core Set"),
+        cardName = "Scout",
+        primaryAbility = None,
+        faction = Faction("unaligned"),
+        cardType = scala.util.Success(new Ship()),
+        qty = 1,
+        role = "Personal Deck"
+      )
+      controller.gameState.returnCardToTradeRow(card)
+      controller.buyCard(card)
+      observer.notified shouldBe true
+    }
+
+    "end turn and notify observers" in {
+      observer.notified = false
+      controller.endTurn()
+      observer.notified shouldBe true
+    }
+
+    "reset game and notify observers" in {
+      observer.notified = false
+      controller.resetGame()
+      observer.notified shouldBe true
+    }
+
+    "undo and redo actions and notify observers" in {
+      observer.notified = false
+      controller.undo()
+      observer.notified shouldBe true
+      observer.notified = false
+      controller.redo()
+      observer.notified shouldBe true
+    }
+  }
 }

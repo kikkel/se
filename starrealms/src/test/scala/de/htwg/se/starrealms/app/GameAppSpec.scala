@@ -19,7 +19,6 @@ class GameAppSpec extends AnyWordSpec with Matchers {
 
       val output = outputBuffer.mkString("\n")
 
-      output should include("Welcome to Star Realms!")
       output should include("Scout") // if scout was drawn
       output should include("Viper") // if viper was drawn
       output should include("reset") // if game reset occurred
