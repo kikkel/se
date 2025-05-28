@@ -28,7 +28,6 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame wi
     }
 
     val ashPurple = new Color(75, 60, 90)
-
     outputArea.background = ashPurple
     outputArea.foreground = Color.WHITE
     outputArea.border = Swing.EmptyBorder(10)
@@ -89,7 +88,7 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame wi
         background = ashPurple
         opaque = true
     }
-
+/* 
     val contentPanel = new BorderPanel {
         opaque = false
         layout(statusLabel) = BorderPanel.Position.North
@@ -100,7 +99,7 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame wi
         reactions += {
         case KeyPressed(`inputField`, Key.Enter, _, _) => processInput()
         }
-    }
+    } */
 
     val backgroundPanel = new BorderPanel {
     background = ashPurple
@@ -112,8 +111,12 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame wi
     }
 
     contents = backgroundPanel
-    // Observer registrieren
     controller.addObserver(this)
+
+    private def initializeState(): Unit = {
+        val initialState = commandHandler.processCommand("show")
+        outputArea.append(initialState + "\n")
+    }
 
     def processInput(): Unit = {
         val inputText = inputField.text.trim
