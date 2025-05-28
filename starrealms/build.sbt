@@ -11,6 +11,7 @@ lazy val root = (project in file("."))
     name := "StarRealms",
     scalacOptions += "-deprecation",
     libraryDependencies ++= Seq(
+      "org.scala-lang.modules" %% "scala-swing" % "3.0.0",
       "org.scalatest" %% "scalatest" % "3.2.16" % Test,
       "org.scalameta" %% "munit" % "1.0.0" % Test,
       "org.scalactic" %% "scalactic" % "3.2.19",

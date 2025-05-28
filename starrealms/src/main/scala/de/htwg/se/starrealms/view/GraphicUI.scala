@@ -56,6 +56,29 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame wi
         opaque = true
     }
 
+        listenTo(inputField.keys, startButton, replenishButton, resetButton, exitButton)
+
+        reactions += {
+            case KeyPressed(`inputField`, Key.Enter, _, _) =>
+                processInput()
+            case ButtonClicked(`startButton`) =>
+                outputArea.append("> Start Game clicked\n")
+                val result = commandHandler.processCommand("s")
+                outputArea.append(result + "\n")
+            case ButtonClicked(`replenishButton`) =>
+                outputArea.append("> Replenish Trade Row clicked\n")
+                val result = commandHandler.processCommand("t")
+                outputArea.append(result + "\n")
+            case ButtonClicked(`resetButton`) =>
+                outputArea.append("> Reset Game clicked\n")
+                val result = commandHandler.processCommand("r")
+                outputArea.append(result + "\n")
+            case ButtonClicked(`exitButton`) =>
+                outputArea.append("> Exit Game clicked\n")
+                onExit()
+                close()
+        }
+
 
     val controlPanel = new BoxPanel(Orientation.Horizontal) {
         contents += inputField
