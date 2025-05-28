@@ -5,10 +5,13 @@ import de.htwg.se.starrealms.controller.CommandHandler
 import de.htwg.se.starrealms.model._
 import de.htwg.se.starrealms.view.{ConsoleView, GraphicUI}
 
-object GameApp {
+import scalafx.application.JFXApp3
+import scalafx.scene.Scene
+
+object GameApp extends JFXApp3 {
   @volatile var running = true
 
-  def main(args: Array[String]): Unit = {
+  override def start(): Unit = {
     val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set")
     if (decksByRole.isEmpty) {
       println("No decks found. Exiting the game.")
@@ -30,15 +33,7 @@ object GameApp {
       println("\n\nGame exited. Goodbye! #main\n\n")
     }).start()
 
-    // GUI im Hauptthread starten
     val gui = new GraphicUI(controller, () => running = false)
-    gui.visible = true
-
-    // Hauptthread warten lassen, solange das Fenster offen ist und running true ist
-    while (gui.visible && running) {
-      Thread.sleep(500)
-    }
-    // Fenster schließen, wenn running auf false gesetzt wurde (z.B. durch "x")
-    gui.close()
+    gui.show()
   }
 }

@@ -2,156 +2,89 @@ package de.htwg.se.starrealms.view
 
 import de.htwg.se.starrealms.controller.{Controller, CommandHandler}
 import de.htwg.util.Observer
-import scala.swing._
-import scala.swing.event._
-import javax.imageio.ImageIO
-import java.io.File
-import java.awt.Color
-import java.awt.Font
+import scalafx.application.Platform
+import scalafx.scene.Scene
+import scalafx.scene.control.{Button, Label, TextArea, TextField}
+import scalafx.scene.layout.{BorderPane, HBox, VBox}
+import scalafx.scene.paint.Color
+import scalafx.scene.text.Font
+import scalafx.stage.Stage
 
-class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame with Reactor with Observer {
+class GraphicUI(controller: Controller, onExit: () => Unit) extends Stage with Observer {
     title = "Star Realms"
-    preferredSize = new Dimension(800, 600)
+    width = 800
+    height = 600
 
     private val commandHandler = new CommandHandler(controller)
 
-
     // UI Components
-    private val statusLabel = new Label("Welcome to Star Realms!")
-    statusLabel.foreground = Color.WHITE
-    statusLabel.font = new Font(statusLabel.font.getName, Font.BOLD, 24)
-    private val inputField = new TextField(20)
-    private val outputArea = new TextArea(10, 40) {
+    private val statusLabel = new Label("Welcome to Star Realms!") {
+        textFill =  Color.Purple
+        font = Font.font(null, 24)
+    }
+
+    private val inputField = new TextField {
+        promptText = "Enter command here"
+    }
+
+    private val outputArea = new TextArea {
         editable = false
-        lineWrap = true
-        wordWrap = true
+        wrapText = true
     }
 
-    val ashPurple = new Color(75, 60, 90)
-    outputArea.background = ashPurple
-    outputArea.foreground = Color.WHITE
-    outputArea.border = Swing.EmptyBorder(10)
-
-    val ashBlue = new Color(80, 110, 140)
-
-    val startButton = new Button("Start Game") {
-        background = ashPurple
-        foreground = ashBlue
-        opaque = true
-    }
-    val replenishButton = new Button("replenish Trade Row") {
-        background = ashPurple
-        foreground = ashBlue
-        opaque = true
-    }
-    val resetButton = new Button("reset Game") {
-        background = ashPurple
-        foreground = ashBlue
-        opaque = true
-    }
-    val exitButton = new Button("Exit Game") {
-        background = ashPurple
-        foreground = ashBlue
-        opaque = true
+    private val startButton = new Button("Start Game") {
+        onAction = _ => processCommand("s")
     }
 
-        listenTo(inputField.keys, startButton, replenishButton, resetButton, exitButton)
+    private val replenishButton = new Button("Replenish Trade Row") {
+        onAction = _ => processCommand("t")
+    }
 
-        reactions += {
-            case KeyPressed(`inputField`, Key.Enter, _, _) =>
-                processInput()
-            case ButtonClicked(`startButton`) =>
-                outputArea.append("> Start Game clicked\n")
-                val result = commandHandler.processCommand("s")
-                outputArea.append(result + "\n")
-            case ButtonClicked(`replenishButton`) =>
-                outputArea.append("> Replenish Trade Row clicked\n")
-                val result = commandHandler.processCommand("t")
-                outputArea.append(result + "\n")
-            case ButtonClicked(`resetButton`) =>
-                outputArea.append("> Reset Game clicked\n")
-                val result = commandHandler.processCommand("r")
-                outputArea.append(result + "\n")
-            case ButtonClicked(`exitButton`) =>
-                outputArea.append("> Exit Game clicked\n")
-                onExit()
-                close()
+    private val resetButton = new Button("Reset Game") {
+        onAction = _ => processCommand("r")
+    }
+
+    private val exitButton = new Button("Exit Game") {
+        onAction = _ => {
+            onExit()
+            Platform.exit()
         }
-
-
-    val controlPanel = new BoxPanel(Orientation.Horizontal) {
-        contents += inputField
-        contents += startButton
-        contents += replenishButton
-        contents += resetButton
-        contents += exitButton
-        background = ashPurple
-        opaque = true
     }
-/* 
-    val contentPanel = new BorderPanel {
-        opaque = false
-        layout(statusLabel) = BorderPanel.Position.North
-        layout(new ScrollPane(outputArea)) = BorderPanel.Position.Center
-        layout(controlPanel) = BorderPanel.Position.South
 
-        listenTo(inputField.keys)
-        reactions += {
-        case KeyPressed(`inputField`, Key.Enter, _, _) => processInput()
+    private val controlPanel = new HBox {
+        spacing = 10
+        children = Seq(inputField, startButton, replenishButton, resetButton, exitButton)
+    }
+
+    private val contentPanel = new VBox {
+        spacing = 10
+        children = Seq(statusLabel, outputArea, controlPanel)
+    }
+
+    scene = new Scene {
+        root = new BorderPane {
+            top = statusLabel
+            center = outputArea
+            bottom = controlPanel
         }
-    } */
-
-    val backgroundPanel = new BorderPanel {
-    background = ashPurple
-    opaque = true
-
-    layout(statusLabel) = BorderPanel.Position.North
-    layout(new ScrollPane(outputArea)) = BorderPanel.Position.Center
-    layout(controlPanel) = BorderPanel.Position.South
+        stylesheets.add("style.css") 
     }
 
-    contents = backgroundPanel
     controller.addObserver(this)
 
-    private def initializeState(): Unit = {
-        val initialState = commandHandler.processCommand("show")
-        outputArea.append(initialState + "\n")
-    }
-
-    def processInput(): Unit = {
-        val inputText = inputField.text.trim
-        inputField.text = ""
-        inputText match {
-        case "x" =>
-            onExit()
-            close()
-        case "s" | "t" | "r" | "e" | "z" | "y" | "show" =>
-            outputArea.append(s"> $inputText\n")
-            val result = commandHandler.processCommand(inputText)
-            outputArea.append(result + "\n")
-        case p if p.matches("""p \d+""") =>
-            outputArea.append(s"> $inputText\n")
-            val result = commandHandler.processCommand(inputText)
-            outputArea.append(result + "\n")
-        case b if b.matches("""b \d+""") =>
-            outputArea.append(s"> $inputText\n")
-            val result = commandHandler.processCommand(inputText)
-            outputArea.append(result + "\n")
-        case other if other.nonEmpty =>
-            outputArea.append(s"> $inputText\n")
-            outputArea.append("Ungültiger Befehl!\n")
-        case _ =>
-        }
+    private def processCommand(command: String): Unit = {
+        outputArea.appendText(s"> $command\n")
+        val result = commandHandler.processCommand(command)
+        outputArea.appendText(result + "\n")
     }
 
     override def update: Unit = {
-        outputArea.append("\n" + controller.getState + "\n")
+        outputArea.appendText("\n" + controller.getState + "\n")
     }
 
     def run(): Unit = {
-        visible = true
-        inputField.requestFocusInWindow()
-        outputArea.append("Welcome to Star Realms!\n")
-        outputArea.append(controller.getState + "\n")
+        show()
+        outputArea.appendText("Welcome to Star Realms!\n")
+        outputArea.appendText(controller.getState + "\n")
     }
 }
