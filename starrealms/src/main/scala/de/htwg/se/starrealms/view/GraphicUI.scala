@@ -25,6 +25,13 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends Stage with O
 
     private val inputField = new TextField {
         promptText = "Enter command here"
+        onAction = _ => {
+            val input = text.value.trim
+            if (input.nonEmpty) {
+                processCommand(input)
+                text = ""
+            }
+        }
     }
 
     private val outputArea = new TextArea {
