@@ -2,171 +2,195 @@ package de.htwg.se.starrealms.model
 
 import de.htwg.util._
 
-class GameState(decksByRole: Map[String, Deck]) extends Observable {
-  private var deck: List[Card] = List()
-  private var hand: List[Card] = List()
+class GameState(
+  decksByRole: Map[String, Deck],
+  val player1: Player,
+  val player2: Player
+) extends Observable {
+  private var currentPlayer: Player = player1
+  private var opponent: Player = player2
+
+  // Jeder Spieler hat eigenes Deck, Hand, Discard
+  private var playerDecks: Map[Player, Deck] = Map()
+  private var hands: Map[Player, List[Card]] = Map(player1 -> List(), player2 -> List())
+  private var discardPiles: Map[Player, List[Card]] = Map(player1 -> List(), player2 -> List())
+
+  // Gemeinsame Bereiche
   private var tradeRow: List[Card] = List()
-  private var discardPile: List[Card] = List()
-  private var playerDeck: Deck = new Deck()
   private var tradeDeck: Deck = new Deck()
   private var explorerPile = new Deck()
 
   initializeDecks(decksByRole)
 
-
   private def initializeDecks(decks: Map[String, Deck]): Unit = {
-    // Personal Deck vorbereiten
+    // Personal Deck vorbereiten (für beide Spieler)
     val allPersonal = decks.getOrElse("Personal Deck", new Deck()).getCards
     val expandedPersonal = allPersonal.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
-
     val scouts = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
     val vipers = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
     val playerCards = scala.util.Random.shuffle(scouts ++ vipers)
 
-    playerDeck = new Deck()
-    playerDeck.setName("Personal Deck")
-    playerDeck.setCardStack(playerCards) // <-- Reihenfolge bleibt erhalten!
+    // Jeder Spieler bekommt ein eigenes Deck
+    playerDecks = Map(
+      player1 -> new Deck(),
+      player2 -> new Deck()
+    )
+    playerDecks(player1).setName("Personal Deck 1")
+    playerDecks(player2).setName("Personal Deck 2")
+    playerDecks(player1).setCardStack(scala.util.Random.shuffle(playerCards))
+    playerDecks(player2).setCardStack(scala.util.Random.shuffle(playerCards))
 
     // Trade Deck vorbereiten
     val allTrade = decks.getOrElse("Trade Deck", new Deck()).getCards
     val expandedTrade = allTrade.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     val shuffledTrade = scala.util.Random.shuffle(expandedTrade)
-
     tradeDeck = new Deck()
     tradeDeck.setName("Trade Deck")
-    tradeDeck.setCardStack(shuffledTrade) // <-- Reihenfolge bleibt erhalten!
+    tradeDeck.setCardStack(shuffledTrade)
 
-    // Explorer Pile bleibt wie gehabt
     explorerPile = decks.getOrElse("Explorer Pile", new Deck())
 
+    // Hände und Discard leeren
+    hands = Map(player1 -> List(), player2 -> List())
+    discardPiles = Map(player1 -> List(), player2 -> List())
+
     notifyObservers()
   }
 
+  def getCurrentPlayer: Player = currentPlayer
+  def getOpponent: Player = opponent
 
-  def removeCardFrom(cards: List[Card], card: Card): List[Card] = {
-    val (before, after) = cards.span(_ != card)
-    before ++ after.drop(1)
-  }
+  // Zugriff auf Deck, Hand, Discard pro Spieler
+  def getPlayerDeck(player: Player): Deck = playerDecks(player)
+  def getHand(player: Player): List[Card] = hands(player)
+  def getDiscardPile(player: Player): List[Card] = discardPiles(player)
 
-  def getPlayerDeck: Deck = playerDeck
   def getTradeDeck: Deck = tradeDeck
-  def getExplorerPile: Deck = explorerPile
-  def getDecks: Map[String, Deck] = {
-    Map(
-      "Personal Deck" -> playerDeck,
-      "Trade Deck" -> tradeDeck,
-      "Explorer Pile" -> explorerPile
-    )
-  }
-  def getHand: List[Card] = hand
   def getTradeRow: List[Card] = tradeRow
-  def getDiscardPile: List[Card] = discardPile
+  def getExplorerPile: Deck = explorerPile
 
-  def setDeck(newDeck: List[Card]): Unit = { deck = newDeck; notifyObservers() }
-  def setHand(newHand: List[Card]): Unit = { hand = newHand; notifyObservers() }
-  def setTradeRow(newTradeRow: List[Card]): Unit = { tradeRow = newTradeRow; notifyObservers() }
-  def resetDiscardPile(): Unit = { discardPile = List(); notifyObservers() }
-
-
+  // Karten ziehen für aktuellen Spieler
   def drawCards(count: Int): List[Card] = {
-    val drawnCards = (1 to count).flatMap(_ => playerDeck.drawCard()).toList
-    hand = hand ++ drawnCards
+    val deck = playerDecks(currentPlayer)
+    val drawn = (1 to count).flatMap(_ => deck.drawCard()).toList
+    hands = hands.updated(currentPlayer, hands(currentPlayer) ++ drawn)
     notifyObservers()
-    drawnCards
+    drawn
   }
+
+  // Karte aus Hand spielen (vom aktuellen Spieler)
+  def playCard(card: Card): Unit = {
+    if (hands(currentPlayer).contains(card)) {
+      hands = hands.updated(currentPlayer, hands(currentPlayer).filterNot(_ == card))
+      discardPiles = discardPiles.updated(currentPlayer, card :: discardPiles(currentPlayer))
+      notifyObservers()
+    }
+  }
+
+  // Karte kaufen (vom aktuellen Spieler)
+  def buyCard(card: Card): Unit = {
+    if (tradeRow.contains(card)) {
+      tradeRow = tradeRow.filterNot(_ == card)
+      discardPiles = discardPiles.updated(currentPlayer, card :: discardPiles(currentPlayer))
+      notifyObservers()
+    }
+  }
+
+  // Trade Row auffüllen (gemeinsam)
   def replenishTradeRow(): Unit = {
     while (tradeRow.size < 5 && tradeDeck.getCards.nonEmpty) {
       tradeDeck.drawCard().foreach(card => tradeRow = tradeRow :+ card)
     }
     notifyObservers()
   }
-  def undoReplenish(card: Card): Unit = {
-    tradeRow = tradeRow.filterNot(_ => tradeDeck.getCards.contains(card))
-    notifyObservers()
-  }
-  def drawCard(): Option[Card] = {
-    val card = playerDeck.drawCard()
-    card.foreach(c => hand = c :: hand)
-    notifyObservers()
-    card
-  }
+
+  // Karte zurück ins Deck des aktuellen Spielers (für Undo)
   def returnCardToPlayerDeck(card: Card): Unit = {
-    playerDeck.addCard(card)
-    hand = hand.filterNot(_ == card)
-    discardPile = discardPile.filterNot(_ == card)
+    playerDecks(currentPlayer).addCard(card)
     notifyObservers()
   }
-  def playCard(card: Card): Unit = {
-    hand = removeCardFrom(hand, card)
-    discardPile = card :: discardPile
-    notifyObservers()
-  }
+
+  // Karte zurück auf die Hand des aktuellen Spielers (für Undo)
   def returnCardToHand(card: Card): Unit = {
-    discardPile = removeCardFrom(discardPile, card)
-    hand = card :: hand
+    hands = hands.updated(currentPlayer, card :: hands(currentPlayer))
     notifyObservers()
   }
-  def buyCard(card: Card): Unit = {
-    if (tradeRow.contains(card)) {
-      tradeRow = tradeRow.filterNot(_ == card)
-      discardPile = card :: discardPile
-      replenishTradeRow()
-      notifyObservers()
-    }
-  }
+
+  // Karte zurück in die Trade Row (für Undo)
   def returnCardToTradeRow(card: Card): Unit = {
     tradeRow = card :: tradeRow
-    discardPile = discardPile.filterNot(_ == card)
     notifyObservers()
   }
-  def endTurn(): Unit = {
-    discardPile = hand ++ discardPile
-    hand = List()
-    drawCards(5)
+
+  // Trade Row Änderung rückgängig machen (für Undo)
+  def undoReplenish(card: Card): Unit = {
+    tradeRow = tradeRow.filterNot(_ == card)
+    tradeDeck.addCard(card)
     notifyObservers()
   }
+
+  // Einen Zug rückgängig machen (für Undo)
   def undoEndTurn(): Unit = {
-    hand = discardPile.take(5)
-    discardPile = discardPile.drop(5)
-    notifyObservers()
   }
+
+  // Spiel zurücksetzen
   def resetGame(): Unit = {
     initializeDecks(decksByRole)
-    hand = List()
-    discardPile = List()
-    tradeRow = List()
-    drawCards(5)
-    replenishTradeRow()
     notifyObservers()
   }
 
   def undoResetGame(): Unit = {
-    // Logic to undo reset game
+    // Optional: Vorherigen Zustand wiederherstellen, falls du das möchtest
+  }
+
+  // Eine Karte ziehen (vom aktuellen Spieler)
+  def drawCard(): Option[Card] = {
+    val deck = playerDecks(currentPlayer)
+    val cardOpt = deck.drawCard()
+    cardOpt.foreach { card =>
+      hands = hands.updated(currentPlayer, hands(currentPlayer) :+ card)
+    }
+    notifyObservers()
+    cardOpt
+  }
+
+  // Zug beenden: Hand auf Ablagestapel, neue Karten ziehen, Spieler wechseln
+  def endTurn(): Unit = {
+    discardPiles = discardPiles.updated(currentPlayer, hands(currentPlayer) ++ discardPiles(currentPlayer))
+    hands = hands.updated(currentPlayer, List())
+    val tmp = currentPlayer
+    currentPlayer = opponent
+    opponent = tmp
+    drawCards(5)
     notifyObservers()
   }
 
-def getDeckState: String = {
-  def cardLine(card: Card): String = {
-    val name = card.cardName
-    val faction = card.faction.factionName
-    val typ = card.cardType.map(_.cardType).getOrElse("Unknown")
-    val cost = card match {
-      case c: FactionCard => c.cost.toString
-      case _ => "-"
-    }
-    val ability = card.primaryAbility.map(_.actions.map(_.description).mkString(", ")).getOrElse("-")
-    s"$name | $faction | $typ | Cost: $cost | Ability: $ability"
+  // Schaden an Gegner
+  def dealDamageToOpponent(amount: Int): Unit = {
+    opponent.takeDamage(amount)
+    notifyObservers()
   }
 
-  "PlayerDeck:\n" +
-    playerDeck.getExpandedCards.map(cardLine).mkString("\n") + "\n" +
-  "Hand:\n" +
-    hand.zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n" +
-  "Discard Pile:\n" +
-    discardPile.map(cardLine).mkString("\n") + "\n" +
-  "TradeRow:\n" +
-    tradeRow.map(cardLine).mkString("\n") + "\n" +
-  "TradeDeck:\n" +
-    tradeDeck.getExpandedCards.map(cardLine).mkString("\n") + "\n"
+  // Beispiel für DeckState-Ausgabe
+  def getDeckState: String = {
+    def cardLine(card: Card): String = {
+      val name = card.cardName
+      val faction = card.faction.factionName
+      val typ = card.cardType.map(_.cardType).getOrElse("Unknown")
+      val cost = card match {
+        case c: FactionCard => c.cost.toString
+        case _ => "-"
+      }
+      val ability = card.primaryAbility.map(_.actions.map(_.description).mkString(", ")).getOrElse("-")
+      s"$name | $faction | $typ | Cost: $cost | Ability: $ability"
+    }
+
+    s"Active Player: $currentPlayer\nOpponent: $opponent\n" +
+    "Hand:\n" +
+      hands(currentPlayer).zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n" +
+    "Discard Pile:\n" +
+      discardPiles(currentPlayer).map(cardLine).mkString("\n") + "\n" +
+    "TradeRow:\n" +
+      tradeRow.map(cardLine).mkString("\n") + "\n"
   }
 }

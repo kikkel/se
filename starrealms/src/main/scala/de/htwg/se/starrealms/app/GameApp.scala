@@ -19,7 +19,10 @@ object GameApp extends JFXApp3 {
     }
     println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
 
-    val gameState = new GameState(decksByRole)
+    val player1 = Player("Player 1")
+    val player2 = Player("Player 2")
+
+    val gameState = new GameState(decksByRole, player1, player2)
     val controller = new Controller(gameState)
     val commandHandler = new CommandHandler(controller)
 

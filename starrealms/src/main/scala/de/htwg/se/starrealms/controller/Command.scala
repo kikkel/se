@@ -89,14 +89,14 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
     tokens match {
       case Array("p", num) if num.forall(_.isDigit) =>
         val idx = num.toInt - 1
-        val hand = controller.gameState.getHand
+        val hand = controller.gameState.getHand(controller.gameState.getCurrentPlayer)
         if (idx >= 0 && idx < hand.size) {
           controller.undoManager.doMove(new PlayCardCommand(controller, hand(idx))); s"Played card: ${hand(idx).cardName}\n\n"
         } else { "Invalid card index.\n\n" }
       case Array("b", num) if num.forall(_.isDigit) =>
         val idx = num.toInt - 1
         val tradeRow = controller.gameState.getTradeRow
-        if (idx >= 0 && idx < tradeRow.size) { 
+        if (idx >= 0 && idx < tradeRow.size) {
           controller.undoManager.doMove(new BuyCardCommand(controller, tradeRow(idx))); s"Bought card: ${tradeRow(idx).cardName}\n\n"
         } else { "Invalid card index." }
       case Array("p") => "Enter the number of the card you want to play (e.g. 'p 2').\n\n"
