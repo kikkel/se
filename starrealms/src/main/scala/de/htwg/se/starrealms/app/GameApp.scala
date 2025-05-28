@@ -26,6 +26,8 @@ class GameApp(inputProvider: () => String, output: String => Unit = println) {
 
     output("\n\nGame exited. Goodbye! #main\n\n")
   }
+
 }
+
 
 

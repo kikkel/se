@@ -13,30 +13,34 @@ class GameState(decksByRole: Map[String, Deck]) extends Observable {
 
   initializeDecks(decksByRole)
 
+
   private def initializeDecks(decks: Map[String, Deck]): Unit = {
-    // Alle Karten aus dem Personal Deck holen und gemäß qty vervielfachen
+    // Personal Deck vorbereiten
     val allPersonal = decks.getOrElse("Personal Deck", new Deck()).getCards
     val expandedPersonal = allPersonal.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
 
-    // 8 Scouts und 2 Vipers auswählen
     val scouts = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
     val vipers = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
     val playerCards = scala.util.Random.shuffle(scouts ++ vipers)
 
     playerDeck = new Deck()
     playerDeck.setName("Personal Deck")
-    // Map[Card, Int] aus der Liste erzeugen:
-    val playerCardMap = playerCards.groupBy(identity).view.mapValues(_.size).toMap
-    playerDeck.setCards(playerCardMap)
+    playerDeck.setCardStack(playerCards) // <-- Reihenfolge bleibt erhalten!
 
-    tradeDeck = decks.getOrElse("Trade Deck", new Deck())
-    tradeDeck.shuffle()
+    // Trade Deck vorbereiten
+    val allTrade = decks.getOrElse("Trade Deck", new Deck()).getCards
+    val expandedTrade = allTrade.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
+    val shuffledTrade = scala.util.Random.shuffle(expandedTrade)
 
+    tradeDeck = new Deck()
+    tradeDeck.setName("Trade Deck")
+    tradeDeck.setCardStack(shuffledTrade) // <-- Reihenfolge bleibt erhalten!
+
+    // Explorer Pile bleibt wie gehabt
     explorerPile = decks.getOrElse("Explorer Pile", new Deck())
 
     notifyObservers()
   }
-
 
 
   def removeCardFrom(cards: List[Card], card: Card): List[Card] = {
