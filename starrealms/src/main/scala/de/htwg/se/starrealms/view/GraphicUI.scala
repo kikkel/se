@@ -4,7 +4,10 @@ import de.htwg.se.starrealms.controller.{Controller, CommandHandler}
 import de.htwg.util.Observer
 import scala.swing._
 import scala.swing.event._
-import javax.swing.BorderFactory
+import javax.imageio.ImageIO
+import java.io.File
+import java.awt.Color
+import java.awt.Font
 
 class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame with Reactor with Observer {
     title = "Star Realms"
@@ -12,8 +15,11 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame wi
 
     private val commandHandler = new CommandHandler(controller)
 
+
     // UI Components
     private val statusLabel = new Label("Welcome to Star Realms!")
+    statusLabel.foreground = Color.WHITE
+    statusLabel.font = new Font(statusLabel.font.getName, Font.BOLD, 24)
     private val inputField = new TextField(20)
     private val outputArea = new TextArea(10, 40) {
         editable = false
@@ -21,26 +27,50 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame wi
         wordWrap = true
     }
 
-    val startButton = new Button("Start Game")
-    val replenishButton = new Button("replenish Trade Row")
-    val resetButton = new Button("reset Game")
-    val exitButton = new Button("Exit Game")
+    val ashPurple = new Color(75, 60, 90)
+
+    outputArea.background = ashPurple
+    outputArea.foreground = Color.WHITE
+    outputArea.border = Swing.EmptyBorder(10)
+
+    val ashBlue = new Color(80, 110, 140)
+
+    val startButton = new Button("Start Game") {
+        background = ashPurple
+        foreground = ashBlue
+        opaque = true
+    }
+    val replenishButton = new Button("replenish Trade Row") {
+        background = ashPurple
+        foreground = ashBlue
+        opaque = true
+    }
+    val resetButton = new Button("reset Game") {
+        background = ashPurple
+        foreground = ashBlue
+        opaque = true
+    }
+    val exitButton = new Button("Exit Game") {
+        background = ashPurple
+        foreground = ashBlue
+        opaque = true
+    }
+
 
     val controlPanel = new BoxPanel(Orientation.Horizontal) {
-    border = BorderFactory.createTitledBorder("Actions")
-    contents += inputField
-    contents += startButton
-    contents += replenishButton
-    contents += resetButton
-    contents += exitButton
-    contents += inputField
-  }
+        contents += inputField
+        contents += startButton
+        contents += replenishButton
+        contents += resetButton
+        contents += exitButton
+        background = ashPurple
+        opaque = true
+    }
 
-    // Layout
-    contents = new BorderPanel {
+    val contentPanel = new BorderPanel {
+        opaque = false
         layout(statusLabel) = BorderPanel.Position.North
-        layout(outputArea) = BorderPanel.Position.Center
-        //layout(inputField) = BorderPanel.Position.South
+        layout(new ScrollPane(outputArea)) = BorderPanel.Position.Center
         layout(controlPanel) = BorderPanel.Position.South
 
         listenTo(inputField.keys)
@@ -49,6 +79,16 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame wi
         }
     }
 
+    val backgroundPanel = new BorderPanel {
+    background = ashPurple
+    opaque = true
+
+    layout(statusLabel) = BorderPanel.Position.North
+    layout(new ScrollPane(outputArea)) = BorderPanel.Position.Center
+    layout(controlPanel) = BorderPanel.Position.South
+    }
+
+    contents = backgroundPanel
     // Observer registrieren
     controller.addObserver(this)
 
@@ -56,29 +96,28 @@ class GraphicUI(controller: Controller, onExit: () => Unit) extends MainFrame wi
         val inputText = inputField.text.trim
         inputField.text = ""
         inputText match {
-            case "x" =>
+        case "x" =>
             onExit()
             close()
-            case "s" | "t" | "r" | "e" | "z" | "y" | "show" =>
+        case "s" | "t" | "r" | "e" | "z" | "y" | "show" =>
             outputArea.append(s"> $inputText\n")
             val result = commandHandler.processCommand(inputText)
             outputArea.append(result + "\n")
-            case p if p.matches("""p \d+""") =>
+        case p if p.matches("""p \d+""") =>
             outputArea.append(s"> $inputText\n")
             val result = commandHandler.processCommand(inputText)
             outputArea.append(result + "\n")
-            case b if b.matches("""b \d+""") =>
+        case b if b.matches("""b \d+""") =>
             outputArea.append(s"> $inputText\n")
             val result = commandHandler.processCommand(inputText)
             outputArea.append(result + "\n")
-            case other if other.nonEmpty =>
+        case other if other.nonEmpty =>
             outputArea.append(s"> $inputText\n")
             outputArea.append("Ungültiger Befehl!\n")
-            case _ =>
+        case _ =>
         }
     }
 
-    // Observer-Methode: Wird bei jedem Controller-Update aufgerufen
     override def update: Unit = {
         outputArea.append("\n" + controller.getState + "\n")
     }
