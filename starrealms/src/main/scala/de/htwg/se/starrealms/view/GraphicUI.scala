@@ -11,7 +11,6 @@ import scalafx.scene.text.Font
 import scalafx.stage.Stage
 
 class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage with Observer {
-    
 
     title = "Star Realms"
     width = 800
@@ -74,9 +73,8 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
             center = outputArea
             bottom = controlPanel
         }
-        stylesheets.add("style.css") 
+        stylesheets.add("style.css")
     }
-
 
     private def processCommand(command: String): Unit = {
         outputArea.appendText(s"> $command\n")
@@ -86,11 +84,13 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
 
     override def update: Unit = {
         outputArea.appendText("\n" + processor.getState + "\n")
+
     }
 
     def run(): Unit = {
         show()
         outputArea.appendText("Welcome to Star Realms!\n")
         outputArea.appendText(processor.getState + "\n")
+
     }
 }
