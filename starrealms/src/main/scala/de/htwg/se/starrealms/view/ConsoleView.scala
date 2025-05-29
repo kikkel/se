@@ -4,7 +4,7 @@ import de.htwg.util.Observer
 import de.htwg.se.starrealms.controller.CommandProcessor
 
 class ConsoleView(processor: CommandProcessor) extends Observer {
-
+  
   private var inPlayPhase = false
 
   def render(): String = {

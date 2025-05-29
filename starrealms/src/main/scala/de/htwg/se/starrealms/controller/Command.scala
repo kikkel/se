@@ -10,7 +10,7 @@ trait Command {
   def redoMove: Unit = doMove
 }
 
-trait CommandProcessor { def processCommand(input: String): String } //Strategy
+trait CommandProcessor { def processCommand(input: String): String; def getState: String } //Strategy
 
 class UndoManager {
   private var undoStack: List[Command] = Nil
@@ -84,6 +84,7 @@ class InvalidCommand(input: String) extends Command {
   override def doMove: Unit = println(s"Invalid command: $input"); override def undoMove: Unit = {} }
 
 class CommandHandler(controller: Controller) extends CommandProcessor {
+  override def getState: String = controller.getState
   override def processCommand(input: String): String = {
     val tokens = input.trim.toLowerCase.split("\\s+")
     tokens match {
