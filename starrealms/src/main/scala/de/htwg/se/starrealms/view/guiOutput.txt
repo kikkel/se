@@ -71,7 +71,7 @@ Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
 Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
 Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
 
--------------------------------------------#7 y
+-------------------------------------------# y
 Active Player: Player 1 (Leben: 50)
 Opponent: Player 2 (Leben: 50)
 Hand:
@@ -103,7 +103,7 @@ Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
 Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
 Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
 
--------------------------------------------#8 y
+-------------------------------------------# y
 Active Player: Player 1 (Leben: 50)
 Opponent: Player 2 (Leben: 50)
 Hand:
@@ -126,7 +126,7 @@ Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
 Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
 Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
 
-
+-------------------------------------------#10 e
 Active Player: Player 2 (Leben: 50)
 Opponent: Player 2 (Leben: 50)
 Hand:
@@ -140,7 +140,7 @@ Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
 Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
 Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
 
-
+-------------------------------------------#11 p 3
 Active Player: Player 2 (Leben: 50)
 Opponent: Player 1 (Leben: 50)
 Hand:
@@ -154,25 +154,7 @@ Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
 Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
 Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
 
-
-Active Player: Player 2 (Leben: 50)
-Opponent: Player 1 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-
+-------------------------------------------#12 z
 Active Player: Player 2 (Leben: 50)
 Opponent: Player 1 (Leben: 50)
 Hand:
@@ -208,7 +190,7 @@ Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
 Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
 Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
 
-
+-------------------------------------------#12 z
 Active Player: Player 2 (Leben: 50)
 Opponent: Player 1 (Leben: 50)
 Hand:
@@ -227,6 +209,24 @@ Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
 Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
 
 
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+
+TradeRow:
+Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+
+-------------------------------------------#13 e
 Active Player: Player 2 (Leben: 50)
 Opponent: Player 1 (Leben: 50)
 Hand:
@@ -266,4 +266,274 @@ Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
 Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
 Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
 Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+----------------------------------------------------------------------------
+gui
+----------------------------------------------------------------------------
+-------------------------------------------#1 b 1
+> b 1
 
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+
+Bought card: Recycling Station
+
+
+-------------------------------------------#2 z
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+
+TradeRow:
+Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+
+-------------------------------------------#3 y
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+----------------------------------------------------------------------------
+gui
+----------------------------------------------------------------------------
+-------------------------------------------#1 r
+> r
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
+
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
+
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
+
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
+
+Game reset.
+
+
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
+
+-------------------------------------------#3 y
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
+
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
+
+-------------------------------------------????????????????????
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
+
+
+Active Player: Player 2 (Leben: 50)
+Opponent: Player 1 (Leben: 50)
+Hand:
+1: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
+2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
+Discard Pile:
+
+TradeRow:
+Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
+Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
+Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
+Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
