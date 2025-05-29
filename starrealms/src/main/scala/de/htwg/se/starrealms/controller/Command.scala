@@ -1,7 +1,10 @@
 package de.htwg.se.starrealms.controller
 
 import de.htwg.se.starrealms.model._
-import de.htwg.util.Observable
+import scala.swing.Publisher
+import scala.swing.event.Event
+
+class UpdateEvent extends Event
 
 
 trait Command {
@@ -87,43 +90,53 @@ class ShowHandCommand(controller: Controller) extends Command {
 class InvalidCommand(input: String) extends Command {
   override def doMove: Unit = println(s"Invalid command: $input"); override def undoMove: Unit = {} }
 
-class CommandHandler(controller: Controller) extends CommandProcessor {
-  override def getState: String = controller.getState
-  override def processCommand(input: String): String = {
-    val tokens = input.trim.toLowerCase.split("\\s+")
-    tokens match {
-      case Array("p", num) if num.forall(_.isDigit) =>
-        val idx = num.toInt - 1
-        val hand = controller.gameState.getHand(controller.gameState.getCurrentPlayer)
-        if (idx >= 0 && idx < hand.size) {
-          controller.undoManager.doMove(new PlayCardCommand(controller, hand(idx))); s"Played card: ${hand(idx).cardName}\n\n"
-        } else { "Invalid card index.\n\n" }
-      case Array("b", num) if num.forall(_.isDigit) =>
-        val idx = num.toInt - 1
-        val tradeRow = controller.gameState.getTradeRow
-        if (idx >= 0 && idx < tradeRow.size) {
-          controller.undoManager.doMove(new BuyCardCommand(controller, tradeRow(idx))); s"Bought card: ${tradeRow(idx).cardName}\n\n"
-        } else { "Invalid card index." }
-      case Array("p") => "Enter the number of the card you want to play (e.g. 'p 2').\n\n"
-      case Array("b") => "Enter the number of the card you want to buy (e.g. 'b 3').\n\n"
-      case Array(cmd) => cmd match {
-        case "s" => controller.undoManager.doMove(new DrawCardsCommand(controller, 5))
-          "Turn started.\n\n"
-        case "t" => controller.undoManager.doMove(new ReplenishTradeRowCommand(controller))
-          "Trade row replenished.\n\n"
-        case "e" => controller.undoManager.doMove(new EndTurnCommand(controller))
-          "Turn ended.\n\n"
-        case "r" => controller.undoManager.doMove(new ResetGameCommand(controller))
-          "Game reset.\n\n"
-        case "z" => controller.undoManager.undoMove; "Undo performed.\n\n"
-        case "y" => controller.undoManager.redoMove; "Redo performed.\n\n"
-        case "show hand" => controller.gameState.getHandState
-        case "show discard" => controller.gameState.getDiscardPileState
-        case "show trade" => controller.gameState.getTradeRowState
-        case "show turn" => controller.gameState.getDeckState
+class CommandHandler(controller: Controller) extends CommandProcessor with Publisher {
+    override def getState: String = controller.getState
+    override def processCommand(input: String): String = {
+      val tokens = input.trim.toLowerCase.split("\\s+")
+      val result = tokens match {
+        case Array("p", num) if num.forall(_.isDigit) =>
+          val idx = num.toInt - 1
+          val hand = controller.gameState.getHand(controller.gameState.getCurrentPlayer)
+          if (idx >= 0 && idx < hand.size) {
+            controller.undoManager.doMove(new PlayCardCommand(controller, hand(idx))); s"Played card: ${hand(idx).cardName}\n\n"
+          } else { "Invalid card index.\n\n" }
+        case Array("b", num) if num.forall(_.isDigit) =>
+          val idx = num.toInt - 1
+          val tradeRow = controller.gameState.getTradeRow
+          if (idx >= 0 && idx < tradeRow.size) {
+            controller.undoManager.doMove(new BuyCardCommand(controller, tradeRow(idx))); s"Bought card: ${tradeRow(idx).cardName}\n\n"
+          } else { "Invalid card index." }
+        case Array("p") => "Enter the number of the card you want to play (e.g. 'p 2').\n\n"
+        case Array("b") => "Enter the number of the card you want to buy (e.g. 'b 3').\n\n"
+        case Array("show", "players") => controller.gameState.player1.name + ", " + controller.gameState.player2.name
+        case Array("show", "current") => controller.gameState.getCurrentPlayer.name
+        case Array("show", "hand")    => controller.gameState.getHandState
+        case Array("show", "discard") => controller.gameState.getDiscardPileState
+        case Array("show", "trade")   => controller.gameState.getTradeRowState
+        case Array("show", "turn")    => controller.gameState.getDeckState
+        case Array(cmd) => cmd match {
+          case "s" => controller.undoManager.doMove(new DrawCardsCommand(controller, 5))
+            "Turn started.\n\n"
+          case "t" => controller.undoManager.doMove(new ReplenishTradeRowCommand(controller))
+            "Trade row replenished.\n\n"
+          case "e" => controller.undoManager.doMove(new EndTurnCommand(controller))
+            "Turn ended.\n\n"
+          case "r" => controller.undoManager.doMove(new ResetGameCommand(controller))
+            "Game reset.\n\n"
+          case "z" => controller.undoManager.undoMove; "Undo performed.\n\n"
+          case "y" => controller.undoManager.redoMove; "Redo performed.\n\n"
+          case "show hand"    => controller.gameState.getHandState
+          case "show discard" => controller.gameState.getDiscardPileState
+          case "show trade"   => controller.gameState.getTradeRowState
+          case "show turn"    => controller.gameState.getDeckState
+          case _ => "Unknown command.\n\n"
+        }
         case _ => "Unknown command.\n\n"
       }
-      case _ => "Unknown command.\n\n"
+      if (!input.trim.toLowerCase.startsWith("show")) {
+      publish(new UpdateEvent)
     }
+    result
   }
 }

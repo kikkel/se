@@ -1,16 +1,30 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.controller.CommandProcessor
-import de.htwg.util.Observer
+import scala.swing.Reactor
+import de.htwg.se.starrealms.controller.{CommandProcessor, UpdateEvent}
 import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.control.{Button, Label, TextArea, TextField}
 import scalafx.scene.layout.{BorderPane, HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Font
+import scalafx.stage.Stage
+import scala.swing.Publisher
 
-class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Observer {
+class GraphicUI(processor: CommandProcessor with Publisher, onExit: () => Unit) extends Stage with Reactor {
 
+    title = "Star Realms"
+    width = 800
+    height = 600
+
+    listenTo(processor)
+
+    reactions += {
+      case _: UpdateEvent =>
+        Platform.runLater {
+          outputArea.appendText("\n" + processor.getState + "\n")
+        }
+    }
 
     // UI Components
     private val statusLabel = new Label("Welcome to Star Realms!") {
@@ -32,7 +46,6 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Observe
     private val outputArea = new TextArea {
         editable = false
         wrapText = true
-
     }
     private val playingField = new TextArea {
         editable = false
@@ -99,9 +112,7 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Observe
     }
 
     private def processCommand(command: String): Unit = {
-        //outputArea.appendText(s"> $command\n")
         val result = processor.processCommand(command)
-        //define textarea depending on command
         command match {
             case "t" => tradeRow.text = result
             case "s" => playingField.text = result
@@ -116,14 +127,8 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Observe
         outputArea.text = state
     }
 
-    override def update: Unit = {
-        outputArea.appendText("\n" + processor.getState + "\n")
-
-    }
-
     def run(): Unit = {
         outputArea.appendText("Welcome to Star Realms!\n")
         outputArea.appendText(processor.getState + "\n")
-
     }
 }

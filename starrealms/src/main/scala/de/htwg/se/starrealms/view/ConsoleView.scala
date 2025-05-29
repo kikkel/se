@@ -1,32 +1,45 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.util.Observer
-import de.htwg.se.starrealms.controller.CommandProcessor
+import scala.swing.Reactor
+import de.htwg.se.starrealms.controller.{CommandProcessor, UpdateEvent}
+import scala.swing.Publisher
 
-class ConsoleView(processor: CommandProcessor) extends Observer {
-  
+class ConsoleView(processor: CommandProcessor with Publisher) extends Reactor {
+
   private var inPlayPhase = false
 
-  def render(): String = {
-  val sb = new StringBuilder
-  sb.append("\n\n")
-  sb.append(processor.processCommand("show")).append("\n")
-  if (!inPlayPhase) {
-    sb.append("Enter 't' to start game\n")
-    sb.append("Enter 's' to start your turn\n")
-    sb.append("Enter 'x' to exit the game\n\n")
-  } else {
-    sb.append("Its your turn!\n")
-    sb.append("Enter 'p <number>' to play a card from your hand\n")
-    sb.append("Enter 'b <number>' to buy a card from the trade row\n")
-    sb.append("Enter 'e' to end your turn\n")
-    sb.append("Enter 'z' to undo the last action\n")
-    sb.append("Enter 'y' to redo the last undone action\n")
-    sb.append("Enter 'r' to reset the game\n")
-    sb.append("Enter 'x' to exit the game\n")
+  listenTo(processor)
+
+  reactions += {
+    case _: UpdateEvent => println(render())
   }
-  sb.toString()
-}
+
+  def render(): String = {
+    val sb = new StringBuilder
+    sb.append("\n\n")
+    // Spielerinfos ausgeben
+    sb.append("Players: ")
+    sb.append(processor.processCommand("show players")).append("\n")
+    sb.append("Current Player: ")
+    sb.append(processor.processCommand("show current")).append("\n\n")
+    sb.append("Hand: ").append(processor.processCommand("show hand")).append("\n")
+    sb.append("Trade Row: ").append(processor.processCommand("show trade")).append("\n")
+    sb.append("Discard: ").append(processor.processCommand("show discard")).append("\n")
+    if (!inPlayPhase) {
+      sb.append("Enter 's' to start your turn\n")
+      sb.append("Enter 't' to replenish the trade row\n")
+      sb.append("Enter 'x' to exit the game\n\n")
+    } else {
+      sb.append("Its your turn!\n")
+      sb.append("Enter 'p <number>' to play a card from your hand\n")
+      sb.append("Enter 'b <number>' to buy a card from the trade row\n")
+      sb.append("Enter 'e' to end your turn\n")
+      sb.append("Enter 'z' to undo the last action\n")
+      sb.append("Enter 'y' to redo the last undone action\n")
+      sb.append("Enter 'x' to exit the game\n")
+    }
+    sb.toString()
+  }
 
   def processInput(input: String): Boolean = {
     if (!inPlayPhase) {
@@ -81,8 +94,5 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
           true
       }
     }
-  }
-  override def update: Unit = {
-    render()
   }
 }

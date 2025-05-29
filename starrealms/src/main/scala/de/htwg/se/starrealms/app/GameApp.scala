@@ -46,8 +46,5 @@ object GameApp extends JFXApp3 {
       System.exit(0)
     }).start()
 
-    controller.gameLogic.gameState.addObserver(gui)
-    controller.gameLogic.gameState.addObserver(view)
-
   }
 }
