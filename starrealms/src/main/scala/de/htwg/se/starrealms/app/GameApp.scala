@@ -23,7 +23,8 @@ object GameApp extends JFXApp3 {
     val player2 = Player("Player 2")
 
     val gameState = new GameState(decksByRole, player1, player2)
-    val controller = new Controller(gameState)
+    val gameLogic = new GameLogic(gameState)
+    val controller = new Controller(gameLogic)
     val commandHandler = new CommandHandler(controller)
     val view = new ConsoleView(commandHandler)
     val gui = new GraphicUI(commandHandler, () => running = false)
@@ -41,8 +42,8 @@ object GameApp extends JFXApp3 {
 
     gui.show()
 
-    controller.gameState.addObserver(gui)
-    controller.gameState.addObserver(view)
+    controller.gameLogic.gameState.addObserver(gui)
+    controller.gameLogic.gameState.addObserver(view)
 
   }
 }

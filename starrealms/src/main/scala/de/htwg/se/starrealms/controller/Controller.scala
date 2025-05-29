@@ -3,7 +3,8 @@ package de.htwg.se.starrealms.controller
 import de.htwg.se.starrealms.model._
 import de.htwg.util.Observable
 
-class Controller(val gameState: GameState) extends Observable {
+class Controller(val gameLogic: GameLogic) extends Observable {
+  val gameState: GameState = gameLogic.gameState
   val undoManager: UndoManager = new UndoManager()
 
   def drawCards(count: Int): Unit = { val command = new DrawCardsCommand(this, count); undoManager.doMove(command); notifyObservers() }
@@ -11,12 +12,12 @@ class Controller(val gameState: GameState) extends Observable {
   def drawCard(): Unit = { val command = new DrawCardCommand(this); undoManager.doMove(command); notifyObservers() }
   def playCard(card: Card): Unit = { val command = new PlayCardCommand(this, card); undoManager.doMove(command); notifyObservers() }
   def buyCard(card: Card): Unit = { val command = new BuyCardCommand(this, card); undoManager.doMove(command); notifyObservers() }
-  def endTurn(): Unit = { gameState.endTurn(); notifyObservers() }
+  def endTurn(): Unit = { gameLogic.endTurn(); notifyObservers() }
   def resetGame(): Unit = { val command = new ResetGameCommand(this); undoManager.doMove(command); notifyObservers() }
   def undo(): Unit = { undoManager.undoMove; notifyObservers() }
   def redo(): Unit = { undoManager.redoMove; notifyObservers() }
 
-  def dealDamageToOpponent(amount: Int): Unit = { gameState.dealDamageToOpponent(amount); notifyObservers() }
+  def dealDamageToOpponent(amount: Int): Unit = { gameLogic.dealDamageToOpponent(amount); notifyObservers() }
 
   def getCurrentPlayer: Player = gameState.getCurrentPlayer
   def getOpponent: Player = gameState.getOpponent

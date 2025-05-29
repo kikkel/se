@@ -39,11 +39,11 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
     }
 
     private val startButton = new Button("Start Game") {
-        onAction = _ => processCommand("s")
+        onAction = _ => processCommand("t")
     }
 
-    private val replenishButton = new Button("Replenish Trade Row") {
-        onAction = _ => processCommand("t")
+    private val replenishButton = new Button("Start turn") {
+        onAction = _ => processCommand("s")
     }
 
     private val resetButton = new Button("Reset Game") {
@@ -56,10 +56,20 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
             Platform.exit()
         }
     }
+    private val buyButton = new Button("Buy Card") {
+        onAction = _ => {
+            val input = inputField.text.value.trim
+            if (input.nonEmpty) {
+                processCommand(s"b $input")
+                inputField.text = ""
+            }
+            processCommand("t")
+        }
+    }
 
     private val controlPanel = new HBox {
         spacing = 10
-        children = Seq(inputField, startButton, replenishButton, resetButton, exitButton)
+        children = Seq(inputField, startButton, replenishButton, buyButton, resetButton, exitButton)
     }
 
     private val contentPanel = new VBox {

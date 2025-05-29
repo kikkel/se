@@ -3,34 +3,30 @@ package de.htwg.se.starrealms.model
 import de.htwg.util._
 
 class GameState(
-  decksByRole: Map[String, Deck],
+  val decksByRole: Map[String, Deck],
   val player1: Player,
   val player2: Player
 ) extends Observable {
   private var currentPlayer: Player = player1
   private var opponent: Player = player2
 
-  // Jeder Spieler hat eigenes Deck, Hand, Discard
   private var playerDecks: Map[Player, Deck] = Map()
   private var hands: Map[Player, List[Card]] = Map(player1 -> List(), player2 -> List())
   private var discardPiles: Map[Player, List[Card]] = Map(player1 -> List(), player2 -> List())
 
-  // Gemeinsame Bereiche
   private var tradeRow: List[Card] = List()
   private var tradeDeck: Deck = new Deck()
   private var explorerPile = new Deck()
 
   initializeDecks(decksByRole)
 
-  private def initializeDecks(decks: Map[String, Deck]): Unit = {
-    // Personal Deck vorbereiten (für beide Spieler)
+  def initializeDecks(decks: Map[String, Deck]): Unit = {
     val allPersonal = decks.getOrElse("Personal Deck", new Deck()).getCards
     val expandedPersonal = allPersonal.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     val scouts = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
     val vipers = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
     val playerCards = scala.util.Random.shuffle(scouts ++ vipers)
 
-    // Jeder Spieler bekommt ein eigenes Deck
     playerDecks = Map(
       player1 -> new Deck(),
       player2 -> new Deck()
@@ -40,7 +36,6 @@ class GameState(
     playerDecks(player1).setCardStack(scala.util.Random.shuffle(playerCards))
     playerDecks(player2).setCardStack(scala.util.Random.shuffle(playerCards))
 
-    // Trade Deck vorbereiten
     val allTrade = decks.getOrElse("Trade Deck", new Deck()).getCards
     val expandedTrade = allTrade.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     val shuffledTrade = scala.util.Random.shuffle(expandedTrade)
@@ -60,7 +55,6 @@ class GameState(
   def getCurrentPlayer: Player = currentPlayer
   def getOpponent: Player = opponent
 
-  // Zugriff auf Deck, Hand, Discard pro Spieler
   def getPlayerDeck(player: Player): Deck = playerDecks(player)
   def getHand(player: Player): List[Card] = hands(player)
   def getDiscardPile(player: Player): List[Card] = discardPiles(player)
@@ -69,109 +63,51 @@ class GameState(
   def getTradeRow: List[Card] = tradeRow
   def getExplorerPile: Deck = explorerPile
 
-  // Karten ziehen für aktuellen Spieler
-  def drawCards(count: Int): List[Card] = {
-    val deck = playerDecks(currentPlayer)
-    val drawn = (1 to count).flatMap(_ => deck.drawCard()).toList
-    hands = hands.updated(currentPlayer, hands(currentPlayer) ++ drawn)
-    notifyObservers()
-    drawn
-  }
-
-  // Karte aus Hand spielen (vom aktuellen Spieler)
-  def playCard(card: Card): Unit = {
-    if (hands(currentPlayer).contains(card)) {
-      hands = hands.updated(currentPlayer, hands(currentPlayer).filterNot(_ == card))
-      discardPiles = discardPiles.updated(currentPlayer, card :: discardPiles(currentPlayer))
-      notifyObservers()
-    }
-  }
-
-  // Karte kaufen (vom aktuellen Spieler)
-  def buyCard(card: Card): Unit = {
-    if (tradeRow.contains(card)) {
-      tradeRow = tradeRow.filterNot(_ == card)
-      discardPiles = discardPiles.updated(currentPlayer, card :: discardPiles(currentPlayer))
-      notifyObservers()
-    }
-  }
-
-  // Trade Row auffüllen (gemeinsam)
-  def replenishTradeRow(): Unit = {
-    while (tradeRow.size < 5 && tradeDeck.getCards.nonEmpty) {
-      tradeDeck.drawCard().foreach(card => tradeRow = tradeRow :+ card)
-    }
+  // Setters for state variables to be used by GameLogic.scala
+  def setCurrentPlayer(player: Player): Unit = {
+    currentPlayer = player
     notifyObservers()
   }
 
-  // Karte zurück ins Deck des aktuellen Spielers (für Undo)
-  def returnCardToPlayerDeck(card: Card): Unit = {
-    playerDecks(currentPlayer).addCard(card)
+  def setOpponent(player: Player): Unit = {
+    opponent = player
     notifyObservers()
   }
 
-  // Karte zurück auf die Hand des aktuellen Spielers (für Undo)
-  def returnCardToHand(card: Card): Unit = {
-    hands = hands.updated(currentPlayer, card :: hands(currentPlayer))
+  def setPlayerDeck(player: Player, deck: Deck): Unit = {
+    playerDecks = playerDecks.updated(player, deck)
     notifyObservers()
   }
 
-  // Karte zurück in die Trade Row (für Undo)
-  def returnCardToTradeRow(card: Card): Unit = {
-    tradeRow = card :: tradeRow
+  def setHand(player: Player, hand: List[Card]): Unit = {
+    hands = hands.updated(player, hand)
     notifyObservers()
   }
 
-  // Trade Row Änderung rückgängig machen (für Undo)
-  def undoReplenish(card: Card): Unit = {
-    tradeRow = tradeRow.filterNot(_ == card)
-    tradeDeck.addCard(card)
+  def setDiscardPile(player: Player, discard: List[Card]): Unit = {
+    discardPiles = discardPiles.updated(player, discard)
     notifyObservers()
   }
 
-  // Einen Zug rückgängig machen (für Undo)
-  def undoEndTurn(): Unit = {
-  }
-
-  // Spiel zurücksetzen
-  def resetGame(): Unit = {
-    initializeDecks(decksByRole)
+  def setTradeRow(row: List[Card]): Unit = {
+    tradeRow = row
     notifyObservers()
   }
 
-  def undoResetGame(): Unit = {
-    // Optional: Vorherigen Zustand wiederherstellen, falls du das möchtest
-  }
-
-  // Eine Karte ziehen (vom aktuellen Spieler)
-  def drawCard(): Option[Card] = {
-    val deck = playerDecks(currentPlayer)
-    val cardOpt = deck.drawCard()
-    cardOpt.foreach { card =>
-      hands = hands.updated(currentPlayer, hands(currentPlayer) :+ card)
-    }
-    notifyObservers()
-    cardOpt
-  }
-
-  // Zug beenden: Hand auf Ablagestapel, neue Karten ziehen, Spieler wechseln
-  def endTurn(): Unit = {
-    discardPiles = discardPiles.updated(currentPlayer, hands(currentPlayer) ++ discardPiles(currentPlayer))
-    hands = hands.updated(currentPlayer, List())
-    val tmp = currentPlayer
-    currentPlayer = opponent
-    opponent = tmp
-    drawCards(5)
+  def setTradeDeck(deck: Deck): Unit = {
+    tradeDeck = deck
     notifyObservers()
   }
 
-  // Schaden an Gegner
-  def dealDamageToOpponent(amount: Int): Unit = {
-    opponent.takeDamage(amount)
+  def setExplorerPile(deck: Deck): Unit = {
+    explorerPile = deck
     notifyObservers()
   }
 
-  // Beispiel für DeckState-Ausgabe
+  def notifyStateChange(): Unit = {
+    notifyObservers()
+  }
+
   def getDeckState: String = {
     def cardLine(card: Card): String = {
       val name = card.cardName
