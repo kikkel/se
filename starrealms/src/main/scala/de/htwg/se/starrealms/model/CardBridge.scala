@@ -7,6 +7,7 @@ import scala.util.{Try, Success, Failure}
 trait Card {
     val edition: Edition
     val cardName: String
+    def combat: Int = 0 // musste ich rein machen sonst errorrrrrr
     val primaryAbility: Option[Ability]
     val faction: Faction
     def cardType: Try[CardType]
@@ -58,7 +59,7 @@ case class DefaultCard(
     override val cardType: Try[CardType],
     override val qty: Int,
     override val role: String
-    
+
 
 ) extends Card {
     override def render(): String = {

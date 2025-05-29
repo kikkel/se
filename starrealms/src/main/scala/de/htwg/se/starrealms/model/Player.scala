@@ -5,17 +5,17 @@ import de.htwg.se.starrealms.model.Deck
 
 case class Player(
     name: String,
-    var life: Int = 50
+    var health: Int = 50
 ) {
     def takeDamage(amount: Int): Unit = {
-        life = math.max(0, life - amount)
+        health = math.max(0, health- amount)
     }
 
     def heal(amount: Int): Unit = {
-        life += amount
+        health += amount
     }
 
-    def isAlive: Boolean = life > 0
+    def isAlive: Boolean = health > 0
 
-    override def toString: String = s"$name (Leben: $life)"
+    override def toString: String = s"$name (Leben: $health)"
 }
