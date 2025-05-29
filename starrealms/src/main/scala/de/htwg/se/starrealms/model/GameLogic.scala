@@ -27,7 +27,6 @@ class GameLogic(val gameState: GameState) extends Observable {
   private val replenishStrategy = new TradeRowReplenishStrategy()
   private val startTurnStrategy = new StartTurnStrategy()
 
-  // --- Methods that encapsulate logic previously in GameState ---
   def drawCard(): Option[Card] = {
     val deck = gameState.getPlayerDeck(gameState.getCurrentPlayer)
     val cardOpt = deck.drawCard()

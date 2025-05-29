@@ -12,9 +12,8 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
   sb.append("\n\n")
   sb.append(processor.processCommand("show")).append("\n")
   if (!inPlayPhase) {
+    sb.append("Enter 't' to start game\n")
     sb.append("Enter 's' to start your turn\n")
-    sb.append("Enter 't' to replenish the trade row\n")
-    sb.append("Enter 'r' to reset the game\n")
     sb.append("Enter 'x' to exit the game\n\n")
   } else {
     sb.append("Its your turn!\n")
@@ -23,6 +22,7 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
     sb.append("Enter 'e' to end your turn\n")
     sb.append("Enter 'z' to undo the last action\n")
     sb.append("Enter 'y' to redo the last undone action\n")
+    sb.append("Enter 'r' to reset the game\n")
     sb.append("Enter 'x' to exit the game\n")
   }
   sb.toString()

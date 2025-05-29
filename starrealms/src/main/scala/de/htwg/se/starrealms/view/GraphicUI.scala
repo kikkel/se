@@ -8,13 +8,9 @@ import scalafx.scene.control.{Button, Label, TextArea, TextField}
 import scalafx.scene.layout.{BorderPane, HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Font
-import scalafx.stage.Stage
 
-class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage with Observer {
+class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Observer {
 
-    title = "Star Realms"
-    width = 800
-    height = 600
 
     // UI Components
     private val statusLabel = new Label("Welcome to Star Realms!") {
@@ -36,6 +32,22 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
     private val outputArea = new TextArea {
         editable = false
         wrapText = true
+
+    }
+    private val playingField = new TextArea {
+        editable = false
+        wrapText = true
+        text = "place cards here and view playable actions, count available coins, damage and health"
+    }
+    private val discardArea = new TextArea {
+        editable = false
+        wrapText = true
+        text = "place discard cards here"
+    }
+    private val tradeRow = new TextArea {
+        editable = false
+        wrapText = true
+        text = "place trade row cards here"
     }
 
     private val startButton = new Button("Start Game") {
@@ -72,24 +84,36 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
         children = Seq(inputField, startButton, replenishButton, buyButton, resetButton, exitButton)
     }
 
-    private val contentPanel = new VBox {
+    private val playPanel = new VBox {
         spacing = 10
-        children = Seq(statusLabel, outputArea, controlPanel)
+        children = Seq(tradeRow, playingField, discardArea, outputArea)
     }
 
-    scene = new Scene {
+    def buildScene: Scene = new Scene {
         root = new BorderPane {
             top = statusLabel
-            center = outputArea
+            center = playPanel
             bottom = controlPanel
         }
         stylesheets.add("style.css")
     }
 
     private def processCommand(command: String): Unit = {
-        outputArea.appendText(s"> $command\n")
+        //outputArea.appendText(s"> $command\n")
         val result = processor.processCommand(command)
-        outputArea.appendText(result + "\n")
+        //define textarea depending on command
+        command match {
+            case "t" => tradeRow.text = result
+            case "s" => playingField.text = result
+            case "b" => playingField.text = result
+            case "show trade" => tradeRow.text = result
+            case "show hand" => playingField.text = result
+            case "show discard" => discardArea.text = result
+            case "show turn" => outputArea.text = result
+            case _ => // Do nothing for other commands
+        }
+        val state = processor.getState
+        outputArea.text = state
     }
 
     override def update: Unit = {
@@ -98,7 +122,6 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
     }
 
     def run(): Unit = {
-        show()
         outputArea.appendText("Welcome to Star Realms!\n")
         outputArea.appendText(processor.getState + "\n")
 

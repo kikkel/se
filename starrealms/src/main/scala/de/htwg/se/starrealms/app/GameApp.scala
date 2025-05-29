@@ -29,6 +29,13 @@ object GameApp extends JFXApp3 {
     val view = new ConsoleView(commandHandler)
     val gui = new GraphicUI(commandHandler, () => running = false)
 
+    stage = new JFXApp3.PrimaryStage {
+      title = "Star Realms"
+      width = 800
+      height = 600
+      scene = gui.buildScene
+    }
+
     // TUI in separatem Thread starten
     new Thread(() => {
       while (running) {
@@ -38,9 +45,6 @@ object GameApp extends JFXApp3 {
       println("\n\nGame exited. Goodbye! #main\n\n")
       System.exit(0)
     }).start()
-
-
-    gui.show()
 
     controller.gameLogic.gameState.addObserver(gui)
     controller.gameLogic.gameState.addObserver(view)

@@ -79,7 +79,11 @@ class ResetGameCommand(controller: Controller) extends Command {
 
 class ShowDeckCommand(controller: Controller) extends Command {
   override def doMove: Unit = println(controller.gameState.getDeckState); override def undoMove: Unit = {} }
-
+class ShowTradeRowCommand(controller: Controller) extends Command {
+  override def doMove: Unit = println(controller.gameState.getTradeRow.map(_.cardName).mkString(", ")); override def undoMove: Unit = {} }
+class ShowHandCommand(controller: Controller) extends Command {
+  override def doMove: Unit = println(controller.gameState.getHand(controller.gameState.getCurrentPlayer).map(_.cardName).mkString(", "))
+  override def undoMove: Unit = {} }
 class InvalidCommand(input: String) extends Command {
   override def doMove: Unit = println(s"Invalid command: $input"); override def undoMove: Unit = {} }
 
@@ -113,7 +117,10 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
           "Game reset.\n\n"
         case "z" => controller.undoManager.undoMove; "Undo performed.\n\n"
         case "y" => controller.undoManager.redoMove; "Redo performed.\n\n"
-        case "show" => controller.getState
+        case "show hand" => controller.gameState.getHandState
+        case "show discard" => controller.gameState.getDiscardPileState
+        case "show trade" => controller.gameState.getTradeRowState
+        case "show turn" => controller.gameState.getDeckState
         case _ => "Unknown command.\n\n"
       }
       case _ => "Unknown command.\n\n"

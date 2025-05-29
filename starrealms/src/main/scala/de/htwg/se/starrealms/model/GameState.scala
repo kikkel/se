@@ -107,26 +107,23 @@ class GameState(
   def notifyStateChange(): Unit = {
     notifyObservers()
   }
-
-  def getDeckState: String = {
-    def cardLine(card: Card): String = {
-      val name = card.cardName
-      val faction = card.faction.factionName
-      val typ = card.cardType.map(_.cardType).getOrElse("Unknown")
-      val cost = card match {
-        case c: FactionCard => c.cost.toString
-        case _ => "-"
-      }
-      val ability = card.primaryAbility.map(_.actions.map(_.description).mkString(", ")).getOrElse("-")
-      s"$name | $faction | $typ | Cost: $cost | Ability: $ability"
+  
+  def cardLine(card: Card): String = {
+    val name = card.cardName
+    val faction = card.faction.factionName
+    val typ = card.cardType.map(_.cardType).getOrElse("Unknown")
+    val cost = card match {
+      case c: FactionCard => c.cost.toString
+      case _ => "-"
     }
-
-    s"Active Player: $currentPlayer\nOpponent: $opponent\n" +
-    "Hand:\n" +
-      hands(currentPlayer).zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n" +
-    "Discard Pile:\n" +
-      discardPiles(currentPlayer).map(cardLine).mkString("\n") + "\n" +
-    "TradeRow:\n" +
-      tradeRow.map(cardLine).mkString("\n") + "\n"
+    val ability = card.primaryAbility.map(_.actions.map(_.description).mkString(", ")).getOrElse("-")
+    s"$name | $faction | $typ | Cost: $cost | Ability: $ability"
+  }
+  def getHandState: String = "Hand:\n" + hands(currentPlayer).zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n"
+  def getDiscardPileState: String = "Discard Pile:\n" + discardPiles(currentPlayer).map(cardLine).mkString("\n") + "\n" 
+  def getTradeRowState: String = "TradeRow:\n" + tradeRow.map(cardLine).mkString("\n") + "\n"
+  
+  def getDeckState: String = {
+    s"Active Player: $currentPlayer\nOpponent: $opponent\n" 
   }
 }

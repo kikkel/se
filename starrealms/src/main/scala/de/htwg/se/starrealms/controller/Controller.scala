@@ -31,5 +31,9 @@ class Controller(val gameLogic: GameLogic) extends Observable {
   def getTradeRow: List[Card] = gameState.getTradeRow
   def getExplorerPile: Deck = gameState.getExplorerPile
 
-  def getState: String = gameState.getDeckState
+def getState: String =
+  gameState.getDeckState +
+  gameState.getHandState +
+  gameState.getTradeRowState +
+  gameState.getDiscardPileState
 }
