@@ -26,18 +26,11 @@ object GameApp extends JFXApp3 {
     val controller = new Controller(gameState)
     val commandHandler = new CommandHandler(controller)
 
-    // TUI in separatem Thread starten
-    new Thread(() => {
-      val view = new ConsoleView(commandHandler)
-      while (running) {
-        println(s"\n\n${view.render()}\n\nYour command:\n\n")
-        running = view.processInput(scala.io.StdIn.readLine())
-      }
-      println("\n\nGame exited. Goodbye! #main\n\n")
-      System.exit(0)
-    }).start()
+    val tui = new ConsoleView(commandHandler)
+    val gui = new GraphicUI(commandHandler, () => sys.exit())
 
-    val gui = new GraphicUI(controller, () => running = false)
-    gui.show()
+    // Beide UIs laufen parallel
+    new Thread(() => tui.run()).start()
+    gui.run()
   }
 }
