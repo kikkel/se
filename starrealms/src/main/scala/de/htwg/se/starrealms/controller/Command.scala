@@ -88,6 +88,9 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
   override def processCommand(input: String): String = {
     val tokens = input.trim.toLowerCase.split("\\s+")
     tokens match {
+      case Array("show", "health") =>
+        s"${controller.gameState.player1.name}: ${controller.gameState.player1.health} HP, " +
+        s"${controller.gameState.player2.name}: ${controller.gameState.player2.health} HP"
       case Array("p", num) if num.forall(_.isDigit) =>
         val idx = num.toInt - 1
         val hand = controller.gameState.getHand(controller.gameState.getCurrentPlayer)
@@ -107,8 +110,11 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
           "Turn started.\n\n"
         case "t" => controller.undoManager.doMove(new ReplenishTradeRowCommand(controller))
           "Trade row replenished.\n\n"
-        case "e" => controller.undoManager.doMove(new EndTurnCommand(controller))
-          "Turn ended.\n\n"
+        case "e" =>
+          controller.gameState.applyCombatDamage()
+          val result = controller.gameState.checkGameOver().getOrElse("Turn ended.\n\n")
+          controller.undoManager.doMove(new EndTurnCommand(controller))
+          result
         case "r" => controller.undoManager.doMove(new ResetGameCommand(controller))
           "Game reset.\n\n"
         case "z" => controller.undoManager.undoMove; "Undo performed.\n\n"

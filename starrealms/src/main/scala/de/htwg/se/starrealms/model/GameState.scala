@@ -75,6 +75,23 @@ class GameState(
     notifyObservers()
   }
 
+  def applyCombatDamage(): Unit = {
+    val current = getCurrentPlayer
+    val opponent = getOpponent
+    // Alle Karten, die im aktuellen Zug gespielt wurden und Combat > 0 haben
+    val playedCards = getDiscardPile(current).filter(_.combat > 0)
+    val totalDamage = playedCards.map(_.combat).sum
+    if (totalDamage > 0) {
+      opponent.takeDamage(totalDamage)
+    }
+  }
+
+  def checkGameOver(): Option[String] = {
+    if (player1.health <= 0) Some(s"${player2.name} won!")
+    else if (player2.health <= 0) Some(s"${player1.name} won!")
+    else None
+  }
+
   def setPlayerDeck(player: Player, deck: Deck): Unit = {
     playerDecks = playerDecks.updated(player, deck)
     notifyObservers()

@@ -10,7 +10,8 @@ class ConsoleView(processor: CommandProcessor, gameLogic: Observable) extends Ob
   def render(): String = {
   val sb = new StringBuilder
   sb.append("\n\n")
-  sb.append(processor.processCommand("show")).append("\n")
+  sb.append(s"${processor.processCommand("show players")}\n")
+  sb.append(s"${processor.processCommand("show health")}\n")
   if (!inPlayPhase) {
     sb.append("Enter 't' to start game\n")
     sb.append("Enter 's' to start your turn\n")
