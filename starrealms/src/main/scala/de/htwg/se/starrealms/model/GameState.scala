@@ -13,6 +13,7 @@ class GameState(
   private var playerDecks: Map[Player, Deck] = Map()
   private var hands: Map[Player, List[Card]] = Map(player1 -> List(), player2 -> List())
   private var discardPiles: Map[Player, List[Card]] = Map(player1 -> List(), player2 -> List())
+  private var lastDiscardedHands: Map[Player, List[Card]] = Map(player1 -> List(), player2 -> List())
 
   private var tradeRow: List[Card] = List()
   private var tradeDeck: Deck = new Deck()
@@ -45,9 +46,9 @@ class GameState(
 
     explorerPile = decks.getOrElse("Explorer Pile", new Deck())
 
-    // Hände und Discard leeren
     hands = Map(player1 -> List(), player2 -> List())
     discardPiles = Map(player1 -> List(), player2 -> List())
+    lastDiscardedHands = Map(player1 -> List(), player2 -> List())
 
     notifyObservers()
   }
@@ -58,12 +59,12 @@ class GameState(
   def getPlayerDeck(player: Player): Deck = playerDecks(player)
   def getHand(player: Player): List[Card] = hands(player)
   def getDiscardPile(player: Player): List[Card] = discardPiles(player)
+  def getLastDiscardedHand(player: Player): List[Card] = lastDiscardedHands(player)
 
   def getTradeDeck: Deck = tradeDeck
   def getTradeRow: List[Card] = tradeRow
   def getExplorerPile: Deck = explorerPile
 
-  // Setters for state variables to be used by GameLogic.scala
   def setCurrentPlayer(player: Player): Unit = {
     currentPlayer = player
     notifyObservers()
@@ -86,6 +87,10 @@ class GameState(
 
   def setDiscardPile(player: Player, discard: List[Card]): Unit = {
     discardPiles = discardPiles.updated(player, discard)
+    notifyObservers()
+  }
+  def setLastDiscardedHand(player: Player, hand: List[Card]): Unit = {
+    lastDiscardedHands = lastDiscardedHands.updated(player, hand)
     notifyObservers()
   }
 
@@ -123,10 +128,10 @@ class GameState(
 
     s"Active Player: $currentPlayer\nOpponent: $opponent\n" +
     "Hand:\n" +
-      hands(currentPlayer).zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n" +
+      hands(currentPlayer).zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n\n" +
     "Discard Pile:\n" +
-      discardPiles(currentPlayer).map(cardLine).mkString("\n") + "\n" +
+      discardPiles(currentPlayer).map(cardLine).mkString("\n") + "\n\n" +
     "TradeRow:\n" +
-      tradeRow.map(cardLine).mkString("\n") + "\n"
+      tradeRow.map(cardLine).mkString("\n") + "\n\n"
   }
 }

@@ -63,7 +63,6 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
                 processCommand(s"b $input")
                 inputField.text = ""
             }
-            processCommand("t")
         }
     }
 
@@ -93,7 +92,8 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
     }
 
     override def update: Unit = {
-        outputArea.appendText("\n" + processor.getState + "\n")
+        val state = processor.getState
+        outputArea.text = state
 
     }
 

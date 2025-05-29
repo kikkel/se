@@ -26,7 +26,7 @@ object GameApp extends JFXApp3 {
     val gameLogic = new GameLogic(gameState)
     val controller = new Controller(gameLogic)
     val commandHandler = new CommandHandler(controller)
-    val view = new ConsoleView(commandHandler)
+    val view = new ConsoleView(commandHandler, gameLogic)
     val gui = new GraphicUI(commandHandler, () => running = false)
 
     // TUI in separatem Thread starten

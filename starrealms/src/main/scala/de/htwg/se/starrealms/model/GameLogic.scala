@@ -79,6 +79,7 @@ class GameLogic(val gameState: GameState) extends Observable {
       val newDiscard = card :: gameState.getDiscardPile(gameState.getCurrentPlayer)
       gameState.setTradeRow(updatedTradeRow)
       gameState.setDiscardPile(gameState.getCurrentPlayer, newDiscard)
+      replenishTradeRow() 
     }
   }
   def returnCardToTradeRow(card: Card): Unit = {
@@ -107,28 +108,30 @@ class GameLogic(val gameState: GameState) extends Observable {
     gameState.setTradeRow(newTradeRow)
   }
 
+
   def endTurn(): Unit = {
     val current = gameState.getCurrentPlayer
-    val opp = gameState.getOpponent
     val discard = gameState.getDiscardPile(current)
-    val updatedDiscard = discard ++ gameState.getHand(current)
+    val discardedHand = gameState.getHand(current)
+    val updatedDiscard = discard ++ discardedHand
     gameState.setDiscardPile(current, updatedDiscard)
     gameState.setHand(current, List())
-    gameState.setCurrentPlayer(opp)
+    gameState.setLastDiscardedHand(current, discardedHand) // Store the last discarded hand for undo
+    val opponent = gameState.getOpponent
+    gameState.setCurrentPlayer(opponent)
     gameState.setOpponent(current)
-    drawCards(5)
   }
-  def undoEndTurn(): Unit = {
-    val current = gameState.getCurrentPlayer
-    val opp = gameState.getOpponent
-    val discard = gameState.getDiscardPile(opp)
-    val updatedDiscard = discard ++ gameState.getHand(opp)
-    gameState.setDiscardPile(opp, updatedDiscard)
-    gameState.setHand(opp, List())
-    gameState.setCurrentPlayer(current)
-    gameState.setOpponent(opp)
-    drawCards(5)
-  }
+
+    def undoEndTurn(): Unit = {
+      val previousPlayer = gameState.getOpponent
+      val current = gameState.getCurrentPlayer
+      val restoredHand = gameState.getLastDiscardedHand(previousPlayer)
+      val discard = gameState.getDiscardPile(previousPlayer).dropRight(restoredHand.size)
+      gameState.setCurrentPlayer(previousPlayer)
+      gameState.setOpponent(current)
+      gameState.setHand(previousPlayer, restoredHand)
+      gameState.setDiscardPile(previousPlayer, discard)
+    }
 
   def dealDamageToOpponent(amount: Int): Unit = {
     gameState.getOpponent.takeDamage(amount)
