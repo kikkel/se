@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.controller.CommandHandler
+import de.htwg.se.starrealms.controller.CommandProcessor
 import de.htwg.util.Observer
 import scalafx.application.Platform
 import scalafx.scene.Scene
@@ -10,7 +10,8 @@ import scalafx.scene.paint.Color
 import scalafx.scene.text.Font
 import scalafx.stage.Stage
 
-class GraphicUI(handler: CommandHandler, onExit: () => Unit) extends Stage with Observer {
+class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage with Observer {
+
     title = "Star Realms"
     width = 800
     height = 600
@@ -75,22 +76,21 @@ class GraphicUI(handler: CommandHandler, onExit: () => Unit) extends Stage with 
         stylesheets.add("style.css")
     }
 
-    // Observer-Registrierung am CommandHandler
-    handler.addObserver(this)
-
     private def processCommand(command: String): Unit = {
         outputArea.appendText(s"> $command\n")
-        val result = handler.processCommand(command)
+        val result = processor.processCommand(command)
         outputArea.appendText(result + "\n")
     }
 
     override def update: Unit = {
-        outputArea.appendText("\n" + handler.getState + "\n")
+        outputArea.appendText("\n" + processor.getState + "\n")
+
     }
 
     def run(): Unit = {
         show()
         outputArea.appendText("Welcome to Star Realms!\n")
-        outputArea.appendText(handler.getState + "\n")
+        outputArea.appendText(processor.getState + "\n")
+
     }
 }
