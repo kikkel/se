@@ -34,6 +34,7 @@ object GameApp extends JFXApp3 {
         running = view.processInput(scala.io.StdIn.readLine())
       }
       println("\n\nGame exited. Goodbye! #main\n\n")
+      System.exit(0)
     }).start()
 
     val gui = new GraphicUI(controller, () => running = false)
