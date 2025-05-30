@@ -1,17 +1,33 @@
 package de.htwg.se.starrealms.view
 
 import de.htwg.util.{Observer, Observable}
-import de.htwg.se.starrealms.controller.CommandProcessor
+import de.htwg.se.starrealms.controller.GameStateReadOnly
+import de.htwg.se.starrealms.model.Card
 
-class ConsoleView(processor: CommandProcessor, gameLogic: Observable) extends Observer {
+
+/*
+Use readOnlyState sparingly, and only for:
+	•	read-only visual rendering
+	•	shared UI components (TUI + GUI) that need direct game context
+example of how to use readOnlyState in ConsoleView:
+
+val hand = readOnlyState.getHand(readOnlyState.getCurrentPlayer)
+hand.foreach(card => println(card.cardName))
+ */
+
+
+class ConsoleView(processor: CommandAdapter, readOnlyState: GameStateReadOnly, gameLogic: Observable) extends Observer {
   gameLogic.addObserver(this)
   private var inPlayPhase = false
+
+  private val baseRenderer = new CardRenderer()
+  private val cardRenderer: Renderer[Card] = new LoggingDecorator(baseRenderer)
 
   def render(): String = {
   val sb = new StringBuilder
   sb.append("\n\n")
-  sb.append(s"${processor.processCommand("show players")}\n")
-  sb.append(s"${processor.processCommand("show health")}\n")
+  sb.append(s"${processor.handleInput("show players")}\n")
+  sb.append(s"${processor.handleInput("show health")}\n")
   if (!inPlayPhase) {
     sb.append("Enter 't' to start game\n")
     sb.append("Enter 's' to start your turn\n")
@@ -36,17 +52,17 @@ class ConsoleView(processor: CommandProcessor, gameLogic: Observable) extends Ob
           println("\n\nExiting the game... #ConsoleView")
           false
         case "s" =>
-          println(processor.processCommand("s"))
+          println(processor.handleInput("s"))
           inPlayPhase = true
           true
         case "z" =>
-          println(processor.processCommand("z"))
+          println(processor.handleInput("z"))
           true
         case "y" =>
-          println(processor.processCommand("y"))
+          println(processor.handleInput("y"))
           true
         case "t" =>
-          println(processor.processCommand("t"))
+          println(processor.handleInput("t"))
           true
         case _ =>
           println("Invalid command. Please try again.")
@@ -59,23 +75,23 @@ class ConsoleView(processor: CommandProcessor, gameLogic: Observable) extends Ob
           println("\n\nExiting the game... #ConsoleView")
           false
         case Array("e") =>
-          println(processor.processCommand("e"))
+          println(processor.handleInput("e"))
           inPlayPhase = false
           true
         case Array("z") =>
-          println(processor.processCommand("z"))
+          println(processor.handleInput("z"))
           true
         case Array("y") =>
-          println(processor.processCommand("y"))
+          println(processor.handleInput("y"))
           true
         case Array("p", num) if num.forall(_.isDigit) =>
-          println(processor.processCommand(s"p $num"))
+          println(processor.handleInput(s"p $num"))
           true
         case Array("b", num) if num.forall(_.isDigit) =>
-          println(processor.processCommand(s"b $num"))
+          println(processor.handleInput(s"b $num"))
           true
         case Array(num) if num.forall(_.isDigit) =>
-          println(processor.processCommand(s"p $num"))
+          println(processor.handleInput(s"p $num"))
           true
         case _ =>
           println("Invalid command. Please try again.")
@@ -84,6 +100,8 @@ class ConsoleView(processor: CommandProcessor, gameLogic: Observable) extends Ob
     }
   }
   override def update: Unit = {
+    val hand = readOnlyState.getHand(readOnlyState.getCurrentPlayer)
+    hand.foreach(card => println(cardRenderer.render(card))) 
     println(processor.getState)
   }
 }

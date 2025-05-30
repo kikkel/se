@@ -3,10 +3,6 @@ package de.htwg.se.starrealms.view
 import de.htwg.se.starrealms.model._
 import de.htwg.util._
 
-trait Renderer[T] { def render(entity: T): String }
-
-//class WelcomeRenderer extends Renderer
-
 class OptionsMenuRender extends Renderer[OptionsMenu] {
   override def render(menu: OptionsMenu): String = {
     val options = menu.getOptions.map(_.render()).mkString("\n")

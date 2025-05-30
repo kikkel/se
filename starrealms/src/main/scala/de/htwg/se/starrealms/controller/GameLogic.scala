@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.controller
 
 import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
@@ -6,8 +6,6 @@ import de.htwg.se.starrealms.model._
 
 
 //--------------------------------------------------------------------Strategy
-trait DrawStrategy { def draw(deck: Deck, count: Int): List[Card] }
-
 class StartTurnStrategy extends DrawStrategy {
   override def draw(deck: Deck, count: Int): List[Card] = {
     (1 to count).flatMap(_ => deck.drawCard()).toList
@@ -18,6 +16,11 @@ class TradeRowReplenishStrategy extends DrawStrategy {
     val cards = (1 to count).flatMap(_ => deck.drawCard()).toList
     println(s"Trade Row: ${cards.map(_.render()).mkString(", ")}")
     cards
+  }
+}
+class DefaultDrawStrategy extends DrawStrategy {
+  override def draw(deck: Deck, count: Int): List[Card] = {
+    (1 to count).flatMap(_ => deck.drawCard()).toList
   }
 }
 

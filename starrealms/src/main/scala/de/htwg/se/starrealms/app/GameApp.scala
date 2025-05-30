@@ -1,12 +1,13 @@
 package de.htwg.se.starrealms.app
 
-import de.htwg.se.starrealms.controller.Controller
-import de.htwg.se.starrealms.controller.CommandHandler
-import de.htwg.se.starrealms.model._
+import de.htwg.se.starrealms.controller.{Controller, GameLogic, GameStateProxy}
+import de.htwg.se.starrealms.model.{GameState, LoadCards, Player}
 import de.htwg.se.starrealms.view.{ConsoleView, GraphicUI}
 
 import scalafx.application.JFXApp3
 import scalafx.scene.Scene
+import de.htwg.se.starrealms.view.CommandProcessorAdapter
+import de.htwg.se.starrealms.controller.GameStateReadOnly
 
 object GameApp extends JFXApp3 {
   @volatile var running = true
@@ -25,9 +26,10 @@ object GameApp extends JFXApp3 {
     val gameState = new GameState(decksByRole, player1, player2)
     val gameLogic = new GameLogic(gameState)
     val controller = new Controller(gameLogic)
-    val commandHandler = new CommandHandler(controller)
-    val view = new ConsoleView(commandHandler, gameLogic)
-    val gui = new GraphicUI(commandHandler, () => running = false)
+    val commandAdapter = new CommandProcessorAdapter(controller)
+    val proxy: GameStateReadOnly = new GameStateProxy(gameState)
+    val view = new ConsoleView(commandAdapter, proxy, gameLogic)
+    val gui = new GraphicUI(commandAdapter, proxy, () => running = false)
 
     // TUI in separatem Thread starten
     new Thread(() => {

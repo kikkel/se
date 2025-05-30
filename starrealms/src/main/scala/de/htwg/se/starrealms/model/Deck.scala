@@ -2,6 +2,7 @@ package de.htwg.se.starrealms.model
 
 import scala.util.Random
 import org.scalactic.Fail
+import scala.util.Try
 
 
 class Deck {
@@ -66,56 +67,6 @@ class Deck {
     }
 }
 
-/* class Manual { } */
-
-
-trait Builder {
-    def reset(): Unit
-    def setName(name: String): Unit
-    def setCards(cards: Map[Card, Int]): Unit
-
-    def addCard(card: Card): Unit
-    def addCards(cards: List[Card]): Unit
-    def getProduct(): Deck
-
-}
-
-
-class DeckBuilder extends Builder {
-    private var deck: Deck = new Deck()
-
-    override def reset(): Unit = { deck = new Deck() }
-    override def setName(name: String): Unit = { deck.setName(name) }
-    override def setCards(newCards: Map[Card, Int]): Unit = {
-        deck.setCards(newCards)
-    }
-    override def addCards(cards: List[Card]): Unit = { cards.foreach(deck.addCard) }
-    override def addCard(card: Card): Unit = { deck.addCard(card) }
-
-    override def getProduct(): Deck = {
-        val product = deck
-        reset()
-        product
-    }
-
-}
-
-class Director {
-    def constructDecks(builder: Builder, decksByRole: Map[String, Deck]): Map[String, Deck] = {
-        decksByRole.map { case (role, deck) =>
-            builder.reset()
-            builder.setName(role)
-            builder.setCards(deck.getCards)
-            role -> builder.getProduct()
-        }
-    }
-/*     def constructTradeDeck(builder: Builder, decksByRole: Map[String, Deck]): Map[String, Deck] = {
-        builder.reset()
-        builder.setName(s"Trade Deck - $setName")
-        builder.setCards(cards)
-
-    } */
-}
 
 // Unlike other creational patterns, builder lets you construct
 // products that don't follow the common interface.
