@@ -1,19 +1,20 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.util.Observer
+import de.htwg.util.{Observer, Observable}
 import de.htwg.se.starrealms.controller.CommandProcessor
 
-class ConsoleView(processor: CommandProcessor) extends Observer {
-
+class ConsoleView(processor: CommandProcessor, gameLogic: Observable) extends Observer {
+  gameLogic.addObserver(this)
   private var inPlayPhase = false
 
   def render(): String = {
   val sb = new StringBuilder
   sb.append("\n\n")
-  sb.append(processor.processCommand("show")).append("\n")
+  sb.append(s"${processor.processCommand("show players")}\n")
+  sb.append(s"${processor.processCommand("show health")}\n")
   if (!inPlayPhase) {
+    sb.append("Enter 't' to start game\n")
     sb.append("Enter 's' to start your turn\n")
-    sb.append("Enter 't' to replenish the trade row\n")
     sb.append("Enter 'r' to reset the game\n")
     sb.append("Enter 'x' to exit the game\n\n")
   } else {
@@ -83,6 +84,6 @@ class ConsoleView(processor: CommandProcessor) extends Observer {
     }
   }
   override def update: Unit = {
-    render()
+    println(processor.getState)
   }
 }

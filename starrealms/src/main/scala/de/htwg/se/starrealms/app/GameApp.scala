@@ -1,33 +1,49 @@
 package de.htwg.se.starrealms.app
 
-import de.htwg.se.starrealms.controller._
+import de.htwg.se.starrealms.controller.Controller
+import de.htwg.se.starrealms.controller.CommandHandler
 import de.htwg.se.starrealms.model._
-import de.htwg.se.starrealms.view.ConsoleView
+import de.htwg.se.starrealms.view.{ConsoleView, GraphicUI}
 
-class GameApp(inputProvider: () => String, output: String => Unit = println) {
-  def run(): Unit = {
+import scalafx.application.JFXApp3
+import scalafx.scene.Scene
+
+object GameApp extends JFXApp3 {
+  @volatile var running = true
+
+  override def start(): Unit = {
     val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set")
     if (decksByRole.isEmpty) {
-      output("No decks found. Exiting the game.")
+      println("No decks found. Exiting the game.")
       return
     }
     println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
 
-    val gameState = new GameState(decksByRole)
-    val controller = new Controller(gameState)
+    val player1 = Player("Player 1")
+    val player2 = Player("Player 2")
+
+    val gameState = new GameState(decksByRole, player1, player2)
+    val gameLogic = new GameLogic(gameState)
+    val controller = new Controller(gameLogic)
     val commandHandler = new CommandHandler(controller)
-    val view = new ConsoleView(commandHandler)
+    val view = new ConsoleView(commandHandler, gameLogic)
+    val gui = new GraphicUI(commandHandler, () => running = false)
 
-    var running = true
-    while (running) {
-      output(s"\n\n${view.render()}\n\nYour command:\n\n")
-      running = view.processInput(inputProvider())
-    }
+    // TUI in separatem Thread starten
+    new Thread(() => {
+      while (running) {
+        println(s"\n\n${view.render()}\n\nYour command:\n\n")
+        running = view.processInput(scala.io.StdIn.readLine())
+      }
+      println("\n\nGame exited. Goodbye! #main\n\n")
+      System.exit(0)
+    }).start()
 
-    output("\n\nGame exited. Goodbye! #main\n\n")
+
+    gui.show()
+
+    controller.gameLogic.gameState.addObserver(gui)
+    controller.gameLogic.gameState.addObserver(view)
+
   }
-
 }
-
-
-
