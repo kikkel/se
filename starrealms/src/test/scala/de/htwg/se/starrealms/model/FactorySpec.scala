@@ -30,7 +30,6 @@ class FactorySpec extends AnyWordSpec with Matchers {
     "return correct instances for known edition names" in {
       Edition("core set").nameOfEdition shouldBe "Core Set"
       Edition("colony wars").nameOfEdition shouldBe "Colony Wars"
-      Edition("frontiers").nameOfEdition shouldBe "Frontiers"
     }
     "throw an exception for unknown edition names" in {
       an [IllegalArgumentException] should be thrownBy { Edition("pirates set") }

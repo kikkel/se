@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model
 
-trait Faction { 
+trait Faction {
     def factionName: String
     def matches(other: Faction): Boolean
     def render(): String = s"$factionName #factory"
@@ -37,14 +37,14 @@ object Faction {
 // val tradeFederation = Faction("trade federation")
 
 
-trait Edition { 
+trait Edition {
     def nameOfEdition: String
     def render(): String = s"$nameOfEdition #factory"
     //def apply()
 }
 
 private class CoreSet extends Edition { override def nameOfEdition: String = "Core Set" }
-private class HighAlertFirstStrike extends Edition { override def nameOfEdition: String = "High Alert: First Strike" }
+/* private class HighAlertFirstStrike extends Edition { override def nameOfEdition: String = "High Alert: First Strike" }
 private class HighAlertTech extends Edition { override def nameOfEdition: String = "High Alert: Tech" }
 private class HighAlertRequisition extends Edition { override def nameOfEdition: String = "High Alert: Requisition" }
 private class HighAlertInvasion extends Edition { override def nameOfEdition: String = "High Alert: Invasion" }
@@ -67,8 +67,9 @@ private class UnitedMissions extends Edition { override def nameOfEdition: Strin
 private class UnitedHeroes extends Edition { override def nameOfEdition: String = "United: Heroes" }
 private class UnitedCommand extends Edition { override def nameOfEdition: String = "United: Command" }
 private class UnitedAssault extends Edition { override def nameOfEdition: String = "United: Assault" }
+ */
 private class ColonyWars extends Edition { override def nameOfEdition: String = "Colony Wars" }
-private class CosmicGambit extends Edition { override def nameOfEdition: String = "Cosmic Gambit" }
+/* private class CosmicGambit extends Edition { override def nameOfEdition: String = "Cosmic Gambit" }
 private class CrisisHeroes extends Edition { override def nameOfEdition: String = "Crisis: Heroes" }
 private class CrisisFleetsAndFortresses extends Edition { override def nameOfEdition: String = "Crisis: Fleets and Fortresses" }
 private class CrisisEvents extends Edition { override def nameOfEdition: String = "Crisis: Events" }
@@ -80,11 +81,11 @@ private class PromosBattlecruiserStorageBox extends Edition { override def nameO
 private class PromosImperialFighterDeckBox extends Edition { override def nameOfEdition: String = "Promos (Imperial Fighter Deck Box)" }
 private class PromosDiceTower2016 extends Edition { override def nameOfEdition: String = "Promos (Dice Tower 2016)" }
 private class PromosMechCruiserStorageBox extends Edition { override def nameOfEdition: String = "Promos (Mech Cruiser Storage Box)" }
-
+ */
 object Edition {
     def apply(nameOfEdition: String): Edition = nameOfEdition.toLowerCase match {
         case "core set" => new CoreSet
-        case "high alert: first strike" => new HighAlertFirstStrike
+        /* case "high alert: first strike" => new HighAlertFirstStrike
         case "high alert: tech" => new HighAlertTech
         case "high alert: requisition" => new HighAlertRequisition
         case "high alert: invasion" => new HighAlertInvasion
@@ -106,9 +107,9 @@ object Edition {
         case "united: missions" => new UnitedMissions
         case "united: heroes" => new UnitedHeroes
         case "united: command" => new UnitedCommand
-        case "united: assault" => new UnitedAssault
+        case "united: assault" => new UnitedAssault */
         case "colony wars" => new ColonyWars
-        case "cosmic gambit" => new CosmicGambit
+        /* case "cosmic gambit" => new CosmicGambit
         case "crisis: heroes" => new CrisisHeroes
         case "crisis: fleets and fortresses" => new CrisisFleetsAndFortresses
         case "crisis: events" => new CrisisEvents
@@ -119,7 +120,7 @@ object Edition {
         case "promos (battlecruiser storage box)" => new PromosBattlecruiserStorageBox
         case "promos (imperial fighter deck box)" => new PromosImperialFighterDeckBox
         case "promos (dice tower 2016)" => new PromosDiceTower2016
-        case "promos (mech cruiser storage box)" => new PromosMechCruiserStorageBox
+        case "promos (mech cruiser storage box)" => new PromosMechCruiserStorageBox */
         case _ => throw new IllegalArgumentException(s"Unknown Edition: $nameOfEdition")
     }
 }

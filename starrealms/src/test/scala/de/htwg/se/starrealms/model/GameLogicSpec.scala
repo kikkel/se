@@ -12,6 +12,7 @@ class GameLogicSpec extends AnyWordSpec with Matchers {
 
   def newGameLogicWithDeck(deck: Deck): GameLogic = {
     val gs = new GameState(decksByRole.updated("Personal Deck", deck), player1, player2)
+    gs.setPlayerDeck(player1, deck) // WICHTIG: Deck explizit zuweisen!
     new GameLogic(gs)
   }
 
@@ -83,7 +84,9 @@ class GameLogicSpec extends AnyWordSpec with Matchers {
       )
       deck.addCard(card)
 
-      val gameLogic = newGameLogicWithDeck(deck)
+      val gs = new GameState(decksByRole.updated("Personal Deck", deck), player1, player2)
+      gs.setPlayerDeck(player1, deck)
+      val gameLogic = new GameLogic(gs)
       val drawnCard = gameLogic.drawCard()
 
       drawnCard shouldBe Some(card)
@@ -146,6 +149,7 @@ class GameLogicSpec extends AnyWordSpec with Matchers {
       deck.addCard(card)
 
       val gs = new GameState(decksByRole.updated("Personal Deck", deck), player1, player2)
+      gs.setPlayerDeck(player1, deck)
       val gameLogic = new GameLogic(gs)
       gameLogic.resetGame()
       gs.getHand(player1) shouldBe empty
@@ -179,11 +183,10 @@ class GameLogicSpec extends AnyWordSpec with Matchers {
       deck.addCard(card1)
       deck.addCard(card2)
 
-      val gs = new GameState(decksByRole.updated("Personal Deck", deck), player1, player2)
-      val gameLogic = new GameLogic(gs)
-      val deckState = deck.getCards.map(_._1.cardName).mkString(", ")
+      // Die Map von getCards ist nicht sortiert, daher sortieren wir nach cardName
+      val deckState = deck.getCards.toList.sortBy(_._1.cardName).map { case (card, qty) => s"Card[$qty, ${card.cardName}]" }.mkString(", ")
 
-      deckState shouldBe "Card1, Card2"
+      deckState shouldBe "Card[1, Card1], Card[1, Card2]"
     }
   }
 }
