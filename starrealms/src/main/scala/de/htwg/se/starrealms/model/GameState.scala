@@ -59,6 +59,7 @@ class GameState(
   def getPlayerDeck(player: Player): Deck = playerDecks(player)
   def getHand(player: Player): List[Card] = hands(player)
   def getDiscardPile(player: Player): List[Card] = discardPiles(player)
+  def getDiscardPiles: Map[Player, List[Card]] = discardPiles
   def getLastDiscardedHand(player: Player): List[Card] = lastDiscardedHands(player)
 
   def getTradeDeck: Deck = tradeDeck
@@ -73,23 +74,6 @@ class GameState(
   def setOpponent(player: Player): Unit = {
     opponent = player
     notifyObservers()
-  }
-
-  def applyCombatDamage(): Unit = {
-    val current = getCurrentPlayer
-    val opponent = getOpponent
-    // Alle Karten, die im aktuellen Zug gespielt wurden und Combat > 0 haben
-    val playedCards = getDiscardPile(current).filter(_.combat > 0)
-    val totalDamage = playedCards.map(_.combat).sum
-    if (totalDamage > 0) {
-      opponent.takeDamage(totalDamage)
-    }
-  }
-
-  def checkGameOver(): Option[String] = {
-    if (player1.health <= 0) Some(s"${player2.name} won!")
-    else if (player2.health <= 0) Some(s"${player1.name} won!")
-    else None
   }
 
   def setPlayerDeck(player: Player, deck: Deck): Unit = {
@@ -150,5 +134,12 @@ class GameState(
       discardPiles(currentPlayer).map(cardLine).mkString("\n") + "\n\n" +
     "TradeRow:\n" +
       tradeRow.map(cardLine).mkString("\n") + "\n\n"
+  }
+
+  def checkGameOver(): Option[String] = {
+    if (currentPlayer.health <= 0) Some(s"${opponent.name} won!")
+    else if (opponent.health <= 0) Some(s"${currentPlayer.name} won!")
+    else None
+    notifyObservers()
   }
 }

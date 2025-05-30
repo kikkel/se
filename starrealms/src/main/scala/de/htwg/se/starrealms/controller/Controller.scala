@@ -17,8 +17,6 @@ class Controller(val gameLogic: GameLogic) extends Observable {
   def undo(): Unit = { undoManager.undoMove; notifyObservers() }
   def redo(): Unit = { undoManager.redoMove; notifyObservers() }
 
-  def dealDamageToOpponent(amount: Int): Unit = { gameLogic.dealDamageToOpponent(amount); notifyObservers() }
-
   def getCurrentPlayer: Player = gameState.getCurrentPlayer
   def getOpponent: Player = gameState.getOpponent
 

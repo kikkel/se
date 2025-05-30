@@ -5,7 +5,7 @@ import de.htwg.se.starrealms.model.Deck
 
 case class Player(
     name: String,
-    var health: Int = 50
+    var health: Int = 3
 ) {
     def takeDamage(amount: Int): Unit = {
         health = math.max(0, health- amount)

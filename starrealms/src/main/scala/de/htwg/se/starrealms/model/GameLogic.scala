@@ -57,6 +57,9 @@ class GameLogic(val gameState: GameState) extends Observable {
       val newDiscard = card :: gameState.getDiscardPile(gameState.getCurrentPlayer)
       gameState.setHand(gameState.getCurrentPlayer, newHand)
       gameState.setDiscardPile(gameState.getCurrentPlayer, newDiscard)
+      if (card.cardName.trim.equalsIgnoreCase("Viper")) {
+        dealDamageToOpponent(1)
+      }
     }
   }
 
@@ -111,15 +114,21 @@ class GameLogic(val gameState: GameState) extends Observable {
 
   def endTurn(): Unit = {
     val current = gameState.getCurrentPlayer
-    val discard = gameState.getDiscardPile(current)
-    val discardedHand = gameState.getHand(current)
-    val updatedDiscard = discard ++ discardedHand
-    gameState.setDiscardPile(current, updatedDiscard)
-    gameState.setHand(current, List())
-    gameState.setLastDiscardedHand(current, discardedHand) // Store the last discarded hand for undo
     val opponent = gameState.getOpponent
-    gameState.setCurrentPlayer(opponent)
-    gameState.setOpponent(current)
+
+    val discardedHand = gameState.getHand(current)
+    val updatedDiscard = gameState.getDiscardPile(current) ++ discardedHand
+    gameState.setDiscardPile(current, updatedDiscard)
+    gameState.setLastDiscardedHand(current, discardedHand)
+    gameState.setHand(current, List())
+
+    if (opponent.isAlive) {
+      gameState.setOpponent(current)
+      gameState.setCurrentPlayer(opponent)
+      drawCards(5)
+    } else {
+      gameState.checkGameOver()
+    }
   }
 
     def undoEndTurn(): Unit = {
@@ -133,10 +142,6 @@ class GameLogic(val gameState: GameState) extends Observable {
       gameState.setDiscardPile(previousPlayer, discard)
     }
 
-  def dealDamageToOpponent(amount: Int): Unit = {
-    gameState.getOpponent.takeDamage(amount)
-  }
-
   def resetGame(): Unit = {
     gameState.initializeDecks(gameState.decksByRole) 
     drawCards(5)
@@ -147,4 +152,20 @@ class GameLogic(val gameState: GameState) extends Observable {
     //
     gameState.notifyStateChange() 
   }
+
+  def dealDamageToOpponent(amount: Int): Unit = {
+    val opponent = gameState.getOpponent
+    opponent.takeDamage(amount)
+  }
+
+/*     def applyCombat(): Unit = {
+    val current = gameState.getCurrentPlayer
+    val opponent = gameState.getOpponent
+    // Alle Karten, die im aktuellen Zug gespielt wurden und Combat > 0 haben
+    val playedCards = gameState.getDiscardPile(current).filter(_.combat > 0)
+    val totalDamage = playedCards.map(_.combat).sum
+    if (totalDamage > 0) {
+      opponent.takeDamage(totalDamage)
+    }
+  } */
 }

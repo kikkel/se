@@ -111,7 +111,7 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
         case "t" => controller.undoManager.doMove(new ReplenishTradeRowCommand(controller))
           "Trade row replenished.\n\n"
         case "e" =>
-          controller.gameState.applyCombatDamage()
+          controller.undoManager.doMove(new EndTurnCommand(controller))
           val result = controller.gameState.checkGameOver().getOrElse("Turn ended.\n\n")
           controller.undoManager.doMove(new EndTurnCommand(controller))
           result
