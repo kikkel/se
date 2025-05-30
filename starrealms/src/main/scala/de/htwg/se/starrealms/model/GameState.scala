@@ -68,11 +68,16 @@ class GameState(
 
   def setCurrentPlayer(player: Player): Unit = {
     currentPlayer = player
-    notifyObservers()
   }
 
   def setOpponent(player: Player): Unit = {
     opponent = player
+  }
+
+  def swapPlayers(): Unit = {
+    val oldCurrent = currentPlayer
+    currentPlayer = opponent
+    opponent = oldCurrent
     notifyObservers()
   }
 
@@ -137,9 +142,8 @@ class GameState(
   }
 
   def checkGameOver(): Option[String] = {
-    if (currentPlayer.health <= 0) Some(s"${opponent.name} won!")
-    else if (opponent.health <= 0) Some(s"${currentPlayer.name} won!")
+    if (player1.health <= 0) Some(s"${player2.name} won!")
+    else if (player2.health <= 0) Some(s"${player1.name} won!")
     else None
-    notifyObservers()
   }
 }

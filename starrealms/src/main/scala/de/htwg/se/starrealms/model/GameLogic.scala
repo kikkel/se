@@ -58,7 +58,7 @@ class GameLogic(val gameState: GameState) extends Observable {
       gameState.setHand(gameState.getCurrentPlayer, newHand)
       gameState.setDiscardPile(gameState.getCurrentPlayer, newDiscard)
       if (card.cardName.trim.equalsIgnoreCase("Viper")) {
-        dealDamageToOpponent(1)
+        dealDamageToOpponent(2)
       }
     }
   }
@@ -82,7 +82,7 @@ class GameLogic(val gameState: GameState) extends Observable {
       val newDiscard = card :: gameState.getDiscardPile(gameState.getCurrentPlayer)
       gameState.setTradeRow(updatedTradeRow)
       gameState.setDiscardPile(gameState.getCurrentPlayer, newDiscard)
-      replenishTradeRow() 
+      replenishTradeRow()
     }
   }
   def returnCardToTradeRow(card: Card): Unit = {
@@ -114,43 +114,41 @@ class GameLogic(val gameState: GameState) extends Observable {
 
   def endTurn(): Unit = {
     val current = gameState.getCurrentPlayer
-    val opponent = gameState.getOpponent
-
     val discardedHand = gameState.getHand(current)
     val updatedDiscard = gameState.getDiscardPile(current) ++ discardedHand
     gameState.setDiscardPile(current, updatedDiscard)
     gameState.setLastDiscardedHand(current, discardedHand)
     gameState.setHand(current, List())
 
-    if (opponent.isAlive) {
-      gameState.setOpponent(current)
-      gameState.setCurrentPlayer(opponent)
-      drawCards(5)
+    if (gameState.getOpponent.isAlive) {
+      gameState.swapPlayers()         // Spieler wechseln
+      drawCards(5)                    // Neue Karten für neuen Spieler ziehen
+      gameState.notifyStateChange()   // Observer benachrichtigen, damit View aktualisiert wird
     } else {
       gameState.checkGameOver()
     }
   }
 
-    def undoEndTurn(): Unit = {
-      val previousPlayer = gameState.getOpponent
-      val current = gameState.getCurrentPlayer
-      val restoredHand = gameState.getLastDiscardedHand(previousPlayer)
-      val discard = gameState.getDiscardPile(previousPlayer).dropRight(restoredHand.size)
-      gameState.setCurrentPlayer(previousPlayer)
-      gameState.setOpponent(current)
-      gameState.setHand(previousPlayer, restoredHand)
-      gameState.setDiscardPile(previousPlayer, discard)
-    }
+  def undoEndTurn(): Unit = {
+    val previousPlayer = gameState.getOpponent
+    val current = gameState.getCurrentPlayer
+    val restoredHand = gameState.getLastDiscardedHand(previousPlayer)
+    val discard = gameState.getDiscardPile(previousPlayer).dropRight(restoredHand.size)
+    gameState.setCurrentPlayer(previousPlayer)
+    gameState.setOpponent(current)
+    gameState.setHand(previousPlayer, restoredHand)
+    gameState.setDiscardPile(previousPlayer, discard)
+  }
 
   def resetGame(): Unit = {
-    gameState.initializeDecks(gameState.decksByRole) 
+    gameState.initializeDecks(gameState.decksByRole)
     drawCards(5)
     replenishTradeRow()
     gameState.notifyStateChange()
   }
   def undoResetGame(): Unit = {
     //
-    gameState.notifyStateChange() 
+    gameState.notifyStateChange()
   }
 
   def dealDamageToOpponent(amount: Int): Unit = {

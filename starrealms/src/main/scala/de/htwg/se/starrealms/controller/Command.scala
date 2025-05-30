@@ -113,7 +113,6 @@ class CommandHandler(controller: Controller) extends CommandProcessor {
         case "e" =>
           controller.undoManager.doMove(new EndTurnCommand(controller))
           val result = controller.gameState.checkGameOver().getOrElse("Turn ended.\n\n")
-          controller.undoManager.doMove(new EndTurnCommand(controller))
           result
         case "r" => controller.undoManager.doMove(new ResetGameCommand(controller))
           "Game reset.\n\n"
