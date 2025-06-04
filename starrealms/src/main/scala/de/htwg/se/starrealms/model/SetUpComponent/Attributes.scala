@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.model.SetUpComponent
 
 import de.htwg.se.starrealms.model._
 

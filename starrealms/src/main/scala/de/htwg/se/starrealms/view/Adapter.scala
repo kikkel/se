@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.view
 
 import de.htwg.se.starrealms.controller.ControllerComponent._
-import de.htwg.se.starrealms.model.Card
+import de.htwg.se.starrealms.model.SetUpComponent.Card
 
 
 trait CommandAdapter { def handleInput(input: String): String; def getState: String } //Adapter

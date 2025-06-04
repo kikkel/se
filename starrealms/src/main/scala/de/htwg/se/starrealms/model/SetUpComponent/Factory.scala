@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.model.SetUpComponent
 
 trait Faction {
     def factionName: String

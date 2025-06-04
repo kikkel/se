@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.model.SetUpComponent
 
 class StartTurnStrategy extends DrawStrategy {
   override def draw(deck: Deck, count: Int): List[Card] = {

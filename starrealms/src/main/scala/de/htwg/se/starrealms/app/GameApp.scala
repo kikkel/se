@@ -1,7 +1,9 @@
 package de.htwg.se.starrealms.app
 
+import de.htwg.se.starrealms.controller.GameState
 import de.htwg.se.starrealms.controller.ControllerComponent.{Controller, GameLogic, GameStateProxy, GameStateReadOnly}
-import de.htwg.se.starrealms.model.{GameState, LoadCards, Player}
+import de.htwg.se.starrealms.model.SetUpComponent.LoadCards
+import de.htwg.se.starrealms.model.PlayerComponent._
 import de.htwg.se.starrealms.view.{ConsoleView, GraphicUI, CommandProcessorAdapter}
 
 import scalafx.application.JFXApp3

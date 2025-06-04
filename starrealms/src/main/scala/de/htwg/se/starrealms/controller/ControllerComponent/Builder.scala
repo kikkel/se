@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.controller.ControllerComponent
 
-import de.htwg.se.starrealms.model.{Card, Deck}
+import de.htwg.se.starrealms.model.SetUpComponent.{Card, Deck}
 
 class DeckBuilder extends Builder {
     private var deck: Deck = new Deck()

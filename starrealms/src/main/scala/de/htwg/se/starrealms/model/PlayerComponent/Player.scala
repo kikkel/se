@@ -1,7 +1,7 @@
-package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.model.PlayerComponent
 
-import de.htwg.se.starrealms.model.Card
-import de.htwg.se.starrealms.model.Deck
+import de.htwg.se.starrealms.model.SetUpComponent.Card
+import de.htwg.se.starrealms.model.SetUpComponent.Deck
 
 case class Player(
     name: String,

@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.model.SetUpComponent
 
 import scala.util.Random
 import org.scalactic.Fail

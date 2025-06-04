@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.model._
+import de.htwg.se.starrealms.model.SetUpComponent._
 import de.htwg.util._
 
 class OptionsMenuRender extends Renderer[OptionsMenu] {

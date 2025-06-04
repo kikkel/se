@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.controller.ControllerComponent
 
 import de.htwg.util.Command
-import de.htwg.se.starrealms.model.Card
+import de.htwg.se.starrealms.model.SetUpComponent.Card
 
 class DrawCardCommand(controller: Controller) extends Command {
   private var drawnCard: Option[Card] = None

@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.controller.ControllerComponent
 
 import de.htwg.util.Command
-import de.htwg.se.starrealms.model.Card
+import de.htwg.se.starrealms.model.SetUpComponent.Card
 
 class ResetGameCommand(controller: Controller) extends Command {
   override def doMove: Unit = controller.gameLogic.resetGame(); override def undoMove: Unit = controller.gameLogic.undoResetGame() }

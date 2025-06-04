@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.controller.ControllerComponent
 
 import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
-import de.htwg.se.starrealms.model._
+import de.htwg.se.starrealms.model.SetUpComponent._
 import de.htwg.se.starrealms.controller._
 
 
