@@ -3,6 +3,7 @@ package de.htwg.se.starrealms.model
 import scala.util.{Try, Success, Failure}
 
 //bridge
+
 trait Card {
     val edition: Edition
     val cardName: String

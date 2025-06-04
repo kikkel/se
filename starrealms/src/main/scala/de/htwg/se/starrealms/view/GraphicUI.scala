@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.view
 
 import de.htwg.util.Observer
-import de.htwg.se.starrealms.controller.GameStateReadOnly
+import de.htwg.se.starrealms.controller.ControllerComponent.GameStateReadOnly
 import de.htwg.se.starrealms.model.Card
 
 import scalafx.application.Platform

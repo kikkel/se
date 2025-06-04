@@ -1,7 +1,8 @@
-package de.htwg.se.starrealms.controller
+package de.htwg.se.starrealms.controller.ControllerComponent
 
 import de.htwg.se.starrealms.model._
-import de.htwg.util.Observable
+import de.htwg.util.{Observable, UndoManager}
+import de.htwg.se.starrealms.controller.ControllerComponent._
 
 class Controller(val gameLogic: GameLogic) extends Observable {
   val gameState: GameState = gameLogic.gameState

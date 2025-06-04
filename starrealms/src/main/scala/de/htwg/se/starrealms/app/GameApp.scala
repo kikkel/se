@@ -1,13 +1,11 @@
 package de.htwg.se.starrealms.app
 
-import de.htwg.se.starrealms.controller.{Controller, GameLogic, GameStateProxy}
+import de.htwg.se.starrealms.controller.ControllerComponent.{Controller, GameLogic, GameStateProxy, GameStateReadOnly}
 import de.htwg.se.starrealms.model.{GameState, LoadCards, Player}
-import de.htwg.se.starrealms.view.{ConsoleView, GraphicUI}
+import de.htwg.se.starrealms.view.{ConsoleView, GraphicUI, CommandProcessorAdapter}
 
 import scalafx.application.JFXApp3
 import scalafx.scene.Scene
-import de.htwg.se.starrealms.view.CommandProcessorAdapter
-import de.htwg.se.starrealms.controller.GameStateReadOnly
 
 object GameApp extends JFXApp3 {
   @volatile var running = true

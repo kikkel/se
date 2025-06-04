@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.controller._
+import de.htwg.se.starrealms.controller.ControllerComponent._
 import de.htwg.se.starrealms.model.Card
 
 

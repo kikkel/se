@@ -1,9 +1,8 @@
-package de.htwg.se.starrealms.controller
+package de.htwg.se.starrealms.controller.ControllerComponent
 import de.htwg.se.starrealms.model._
 import scala.util.Try
 
-trait DrawStrategy { def draw(deck: Deck, count: Int): List[Card] } //Service Interface!!
-trait Command { def doMove: Unit; def undoMove: Unit; def redoMove: Unit = doMove }
+
 trait Builder {
     def reset(): Unit
     def setName(name: String): Unit

@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.controller
+package de.htwg.se.starrealms.controller.ControllerComponent
 
 import de.htwg.se.starrealms.model.{Card, Deck}
 
