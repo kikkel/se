@@ -1,34 +1,13 @@
-package de.htwg.se.starrealms.model.SetUpComponent
+package de.htwg.se.starrealms.model.SetUpComponent.str
 
-
-import scala.io.Source
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.CardComponent.str._
+import de.htwg.se.starrealms.model.CardComponent.impl._
+import de.htwg.se.starrealms.model.AbilityComponent.impl._
 import scala.util.{Failure, Try, Success}
+import scala.io.Source
 import scala.util.matching.Regex
 
-
-object LoadCards {
-    def loadFromResource(getCsvPath: String, setName: String): Map[String, Deck] = {
-        val loader = new CardCSVLoader(getCsvPath)
-        loader.loadCardsFromFile()
-        val cards = loader.getAllCards.filter(_.edition.nameOfEdition.trim.equalsIgnoreCase(setName.trim))
-        val groupedCards = cards.groupBy(_.role.trim)
-        groupedCards.map { case (role, cards) =>
-            val deck = new Deck()
-            deck.setName(role)
-            val cardMap = cards.map(card => card -> card.qty).toMap
-            deck.setCards(cardMap)
-            role -> deck
-        }
-    }
-
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
-
-
-    def getCsvPath: String =
-        sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath")
-
-}
 
 class CardCSVLoader(filePath: String) {
     private var cardsByEdition: Map[String, List[Card]] = Map()
@@ -196,5 +175,3 @@ class CardCSVLoader(filePath: String) {
     def getAllCards: List[Card] = cardsByEdition.values.flatten.toList;
 
 }
-
-

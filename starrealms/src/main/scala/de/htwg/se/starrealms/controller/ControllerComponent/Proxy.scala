@@ -1,8 +1,7 @@
 package de.htwg.se.starrealms.controller.ControllerComponent
 
-import de.htwg.se.starrealms.model.SetUpComponent.{Deck, Card, DrawStrategy}
-import de.htwg.se.starrealms.model.PlayerComponent._
-import de.htwg.se.starrealms.controller.GameState
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.DeckComponent.interface._
 
 class DrawStrategyProxy extends DrawStrategy {
   private lazy val realStrategy: DrawStrategy = new DefaultDrawStrategy()

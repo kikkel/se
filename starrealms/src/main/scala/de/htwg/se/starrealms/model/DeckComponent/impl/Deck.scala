@@ -1,11 +1,13 @@
-package de.htwg.se.starrealms.model.SetUpComponent
+package de.htwg.se.starrealms.model.DeckComponent.impl
 
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.DeckComponent.interface._
 import scala.util.Random
 import org.scalactic.Fail
 import scala.util.Try
 
 
-class Deck {
+class Deck extends DeckInterface {
     private var name: String = ""
     private var cards: Map[Card, Int] = Map()
     private var cardStack: List[Card] = List() // <- Reihenfolge der Karten

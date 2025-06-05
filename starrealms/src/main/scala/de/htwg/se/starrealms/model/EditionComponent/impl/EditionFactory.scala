@@ -1,47 +1,6 @@
-package de.htwg.se.starrealms.model.SetUpComponent
+package de.htwg.se.starrealms.model.EditionComponent.impl
 
-trait Faction {
-    def factionName: String
-    def matches(other: Faction): Boolean
-    def render(): String = s"$factionName #factory"
-    //def apply()
-}
-
-private class TradeFederation extends Faction { override def factionName: String = "Trade Federation"; override def matches(other: Faction): Boolean = other.factionName == factionName }
-private class StarEmpire extends Faction { override def factionName: String = "Star Empire"; override def matches(other: Faction): Boolean = other.factionName == factionName }
-private class Blob extends Faction { override def factionName: String = "Blob"; override def matches(other: Faction): Boolean = other.factionName == factionName }
-private class MachineCult extends Faction { override def factionName: String = "Machine Cult"; override def matches(other: Faction): Boolean = other.factionName == factionName }
-private class CompositeFaction(factions: List[Faction]) extends Faction { override def factionName: String = factions.map(_.factionName).mkString(" / "); override def matches(other: Faction): Boolean = factions.exists(_.matches(other)) }
-private class Unaligned extends Faction { override def factionName: String = "Unaligned"; override def matches(other: Faction): Boolean = false }
-
-object Faction {
-    def apply(factionName: String): Faction = {
-        if (factionName.contains("/")) {
-            val factionParts = factionName.split("/").map(_.trim)
-            val factions = factionParts.map(apply).toList
-            new CompositeFaction(factions)
-        } else {
-            factionName.toLowerCase match {
-                case "trade federation" => new TradeFederation
-                case "star empire" => new StarEmpire
-                case "blob" => new Blob
-                case "machine cult" => new MachineCult
-                case "unaligned" => new Unaligned
-                case _ => throw new IllegalArgumentException(s"Faction not recognized: $factionName #Factory.scala: objectFaction")
-            }
-        }
-    }
-}
-
-// Example usage
-// val tradeFederation = Faction("trade federation")
-
-
-trait Edition {
-    def nameOfEdition: String
-    def render(): String = s"$nameOfEdition #factory"
-    //def apply()
-}
+import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
 
 private class CoreSet extends Edition { override def nameOfEdition: String = "Core Set" }
 /* private class HighAlertFirstStrike extends Edition { override def nameOfEdition: String = "High Alert: First Strike" }

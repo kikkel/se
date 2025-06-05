@@ -1,8 +1,7 @@
 package de.htwg.se.starrealms.controller.ControllerComponent
 
 import de.htwg.util.Command
-import de.htwg.se.starrealms.model.SetUpComponent.Card
-
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
 
 class ReplenishTradeRowCommand(controller: Controller) extends Command {
   private var rep: List[Card] = Nil

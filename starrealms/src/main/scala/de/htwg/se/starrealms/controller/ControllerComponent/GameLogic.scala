@@ -2,27 +2,17 @@ package de.htwg.se.starrealms.controller.ControllerComponent
 
 import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
-import de.htwg.se.starrealms.model.SetUpComponent._
-import de.htwg.se.starrealms.controller._
+
+import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateInterface
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.DeckComponent.str.{TradeRowReplenishStrategy, StartTurnStrategy}
 
 
-//--------------------------------------------------------------------Strategy
+//import de.htwg.se.starrealms.controller._
 
-class TradeRowReplenishStrategy extends DrawStrategy {
-  override def draw(deck: Deck, count: Int): List[Card] = {
-    val cards = (1 to count).flatMap(_ => deck.drawCard()).toList
-    println(s"Trade Row: ${cards.map(_.render()).mkString(", ")}")
-    cards
-  }
-}
-class DefaultDrawStrategy extends DrawStrategy {
-  override def draw(deck: Deck, count: Int): List[Card] = {
-    (1 to count).flatMap(_ => deck.drawCard()).toList
-  }
-}
 
 //--------------------------------------------------------------------GameLogic
-class GameLogic(val gameState: GameState) extends Observable {
+class GameLogic(val gameState: GameStateInterface) extends Observable {
   // Existing logic for strategies, if needed
   private val replenishStrategy = new TradeRowReplenishStrategy()
   private val startTurnStrategy = new StartTurnStrategy()
@@ -121,11 +111,11 @@ class GameLogic(val gameState: GameState) extends Observable {
     gameState.setHand(current, List())
 
     if (gameState.getOpponent.isAlive) {
-      gameState.swapPlayers()         // Spieler wechseln
+      gameState.swapPlayers         // Spieler wechseln
       drawCards(5)                    // Neue Karten für neuen Spieler ziehen
       gameState.notifyStateChange()   // Observer benachrichtigen, damit View aktualisiert wird
     } else {
-      gameState.checkGameOver()
+      gameState.checkGameOver
     }
   }
 
@@ -141,7 +131,7 @@ class GameLogic(val gameState: GameState) extends Observable {
   }
 
   def resetGame(): Unit = {
-    gameState.initializeDecks(gameState.decksByRole)
+    gameState.initializeDecks(gameState.getDecksByRole)
     drawCards(5)
     replenishTradeRow()
     gameState.notifyStateChange()

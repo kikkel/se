@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.controller.ControllerComponent
 
 import de.htwg.se.starrealms.model.SetUpComponent._
 import de.htwg.se.starrealms.model.PlayerComponent._
-import de.htwg.se.starrealms.controller.GameState
+import de.htwg.se. starrealms.model.GameState
 import de.htwg.util.{Observable, UndoManager}
 import de.htwg.se.starrealms.controller.ControllerComponent._
 

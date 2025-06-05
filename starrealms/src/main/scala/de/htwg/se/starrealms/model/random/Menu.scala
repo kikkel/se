@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model.SetUpComponent
+package de.htwg.se.starrealms.model.random
 
 import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
