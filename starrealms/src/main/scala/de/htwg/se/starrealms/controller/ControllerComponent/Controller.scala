@@ -1,13 +1,14 @@
 package de.htwg.se.starrealms.controller.ControllerComponent
 
-import de.htwg.se.starrealms.model.SetUpComponent._
-import de.htwg.se.starrealms.model.PlayerComponent._
-import de.htwg.se. starrealms.model.GameState
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se. starrealms.model.GameStateComponent.interface.GameStateInterface
+import de.htwg.se. starrealms.model.PlayerComponent.interface.PlayerInterface
+import de.htwg.se.starrealms.model.DeckComponent.interface.DeckInterface
 import de.htwg.util.{Observable, UndoManager}
-import de.htwg.se.starrealms.controller.ControllerComponent._
+//import de.htwg.se.starrealms.controller.ControllerComponent._
 
 class Controller(val gameLogic: GameLogic) extends Observable {
-  val gameState: GameState = gameLogic.gameState
+  val gameState: GameStateInterface = gameLogic.gameState
   val undoManager: UndoManager = new UndoManager()
 
   def drawCards(count: Int): Unit = { val command = new DrawCardsCommand(this, count); undoManager.doMove(command); notifyObservers() }
@@ -20,17 +21,17 @@ class Controller(val gameLogic: GameLogic) extends Observable {
   def undo(): Unit = { undoManager.undoMove; notifyObservers() }
   def redo(): Unit = { undoManager.redoMove; notifyObservers() }
 
-  def getCurrentPlayer: Player = gameState.getCurrentPlayer
-  def getOpponent: Player = gameState.getOpponent
+  def getCurrentPlayer: PlayerInterface = gameState.getCurrentPlayer
+  def getOpponent: PlayerInterface = gameState.getOpponent
 
   // Zugriff auf Deck, Hand, Discard für aktuellen Spieler
-  def getPlayerDeck: Deck = gameState.getPlayerDeck(getCurrentPlayer)
+  def getPlayerDeck: DeckInterface = gameState.getPlayerDeck(getCurrentPlayer)
   def getHand: List[Card] = gameState.getHand(getCurrentPlayer)
   def getDiscardPile: List[Card] = gameState.getDiscardPile(getCurrentPlayer)
 
-  def getTradeDeck: Deck = gameState.getTradeDeck
+  def getTradeDeck: DeckInterface = gameState.getTradeDeck
   def getTradeRow: List[Card] = gameState.getTradeRow
-  def getExplorerPile: Deck = gameState.getExplorerPile
+  def getExplorerPile: DeckInterface = gameState.getExplorerPile
 
   def getState: String = gameState.getDeckState
 }

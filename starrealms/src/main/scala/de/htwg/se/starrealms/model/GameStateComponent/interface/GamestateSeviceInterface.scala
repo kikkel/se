@@ -3,7 +3,9 @@ package de.htwg.se.starrealms.model.GameStateComponent.interface
 import de.htwg.se.starrealms.model.PlayerComponent.interface.PlayerInterface
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
 import de.htwg.se.starrealms.model.DeckComponent.interface.DeckInterface
+import de.htwg.util.Observable
 import scala.util.Try
+
 
 
 trait GameStateReadOnly { //Service Interface
@@ -21,7 +23,7 @@ trait GameStateReadOnly { //Service Interface
   def getDeckState: String
 }
 
-trait GameStateInterface {
+trait GameStateInterface extends Observable {
   def getCurrentPlayer: PlayerInterface
   def getOpponent: PlayerInterface
   def getPlayerDeck(player: PlayerInterface): DeckInterface

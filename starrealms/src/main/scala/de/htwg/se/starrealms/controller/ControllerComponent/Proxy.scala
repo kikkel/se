@@ -2,11 +2,14 @@ package de.htwg.se.starrealms.controller.ControllerComponent
 
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
 import de.htwg.se.starrealms.model.DeckComponent.interface._
+import de.htwg.se.starrealms.model.DeckComponent.str.DefaultDrawStrategy
+import de.htwg.se.starrealms.model.GameStateComponent.interface._
+import de.htwg.se.starrealms.model.PlayerComponent.interface.PlayerInterface
 
 class DrawStrategyProxy extends DrawStrategy {
   private lazy val realStrategy: DrawStrategy = new DefaultDrawStrategy()
 
-  override def draw(deck: Deck, count: Int): List[Card] = {
+  override def draw(deck: DeckInterface, count: Int): List[Card] = {
     println(s"[Proxy] Preparing to draw $count card(s).")
     val result = realStrategy.draw(deck, count)
     println(s"[Proxy] Completed drawing. Cards drawn: ${result.map(_.cardName).mkString(", ")}")
@@ -22,17 +25,17 @@ object DrawStrategyFactory {
   }
 }
 
-class GameStateProxy(private val gameState: GameState) extends GameStateReadOnly {
-  override def getCurrentPlayer: Player = gameState.getCurrentPlayer
-  override def getOpponent: Player = gameState.getOpponent
-  override def getPlayerDeck(player: Player): Deck = gameState.getPlayerDeck(player)
-  override def getHand(player: Player): List[Card] = gameState.getHand(player)
-  override def getDiscardPile(player: Player): List[Card] = gameState.getDiscardPile(player)
-  override def getDiscardPiles: Map[Player, List[Card]] = gameState.getDiscardPiles
-  override def getLastDiscardedHand(player: Player): List[Card] = gameState.getLastDiscardedHand(player)
-  override def getTradeDeck: Deck = gameState.getTradeDeck
+class GameStateProxy(private val gameState: GameStateInterface) extends GameStateReadOnly {
+  override def getCurrentPlayer: PlayerInterface = gameState.getCurrentPlayer
+  override def getOpponent: PlayerInterface = gameState.getOpponent
+  override def getPlayerDeck(player: PlayerInterface): DeckInterface = gameState.getPlayerDeck(player)
+  override def getHand(player: PlayerInterface): List[Card] = gameState.getHand(player)
+  override def getDiscardPile(player: PlayerInterface): List[Card] = gameState.getDiscardPile(player)
+  override def getDiscardPiles: Map[PlayerInterface, List[Card]] = gameState.getDiscardPiles
+  override def getLastDiscardedHand(player: PlayerInterface): List[Card] = gameState.getLastDiscardedHand(player)
+  override def getTradeDeck: DeckInterface = gameState.getTradeDeck
   override def getTradeRow: List[Card] = gameState.getTradeRow
-  override def getExplorerPile: Deck = gameState.getExplorerPile
-  override def checkGameOver(): Option[String] = gameState.checkGameOver()
+  override def getExplorerPile: DeckInterface = gameState.getExplorerPile
+  override def checkGameOver(): Option[String] = gameState.checkGameOver
   override def getDeckState: String = gameState.getDeckState
 }

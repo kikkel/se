@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.controller.ControllerComponent
 
-import de.htwg.se.starrealms.model.PlayerComponent._
-import de.htwg.se.starrealms.model.SetUpComponent.{Card, Deck}
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.DeckComponent.interface.DeckInterface
 import scala.util.Try
 
 trait Builder {
@@ -10,6 +10,6 @@ trait Builder {
     def setCards(cards: Map[Card, Int]): Unit
     def addCard(card: Card): Unit
     def addCards(cards: List[Card]): Unit
-    def getProduct(): Deck
+    def getProduct(): DeckInterface
 }
 

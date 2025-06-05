@@ -7,13 +7,14 @@ import de.htwg.se.starrealms.model.DeckComponent.interface.DeckInterface
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
 import de.htwg.se.starrealms.model.DeckComponent.impl.Deck
 import de.htwg.se.starrealms.model.CardComponent.impl.FactionCard
+import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateInterface
 
 
 class GameState(
   val decksByRole: Map[String, DeckInterface],
   val player1: PlayerInterface,
   val player2: PlayerInterface
-) extends Observable {
+) extends Observable with GameStateInterface {
   private var currentPlayer: PlayerInterface = player1
   private var opponent: PlayerInterface = player2
 
