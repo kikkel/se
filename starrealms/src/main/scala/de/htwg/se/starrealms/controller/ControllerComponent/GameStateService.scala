@@ -1,8 +1,9 @@
-package de.htwg.se.starrealms.controller
+package de.htwg.se.starrealms.controller.ControllerComponent
 
 import de.htwg.util._
 import de.htwg.se.starrealms.model.PlayerComponent._
 import de.htwg.se.starrealms.model.SetUpComponent.{Deck, Card, FactionCard}
+import de.htwg.se.starrealms.controller.ControllerComponent._
 
 class GameState(
   val decksByRole: Map[String, Deck],
