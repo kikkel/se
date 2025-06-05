@@ -1,9 +1,7 @@
-package de.htwg.se.starrealms.model.SetUpComponent.impl
+package de.htwg.se.starrealms.model.DeckComponent.impl
 
-import de.htwg.se.starrealms.model.SetUpComponent.str.CardCSVLoader
-import de.htwg.se.starrealms.model.DeckComponent.impl.Deck
-//import scala.io.Source
-//import scala.util.{Failure, Try, Success}
+import de.htwg.se.starrealms.model.CardComponent.str.CardCSVLoader
+
 
 object LoadCards {
     def loadFromResource(getCsvPath: String, setName: String): Map[String, Deck] = {

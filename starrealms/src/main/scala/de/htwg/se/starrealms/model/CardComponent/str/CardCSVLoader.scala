@@ -1,7 +1,7 @@
-package de.htwg.se.starrealms.model.SetUpComponent.str
+package de.htwg.se.starrealms.model.CardComponent.str
 
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se.starrealms.model.CardComponent.str._
+import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
 import de.htwg.se.starrealms.model.CardComponent.impl._
 import de.htwg.se.starrealms.model.AbilityComponent.impl._
 import scala.util.{Failure, Try, Success}

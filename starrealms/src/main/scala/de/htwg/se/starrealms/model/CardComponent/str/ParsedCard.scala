@@ -3,6 +3,7 @@ package de.htwg.se.starrealms.model.CardComponent.str
 import de.htwg.se.starrealms.model.CardComponent.interface._
 import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
 import de.htwg.se.starrealms.model.AbilityComponent.interface._
+import de.htwg.se.starrealms.model.AbilityComponent.impl._
 import scala.util.{Try, Success, Failure}
 
 case class ParsedCard(
