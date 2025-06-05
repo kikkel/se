@@ -1,19 +1,20 @@
 package de.htwg.se.starrealms.model.GameStateComponent.impl
 
 import de.htwg.util._
-//import de.htwg.se.starrealms.controller.ControllerComponent._
 import de.htwg.se.starrealms.model.PlayerComponent.interface.PlayerInterface
-import de.htwg.se.starrealms.model.DeckComponent.interface.DeckInterface
+import de.htwg.se.starrealms.model.DeckComponent.interface._
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se.starrealms.model.DeckComponent.impl.Deck
-import de.htwg.se.starrealms.model.CardComponent.impl.FactionCard
 import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateInterface
+
+import de.htwg.se.starrealms.model.CardComponent.impl.FactionCard
 
 
 class GameState(
   val decksByRole: Map[String, DeckInterface],
   val player1: PlayerInterface,
-  val player2: PlayerInterface
+  val player2: PlayerInterface,
+  builderFactory: => Builder,
+  director: DeckDirectorInterface
 ) extends Observable with GameStateInterface {
   private var currentPlayer: PlayerInterface = player1
   private var opponent: PlayerInterface = player2
@@ -24,37 +25,37 @@ class GameState(
   private var lastDiscardedHands: Map[PlayerInterface, List[Card]] = Map(player1 -> List(), player2 -> List())
 
   private var tradeRow: List[Card] = List()
-  private var tradeDeck: DeckInterface = new Deck()
-  private var explorerPile: DeckInterface = new Deck()
+  private var tradeDeck: DeckInterface = director.constructEmptyDeck("Trade Deck", builderFactory)
+  private var explorerPile: DeckInterface = director.constructEmptyDeck("Explorer Pile", builderFactory)
 
   initializeDecks(decksByRole)
 
   override def getDecksByRole = decksByRole
 
   override def initializeDecks(decks: Map[String, DeckInterface]): Unit = {
-    val allPersonal = decks.getOrElse("Personal Deck", new Deck()).getCards
+    val allPersonal = decks.getOrElse("Personal Deck", director.constructEmptyDeck("Personal Deck", builderFactory)).getCards
     val expandedPersonal = allPersonal.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     val scouts = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
     val vipers = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
     val playerCards = scala.util.Random.shuffle(scouts ++ vipers)
 
     playerDecks = Map(
-      player1 -> (new Deck(): DeckInterface),
-      player2 -> (new Deck(): DeckInterface)
+      player1 -> director.constructCustomDeck("Personal Deck 1", builderFactory, scala.util.Random.shuffle(playerCards)),
+      player2 -> director.constructCustomDeck("Personal Deck 2", builderFactory, scala.util.Random.shuffle(playerCards))
     )
     playerDecks(player1).setName("Personal Deck 1")
     playerDecks(player2).setName("Personal Deck 2")
     playerDecks(player1).setCardStack(scala.util.Random.shuffle(playerCards))
     playerDecks(player2).setCardStack(scala.util.Random.shuffle(playerCards))
 
-    val allTrade = decks.getOrElse("Trade Deck", new Deck()).getCards
+    val allTrade = decks.getOrElse("Trade Deck", director.constructEmptyDeck("Trade Deck", builderFactory)).getCards
     val expandedTrade = allTrade.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     val shuffledTrade = scala.util.Random.shuffle(expandedTrade)
-    tradeDeck = new Deck(): DeckInterface
+    tradeDeck = director.constructEmptyDeck("Trade Deck", builderFactory)
     tradeDeck.setName("Trade Deck")
     tradeDeck.setCardStack(shuffledTrade)
 
-    explorerPile = decks.getOrElse("Explorer Pile", new Deck())
+    explorerPile = decks.getOrElse("Explorer Pile", director.constructEmptyDeck("Explorer Pile", builderFactory))
 
     hands = Map(player1 -> List(), player2 -> List())
     discardPiles = Map(player1 -> List(), player2 -> List())

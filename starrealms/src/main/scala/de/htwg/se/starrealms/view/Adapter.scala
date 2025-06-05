@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.view
 
 import de.htwg.se.starrealms.controller.ControllerComponent._
-import de.htwg.se.starrealms.model.SetUpComponent.Card
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
 
 
 trait CommandAdapter { def handleInput(input: String): String; def getState: String } //Adapter
@@ -11,8 +11,8 @@ class CommandProcessorAdapter(controller: Controller) extends CommandAdapter {
     val tokens = input.trim.toLowerCase.split("\\s+")
     tokens match {
       case Array("show", "health") =>
-        s"${controller.gameState.player1.name}: ${controller.gameState.player1.health} HP, " +
-        s"${controller.gameState.player2.name}: ${controller.gameState.player2.health} HP"
+        s"${controller.gameState.getCurrentPlayer.getName}: ${controller.gameState.getCurrentPlayer.getHealth} HP, " +
+        s"${controller.gameState.getOpponent.getName}: ${controller.gameState.getOpponent.getHealth} HP"
       case Array("p", num) if num.forall(_.isDigit) =>
         val idx = num.toInt - 1
         val hand = controller.gameState.getHand(controller.gameState.getCurrentPlayer)
@@ -34,7 +34,7 @@ class CommandProcessorAdapter(controller: Controller) extends CommandAdapter {
           "Trade row replenished.\n\n"
         case "e" =>
           controller.undoManager.doMove(new EndTurnCommand(controller))
-          val result = controller.gameState.checkGameOver().getOrElse("Turn ended.\n\n")
+          val result = controller.gameState.checkGameOver.getOrElse("Turn ended.\n\n")
           result
         case "r" => controller.undoManager.doMove(new ResetGameCommand(controller))
           "Game reset.\n\n"

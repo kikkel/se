@@ -4,6 +4,8 @@ import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
 import de.htwg.se.starrealms.model.AbilityComponent.interface._
 import scala.util.{Try, Success, Failure}
 
+import de.htwg.se.starrealms.model.AbilityComponent.impl._
+
 trait Card {
     val edition: Edition
     val cardName: String

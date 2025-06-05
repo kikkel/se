@@ -1,20 +1,21 @@
 package de.htwg.se.starrealms.model.CardComponent.str
 
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
-import de.htwg.se.starrealms.model.CardComponent.impl._
-import de.htwg.se.starrealms.model.AbilityComponent.impl._
+import de.htwg.se.starrealms.model.CardComponent.interface._
 import scala.util.{Failure, Try, Success}
 import scala.io.Source
 import scala.util.matching.Regex
 
+import de.htwg.se.starrealms.model.CardComponent.impl._
+import de.htwg.se.starrealms.model.AbilityComponent.impl._
+import de.htwg.se.starrealms.model.EditionComponent.impl.Edition
 
-class CardCSVLoader(filePath: String) {
+
+class CardCSVLoader(filePath: String) extends CardCSVLoaderInterface {
     private var cardsByEdition: Map[String, List[Card]] = Map()
     private val validRoles = Set("Trade Deck", "Personal Deck", "Explorer Pile")
 
 
-    def loadCardsFromFile(): Unit = {
+    override def loadCardsFromFile: Unit = {
         Try(Source.fromFile(filePath).getLines().toList) match {
             case Success(lines) if lines.nonEmpty =>
                 val headers = parseCSVLine(lines.head)
@@ -166,12 +167,12 @@ class CardCSVLoader(filePath: String) {
         .map { case (_, constructor) => constructor(text) }
         .getOrElse(SimpleAction(text))
     }
-    def getCardsForEdition(nameOfEdition: String): List[Card] = {
+    override def getCardsForEdition(nameOfEdition: String): List[Card] = {
 
         cardsByEdition.filter { case (key, _) => key.trim.toLowerCase.contains(nameOfEdition.trim.toLowerCase) }
             .values.flatten.toList
     }
 
-    def getAllCards: List[Card] = cardsByEdition.values.flatten.toList;
+    override def getAllCards: List[Card] = cardsByEdition.values.flatten.toList;
 
 }

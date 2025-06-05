@@ -1,6 +1,9 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.model.SetUpComponent.{Card, Faction, FactionCard, ExplorerCard, DefaultCard}
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
+
+
+import de.htwg.se.starrealms.model.CardComponent.impl._
 
 trait Renderer[T] { def render(entity: T): String }
 

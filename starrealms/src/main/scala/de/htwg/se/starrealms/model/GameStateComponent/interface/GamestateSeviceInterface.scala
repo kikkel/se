@@ -47,7 +47,6 @@ trait GameStateInterface extends Observable {
   def setTradeDeck(deck: DeckInterface): Unit
   def setTradeRow(row: List[Card]): Unit
   def setExplorerPile(deck: DeckInterface): Unit
-  def setDeckState: String
 
   def initializeDecks(deck: Map[String, DeckInterface]): Unit
   def notifyStateChange(): Unit

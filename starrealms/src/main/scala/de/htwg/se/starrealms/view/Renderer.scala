@@ -1,7 +1,11 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.model.SetUpComponent._
+import de.htwg.se.starrealms.model.CardComponent.interface.Card
 import de.htwg.util._
+
+import de.htwg.se.starrealms.model.random._
+import de.htwg.se.starrealms.model.CardComponent.impl._
+import de.htwg.se.starrealms.model.AbilityComponent.impl._
 
 class OptionsMenuRender extends Renderer[OptionsMenu] {
   override def render(menu: OptionsMenu): String = {

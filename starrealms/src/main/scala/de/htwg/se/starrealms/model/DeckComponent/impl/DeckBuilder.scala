@@ -11,7 +11,7 @@ class DeckBuilder(product: DeckInterface) extends Builder {
     override def setCards(newCards: Map[Card, Int]): Unit = productVar.setCards(newCards)
     override def addCards(cards: List[Card]): Unit = cards.foreach(productVar.addCard)
     override def addCard(card: Card): Unit = productVar.addCard(card)
-    override def getProduct(): DeckInterface = productVar
+    override def getProduct: DeckInterface = productVar
 
 }
 
