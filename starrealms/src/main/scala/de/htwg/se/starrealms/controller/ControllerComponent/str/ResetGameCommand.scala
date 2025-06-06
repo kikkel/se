@@ -4,5 +4,5 @@ import de.htwg.util.Command
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
 import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
 
-class ResetGameCommand(controller: Controller) extends Command {
-  override def doMove: Unit = controller.gameLogic.resetGame(); override def undoMove: Unit = controller.gameLogic.undoResetGame() }
+class ResetGameCommand(mediator: GameMediator) extends Command {
+  override def doMove: Unit = mediator.getGameLogic.resetGame; override def undoMove: Unit = mediator.getGameLogic.undoResetGame }
