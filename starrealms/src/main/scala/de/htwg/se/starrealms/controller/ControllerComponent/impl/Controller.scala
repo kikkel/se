@@ -4,6 +4,7 @@ import de.htwg.util.{Observable, UndoManager}
 import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
 
 import de.htwg.se.starrealms.controller.ControllerComponent.impl._
+import de.htwg.se.starrealms.controller.ControllerComponent.str._
 
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
 import de.htwg.se. starrealms.model.GameStateComponent.interface.GameStateInterface
@@ -20,13 +21,13 @@ class Controller(val mediator: GameMediator) extends Observable with ControllerI
   def gameLogic: GameLogicInterface = mediator.getGameLogic
   val undoManager: UndoManager = new UndoManager()
 
-  override def drawCards(count: Int): Unit = { val command = new DrawCardsCommand(this, count); undoManager.doMove(command); notifyObservers() }
-  override def replenishTradeRow: Unit = { val command = new ReplenishTradeRowCommand(this); undoManager.doMove(command); notifyObservers() }
-  override def drawCard: Unit = { val command = new DrawCardCommand(this); undoManager.doMove(command); notifyObservers() }
-  override def playCard(card: Card): Unit = { val command = new PlayCardCommand(this, card); undoManager.doMove(command); notifyObservers() }
-  override def buyCard(card: Card): Unit = { val command = new BuyCardCommand(this, card); undoManager.doMove(command); notifyObservers() }
+  override def drawCards(count: Int): Unit = { val command = new DrawCardsCommand(mediator, count); undoManager.doMove(command); notifyObservers() }
+  override def replenishTradeRow: Unit = { val command = new ReplenishTradeRowCommand(mediator); undoManager.doMove(command); notifyObservers() }
+  override def drawCard: Unit = { val command = new DrawCardCommand(mediator); undoManager.doMove(command); notifyObservers() }
+  override def playCard(card: Card): Unit = { val command = new PlayCardCommand(mediator, card); undoManager.doMove(command); notifyObservers() }
+  override def buyCard(card: Card): Unit = { val command = new BuyCardCommand(mediator, card); undoManager.doMove(command); notifyObservers() }
   override def endTurn: Unit = { gameLogic.endTurn; notifyObservers() }
-  override def resetGame: Unit = { val command = new ResetGameCommand(this); undoManager.doMove(command); notifyObservers() }
+  override def resetGame: Unit = { val command = new ResetGameCommand(mediator); undoManager.doMove(command); notifyObservers() }
   override def undo: Unit = { undoManager.undoMove; notifyObservers() }
   override def redo: Unit = { undoManager.redoMove; notifyObservers() }
 

@@ -9,6 +9,7 @@ import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateReadOnl
 import de.htwg.se.starrealms.model.DeckComponent.interface._
 import de.htwg.se.starrealms.view._
 import de.htwg.se.starrealms.controller.ControllerComponent._
+import de.htwg.se.starrealms.controller.ControllerComponent.impl._
 
 import scalafx.application.JFXApp3
 import scalafx.scene.Scene
@@ -31,7 +32,7 @@ object GameApp extends JFXApp3 {
 
     val gameState = new GameState(decksByRole, player1, player2, builderFactory, director)
     val gameLogic = new GameLogic(gameState)
-    val mediator = new StarRealmsMediator(gameState, gameLogic, List(p1, p2))
+    val mediator = new StarRealmsMediator(gameState, gameLogic, List(player1, player2))
     val controller = new Controller(mediator)
     val commandAdapter = new CommandProcessorAdapter(controller)
     val proxy: GameStateReadOnly = new GameStateProxy(gameState)
