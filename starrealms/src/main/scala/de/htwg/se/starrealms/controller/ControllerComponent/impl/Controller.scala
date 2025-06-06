@@ -44,4 +44,5 @@ class Controller(val mediator: GameMediator) extends Observable with ControllerI
   override def getExplorerPile: DeckInterface = gameState.getExplorerPile
 
   override def getState: String = gameState.getDeckState
+  override def getUndoManager: Unit = undoManager
 }

@@ -4,11 +4,12 @@ import de.htwg.se.starrealms.controller.ControllerComponent._
 import de.htwg.se.starrealms.controller.ControllerComponent.str._
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
 import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
+import de.htwg.se.starrealms.controller.ControllerComponent.interface.ControllerInterface
 
 
 trait CommandAdapter { def handleInput(input: String): String; def getState: String } //Adapter
 
-class CommandProcessorAdapter(mediator: GameMediator) extends CommandAdapter {
+class CommandProcessorAdapter(mediator: GameMediator, controller: ControllerInterface) extends CommandAdapter {
   override def handleInput(input: String): String = {
     val tokens = input.trim.toLowerCase.split("\\s+")
     tokens match {
@@ -19,36 +20,36 @@ class CommandProcessorAdapter(mediator: GameMediator) extends CommandAdapter {
         val idx = num.toInt - 1
         val hand = mediator.getGameState.getHand(mediator.getGameState.getCurrentPlayer)
         if (idx >= 0 && idx < hand.size) {
-          mediator.undoManager.doMove(new str.PlayCardCommand(mediator, hand(idx))); s"Played card: ${hand(idx).cardName}\n\n"
+          controller.getUndoManager.doMove(new str.PlayCardCommand(mediator, hand(idx))); s"Played card: ${hand(idx).cardName}\n\n"
         } else { "Invalid card index.\n\n" }
       case Array("b", num) if num.forall(_.isDigit) =>
         val idx = num.toInt - 1
         val tradeRow = mediator.getGameState.getTradeRow
         if (idx >= 0 && idx < tradeRow.size) {
-          mediator.undoManager.doMove(new BuyCardCommand(mediator, tradeRow(idx))); s"Bought card: ${tradeRow(idx).cardName}\n\n"
+          controller.getUndoManager.doMove(new BuyCardCommand(mediator, tradeRow(idx))); s"Bought card: ${tradeRow(idx).cardName}\n\n"
         } else { "Invalid card index." }
       case Array("p") => "Enter the number of the card you want to play (e.g. 'p 2').\n\n"
       case Array("b") => "Enter the number of the card you want to buy (e.g. 'b 3').\n\n"
       case Array(cmd) => cmd match {
-        case "s" => mediator.undoManager.doMove(new DrawCardsCommand(mediator, 5))
+        case "s" => controller.getUndoManager.doMove(new DrawCardsCommand(mediator, 5))
           "Turn started.\n\n"
-        case "t" => mediator.undoManager.doMove(new ReplenishTradeRowCommand(mediator))
+        case "t" => controller.getUndoManager.doMove(new ReplenishTradeRowCommand(mediator))
           "Trade row replenished.\n\n"
         case "e" =>
-          mediator.undoManager.doMove(new EndTurnCommand(mediator))
+          controller.getUndoManager.doMove(new EndTurnCommand(mediator))
           val result = mediator.getGameState.checkGameOver.getOrElse("Turn ended.\n\n")
           result
-        case "r" => mediator.undoManager.doMove(new ResetGameCommand(mediator))
+        case "r" => controller.getUndoManager.doMove(new ResetGameCommand(mediator))
           "Game reset.\n\n"
-        case "z" => mediator.undoManager.undoMove; "Undo performed.\n\n"
-        case "y" => mediator.undoManager.redoMove; "Redo performed.\n\n"
-        case "show" => mediator.getState
+        case "z" => controller.getUndoManager.undoMove; "Undo performed.\n\n"
+        case "y" => controller.getUndoManager.redoMove; "Redo performed.\n\n"
+        case "show" => controller.getState
         case _ => "Unknown command.\n\n"
       }
       case _ => "Unknown command.\n\n"
     }
   }
 
-  override def getState: String = mediator.getState
+  override def getState: String = controller.getState
 }
 
