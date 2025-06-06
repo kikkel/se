@@ -57,8 +57,8 @@ object GameApp extends JFXApp3 {
 
     gui.show()
 
-    gameState.addObserver(gui)
-    gameState.addObserver(view)
+    mediator.getGameState.addObserver(gui)
+    mediator.getGameState.addObserver(view)
 
   }
 }

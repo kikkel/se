@@ -25,7 +25,7 @@ class StarRealmsMediator(
         case _ =>
         println(s"Unhandled event: $event")
     }
-    override def getGameLogic: GameLogicInterface = ???
-    override def getGameState: GameStateInterface = ???
+    override def getGameLogic: GameLogicInterface = gameLogic
+    override def getGameState: GameStateInterface = gameState
     override def getCurrentPlayer: PlayerInterface = ???
 }

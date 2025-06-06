@@ -14,8 +14,8 @@ object LoadCards {
         director.constructDecks(builderFactory, groupedCards).view.mapValues(_.asInstanceOf[Deck]).toMap
     }
 
-    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
+    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
+    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
 
 
     def getCsvPath: String =
