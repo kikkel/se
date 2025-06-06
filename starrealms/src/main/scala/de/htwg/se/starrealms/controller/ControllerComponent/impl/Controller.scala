@@ -3,6 +3,8 @@ package de.htwg.se.starrealms.controller.ControllerComponent.impl
 import de.htwg.util.{Observable, UndoManager}
 import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
 
+import de.htwg.se.starrealms.controller.ControllerComponent.impl._
+
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
 import de.htwg.se. starrealms.model.GameStateComponent.interface.GameStateInterface
 import de.htwg.se. starrealms.model.PlayerComponent.interface.PlayerInterface
@@ -14,7 +16,8 @@ import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMedi
 //import de.htwg.se.starrealms.controller.ControllerComponent._
 
 class Controller(val mediator: GameMediator) extends Observable with ControllerInterface {
-  val gameState: GameStateInterface = gameLogic.gameState
+  def gameState: GameStateInterface = mediator.getGameState
+  def gameLogic: GameLogicInterface = mediator.getGameLogic
   val undoManager: UndoManager = new UndoManager()
 
   override def drawCards(count: Int): Unit = { val command = new DrawCardsCommand(this, count); undoManager.doMove(command); notifyObservers() }
