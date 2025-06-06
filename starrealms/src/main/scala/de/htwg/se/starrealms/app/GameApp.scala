@@ -31,7 +31,8 @@ object GameApp extends JFXApp3 {
 
     val gameState = new GameState(decksByRole, player1, player2, builderFactory, director)
     val gameLogic = new GameLogic(gameState)
-    val controller = new Controller(gameLogic)
+    val mediator = new StarRealmsMediator(gameState, gameLogic, List(p1, p2))
+    val controller = new Controller(mediator)
     val commandAdapter = new CommandProcessorAdapter(controller)
     val proxy: GameStateReadOnly = new GameStateProxy(gameState)
     val view = new ConsoleView(commandAdapter, proxy, gameLogic)
