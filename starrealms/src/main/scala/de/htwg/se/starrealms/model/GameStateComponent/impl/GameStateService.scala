@@ -31,27 +31,6 @@ class GameState(
 
   initializeDecks(decksByRole)
 
-  def copy: GameState = {
-    val newState = new GameState(
-      decksByRole.map { case (k, v) => (k, v.copy) }, // falls DeckInterface.copy existiert
-      player1, // ggf. auch kopieren, falls mutable
-      player2, // ggf. auch kopieren, falls mutable
-      builderFactory,
-      director
-    )
-    // Kopiere alle relevanten Felder
-    newState.currentPlayer = this.currentPlayer
-    newState.opponent = this.opponent
-    newState.playerDecks = this.playerDecks.map { case (k, v) => (k, v.copy) }
-    newState.hands = this.hands.map { case (k, v) => (k, v.map(_.copy)) }
-    newState.discardPiles = this.discardPiles.map { case (k, v) => (k, v.map(_.copy)) }
-    newState.lastDiscardedHands = this.lastDiscardedHands.map { case (k, v) => (k, v.map(_.copy)) }
-    newState.tradeRow = this.tradeRow.map(_.copy)
-    newState.tradeDeck = this.tradeDeck.copy
-    newState.explorerPile = this.explorerPile.copy
-    newState
-  }
-
   override def getDecksByRole = decksByRole
 
   override def initializeDecks(decks: Map[String, DeckInterface]): Unit = {
