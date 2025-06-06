@@ -14,6 +14,7 @@ import de.htwg.se.starrealms.model.DeckComponent.interface.DeckInterface
 import de.htwg.se.starrealms.controller.ControllerComponent.interface.ControllerInterface
 import de.htwg.se.starrealms.controller.GameLogicComponent.interface.GameLogicInterface
 import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
+import scalafx.scene.input.KeyCode.Undo
 //import de.htwg.se.starrealms.controller.ControllerComponent._
 
 class Controller(val mediator: GameMediator) extends Observable with ControllerInterface {
@@ -44,5 +45,5 @@ class Controller(val mediator: GameMediator) extends Observable with ControllerI
   override def getExplorerPile: DeckInterface = gameState.getExplorerPile
 
   override def getState: String = gameState.getDeckState
-  override def getUndoManager: Unit = undoManager
+  override def getUndoManager: UndoManager = undoManager
 }

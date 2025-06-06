@@ -3,13 +3,18 @@ package de.htwg.se.starrealms.app
 import de.htwg.se.starrealms.model.GameStateComponent.impl._
 import de.htwg.se.starrealms.model.PlayerComponent.impl._
 import de.htwg.se.starrealms.model.DeckComponent.impl._
+import de.htwg.se.starrealms.controller.ControllerComponent.impl._
+import de.htwg.se.starrealms.controller.GameLogicComponent.impl._
+import de.htwg.se.starrealms.controller.GameMediatorComponent.impl._
+import de.htwg.se.starrealms.controller.ControllerComponent.str._
 
 
 import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateReadOnly
 import de.htwg.se.starrealms.model.DeckComponent.interface._
+
 import de.htwg.se.starrealms.view._
-import de.htwg.se.starrealms.controller.ControllerComponent._
-import de.htwg.se.starrealms.controller.ControllerComponent.impl._
+
+
 
 import scalafx.application.JFXApp3
 import scalafx.scene.Scene
@@ -34,7 +39,7 @@ object GameApp extends JFXApp3 {
     val gameLogic = new GameLogic(gameState)
     val mediator = new StarRealmsMediator(gameState, gameLogic, List(player1, player2))
     val controller = new Controller(mediator)
-    val commandAdapter = new CommandProcessorAdapter(controller)
+    val commandAdapter = new CommandProcessorAdapter(mediator, controller)
     val proxy: GameStateReadOnly = new GameStateProxy(gameState)
     val view = new ConsoleView(commandAdapter, proxy, gameLogic)
     val gui = new GraphicUI(commandAdapter, proxy, () => running = false)
@@ -52,8 +57,8 @@ object GameApp extends JFXApp3 {
 
     gui.show()
 
-    controller.gameLogic.gameState.addObserver(gui)
-    controller.gameLogic.gameState.addObserver(view)
+    gameState.addObserver(gui)
+    gameState.addObserver(view)
 
   }
 }
