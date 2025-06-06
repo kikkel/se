@@ -13,9 +13,9 @@ class StarRealmsMediator(
 
     override def notify(sender: Any, event: String): Unit = event match {
         case "endTurn" =>
-        gameLogic.saveState()
+        //gameLogic.saveState()
         gameState.swapPlayers
-        gameLogic.startTurn()
+        //gameLogic.startTurn()
 
         case "playerSwitch" =>
         val newPlayer = players.find(_ != gameState.getCurrentPlayer).get
