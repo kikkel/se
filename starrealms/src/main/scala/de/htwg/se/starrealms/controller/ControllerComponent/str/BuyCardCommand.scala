@@ -2,6 +2,7 @@ package de.htwg.se.starrealms.controller.ControllerComponent.str
 
 import de.htwg.util.Command
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
 
-class BuyCardCommand(controller: Controller, card: Card) extends Command {
-  override def doMove: Unit = controller.gameLogic.buyCard(card); override def undoMove: Unit = controller.gameLogic.returnCardToTradeRow(card) }
+class BuyCardCommand(mediator: GameMediator, card: Card) extends Command {
+  override def doMove: Unit = mediator.getGameLogic.buyCard(card); override def undoMove: Unit = mediator.getGameLogic.returnCardToTradeRow(card) }

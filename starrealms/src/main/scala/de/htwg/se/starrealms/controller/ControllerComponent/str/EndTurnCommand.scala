@@ -2,7 +2,8 @@ package de.htwg.se.starrealms.controller.ControllerComponent.str
 
 import de.htwg.util.Command
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
 
-class EndTurnCommand(controller: Controller) extends Command {
-  override def doMove: Unit = controller.gameLogic.endTurn(); override def undoMove: Unit = controller.gameLogic.undoEndTurn() }
+class EndTurnCommand(mediator: GameMediator) extends Command {
+  override def doMove: Unit = mediator.getGameLogic.endTurn; override def undoMove: Unit = mediator.getGameLogic.undoEndTurn }
 
