@@ -1,11 +1,11 @@
 package de.htwg.se.starrealms.view
 
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.AbilityComponent.interface._
 import de.htwg.util._
 
 import de.htwg.se.starrealms.model.random._
 import de.htwg.se.starrealms.model.CardComponent.impl._
-import de.htwg.se.starrealms.model.AbilityComponent.impl._
 
 class OptionsMenuRender extends Renderer[OptionsMenu] {
   override def render(menu: OptionsMenu): String = {
@@ -55,8 +55,8 @@ class CardRenderer extends Observable with Renderer[Card] {
        |  Faction: ${card.faction.factionName}
        |""".stripMargin
 
-  private def renderAbility(ability: Option[Ability]): String =
-    ability.map(_.render()).getOrElse("None")
+  private def renderAbility(ability: Option[AbilityInterface]): String =
+    ability.map(_.render).getOrElse("None")
 }
 
 /* class DeckRenderer extends Renderer[Deck] {

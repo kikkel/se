@@ -5,12 +5,12 @@ import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
 import de.htwg.se.starrealms.model.AbilityComponent.interface._
 import scala.util.{Try, Success, Failure}
 
-import de.htwg.se.starrealms.model.AbilityComponent.impl._
+import de.htwg.se.starrealms.model.AbilityComponent.interface._
 
 case class DefaultCard(
     override val edition: Edition,
     override val cardName: String,
-    override val primaryAbility: Option[Ability],
+    override val primaryAbility: Option[AbilityInterface],
     override val faction: Faction,
     override val cardType: Try[CardType],
     override val qty: Int,
@@ -24,6 +24,6 @@ case class DefaultCard(
             case Failure(exception) => s"Error: ${exception.getMessage} #DefaultCard"
         }
         s"DefaultCard(${edition.nameOfEdition}, $cardName, " +
-        s"${primaryAbility.map(_.render()).getOrElse("None")}, ${faction.factionName} $cardTypeStr) #BRIDGE: DefaultCard"
+        s"${primaryAbility.map(_.render).getOrElse("None")}, ${faction.factionName} $cardTypeStr) #BRIDGE: DefaultCard"
     }
 }

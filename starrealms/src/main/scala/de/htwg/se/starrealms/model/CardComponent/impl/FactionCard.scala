@@ -5,15 +5,15 @@ import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
 import de.htwg.se.starrealms.model.AbilityComponent.interface._
 import scala.util.{Try, Success, Failure}
 
-import de.htwg.se.starrealms.model.AbilityComponent.impl._
+import de.htwg.se.starrealms.model.AbilityComponent.interface._
 
 case class FactionCard(
     override val edition: Edition,
     override val cardName: String,
     val cost: Int,
-    override val primaryAbility: Option[Ability],
-    val allyAbility: Option[Ability],
-    val scrapAbility: Option[Ability],
+    override val primaryAbility: Option[AbilityInterface],
+    val allyAbility: Option[AbilityInterface],
+    val scrapAbility: Option[AbilityInterface],
     override val faction: Faction,
     override val cardType: Try[CardType],
     override val qty: Int,
@@ -25,8 +25,8 @@ case class FactionCard(
                 case Success(value) => value.toString
                 case Failure(exception) => s"Error: ${exception.getMessage} #FactionCard"
             }
-            s"FactionCard(${edition.nameOfEdition}, $cardName, $cost, ${primaryAbility.map(_.render()).getOrElse("None")}, " +
-                s"${allyAbility.map(_.render()).getOrElse("None")}, ${scrapAbility.map(_.render()).getOrElse("None")}, " +
+            s"FactionCard(${edition.nameOfEdition}, $cardName, $cost, ${primaryAbility.map(_.render).getOrElse("None")}, " +
+                s"${allyAbility.map(_.render).getOrElse("None")}, ${scrapAbility.map(_.render).getOrElse("None")}, " +
                 s"${faction.factionName}, $cardTypeStr), ${notes.getOrElse("No notes")}) #BRIDGE: FactionCard"
         }
 }

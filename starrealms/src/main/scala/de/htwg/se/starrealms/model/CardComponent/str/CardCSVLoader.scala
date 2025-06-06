@@ -1,6 +1,7 @@
 package de.htwg.se.starrealms.model.CardComponent.str
 
 import de.htwg.se.starrealms.model.CardComponent.interface._
+import de.htwg.se.starrealms.model.AbilityComponent.interface._
 import scala.util.{Failure, Try, Success}
 import scala.io.Source
 import scala.util.matching.Regex

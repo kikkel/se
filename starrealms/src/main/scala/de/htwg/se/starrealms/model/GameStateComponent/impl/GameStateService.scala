@@ -5,6 +5,7 @@ import de.htwg.se.starrealms.model.PlayerComponent.interface.PlayerInterface
 import de.htwg.se.starrealms.model.DeckComponent.interface._
 import de.htwg.se.starrealms.model.CardComponent.interface.Card
 import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateInterface
+import de.htwg.se.starrealms.model.AbilityComponent.interface.Action
 
 import de.htwg.se.starrealms.model.CardComponent.impl.FactionCard
 
@@ -139,7 +140,7 @@ class GameState(
         case c: FactionCard => c.cost.toString
         case _ => "-"
       }
-      val ability = card.primaryAbility.map(_.actions.map(_.description).mkString(", ")).getOrElse("-")
+      val ability = card.primaryAbility.map(_.getActions.map(_.description).mkString(", ")).getOrElse("-")
       s"$name | $faction | $typ | Cost: $cost | Ability: $ability"
     }
 
