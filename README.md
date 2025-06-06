@@ -45,7 +45,7 @@ lec 7 notes
 Refactoring Guru: https://refactoring.guru/design-patterns
 
 ## Structural
-- ### DECORATOR Pattern:
+-  **DECORATOR Pattern:** ✅
   > - https://refactoring.guru/design-patterns/decorator
   > - to be able to assign extra behaviors to objects at runtime without breaking the code that uses these objects
   > - when it’s awkward or not possible to extend an object’s behavior using inheritance.
