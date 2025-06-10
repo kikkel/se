@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model.AbilityComponent.impl
 
-import de.htwg.se.starrealms.model.AbilityComponent.interface.Action
+import de.htwg.se.starrealms.model.AbilityComponent.Action
 
 case class SimpleAction(description: String) extends Action { override def doMove: Unit = println(description) }
 case class ConditionalAction(condition1: Action, condition2: Action) extends Action {

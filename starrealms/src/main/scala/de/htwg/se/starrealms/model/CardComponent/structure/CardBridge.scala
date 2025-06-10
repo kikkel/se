@@ -1,6 +1,6 @@
-package de.htwg.se.starrealms.model.CardComponent.str
+package de.htwg.se.starrealms.model.CardComponent.structure
 
-import de.htwg.se.starrealms.model.CardComponent.interface.CardType
+import de.htwg.se.starrealms.model.CardComponent.CardType
 
 class Ship extends CardType {
     override def cardType: String = "Ship"

@@ -1,7 +1,7 @@
-package de.htwg.se.starrealms.controller.GameLogicComponent.interface
+package de.htwg.se.starrealms.controller.GameLogicComponent
 
-import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateInterface
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se.starrealms.model.CardComponent.Card
 
 trait GameLogicInterface {
     def drawCard: Option[Card]

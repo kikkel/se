@@ -1,9 +1,9 @@
 package de.htwg.se.starrealms.controller.GameMediatorComponent.impl
 
-import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateInterface
-import de.htwg.se.starrealms.controller.GameLogicComponent.interface.GameLogicInterface
-import de.htwg.se.starrealms.model.PlayerComponent.interface.PlayerInterface
-import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
+import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
+import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 
 class StarRealmsMediator(
     val gameState: GameStateInterface,

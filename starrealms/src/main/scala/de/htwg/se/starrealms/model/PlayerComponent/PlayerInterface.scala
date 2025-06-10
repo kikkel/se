@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model.PlayerComponent.interface
+package de.htwg.se.starrealms.model.PlayerComponent
 
 trait PlayerInterface {
   def getName: String

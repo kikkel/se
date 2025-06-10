@@ -1,6 +1,6 @@
-package de.htwg.se.starrealms.model.DeckComponent.interface
+package de.htwg.se.starrealms.model.DeckComponent
 
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.CardComponent.Card
 
 trait DeckDirectorInterface {
     def constructEmptyDeck(name: String, builderFactory: => Builder): DeckInterface

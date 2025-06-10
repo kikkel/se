@@ -1,11 +1,11 @@
 package de.htwg.se.starrealms.model.CardComponent.impl
 
-import de.htwg.se.starrealms.model.CardComponent.interface._
-import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
-import de.htwg.se.starrealms.model.AbilityComponent.interface._
+import de.htwg.se.starrealms.model.CardComponent._
+import de.htwg.se.starrealms.model.EditionComponent.Edition
+import de.htwg.se.starrealms.model.AbilityComponent._
 import scala.util.{Try, Success, Failure}
 
-import de.htwg.se.starrealms.model.AbilityComponent.interface._
+import de.htwg.se.starrealms.model.AbilityComponent._
 
 case class FactionCard(
     override val edition: Edition,

@@ -1,10 +1,10 @@
 package de.htwg.se.starrealms.view
 
 import de.htwg.se.starrealms.controller.ControllerComponent._
-import de.htwg.se.starrealms.controller.ControllerComponent.str._
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
-import de.htwg.se.starrealms.controller.ControllerComponent.interface.ControllerInterface
+import de.htwg.se.starrealms.controller.ControllerComponent.structure._
+import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
+import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
 
 
 trait CommandAdapter { def handleInput(input: String): String; def getState: String } //Adapter
@@ -20,7 +20,7 @@ class CommandProcessorAdapter(mediator: GameMediator, controller: ControllerInte
         val idx = num.toInt - 1
         val hand = mediator.getGameState.getHand(mediator.getGameState.getCurrentPlayer)
         if (idx >= 0 && idx < hand.size) {
-          controller.getUndoManager.doMove(new str.PlayCardCommand(mediator, hand(idx))); s"Played card: ${hand(idx).cardName}\n\n"
+          controller.getUndoManager.doMove(new structure.PlayCardCommand(mediator, hand(idx))); s"Played card: ${hand(idx).cardName}\n\n"
         } else { "Invalid card index.\n\n" }
       case Array("b", num) if num.forall(_.isDigit) =>
         val idx = num.toInt - 1

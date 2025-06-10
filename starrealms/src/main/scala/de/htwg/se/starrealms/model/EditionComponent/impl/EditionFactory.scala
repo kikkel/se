@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model.EditionComponent.impl
 
-import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
+import de.htwg.se.starrealms.model.EditionComponent.Edition
 
 private class CoreSet extends Edition { override def nameOfEdition: String = "Core Set" }
 /* private class HighAlertFirstStrike extends Edition { override def nameOfEdition: String = "High Alert: First Strike" }

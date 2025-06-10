@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model.PlayerComponent.impl
 
-import de.htwg.se.starrealms.model.PlayerComponent.interface.PlayerInterface
+import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 
 case class Player(
     name: String,

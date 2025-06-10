@@ -1,8 +1,8 @@
-package de.htwg.se.starrealms.model.GameStateComponent.interface
+package de.htwg.se.starrealms.model.GameStateComponent
 
-import de.htwg.se.starrealms.model.PlayerComponent.interface.PlayerInterface
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se.starrealms.model.DeckComponent.interface.DeckInterface
+import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
+import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.DeckComponent.DeckInterface
 import de.htwg.util.Observable
 import scala.util.Try
 

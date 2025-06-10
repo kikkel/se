@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model.CardComponent.interface
+package de.htwg.se.starrealms.model.CardComponent
 
 trait Faction {
     def factionName: String

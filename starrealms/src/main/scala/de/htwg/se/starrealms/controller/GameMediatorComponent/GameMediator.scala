@@ -1,8 +1,8 @@
-package de.htwg.se.starrealms.controller.GameMediatorComponent.interface
+package de.htwg.se.starrealms.controller.GameMediatorComponent
 
-import de.htwg.se.starrealms.controller.GameLogicComponent.interface.GameLogicInterface
-import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateInterface
-import de.htwg.se.starrealms.model.PlayerComponent.interface.PlayerInterface
+import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 trait GameMediator {
     def notify(sender: Any, event: String): Unit
     def getGameLogic: GameLogicInterface

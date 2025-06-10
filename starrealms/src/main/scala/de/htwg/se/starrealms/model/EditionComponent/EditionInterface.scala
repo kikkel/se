@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model.EditionComponent.interface
+package de.htwg.se.starrealms.model.EditionComponent
 
 trait Edition {
     def nameOfEdition: String

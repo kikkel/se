@@ -1,8 +1,8 @@
 package de.htwg.se.starrealms.model.DeckComponent.impl
 
-import de.htwg.se.starrealms.model.CardComponent.str.CardCSVLoader
-import de.htwg.se.starrealms.model.DeckComponent.interface.Builder
-import de.htwg.se.starrealms.model.DeckComponent.interface.DeckDirectorInterface
+import de.htwg.se.starrealms.model.CardComponent.structure.CardCSVLoader
+import de.htwg.se.starrealms.model.DeckComponent.Builder
+import de.htwg.se.starrealms.model.DeckComponent.DeckDirectorInterface
 
 
 object LoadCards {

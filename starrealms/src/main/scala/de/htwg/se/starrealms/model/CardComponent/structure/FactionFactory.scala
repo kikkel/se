@@ -1,6 +1,6 @@
-package de.htwg.se.starrealms.model.CardComponent.str
+package de.htwg.se.starrealms.model.CardComponent.structure
 
-import de.htwg.se.starrealms.model.CardComponent.interface.Faction
+import de.htwg.se.starrealms.model.CardComponent.Faction
 
 private class TradeFederation extends Faction { override def factionName: String = "Trade Federation"; override def matches(other: Faction): Boolean = other.factionName == factionName }
 private class StarEmpire extends Faction { override def factionName: String = "Star Empire"; override def matches(other: Faction): Boolean = other.factionName == factionName }

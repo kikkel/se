@@ -1,11 +1,11 @@
 package de.htwg.se.starrealms.model.GameStateComponent.impl
 
 import de.htwg.util._
-import de.htwg.se.starrealms.model.PlayerComponent.interface.PlayerInterface
-import de.htwg.se.starrealms.model.DeckComponent.interface._
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateInterface
-import de.htwg.se.starrealms.model.AbilityComponent.interface.Action
+import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
+import de.htwg.se.starrealms.model.DeckComponent._
+import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se.starrealms.model.AbilityComponent.Action
 
 import de.htwg.se.starrealms.model.CardComponent.impl.FactionCard
 

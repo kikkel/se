@@ -1,7 +1,7 @@
 package de.htwg.se.starrealms.model.DeckComponent.impl
 
-import de.htwg.se.starrealms.model.DeckComponent.interface.{DeckInterface, Builder}
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.DeckComponent.{DeckInterface, Builder}
+import de.htwg.se.starrealms.model.CardComponent.Card
 
 class DeckBuilder(product: DeckInterface) extends Builder {
     private var productVar: DeckInterface = product

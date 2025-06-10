@@ -1,7 +1,7 @@
-package de.htwg.se.starrealms.model.DeckComponent.str
+package de.htwg.se.starrealms.model.DeckComponent.structure
 
-import de.htwg.se.starrealms.model.DeckComponent.interface._
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.DeckComponent._
+import de.htwg.se.starrealms.model.CardComponent.Card
 
 class DefaultDrawStrategy extends DrawStrategy {
   override def draw(deck: DeckInterface, count: Int): List[Card] = {

@@ -1,6 +1,6 @@
-package de.htwg.se.starrealms.model.AbilityComponent.interface
+package de.htwg.se.starrealms.model.AbilityComponent
 
-import de.htwg.se.starrealms.model.AbilityComponent.interface.Action
+import de.htwg.se.starrealms.model.AbilityComponent.Action
 trait AbilityInterface {
   def getActions: List[Action]
   def hasActions: Boolean

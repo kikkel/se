@@ -1,7 +1,7 @@
-package de.htwg.se.starrealms.model.DeckComponent.interface
+package de.htwg.se.starrealms.model.DeckComponent
 
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se.starrealms.model.DeckComponent.interface.DeckInterface
+import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.DeckComponent.DeckInterface
 import scala.util.Try
 
 trait Builder {

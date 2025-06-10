@@ -1,8 +1,8 @@
 package de.htwg.se.starrealms.model.DeckComponent.impl
 
-import de.htwg.se.starrealms.model.DeckComponent.interface._
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se.starrealms.model.DeckComponent.interface.DeckDirectorInterface
+import de.htwg.se.starrealms.model.DeckComponent._
+import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.DeckComponent.DeckDirectorInterface
 
 class DeckDirector extends DeckDirectorInterface {
     override def constructEmptyDeck(name: String, builderFactory: => Builder): DeckInterface = {

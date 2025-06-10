@@ -1,19 +1,19 @@
 package de.htwg.se.starrealms.controller.ControllerComponent.impl
 
 import de.htwg.util.{Observable, UndoManager}
-import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
+import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 
 import de.htwg.se.starrealms.controller.ControllerComponent.impl._
-import de.htwg.se.starrealms.controller.ControllerComponent.str._
+import de.htwg.se.starrealms.controller.ControllerComponent.structure._
 
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se. starrealms.model.GameStateComponent.interface.GameStateInterface
-import de.htwg.se. starrealms.model.PlayerComponent.interface.PlayerInterface
-import de.htwg.se.starrealms.model.DeckComponent.interface.DeckInterface
+import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se. starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se. starrealms.model.PlayerComponent.PlayerInterface
+import de.htwg.se.starrealms.model.DeckComponent.DeckInterface
 
-import de.htwg.se.starrealms.controller.ControllerComponent.interface.ControllerInterface
-import de.htwg.se.starrealms.controller.GameLogicComponent.interface.GameLogicInterface
-import de.htwg.se.starrealms.controller.GameMediatorComponent.interface.GameMediator
+import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
+import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
+import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 import scalafx.scene.input.KeyCode.Undo
 //import de.htwg.se.starrealms.controller.ControllerComponent._
 

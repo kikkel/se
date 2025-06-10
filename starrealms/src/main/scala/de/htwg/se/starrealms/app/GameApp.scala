@@ -6,11 +6,11 @@ import de.htwg.se.starrealms.model.DeckComponent.impl._
 import de.htwg.se.starrealms.controller.ControllerComponent.impl._
 import de.htwg.se.starrealms.controller.GameLogicComponent.impl._
 import de.htwg.se.starrealms.controller.GameMediatorComponent.impl._
-import de.htwg.se.starrealms.controller.ControllerComponent.str._
+import de.htwg.se.starrealms.controller.ControllerComponent.structure._
 
 
-import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateReadOnly
-import de.htwg.se.starrealms.model.DeckComponent.interface._
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
+import de.htwg.se.starrealms.model.DeckComponent._
 
 import de.htwg.se.starrealms.view._
 

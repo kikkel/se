@@ -1,6 +1,6 @@
-package de.htwg.se.starrealms.model.CardComponent.interface
+package de.htwg.se.starrealms.model.CardComponent
 
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
+import de.htwg.se.starrealms.model.CardComponent.Card
 
 trait CardCSVLoaderInterface {
     def loadCardsFromFile: Unit

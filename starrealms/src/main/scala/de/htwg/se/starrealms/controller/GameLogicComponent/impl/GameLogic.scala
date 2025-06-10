@@ -3,10 +3,10 @@ package de.htwg.se.starrealms.controller.GameLogicComponent.impl
 import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
 
-import de.htwg.se.starrealms.model.GameStateComponent.interface.GameStateInterface
-import de.htwg.se.starrealms.model.CardComponent.interface.Card
-import de.htwg.se.starrealms.controller.GameLogicComponent.interface.GameLogicInterface
-import de.htwg.se.starrealms.model.DeckComponent.str.{TradeRowReplenishStrategy, StartTurnStrategy}
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
+import de.htwg.se.starrealms.model.DeckComponent.structure.{TradeRowReplenishStrategy, StartTurnStrategy}
 
 
 //import de.htwg.se.starrealms.controller._

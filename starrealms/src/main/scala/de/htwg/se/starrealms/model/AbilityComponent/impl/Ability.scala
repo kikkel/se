@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model.AbilityComponent.impl
 
-import de.htwg.se.starrealms.model.AbilityComponent.interface.{AbilityInterface, Action}
+import de.htwg.se.starrealms.model.AbilityComponent.{AbilityInterface, Action}
 
 
 class Ability(val actions: List[Action]) extends AbilityInterface {

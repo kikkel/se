@@ -1,8 +1,8 @@
-package de.htwg.se.starrealms.model.CardComponent.str
+package de.htwg.se.starrealms.model.CardComponent.structure
 
-import de.htwg.se.starrealms.model.CardComponent.interface._
-import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
-import de.htwg.se.starrealms.model.AbilityComponent.interface._
+import de.htwg.se.starrealms.model.CardComponent._
+import de.htwg.se.starrealms.model.EditionComponent.Edition
+import de.htwg.se.starrealms.model.AbilityComponent._
 import scala.util.{Try, Success, Failure}
 
 

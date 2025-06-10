@@ -1,10 +1,10 @@
-package de.htwg.se.starrealms.model.CardComponent.interface
+package de.htwg.se.starrealms.model.CardComponent
 
-import de.htwg.se.starrealms.model.EditionComponent.interface.Edition
-import de.htwg.se.starrealms.model.AbilityComponent.interface._
+import de.htwg.se.starrealms.model.EditionComponent.Edition
+import de.htwg.se.starrealms.model.AbilityComponent._
 import scala.util.{Try, Success, Failure}
 
-import de.htwg.se.starrealms.model.AbilityComponent.interface._
+import de.htwg.se.starrealms.model.AbilityComponent._
 
 trait Card {
     val edition: Edition
