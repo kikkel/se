@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.app
 
 import de.htwg.se.starrealms.model.GameStateComponent.impl._
 import de.htwg.se.starrealms.model.PlayerComponent.impl._
-import de.htwg.se.starrealms.model.DeckComponent.impl._
+import de.htwg.se.starrealms.model.GameCore.impl.{DeckBuilder, DeckDirector, LoadCards, Deck}
 import de.htwg.se.starrealms.controller.ControllerComponent.impl._
 import de.htwg.se.starrealms.controller.GameLogicComponent.impl._
 import de.htwg.se.starrealms.controller.GameMediatorComponent.impl._
@@ -10,7 +10,7 @@ import de.htwg.se.starrealms.controller.ControllerComponent.structure._
 
 
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
-import de.htwg.se.starrealms.model.DeckComponent._
+import de.htwg.se.starrealms.model.GameCore.{DeckInterface, Builder}
 
 import de.htwg.se.starrealms.view._
 

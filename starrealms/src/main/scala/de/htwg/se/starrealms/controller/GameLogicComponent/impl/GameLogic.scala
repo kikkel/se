@@ -6,7 +6,7 @@ import de.htwg.util.Observable
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
 import de.htwg.se.starrealms.model.GameCore.Card
 import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
-import de.htwg.se.starrealms.model.DeckComponent.structure.{TradeRowReplenishStrategy, StartTurnStrategy}
+import de.htwg.se.starrealms.model.GameCore.structure.{TradeRowReplenishStrategy, StartTurnStrategy}
 
 
 //import de.htwg.se.starrealms.controller._

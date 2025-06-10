@@ -1,9 +1,9 @@
 package de.htwg.se.starrealms.controller.ControllerComponent.structure
 
 
-import de.htwg.se.starrealms.model.GameCore.Card
-import de.htwg.se.starrealms.model.DeckComponent._
-import de.htwg.se.starrealms.model.DeckComponent.structure.DefaultDrawStrategy
+import de.htwg.se.starrealms.model.GameCore.{Card, DeckInterface, DrawStrategy}
+import de.htwg.se.starrealms.model.GameCore.structure.DefaultDrawStrategy
+
 import de.htwg.se.starrealms.model.GameStateComponent._
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 
