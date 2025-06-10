@@ -4,7 +4,7 @@ import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
 
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
-import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.GameCore.Card
 import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
 import de.htwg.se.starrealms.model.DeckComponent.structure.{TradeRowReplenishStrategy, StartTurnStrategy}
 

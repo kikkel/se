@@ -1,9 +1,9 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.GameCore.Card
 
 
-import de.htwg.se.starrealms.model.CardComponent.impl._
+import de.htwg.se.starrealms.model.GameCore.impl._
 
 trait Renderer[T] { def render(entity: T): String }
 

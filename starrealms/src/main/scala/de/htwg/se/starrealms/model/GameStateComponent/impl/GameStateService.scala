@@ -2,12 +2,10 @@ package de.htwg.se.starrealms.model.GameStateComponent.impl
 
 import de.htwg.util._
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
-import de.htwg.se.starrealms.model.DeckComponent._
-import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.GameCore.{Card, DeckDirectorInterface, DeckInterface, Builder}
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
-import de.htwg.se.starrealms.model.AbilityComponent.Action
 
-import de.htwg.se.starrealms.model.CardComponent.impl.FactionCard
+import de.htwg.se.starrealms.model.GameCore.impl.FactionCard
 
 
 class GameState(

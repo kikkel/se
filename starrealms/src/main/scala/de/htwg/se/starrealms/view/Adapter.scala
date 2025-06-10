@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.view
 
 import de.htwg.se.starrealms.controller.ControllerComponent._
 import de.htwg.se.starrealms.controller.ControllerComponent.structure._
-import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.GameCore.Card
 import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
 

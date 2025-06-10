@@ -1,11 +1,10 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.model.CardComponent.Card
-import de.htwg.se.starrealms.model.AbilityComponent._
+import de.htwg.se.starrealms.model.GameCore.{Card, AbilityInterface}
 import de.htwg.util._
 
-import de.htwg.se.starrealms.model.random._
-import de.htwg.se.starrealms.model.CardComponent.impl._
+import de.htwg.se.starrealms.model.GameCore.structure.{OptionsMenu, MainMenu}
+import de.htwg.se.starrealms.model.GameCore.impl.{DefaultCard, ExplorerCard, FactionCard}
 
 class OptionsMenuRender extends Renderer[OptionsMenu] {
   override def render(menu: OptionsMenu): String = {

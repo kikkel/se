@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.view
 
 import de.htwg.util.{Observer, Observable}
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
-import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.GameCore.Card
 
 
 /*

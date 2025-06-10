@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.view
 
 import de.htwg.util.Observer
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
-import de.htwg.se.starrealms.model.CardComponent.Card
+import de.htwg.se.starrealms.model.GameCore.Card
 
 import scalafx.application.Platform
 import scalafx.scene.Scene
