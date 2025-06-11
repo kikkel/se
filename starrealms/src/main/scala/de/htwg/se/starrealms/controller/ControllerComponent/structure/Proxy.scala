@@ -4,7 +4,7 @@ package de.htwg.se.starrealms.controller.ControllerComponent.structure
 import de.htwg.se.starrealms.model.GameCore.{Card, DeckInterface, DrawStrategy}
 import de.htwg.se.starrealms.model.GameCore.structure.DefaultDrawStrategy
 
-import de.htwg.se.starrealms.model.GameStateComponent._
+import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameStateReadOnly}
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 
 class DrawStrategyProxy extends DrawStrategy {

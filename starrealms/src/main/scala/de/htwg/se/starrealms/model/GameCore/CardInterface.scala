@@ -1,11 +1,17 @@
 package de.htwg.se.starrealms.model.GameCore
 
-import de.htwg.se.starrealms.model.EditionComponent.Edition
-import de.htwg.se.starrealms.model.GameCore._
 import scala.util.{Try, Success, Failure}
 
-import de.htwg.se.starrealms.model.GameCore._
+trait CardType {
+    def cardType: String
+}
 
+trait Faction {
+    def factionName: String
+    def matches(other: Faction): Boolean
+    def render(): String = s"$factionName #factory"
+    //def apply()
+}
 trait Card {
     val edition: Edition
     val cardName: String
@@ -16,3 +22,12 @@ trait Card {
     val role: String
     def render(): String
 }
+
+
+trait Edition {
+    def nameOfEdition: String
+    def render(): String = s"$nameOfEdition #factory"
+    //def apply()
+}
+
+

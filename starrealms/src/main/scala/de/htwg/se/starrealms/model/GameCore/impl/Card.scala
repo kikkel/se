@@ -1,6 +1,133 @@
-package de.htwg.se.starrealms.model.EditionComponent.impl
+package de.htwg.se.starrealms.model.GameCore.impl
 
-import de.htwg.se.starrealms.model.EditionComponent.Edition
+import de.htwg.se.starrealms.model.GameCore.{Card, CardType, Faction, AbilityInterface, Edition}
+
+import scala.util.{Try, Success, Failure}
+
+//--------------------------------------------------------------------------Card Types
+class Ship extends CardType { override def cardType: String = "Ship" }
+class Base(val defense: String, val isOutpost: Boolean) extends CardType { override def cardType: String = "Base" }
+
+//--------------------------------------------------------------------------Faction Factory
+private class TradeFederation extends Faction { override def factionName: String = "Trade Federation"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class StarEmpire extends Faction { override def factionName: String = "Star Empire"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class Blob extends Faction { override def factionName: String = "Blob"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class MachineCult extends Faction { override def factionName: String = "Machine Cult"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class CompositeFaction(factions: List[Faction]) extends Faction { override def factionName: String = factions.map(_.factionName).mkString(" / "); override def matches(other: Faction): Boolean = factions.exists(_.matches(other)) }
+private class Unaligned extends Faction { override def factionName: String = "Unaligned"; override def matches(other: Faction): Boolean = false }
+
+object Faction {
+    def apply(factionName: String): Faction = {
+        if (factionName.contains("/")) {
+            val factionParts = factionName.split("/").map(_.trim)
+            val factions = factionParts.map(apply).toList
+            new CompositeFaction(factions)
+        } else {
+            factionName.toLowerCase match {
+                case "trade federation" => new TradeFederation
+                case "star empire" => new StarEmpire
+                case "blob" => new Blob
+                case "machine cult" => new MachineCult
+                case "unaligned" => new Unaligned
+                case _ => throw new IllegalArgumentException(s"Faction not recognized: $factionName #Factory.scala: objectFaction")
+            }
+        }
+    }
+}
+
+// Example usage
+// val tradeFederation = Faction("trade federation")
+
+//--------------------------------------------------------------------------Cards
+case class ParsedCard(
+    edition: Edition,
+    cardName: String,
+    cost: Option[Int],
+    primaryAbility: Option[AbilityInterface],
+    allyAbility: Option[AbilityInterface],
+    scrapAbility: Option[AbilityInterface],
+    faction: Faction,
+    cardType: Try[CardType],
+    qty: Int,
+    role: String,
+    notes: Option[String]
+) extends Card {
+    override def render(): String = {
+        val cardTypeStr = cardType match {
+            case Success(value) => value.toString
+            case Failure(exception) => s"Error: ${exception.getMessage} #ParsedCard"
+        }
+        s"ParsedCard(${edition.nameOfEdition}, $cardName, $cost, ${primaryAbility.map(_.render).getOrElse("None")}, " +
+        s"${allyAbility.map(_.render).getOrElse("None")}, ${scrapAbility.map(_.render).getOrElse("None")}, " +
+        s"${faction.factionName}, $cardTypeStr), ${notes.getOrElse("No notes")}) #BRIDGE: ParsedCard"
+    }
+}
+
+case class DefaultCard(
+    override val edition: Edition,
+    override val cardName: String,
+    override val primaryAbility: Option[AbilityInterface],
+    override val faction: Faction,
+    override val cardType: Try[CardType],
+    override val qty: Int,
+    override val role: String
+
+
+) extends Card {
+    override def render(): String = {
+        val cardTypeStr = cardType match {
+            case Success(value) => value.toString
+            case Failure(exception) => s"Error: ${exception.getMessage} #DefaultCard"
+        }
+        s"DefaultCard(${edition.nameOfEdition}, $cardName, " +
+        s"${primaryAbility.map(_.render).getOrElse("None")}, ${faction.factionName} $cardTypeStr) #BRIDGE: DefaultCard"
+    }
+}
+case class ExplorerCard(
+    override val edition: Edition,
+    override val cardName: String,
+    val cost: Int,
+    override val primaryAbility: Option[AbilityInterface],
+    val scrapAbility: Option[AbilityInterface],
+    override val faction: Faction,
+    override val cardType: Try[CardType],
+    override val qty: Int,
+    override val role: String
+) extends Card {
+    override def render(): String = {
+        val cardTypeStr = cardType match {
+            case Success(value) => value.toString
+            case Failure(exception) => s"Error: ${exception.getMessage} #ExplorerCard"
+        }
+        s"ExplorerCard(${edition.nameOfEdition}, $cardName, $cost, ${primaryAbility.map(_.render).getOrElse("None")}, " +
+        s"${scrapAbility.map(_.render).getOrElse("None")}, ${faction.factionName}, $cardTypeStr) #BRIDGE: ExplorerCard"
+    }
+}
+case class FactionCard(
+    override val edition: Edition,
+    override val cardName: String,
+    val cost: Int,
+    override val primaryAbility: Option[AbilityInterface],
+    val allyAbility: Option[AbilityInterface],
+    val scrapAbility: Option[AbilityInterface],
+    override val faction: Faction,
+    override val cardType: Try[CardType],
+    override val qty: Int,
+    override val role: String,
+    val notes: Option[String]
+    ) extends Card {
+        override def render(): String = {
+            val cardTypeStr = cardType match {
+                case Success(value) => value.toString
+                case Failure(exception) => s"Error: ${exception.getMessage} #FactionCard"
+            }
+            s"FactionCard(${edition.nameOfEdition}, $cardName, $cost, ${primaryAbility.map(_.render).getOrElse("None")}, " +
+                s"${allyAbility.map(_.render).getOrElse("None")}, ${scrapAbility.map(_.render).getOrElse("None")}, " +
+                s"${faction.factionName}, $cardTypeStr), ${notes.getOrElse("No notes")}) #BRIDGE: FactionCard"
+        }
+}
+
+//--------------------------------------------------------------------------Edition Factory
 
 private class CoreSet extends Edition { override def nameOfEdition: String = "Core Set" }
 /* private class HighAlertFirstStrike extends Edition { override def nameOfEdition: String = "High Alert: First Strike" }

@@ -1,11 +1,6 @@
 package de.htwg.se.starrealms.model.GameCore.impl
 
-import de.htwg.se.starrealms.model.GameCore.{DeckInterface, Card}
-
-import scala.util.Random
-import org.scalactic.Fail
-import scala.util.Try
-
+import de.htwg.se.starrealms.model.GameCore.{DeckInterface, Card, DeckDirectorInterface, Builder}
 
 class Deck extends DeckInterface {
     private var name: String = ""
@@ -69,7 +64,6 @@ class Deck extends DeckInterface {
     }
 }
 
-
 // Unlike other creational patterns, builder lets you construct
 // products that don't follow the common interface.
 /* class DeckManualBuilder implements Builder is
@@ -98,4 +92,42 @@ class Deck extends DeckInterface {
 
  */
 
+class DeckBuilder(product: DeckInterface) extends Builder {
+    private var productVar: DeckInterface = product
 
+    override def reset: Unit = productVar.resetDeck() 
+    override def setName(name: String): Unit = productVar.setName(name)
+    override def setCards(newCards: Map[Card, Int]): Unit = productVar.setCards(newCards)
+    override def addCards(cards: List[Card]): Unit = cards.foreach(productVar.addCard)
+    override def addCard(card: Card): Unit = productVar.addCard(card)
+    override def getProduct: DeckInterface = productVar
+
+}
+
+class DeckDirector extends DeckDirectorInterface {
+    override def constructEmptyDeck(name: String, builderFactory: => Builder): DeckInterface = {
+        val builder = builderFactory
+        builder.reset
+        builder.setName(name)
+        builder.setCards(Map.empty)
+        builder.getProduct
+    }
+    override def constructCustomDeck(name: String, builderFactory: => Builder, cards: List[Card]): DeckInterface = {
+            val builder = builderFactory
+            builder.reset
+            builder.setName(name)
+            val cardMap = cards.groupBy(identity).map { case (card, list) => card -> list.size }
+            builder.setCards(cardMap)
+            builder.getProduct
+    }
+    override def constructDecks(builderFactory: => Builder, groupedCards: Map[String, List[Card]]): Map[String, DeckInterface] = {
+        groupedCards.map { case (role, cards) =>
+            val builder = builderFactory
+            builder.reset
+            builder.setName(role)
+            val cardMap = cards.groupBy(identity).view.mapValues(_.size).toMap
+            builder.setCards(cardMap)
+            role -> builder.getProduct
+        }
+    }
+}

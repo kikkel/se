@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model.GameCore
 
-import de.htwg.se.starrealms.model.GameCore.Action
+trait Action { def description: String; def doMove: Unit }
 
 trait AbilityInterface {
   def getActions: List[Action]
@@ -8,3 +8,4 @@ trait AbilityInterface {
   def executeActions(): Unit
   def render: String
 }
+

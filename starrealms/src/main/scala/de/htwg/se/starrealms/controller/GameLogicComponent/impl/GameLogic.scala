@@ -4,15 +4,12 @@ import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
 
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
-import de.htwg.se.starrealms.model.GameCore.Card
 import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
+
 import de.htwg.se.starrealms.model.GameCore.structure.{TradeRowReplenishStrategy, StartTurnStrategy}
+import de.htwg.se.starrealms.model.GameCore.Card
 
 
-//import de.htwg.se.starrealms.controller._
-
-
-//--------------------------------------------------------------------GameLogic
 class GameLogic(val gameState: GameStateInterface) extends Observable with GameLogicInterface {
   // Existing logic for strategies, if needed
   private val replenishStrategy = new TradeRowReplenishStrategy()
