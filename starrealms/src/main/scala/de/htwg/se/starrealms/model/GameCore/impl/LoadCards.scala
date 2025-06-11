@@ -1,19 +1,28 @@
 package de.htwg.se.starrealms.model.GameCore.impl
 
-import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, Card, Action, Edition}
+import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, DeckInterface, Card, Action, Edition}
 
 import scala.util.{Failure, Try, Success}
 import scala.io.Source
 import scala.util.matching.Regex
 
 
-object LoadCards {
-    def loadFromResource(getCsvPath: String, setName: String, builderFactory: => Builder, director: DeckDirectorInterface): Map[String, Deck] = {
-        val loader = new CardCSVLoader(getCsvPath)
+class LoadCards(
+    builderFactory: => Builder,
+    director: DeckDirectorInterface,
+    loader: CardCSVLoader
+) {
+    def load(setName: String): Map[String, DeckInterface] = {
         loader.loadCardsFromFile
         val cards = loader.getAllCards.filter(_.edition.nameOfEdition.trim.equalsIgnoreCase(setName.trim))
         val groupedCards = cards.groupBy(_.role.trim)
-        director.constructDecks(builderFactory, groupedCards).view.mapValues(_.asInstanceOf[Deck]).toMap
+
+        if (groupedCards.isEmpty) {
+            println(s"No cards found for edition: $setName")
+            return Map.empty
+        }
+
+        director.constructDecks(groupedCards, builderFactory)
     }
 
     val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"

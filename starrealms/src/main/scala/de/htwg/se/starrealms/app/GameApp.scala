@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.app
 
 import de.htwg.se.starrealms.model.GameStateComponent.impl._
 import de.htwg.se.starrealms.model.PlayerComponent.impl._
-import de.htwg.se.starrealms.model.GameCore.impl.{DeckBuilder, DeckDirector, LoadCards, Deck}
+import de.htwg.se.starrealms.model.GameCore.impl._
 import de.htwg.se.starrealms.controller.ControllerComponent.impl._
 import de.htwg.se.starrealms.controller.GameLogicComponent.impl._
 import de.htwg.se.starrealms.controller.GameMediatorComponent.impl._
@@ -25,6 +25,8 @@ object GameApp extends JFXApp3 {
   override def start(): Unit = {
     val director = new DeckDirector()
     val builderFactory: Builder = new DeckBuilder(new Deck())
+    val loadCards = new LoadCards(new DeckBuilder(new Deck()), director, csvLoader)
+    val decksByRole = loadCards.load("Core Set")
     val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set", builderFactory, director)
     if (decksByRole.isEmpty) {
       println("No decks found. Exiting the game.")

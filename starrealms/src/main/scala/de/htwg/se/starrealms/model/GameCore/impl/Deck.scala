@@ -7,28 +7,28 @@ class Deck extends DeckInterface {
     private var cards: Map[Card, Int] = Map()
     private var cardStack: List[Card] = List() // <- Reihenfolge der Karten
 
-    def setName(name: String): Unit = this.name = name
-    def setCards(newCards: Map[Card, Int]): Unit = {
+    override def setName(name: String): Unit = this.name = name
+    override def setCards(newCards: Map[Card, Int]): Unit = {
         cards = newCards
         cardStack = cards.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     }
 
-    def setCardStack(newStack: List[Card]): Unit = {
+    override def setCardStack(newStack: List[Card]): Unit = {
         cardStack = newStack
         cards = cardStack.groupBy(identity).view.mapValues(_.size).toMap
     }
 
-    def getName: String = name
-    def getCards: Map[Card, Int] = cardStack.groupBy(identity).view.mapValues(_.size).toMap
-    def getExpandedCards: List[Card] = cardStack
+    override def getName: String = name
+    override def getCards: Map[Card, Int] = cardStack.groupBy(identity).view.mapValues(_.size).toMap
+    override def getExpandedCards: List[Card] = cardStack
 
-    def addCard(card: Card): Unit = {
+    override def addCard(card: Card): Unit = {
         cards = cards.updated(card, cards.getOrElse(card, 0) + 1)
         cardStack = cardStack :+ card
     }
-    def addCards(cardsToAdd: List[Card]): Unit = { cardsToAdd.foreach(addCard) }
+    override def addCards(cardsToAdd: List[Card]): Unit = { cardsToAdd.foreach(addCard) }
 
-    def removeCard(card: Card): Unit = {
+    override def removeCard(card: Card): Unit = {
         cards.get(card) match {
             case Some(qty) if qty > 1 => cards = cards.updated(card, qty - 1)
             case Some(_) => cards = cards - card
@@ -38,12 +38,12 @@ class Deck extends DeckInterface {
         if (idx >= 0) cardStack = cardStack.patch(idx, Nil, 1)
     }
 
-    def shuffle(): Unit = {
+    override def shuffle(): Unit = {
         cardStack = scala.util.Random.shuffle(cardStack)
         cards = cardStack.groupBy(identity).view.mapValues(_.size).toMap
     }
 
-    def drawCard(): Option[Card] = {
+    override def drawCard(): Option[Card] = {
         cardStack match {
             case head :: tail =>
                 cardStack = tail
@@ -54,11 +54,11 @@ class Deck extends DeckInterface {
                 None
         }
     }
-    def resetDeck(): Unit = {
+    override def resetDeck(): Unit = {
         cards = Map()
         cardStack = List()
     }
-    def render(): String = {
+    override def render(): String = {
         val cardDescriptions = getExpandedCards.map(_.render()).mkString("\n")
         s"Deck:\n$name\nCards:\n[$cardDescriptions]"
     }
