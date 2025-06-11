@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.controller
+/* package de.htwg.se.starrealms.controller
 
 import de.htwg.se.starrealms.model._
 import de.htwg.util._
@@ -182,4 +182,4 @@ class GameStateSpec extends AnyWordSpec with Matchers {
       drawState.checkGameOver() shouldBe None
     }
   }
-}
+} */

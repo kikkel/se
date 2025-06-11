@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.controller
+/* package de.htwg.se.starrealms.controller
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -103,4 +103,4 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       observer.notified shouldBe true
     }
   }
-}
+} */

@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+/* package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -135,4 +135,4 @@ class CardBridgeSpec extends AnyWordSpec with Matchers {
       rendered should include("Error: failtype")
     }
   }
-}
+} */

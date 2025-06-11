@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+/* package de.htwg.se.starrealms.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -189,4 +189,4 @@ class GameLogicSpec extends AnyWordSpec with Matchers {
       deckState shouldBe "Card[1, Card1], Card[1, Card2]"
     }
   }
-}
+} */

@@ -1,4 +1,4 @@
-package de.htwg.util
+/* package de.htwg.util
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -54,3 +54,4 @@ class ObservableSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+ */

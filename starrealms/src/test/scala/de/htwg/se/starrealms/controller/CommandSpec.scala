@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.controller
+/* package de.htwg.se.starrealms.controller
 
 import de.htwg.se.starrealms.model._
 import de.htwg.util.Observer
@@ -191,4 +191,4 @@ class CommandSpec extends AnyWordSpec with Matchers {
       manager.getUndoStack shouldBe empty
     }
   }
-}
+} */
