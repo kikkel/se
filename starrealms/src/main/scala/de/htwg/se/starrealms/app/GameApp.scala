@@ -25,9 +25,14 @@ object GameApp extends JFXApp3 {
   override def start(): Unit = {
     val director = new DeckDirector()
     val builderFactory: Builder = new DeckBuilder(new Deck())
+
+    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
+    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
+
+    val csvLoader = new CardCSVLoader(sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath"))
     val loadCards = new LoadCards(new DeckBuilder(new Deck()), director, csvLoader)
     val decksByRole = loadCards.load("Core Set")
-    val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set", builderFactory, director)
+    //val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set", builderFactory, director)
     if (decksByRole.isEmpty) {
       println("No decks found. Exiting the game.")
       return
