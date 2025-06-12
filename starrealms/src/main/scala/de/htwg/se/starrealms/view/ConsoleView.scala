@@ -26,8 +26,7 @@ class ConsoleView(processor: CommandAdapter, readOnlyState: GameStateReadOnly, g
   def render(): String = {
   val sb = new StringBuilder
   sb.append("\n\n")
-  sb.append(s"${processor.handleInput("show players")}\n")
-  sb.append(s"${processor.handleInput("show health")}\n")
+  sb.append(s"${processor.playerStatus}\n")
   if (!inPlayPhase) {
     sb.append("Enter 't' to start game\n")
     sb.append("Enter 's' to start your turn\n")
@@ -47,7 +46,7 @@ class ConsoleView(processor: CommandAdapter, readOnlyState: GameStateReadOnly, g
 
   def processInput(input: String): Boolean = {
     if (!inPlayPhase) {
-      input match {
+      input.trim.toLowerCase match {
         case "x" =>
           println("\n\nExiting the game... #ConsoleView")
           false

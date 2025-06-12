@@ -117,6 +117,7 @@ class GraphicUI(processor: CommandAdapter, readOnlyState: GameStateReadOnly, onE
 
         Platform.runLater {
             outputArea.text = (s"Hand:\n$renderedHand\n")
+            outputArea.appendText(processor.playerStatus + "\n")
             outputArea.appendText(processor.getState + "\n")
         }
 
