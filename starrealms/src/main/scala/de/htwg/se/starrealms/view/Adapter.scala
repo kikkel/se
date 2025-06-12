@@ -12,8 +12,9 @@ trait CommandAdapter { def handleInput(input: String): String; def getState: Str
 class CommandProcessorAdapter(mediator: GameMediator, controller: ControllerInterface) extends CommandAdapter {
   val state = mediator.getGameState
   override def playerStatus: String = {
-    s"Current player: ${state.getCurrentPlayer.getName}\t${state.getCurrentPlayer.getHealth} HP\n" +
-    s"Opponent: ${state.getOpponent.getName}\t${state.getOpponent.getHealth} HP\n"
+    val playerRenderer = new PlayerRenderer()
+    s"Current player: ${playerRenderer.render(state.getCurrentPlayer)}\n" +
+    s"Opponent: ${playerRenderer.render(state.getOpponent)}"
   }
   override def handleInput(input: String): String = {
     println(s"INPUT RECEIVED: '$input'") // DEBUG

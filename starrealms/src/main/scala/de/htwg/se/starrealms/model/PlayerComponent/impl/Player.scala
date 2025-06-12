@@ -16,7 +16,7 @@ case class Player(
 
     override def isAlive: Boolean = health > 0
 
-    override def toString: String = s"$name (Leben: $health)"
+    //override def toString: String = s"$name (Leben: $health)"
     override def getHealth: Int = health
     override def getHandSize: Int = ???
     override def getName: String = name

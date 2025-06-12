@@ -1,6 +1,7 @@
 package de.htwg.se.starrealms.view
 
 import de.htwg.se.starrealms.model.GameCore.{Card, AbilityInterface}
+import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 import de.htwg.util._
 
 import de.htwg.se.starrealms.model.GameCore.structure.{OptionsMenu, MainMenu}
@@ -66,3 +67,12 @@ class CardRenderer extends Observable with Renderer[Card] {
 }
 
 class GameStateRenderer extends Renderer[GameLogic] { override def render(gameLogic: GameLogic): String = gameLogic.getDeckState } */
+
+class PlayerRenderer extends Renderer[PlayerInterface] {
+  override def render(player: PlayerInterface): String = {
+    s"""
+       |Player Name: ${player.getName}
+       |Health: ${player.getHealth}
+       |""".stripMargin
+  }
+}
