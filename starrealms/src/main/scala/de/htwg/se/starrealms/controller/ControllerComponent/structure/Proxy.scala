@@ -4,7 +4,7 @@ package de.htwg.se.starrealms.controller.ControllerComponent.structure
 import de.htwg.se.starrealms.model.GameCore.{Card, DeckInterface, DrawStrategy}
 import de.htwg.se.starrealms.model.GameCore.structure.DefaultDrawStrategy
 
-import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameStateReadOnly}
+import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameStateReadOnly, GameSnapshot}
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 
 class DrawStrategyProxy extends DrawStrategy {
@@ -37,6 +37,6 @@ class GameStateProxy(private val gameState: GameStateInterface) extends GameStat
   override def getTradeDeck: DeckInterface = gameState.getTradeDeck
   override def getTradeRow: List[Card] = gameState.getTradeRow
   override def getExplorerPile: DeckInterface = gameState.getExplorerPile
-  override def checkGameOver(): Option[String] = gameState.checkGameOver
-  override def getDeckState: String = gameState.getDeckState
+  override def checkGameOver: Option[String] = gameState.checkGameOver
+  override def getSnapshot: GameSnapshot = gameState.getSnapshot
 }

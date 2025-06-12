@@ -20,7 +20,7 @@ class Deck extends DeckInterface {
 
     override def getName: String = name
     override def getCards: Map[Card, Int] = cardStack.groupBy(identity).view.mapValues(_.size).toMap
-    override def getExpandedCards: List[Card] = cardStack
+    override def getCardStack: List[Card] = cardStack
 
     override def addCard(card: Card): Unit = {
         cards = cards.updated(card, cards.getOrElse(card, 0) + 1)
@@ -59,7 +59,7 @@ class Deck extends DeckInterface {
         cardStack = List()
     }
     override def render(): String = {
-        val cardDescriptions = getExpandedCards.map(_.render()).mkString("\n")
+        val cardDescriptions = getCardStack.map(_.render()).mkString("\n")
         s"Deck:\n$name\nCards:\n[$cardDescriptions]"
     }
 }

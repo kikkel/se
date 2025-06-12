@@ -3,6 +3,7 @@ package de.htwg.se.starrealms.controller.ControllerComponent.structure
 
 import de.htwg.util.Command
 import de.htwg.se.starrealms.model.GameCore.Card
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
 import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 
 class BuyCardCommand(mediator: GameMediator, card: Card) extends Command {
@@ -39,4 +40,4 @@ class ResetGameCommand(mediator: GameMediator) extends Command {
   override def doMove: Unit = mediator.getGameLogic.resetGame; override def undoMove: Unit = mediator.getGameLogic.undoResetGame }
 
 class ShowDeckCommand(mediator: GameMediator) extends Command {
-  override def doMove: Unit = println(mediator.getGameState.getDeckState); override def undoMove: Unit = {} }
+  override def doMove: Unit = println(mediator.getGameState.getSnapshot); override def undoMove: Unit = {} }

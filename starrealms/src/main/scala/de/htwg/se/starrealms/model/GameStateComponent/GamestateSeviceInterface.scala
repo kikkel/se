@@ -4,6 +4,7 @@ import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 import de.htwg.se.starrealms.model.GameCore.{Card, DeckInterface}
 import de.htwg.util.Observable
 import scala.util.Try
+import scalafx.scene.input.KeyCode.G
 
 
 
@@ -18,8 +19,8 @@ trait GameStateReadOnly { //Service Interface
   def getTradeDeck: DeckInterface
   def getTradeRow: List[Card]
   def getExplorerPile: DeckInterface
-  def checkGameOver(): Option[String]
-  def getDeckState: String
+  def checkGameOver: Option[String]
+  def getSnapshot: GameSnapshot
 }
 
 trait GameStateInterface extends Observable {
@@ -33,7 +34,7 @@ trait GameStateInterface extends Observable {
   def getTradeDeck: DeckInterface
   def getTradeRow: List[Card]
   def getExplorerPile: DeckInterface
-  def getDeckState: String
+  def getSnapshot: GameSnapshot
   def getDecksByRole: Map[String, DeckInterface]
 
   def setCurrentPlayer(player: PlayerInterface): Unit

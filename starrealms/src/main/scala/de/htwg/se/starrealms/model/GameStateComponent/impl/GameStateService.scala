@@ -3,9 +3,10 @@ package de.htwg.se.starrealms.model.GameStateComponent.impl
 import de.htwg.util._
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 import de.htwg.se.starrealms.model.GameCore.{Card, DeckDirectorInterface, DeckInterface, Builder}
-import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameSnapshot, PlayerSnapshot}
 
 import de.htwg.se.starrealms.model.GameCore.impl.FactionCard
+import de.htwg.se.starrealms.model.GameStateComponent
 
 
 class GameState(
@@ -128,27 +129,32 @@ class GameState(
   override def notifyStateChange(): Unit = {
     notifyObservers()
   }
+ 
+  override def getSnapshot: GameSnapshot = {
+    def cardList(cards: List[Card]): List[Card] = cards
+    val currentPlayerSnapshot = PlayerSnapshot(
+      name = currentPlayer.getName,
+      health = currentPlayer.getHealth,
+      hand = cardList(hands(currentPlayer)),
+      discardPile = cardList(discardPiles(currentPlayer)),
+      playerDeck = cardList(playerDecks(currentPlayer).getCardStack)
 
-  override def getDeckState: String = {
-    def cardLine(card: Card): String = {
-      val name = card.cardName
-      val faction = card.faction.factionName
-      val typ = card.cardType.map(_.cardType).getOrElse("Unknown")
-      val cost = card match {
-        case c: FactionCard => c.cost.toString
-        case _ => "-"
-      }
-      val ability = card.primaryAbility.map(_.getActions.map(_.description).mkString(", ")).getOrElse("-")
-      s"$name | $faction | $typ | Cost: $cost | Ability: $ability"
-    }
-
-    s"Active Player: $currentPlayer\nOpponent: $opponent\n" +
-    "Hand:\n" +
-      hands(currentPlayer).zipWithIndex.map { case (card, idx) => s"${idx + 1}: ${cardLine(card)}" }.mkString("\n") + "\n\n" +
-    "Discard Pile:\n" +
-      discardPiles(currentPlayer).map(cardLine).mkString("\n") + "\n\n" +
-    "TradeRow:\n" +
-      tradeRow.map(cardLine).mkString("\n") + "\n\n"
+    )
+    val opponentSnapshot = PlayerSnapshot(
+      name = opponent.getName,
+      health = opponent.getHealth,
+      hand = cardList(hands(opponent)),
+      discardPile = cardList(discardPiles(opponent)),
+      playerDeck = cardList(playerDecks(opponent).getCardStack)
+    )
+    GameSnapshot(
+      currentPlayer = currentPlayerSnapshot,
+      opponent = opponentSnapshot,
+      tradeRow = tradeRow,
+      tradeDeck = tradeDeck.getCardStack,
+      explorerCount = explorerPile.getCards.size,
+      tradeDeckCount = tradeDeck.getCards.size
+    )
   }
 
   override def checkGameOver: Option[String] = {

@@ -54,6 +54,6 @@ class CommandProcessorAdapter(mediator: GameMediator, controller: ControllerInte
     }
   }
 
-  override def getState: String = controller.getState
+  override def getState: String = new SnapshotRenderer().render(mediator.getGameState.getSnapshot)
 }
 

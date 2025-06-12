@@ -2,6 +2,7 @@ package de.htwg.se.starrealms.view
 
 import de.htwg.se.starrealms.model.GameCore.{Card, AbilityInterface}
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
+import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameSnapshot, PlayerSnapshot}
 import de.htwg.util._
 
 import de.htwg.se.starrealms.model.GameCore.structure.{OptionsMenu, MainMenu}
@@ -73,6 +74,38 @@ class PlayerRenderer extends Renderer[PlayerInterface] {
     s"""
        |Player Name: ${player.getName}
        |Health: ${player.getHealth}
+       |""".stripMargin
+  }
+}
+
+class SnapshotRenderer extends Renderer[GameSnapshot] {
+  override def render(snapshot: GameSnapshot): String = {
+    val currentPlayer = renderPlayerSnapshot(snapshot.currentPlayer)
+    val opponent = renderPlayerSnapshot(snapshot.opponent)
+    val tradeRow = snapshot.tradeRow.mkString(", ")
+    val tradeDeckCount = snapshot.tradeDeckCount
+    val explorerCount = snapshot.explorerCount
+
+    s"""
+       |Current Player:
+       |$currentPlayer
+       |
+       |Opponent:
+       |$opponent
+       |
+       |Trade Row: $tradeRow
+       |Trade Deck Count: $tradeDeckCount
+       |Explorer Count: $explorerCount
+       |""".stripMargin
+  }
+
+  private def renderPlayerSnapshot(player: PlayerSnapshot): String = {
+    s"""
+       |Name: ${player.name}
+       |Health: ${player.health}
+       |Hand: ${player.hand.mkString(", ")}
+       |Discard Pile: ${player.discardPile.mkString(", ")}
+       |Deck Size: ${player.playerDeck.size}
        |""".stripMargin
   }
 }

@@ -6,7 +6,7 @@ import scala.util.Try
 trait DeckInterface {        //The DeckInterface is not for Deck.scala — it’s for everyone else.
   def getName: String
   def getCards: Map[Card, Int]
-  def getExpandedCards: List[Card]
+  def getCardStack: List[Card]
 
   def setName(name: String): Unit
   def setCards(cards: Map[Card, Int]): Unit
