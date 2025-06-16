@@ -29,7 +29,7 @@ object DrawStrategyFactory {
 class GameStateProxy(private val gameState: GameStateInterface) extends GameStateReadOnly {
   override def getCurrentPlayer: PlayerInterface = gameState.getCurrentPlayer
   override def getOpponent: PlayerInterface = gameState.getOpponent
-  override def getPlayerDeck(player: PlayerInterface): DeckInterface = gameState.getPlayerDeck(player)
+  override def getPlayerDeck(player: PlayerInterface): DeckInterface = gameState.getPlayerDeck(gameState.getCurrentPlayer)
   override def getHand(player: PlayerInterface): List[Card] = gameState.getHand(player)
   override def getDiscardPile(player: PlayerInterface): List[Card] = gameState.getDiscardPile(player)
   override def getDiscardPiles: Map[PlayerInterface, List[Card]] = gameState.getDiscardPiles

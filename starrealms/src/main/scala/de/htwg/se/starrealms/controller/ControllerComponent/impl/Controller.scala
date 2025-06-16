@@ -33,7 +33,7 @@ class Controller(val mediator: GameMediator) extends Observable with ControllerI
   override def getOpponent: PlayerInterface = gameState.getOpponent
 
   // Zugriff auf Deck, Hand, Discard für aktuellen Spieler
-  override def getPlayerDeck: DeckInterface = gameState.getPlayerDeck(getCurrentPlayer)
+  override def getPlayerDeck: DeckInterface = gameState.getPlayerDeck(gameState.getCurrentPlayer)
   override def getHand: List[Card] = gameState.getHand(getCurrentPlayer)
   override def getDiscardPile: List[Card] = gameState.getDiscardPile(getCurrentPlayer)
 

@@ -37,8 +37,16 @@ object GameApp extends JFXApp3 {
       println("No decks found. Exiting the game.")
       return
     }
-    println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
 
+    //debugging 
+    println("\n\nDecks by Role:")
+    decksByRole.foreach { case (role, deck) =>
+      println(s"Role: $role")
+      println(s"Cards: ${deck.getCards.map { case (card, qty) => s"${card.cardName} x$qty" }.mkString(", ")}")
+    }
+    println("\n\n")
+
+    println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
     val player1 = Player("Player 1")
     val player2 = Player("Player 2")
 

@@ -15,7 +15,10 @@ class LoadCards(
     def load(setName: String): Map[String, DeckInterface] = {
         loader.loadCardsFromFile
         val cards = loader.getAllCards.filter(_.edition.nameOfEdition.trim.equalsIgnoreCase(setName.trim))
-        val groupedCards = cards.groupBy(_.role.trim)
+        val groupedCards = cards.groupBy(_.role.trim).map {
+            case (role, cards) =>
+                role -> cards.flatMap(card => List.fill(card.qty)(card))
+        }
 
         if (groupedCards.isEmpty) {
             println(s"No cards found for edition: $setName")

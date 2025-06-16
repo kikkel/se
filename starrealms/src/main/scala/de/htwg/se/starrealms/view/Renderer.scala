@@ -82,7 +82,7 @@ class SnapshotRenderer extends Renderer[GameSnapshot] {
   override def render(snapshot: GameSnapshot): String = {
     val currentPlayer = renderPlayerSnapshot(snapshot.currentPlayer)
     val opponent = renderPlayerSnapshot(snapshot.opponent)
-    val tradeRow = snapshot.tradeRow.mkString(", ")
+    val tradeRow = renderTradeRow(snapshot.tradeRow)
     val tradeDeckCount = snapshot.tradeDeckCount
     val explorerCount = snapshot.explorerCount
 
@@ -93,7 +93,8 @@ class SnapshotRenderer extends Renderer[GameSnapshot] {
        |Opponent:
        |$opponent
        |
-       |Trade Row: $tradeRow
+       |Trade Row:
+       |$tradeRow
        |Trade Deck Count: $tradeDeckCount
        |Explorer Count: $explorerCount
        |""".stripMargin
@@ -103,9 +104,25 @@ class SnapshotRenderer extends Renderer[GameSnapshot] {
     s"""
        |Name: ${player.name}
        |Health: ${player.health}
-       |Hand: ${player.hand.mkString(", ")}
+       |Hand: ${renderHand(player.hand)}
        |Discard Pile: ${player.discardPile.mkString(", ")}
        |Deck Size: ${player.playerDeck.size}
        |""".stripMargin
+  }
+
+  private def renderTradeRow(tradeRow: List[Card]): String = {
+    val cardRenderer = new CardRenderer()
+    if (tradeRow.isEmpty) "Empty Trade Row"
+    else tradeRow.zipWithIndex.map { case (card, index) =>
+      s"${index + 1}. ${cardRenderer.render(card)}"
+    }.mkString("\n")
+  }
+
+  private def renderHand(hand: List[Card]): String = {
+    val cardRenderer = new CardRenderer()
+    if (hand.isEmpty) "Empty Hand"
+    else hand.zipWithIndex.map { case (card, index) =>
+      s"${index + 1}. ${cardRenderer.render(card)}"
+    }.mkString("\n")
   }
 }

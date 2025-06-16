@@ -29,6 +29,7 @@ class GameState(
   private var explorerPile: DeckInterface = director.constructEmptyDeck("Explorer Pile", builderFactory)
 
   initializeDecks(decksByRole)
+  def getCurrentPlayerDeck: DeckInterface = getPlayerDeck(currentPlayer)
 
   override def getDecksByRole = decksByRole
 
@@ -135,25 +136,25 @@ class GameState(
     val currentPlayerSnapshot = PlayerSnapshot(
       name = currentPlayer.getName,
       health = currentPlayer.getHealth,
-      hand = cardList(hands(currentPlayer)),
-      discardPile = cardList(discardPiles(currentPlayer)),
-      playerDeck = cardList(playerDecks(currentPlayer).getCardStack)
+      hand = getHand(currentPlayer),
+      discardPile = getDiscardPile(currentPlayer),
+      playerDeck = getPlayerDeck(currentPlayer).getCardStack
 
     )
     val opponentSnapshot = PlayerSnapshot(
       name = opponent.getName,
       health = opponent.getHealth,
-      hand = cardList(hands(opponent)),
-      discardPile = cardList(discardPiles(opponent)),
-      playerDeck = cardList(playerDecks(opponent).getCardStack)
+      hand = getHand(opponent),
+      discardPile = getDiscardPile(opponent),
+      playerDeck = getPlayerDeck(opponent).getCardStack
     )
     GameSnapshot(
       currentPlayer = currentPlayerSnapshot,
       opponent = opponentSnapshot,
       tradeRow = tradeRow,
       tradeDeck = tradeDeck.getCardStack,
-      explorerCount = explorerPile.getCards.size,
-      tradeDeckCount = tradeDeck.getCards.size
+      explorerCount = getExplorerPile.getCards.size,
+      tradeDeckCount = getTradeDeck.getCards.size
     )
   }
 

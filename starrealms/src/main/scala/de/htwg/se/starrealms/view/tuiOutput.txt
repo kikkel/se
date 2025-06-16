@@ -1,13 +1,23 @@
+[success] Total time: 4 s, completed 16 Jun 2025, 15:19:03
+[info] running de.htwg.se.starrealms.app.GameApp 
+Jun 16, 2025 3:19:04 PM com.sun.javafx.application.PlatformImpl startup
+WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @10055ee4'
+Jun 16, 2025 3:19:09 PM com.sun.glass.ui.mac.MacApplication lambda$waitForReactivation$6
+WARNING: Timeout while waiting for app reactivation
+
 Loaded Editions: 
 Core Set,
 Colony Wars
 
+Decks by Role:
+Role: Explorer Pile
+Cards: Explorer x10
+Role: Personal Deck
+Cards: Viper x4, Scout x16
+Role: Trade Deck
+Cards: Missile Mech x1, Battle Pod x2, Barter World x2, Trade Bot x3, Federation Shuttle x3, Blob World x1, Blob Fighter x3, Brain World x1, Port of Call x1, Junkyard x1, Blob Destroyer x2, Fleet HQ x1, Embassy Yacht x2, Central Office x1, War World x1, Trade Pod x3, Imperial Frigate x3, Trading Post x2, Mech World x1, Stealth Needle x1, Cutter x3, Flagship x1, Missile Bot x3, Battle Station x2, Blob Wheel x3, Trade Escort x1, Dreadnaught x1, Survey Ship x3, Supply Bot x3, Machine Base x1, Ram x2, Corvette x2, Recycling Station x2, Space Station x2, Mothership x1, Battle Blob x1, Freighter x2, The Hive x1, Imperial Fighter x3, Command Ship x1, Patrol Mech x2, Royal Redoubt x1, Blob Carrier x1, Defense Center x1, Battle Mech x1, Battlecruiser x1
 
 Deck loaded: Explorer Pile, Personal Deck, Trade Deck
-
-
-
-
 
 Current player: 
 Player Name: Player 1
@@ -26,19 +36,281 @@ Enter 'x' to exit the game
 
 Your command:
 
+t
 INPUT RECEIVED: 't'
-Active Player: Player(Player 1,3)
-Opponent: Player(Player 2,3)
-Hand:
+
+Current Player:
+
+Name: Player 1
+Health: 3
+Hand: Empty Hand
+Discard Pile: 
+Deck Size: 75
+
+Opponent:
+
+Name: Player 2
+Health: 3
+Hand: Empty Hand
+Discard Pile: 
+Deck Size: 75
 
 
-Discard Pile:
+Trade Row:
+1. 
+  Name: Trading Post
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@72c326b6)
+  Cost: 3
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 1 Authority), SimpleAction(Gain 1 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 3 Combat)
+  Faction: Trade Federation
+
+2. 
+  Name: Ram
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@95a332f)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: SimpleAction(Gain 3 Trade)
+  Faction: Blob
+
+3. 
+  Name: Flagship
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@62bf2c1d)
+  Cost: 6
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: SimpleAction(Gain 5 Trade)
+  Scrap Ability: None
+  Faction: Trade Federation
+
+4. 
+  Name: Supply Bot
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@1ef8660c)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 2 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Machine Cult
+
+5. 
+  Name: Blob Destroyer
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@6b2c0533)
+  Cost: 4
+  Primary Ability: SimpleAction(Gain 6 Combat)
+  Ally Ability: SimpleAction({Blob Ally}: You may destroy target base and/or scrap a card in the trade row.)
+  Scrap Ability: None
+  Faction: Blob
+
+Trade Deck Count: 45
+Explorer Count: 1
+
+Trade row replenished.
+
+Current player: 
+Player Name: Player 1
+Health: 3
+
+Opponent: 
+Player Name: Player 2
+Health: 3
+
+Enter 't' to start game
+Enter 's' to start your turn
+Enter 'r' to reset the game
+Enter 'x' to exit the game
+
+Your command:
+
+s
+INPUT RECEIVED: 's'
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Barter World
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@22e7ffde)
+  Cost: 4
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 2 Authority), SimpleAction(Gain 2 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 5 Combat)
+  Faction: Trade Federation
+
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Trade Pod
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@4ba8f52e)
+  Cost: 2
+  Primary Ability: SimpleAction(Gain 3 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Blob
+
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Supply Bot
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@1ef8660c)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 2 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Machine Cult
+
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Trading Post
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@72c326b6)
+  Cost: 3
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 1 Authority), SimpleAction(Gain 1 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 3 Combat)
+  Faction: Trade Federation
+
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Battle Station
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@6d398750)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 5 Combat)
+  Faction: Machine Cult
+
+Current Player:
+
+Name: Player 1
+Health: 3
+Hand: 1. 
+  Name: Barter World
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@22e7ffde)
+  Cost: 4
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 2 Authority), SimpleAction(Gain 2 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 5 Combat)
+  Faction: Trade Federation
+
+2. 
+  Name: Trade Pod
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@4ba8f52e)
+  Cost: 2
+  Primary Ability: SimpleAction(Gain 3 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Blob
+
+3. 
+  Name: Supply Bot
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@1ef8660c)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 2 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Machine Cult
+
+4. 
+  Name: Trading Post
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@72c326b6)
+  Cost: 3
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 1 Authority), SimpleAction(Gain 1 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 3 Combat)
+  Faction: Trade Federation
+
+5. 
+  Name: Battle Station
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@6d398750)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 5 Combat)
+  Faction: Machine Cult
+
+Discard Pile: 
+Deck Size: 70
 
 
-TradeRow:
-Imperial Frigate | Star Empire | Ship | Cost: 3 | Ability: Gain 4 Combat
-The Hive | Blob | Base | Cost: 5 | Ability: Gain 3 Combat
-Blob Wheel | Blob | Base | Cost: 3 | Ability: Gain 1 Combat
-Trade Escort | Trade Federation | Ship | Cost: 5 | Ability: Gain 44 Combat
-Battle Blob | Blob | Ship | Cost: 6 | Ability: Gain 8 Combat
+Opponent:
 
+Name: Player 2
+Health: 3
+Hand: Empty Hand
+Discard Pile: 
+Deck Size: 70
+
+
+Trade Row:
+1. 
+  Name: Trading Post
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@72c326b6)
+  Cost: 3
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 1 Authority), SimpleAction(Gain 1 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 3 Combat)
+  Faction: Trade Federation
+
+2. 
+  Name: Ram
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@95a332f)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: SimpleAction(Gain 3 Trade)
+  Faction: Blob
+
+3. 
+  Name: Flagship
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@62bf2c1d)
+  Cost: 6
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: SimpleAction(Gain 5 Trade)
+  Scrap Ability: None
+  Faction: Trade Federation
+
+4. 
+  Name: Supply Bot
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@1ef8660c)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 2 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Machine Cult
+
+5. 
+  Name: Blob Destroyer
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@6b2c0533)
+  Cost: 4
+  Primary Ability: SimpleAction(Gain 6 Combat)
+  Ally Ability: SimpleAction({Blob Ally}: You may destroy target base and/or scrap a card in the trade row.)
+  Scrap Ability: None
+  Faction: Blob
+
+Trade Deck Count: 44
+Explorer Count: 1
+
+Turn started.
+
+Current player: 
+Player Name: Player 1
+Health: 3
+
+Opponent: 
+Player Name: Player 2
+Health: 3
+
+Its your turn!
+Enter 'p <number>' to play a card from your hand
+Enter 'b <number>' to buy a card from the trade row
+Enter 'e' to end your turn
+Enter 'z' to undo the last action
+Enter 'y' to redo the last undone action
+Enter 'x' to exit the game
+
+
+Your command:
+
+x
+
+Exiting the game... #ConsoleView
+
+
+Game exited. Goodbye! #main
+
+kianimoon@Kianis-MacBook-Air starrealms % 
