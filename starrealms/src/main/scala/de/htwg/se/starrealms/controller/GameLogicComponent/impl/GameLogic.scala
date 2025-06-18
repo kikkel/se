@@ -7,7 +7,7 @@ import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
 import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
 
 import de.htwg.se.starrealms.model.GameCore.structure.{TradeRowReplenishStrategy, StartTurnStrategy}
-import de.htwg.se.starrealms.model.GameCore.Card
+import de.htwg.se.starrealms.model.GameCore.CardInterface
 
 
 class GameLogic(val gameState: GameStateInterface) extends Observable with GameLogicInterface {
@@ -16,7 +16,7 @@ class GameLogic(val gameState: GameStateInterface) extends Observable with GameL
   private val startTurnStrategy = new StartTurnStrategy()
 
   // --- Methods that encapsulate logic previously in GameState ---
-  def drawCard: Option[Card] = {
+  def drawCard: Option[CardInterface] = {
     val deck = gameState.getPlayerDeck(gameState.getCurrentPlayer)
     val cardOpt = deck.drawCard()
     cardOpt.foreach { card =>
@@ -25,11 +25,11 @@ class GameLogic(val gameState: GameStateInterface) extends Observable with GameL
     }
     cardOpt
   }
-  def returnCardToPlayerDeck(card: Card): Unit = {
+  def returnCardToPlayerDeck(card: CardInterface): Unit = {
     gameState.getPlayerDeck(gameState.getCurrentPlayer).addCard(card)
   }
 
-  def drawCards(count: Int): List[Card] = {
+  def drawCards(count: Int): List[CardInterface] = {
     val deck = gameState.getPlayerDeck(gameState.getCurrentPlayer)
     val drawn = (1 to count).flatMap(_ => deck.drawCard()).toList
     val updatedHand = gameState.getHand(gameState.getCurrentPlayer) ++ drawn
@@ -37,7 +37,7 @@ class GameLogic(val gameState: GameStateInterface) extends Observable with GameL
     drawn
   }
 
-  def playCard(card: Card): Unit = {
+  def playCard(card: CardInterface): Unit = {
     val hand = gameState.getHand(gameState.getCurrentPlayer)
     if (hand.contains(card)) {
       val (before, after) = hand.span(_ != card)
@@ -51,7 +51,7 @@ class GameLogic(val gameState: GameStateInterface) extends Observable with GameL
     }
   }
 
-  def returnCardToHand(card: Card): Unit = {
+  def returnCardToHand(card: CardInterface): Unit = {
     val player = gameState.getCurrentPlayer
     val discard = gameState.getDiscardPile(player)
     val (before, after) = discard.span(_ != card)
@@ -62,7 +62,7 @@ class GameLogic(val gameState: GameStateInterface) extends Observable with GameL
   }
 
 
-  def buyCard(card: Card): Unit = {
+  def buyCard(card: CardInterface): Unit = {
     val tradeRow = gameState.getTradeRow
     if (tradeRow.contains(card)) {
       val (before, after) = tradeRow.span(_ != card)
@@ -73,7 +73,7 @@ class GameLogic(val gameState: GameStateInterface) extends Observable with GameL
       replenishTradeRow
     }
   }
-  def returnCardToTradeRow(card: Card): Unit = {
+  def returnCardToTradeRow(card: CardInterface): Unit = {
     val player = gameState.getCurrentPlayer
     val discard = gameState.getDiscardPile(player)
     val (before, after) = discard.span(_ != card)
@@ -92,7 +92,7 @@ class GameLogic(val gameState: GameStateInterface) extends Observable with GameL
     gameState.setTradeRow(tradeRow)
   }
 
-  def undoReplenish(card: Card): Unit = {
+  def undoReplenish(card: CardInterface): Unit = {
     val tradeRow = gameState.getTradeRow
     val (before, after) = tradeRow.span(_ != card)
     val newTradeRow = before ++ after.drop(1)

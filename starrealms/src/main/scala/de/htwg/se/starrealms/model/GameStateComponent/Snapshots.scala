@@ -1,11 +1,11 @@
 package de.htwg.se.starrealms.model.GameStateComponent
-import de.htwg.se.starrealms.model.GameCore.Card
+import de.htwg.se.starrealms.model.GameCore.CardInterface
 
 case class GameSnapshot(
   currentPlayer: PlayerSnapshot,
   opponent: PlayerSnapshot,
-  tradeRow: List[Card],
-  tradeDeck: List[Card],
+  tradeRow: List[CardInterface],
+  tradeDeck: List[CardInterface],
   explorerCount: Int,
   tradeDeckCount: Int
 )
@@ -13,7 +13,7 @@ case class GameSnapshot(
 case class PlayerSnapshot(
   name: String,
   health: Int,
-  hand: List[Card],
-  discardPile: List[Card],
-  playerDeck: List[Card]
+  hand: List[CardInterface],
+  discardPile: List[CardInterface],
+  playerDeck: List[CardInterface]
 )

@@ -1,13 +1,13 @@
 package de.htwg.util
 
 class UndoManager {
-  private var undoStack: List[Command] = Nil
-  private var redoStack: List[Command] = Nil
+  private var undoStack: List[CommandInterface] = Nil
+  private var redoStack: List[CommandInterface] = Nil
 
-  def getUndoStack: List[Command] = undoStack
-  def getRedoStack: List[Command] = redoStack
+  def getUndoStack: List[CommandInterface] = undoStack
+  def getRedoStack: List[CommandInterface] = redoStack
 
-  def doMove(command: Command) = {
+  def doMove(command: CommandInterface) = {
     undoStack = command :: undoStack
     redoStack = Nil
     command.doMove

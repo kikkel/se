@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.view
 
 import de.htwg.util.Observer
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
-import de.htwg.se.starrealms.model.GameCore.Card
+import de.htwg.se.starrealms.model.GameCore.CardInterface
 
 import scalafx.application.Platform
 import scalafx.scene.Scene
@@ -25,7 +25,7 @@ outputArea.appendText(
 
 class GraphicUI(processor: CommandAdapter, readOnlyState: GameStateReadOnly, onExit: () => Unit) extends Stage with Observer {
 /*     private val baseRenderer = new CardRenderer()
-    private val cardRenderer: Renderer[Card] = new ColourHighlightDecorator(
+    private val cardRenderer: Renderer[CardInterface] = new ColourHighlightDecorator(
         new CompactCardDecorator(
             new LoggingDecorator(baseRenderer)
         )

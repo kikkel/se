@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.view
 
 import de.htwg.se.starrealms.controller.ControllerComponent._
 import de.htwg.se.starrealms.controller.ControllerComponent.structure._
-import de.htwg.se.starrealms.model.GameCore.Card
+import de.htwg.se.starrealms.model.GameCore.CardInterface
 import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
 
@@ -31,7 +31,7 @@ class CommandProcessorAdapter(mediator: GameMediator, controller: ControllerInte
       case Array("p") => return "Enter the number of the card you want to play (e.g. 'p 2').\n\n"
       case Array("b") => return "Enter the number of the card you want to buy (e.g. 'b 3').\n\n"
       case Array(cmd) => cmd match {
-        case "s" => controller.getUndoManager.doMove(new DrawCardsCommand(mediator, 5))
+        case "s" => controller.getUndoManager.doMove(new StartTurnCommand(mediator, 5))
           return "Turn started.\n\n"
         case "t" => controller.getUndoManager.doMove(new ReplenishTradeRowCommand(mediator))
           return "Trade row replenished.\n\n"

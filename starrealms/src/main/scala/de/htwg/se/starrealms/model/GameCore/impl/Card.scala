@@ -1,20 +1,24 @@
 package de.htwg.se.starrealms.model.GameCore.impl
 
-import de.htwg.se.starrealms.model.GameCore.{Card, CardType, Faction, AbilityInterface, Edition}
+import de.htwg.se.starrealms.model.GameCore.{CardInterface, CardTypeInterface, FactionInterface, AbilityInterface, EditionInterface}
+import com.google.inject.{Inject, Guice}
 
 import scala.util.{Try, Success, Failure}
+import scalafx.scene.input.KeyCode.S
 
 //--------------------------------------------------------------------------Card Types
-class Ship extends CardType { override def cardType: String = "Ship" }
-class Base(val defense: String, val isOutpost: Boolean) extends CardType { override def cardType: String = "Base" }
+abstract class CardType @Inject() extends CardTypeInterface {
+}
+class Ship extends CardType with CardTypeInterface { override def cardType: String = "Ship" }
+class Base(val defense: String, val isOutpost: Boolean) extends CardType with CardTypeInterface { override def cardType: String = "Base" }
 
 //--------------------------------------------------------------------------Faction Factory
-private class TradeFederation extends Faction { override def factionName: String = "Trade Federation"; override def matches(other: Faction): Boolean = other.factionName == factionName }
-private class StarEmpire extends Faction { override def factionName: String = "Star Empire"; override def matches(other: Faction): Boolean = other.factionName == factionName }
-private class Blob extends Faction { override def factionName: String = "Blob"; override def matches(other: Faction): Boolean = other.factionName == factionName }
-private class MachineCult extends Faction { override def factionName: String = "Machine Cult"; override def matches(other: Faction): Boolean = other.factionName == factionName }
-private class CompositeFaction(factions: List[Faction]) extends Faction { override def factionName: String = factions.map(_.factionName).mkString(" / "); override def matches(other: Faction): Boolean = factions.exists(_.matches(other)) }
-private class Unaligned extends Faction { override def factionName: String = "Unaligned"; override def matches(other: Faction): Boolean = false }
+private class TradeFederation extends Faction with FactionInterface { override def factionName: String = "Trade Federation"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class StarEmpire extends Faction with FactionInterface { override def factionName: String = "Star Empire"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class Blob extends Faction with FactionInterface { override def factionName: String = "Blob"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class MachineCult extends Faction with FactionInterface { override def factionName: String = "Machine Cult"; override def matches(other: Faction): Boolean = other.factionName == factionName }
+private class CompositeFaction(factions: List[Faction]) extends Faction with FactionInterface { override def factionName: String = factions.map(_.factionName).mkString(" / "); override def matches(other: Faction): Boolean = factions.exists(_.matches(other)) }
+private class Unaligned extends Faction with FactionInterface { override def factionName: String = "Unaligned"; override def matches(other: Faction): Boolean = false }
 
 object Faction {
     def apply(factionName: String): Faction = {
@@ -39,19 +43,23 @@ object Faction {
 // val tradeFederation = Faction("trade federation")
 
 //--------------------------------------------------------------------------Cards
-case class ParsedCard(
-    edition: Edition,
+abstract class Card @Inject() extends CardInterface {
+}
+
+case class ParsedCard (
+    edition: EditionInterface,
     cardName: String,
     cost: Option[Int],
     primaryAbility: Option[AbilityInterface],
     allyAbility: Option[AbilityInterface],
     scrapAbility: Option[AbilityInterface],
-    faction: Faction,
+    faction: FactionInterface,
     cardType: Try[CardType],
     qty: Int,
     role: String,
     notes: Option[String]
-) extends Card {
+) extends Card with CardInterface {
+    
     override def render(): String = {
         val cardTypeStr = cardType match {
             case Success(value) => value.toString
@@ -64,16 +72,16 @@ case class ParsedCard(
 }
 
 case class DefaultCard(
-    override val edition: Edition,
+    override val edition: EditionInterface,
     override val cardName: String,
     override val primaryAbility: Option[AbilityInterface],
-    override val faction: Faction,
+    override val faction: FactionInterface,
     override val cardType: Try[CardType],
     override val qty: Int,
     override val role: String
 
 
-) extends Card {
+) extends Card with CardInterface {
     override def render(): String = {
         val cardTypeStr = cardType match {
             case Success(value) => value.toString
@@ -84,16 +92,16 @@ case class DefaultCard(
     }
 }
 case class ExplorerCard(
-    override val edition: Edition,
+    override val edition: EditionInterface,
     override val cardName: String,
     val cost: Int,
     override val primaryAbility: Option[AbilityInterface],
     val scrapAbility: Option[AbilityInterface],
-    override val faction: Faction,
+    override val faction: FactionInterface,
     override val cardType: Try[CardType],
     override val qty: Int,
     override val role: String
-) extends Card {
+) extends Card with CardInterface {
     override def render(): String = {
         val cardTypeStr = cardType match {
             case Success(value) => value.toString
@@ -104,18 +112,18 @@ case class ExplorerCard(
     }
 }
 case class FactionCard(
-    override val edition: Edition,
+    override val edition: EditionInterface,
     override val cardName: String,
     val cost: Int,
     override val primaryAbility: Option[AbilityInterface],
     val allyAbility: Option[AbilityInterface],
     val scrapAbility: Option[AbilityInterface],
-    override val faction: Faction,
+    override val faction: FactionInterface,
     override val cardType: Try[CardType],
     override val qty: Int,
     override val role: String,
     val notes: Option[String]
-    ) extends Card {
+    ) extends Card with CardInterface {
         override def render(): String = {
             val cardTypeStr = cardType match {
                 case Success(value) => value.toString
@@ -129,47 +137,47 @@ case class FactionCard(
 
 //--------------------------------------------------------------------------Edition Factory
 
-private class CoreSet extends Edition { override def nameOfEdition: String = "Core Set" }
-/* private class HighAlertFirstStrike extends Edition { override def nameOfEdition: String = "High Alert: First Strike" }
-private class HighAlertTech extends Edition { override def nameOfEdition: String = "High Alert: Tech" }
-private class HighAlertRequisition extends Edition { override def nameOfEdition: String = "High Alert: Requisition" }
-private class HighAlertInvasion extends Edition { override def nameOfEdition: String = "High Alert: Invasion" }
-private class HighAlertHeroes extends Edition { override def nameOfEdition: String = "High Alert: Heroes" }
-private class UniversalStorageBox extends Edition { override def nameOfEdition: String = "Universal Storage Box" }
-private class StellarAllies extends Edition { override def nameOfEdition: String = "Stellar Allies" }
-private class CommandDeckLostFleet extends Edition { override def nameOfEdition: String = "Command Deck: Lost Fleet" }
-private class CommandDeckTheUnity extends Edition { override def nameOfEdition: String = "Command Deck: The Unity" }
-private class CommandDeckTheUnion extends Edition { override def nameOfEdition: String = "Command Deck: The Union" }
-private class CommandDeckThePact extends Edition { override def nameOfEdition: String = "Command Deck: The Pact" }
-private class CommandDeckTheCoalition extends Edition { override def nameOfEdition: String = "Command Deck: The Coalition" }
-private class CommandDeckTheAlliance extends Edition { override def nameOfEdition: String = "Command Deck: The Alliance" }
-private class CommandDeckTheAlignment extends Edition { override def nameOfEdition: String = "Command Deck: The Alignment" }
-private class FrontiersKickstarterPromoPack extends Edition { override def nameOfEdition: String = "Frontiers Kickstarter Promo Pack" }
-private class Year2PromoPackOrganizedPlaySeason5 extends Edition { override def nameOfEdition: String = "Year 2 Promo Pack,\nOrganized Play Season 5" }
-private class Year2PromoPack extends Edition { override def nameOfEdition: String = "Year 2 Promo Pack" }
-private class Frontiers extends Edition { override def nameOfEdition: String = "Frontiers" }
-private class Scenarios extends Edition { override def nameOfEdition: String = "Scenarios" }
-private class UnitedMissions extends Edition { override def nameOfEdition: String = "United: Missions" }
-private class UnitedHeroes extends Edition { override def nameOfEdition: String = "United: Heroes" }
-private class UnitedCommand extends Edition { override def nameOfEdition: String = "United: Command" }
-private class UnitedAssault extends Edition { override def nameOfEdition: String = "United: Assault" }
+private class CoreSet extends Edition with EditionInterface { override def nameOfEdition: String = "Core Set" }
+/* private class HighAlertFirstStrike extends Edition with EditionInterface { override def nameOfEdition: String = "High Alert: First Strike" }
+private class HighAlertTech extends Edition with EditionInterface { override def nameOfEdition: String = "High Alert: Tech" }
+private class HighAlertRequisition extends Edition with EditionInterface { override def nameOfEdition: String = "High Alert: Requisition" }
+private class HighAlertInvasion extends Edition with EditionInterface { override def nameOfEdition: String = "High Alert: Invasion" }
+private class HighAlertHeroes extends Edition with EditionInterface { override def nameOfEdition: String = "High Alert: Heroes" }
+private class UniversalStorageBox extends Edition with EditionInterface { override def nameOfEdition: String = "Universal Storage Box" }
+private class StellarAllies extends Edition with EditionInterface { override def nameOfEdition: String = "Stellar Allies" }
+private class CommandDeckLostFleet extends Edition with EditionInterface { override def nameOfEdition: String = "Command Deck: Lost Fleet" }
+private class CommandDeckTheUnity extends Edition with EditionInterface { override def nameOfEdition: String = "Command Deck: The Unity" }
+private class CommandDeckTheUnion extends Edition with EditionInterface { override def nameOfEdition: String = "Command Deck: The Union" }
+private class CommandDeckThePact extends Edition with EditionInterface { override def nameOfEdition: String = "Command Deck: The Pact" }
+private class CommandDeckTheCoalition extends Edition with EditionInterface { override def nameOfEdition: String = "Command Deck: The Coalition" }
+private class CommandDeckTheAlliance extends Edition with EditionInterface { override def nameOfEdition: String = "Command Deck: The Alliance" }
+private class CommandDeckTheAlignment extends Edition with EditionInterface { override def nameOfEdition: String = "Command Deck: The Alignment" }
+private class FrontiersKickstarterPromoPack extends Edition with EditionInterface { override def nameOfEdition: String = "Frontiers Kickstarter Promo Pack" }
+private class Year2PromoPackOrganizedPlaySeason5 extends Edition with EditionInterface { override def nameOfEdition: String = "Year 2 Promo Pack,\nOrganized Play Season 5" }
+private class Year2PromoPack extends Edition with EditionInterface { override def nameOfEdition: String = "Year 2 Promo Pack" }
+private class Frontiers extends Edition with EditionInterface { override def nameOfEdition: String = "Frontiers" }
+private class Scenarios extends Edition with EditionInterface { override def nameOfEdition: String = "Scenarios" }
+private class UnitedMissions extends Edition with EditionInterface { override def nameOfEdition: String = "United: Missions" }
+private class UnitedHeroes extends Edition with EditionInterface { override def nameOfEdition: String = "United: Heroes" }
+private class UnitedCommand extends Edition with EditionInterface { override def nameOfEdition: String = "United: Command" }
+private class UnitedAssault extends Edition with EditionInterface { override def nameOfEdition: String = "United: Assault" }
  */
-private class ColonyWars extends Edition { override def nameOfEdition: String = "Colony Wars" }
-/* private class CosmicGambit extends Edition { override def nameOfEdition: String = "Cosmic Gambit" }
-private class CrisisHeroes extends Edition { override def nameOfEdition: String = "Crisis: Heroes" }
-private class CrisisFleetsAndFortresses extends Edition { override def nameOfEdition: String = "Crisis: Fleets and Fortresses" }
-private class CrisisEvents extends Edition { override def nameOfEdition: String = "Crisis: Events" }
-private class CrisisBasesAndBattleships extends Edition { override def nameOfEdition: String = "Crisis: Bases & Battleships" }
-private class Gambit extends Edition { override def nameOfEdition: String = "Gambit" }
-private class PromoPack1 extends Edition { override def nameOfEdition: String = "Promo Pack 1" }
-private class FirstKickstarterPromoPack extends Edition { override def nameOfEdition: String = "1st Kickstarter Promo Pack" }
-private class PromosBattlecruiserStorageBox extends Edition { override def nameOfEdition: String = "Promos (Battlecruiser Storage Box)" }
-private class PromosImperialFighterDeckBox extends Edition { override def nameOfEdition: String = "Promos (Imperial Fighter Deck Box)" }
-private class PromosDiceTower2016 extends Edition { override def nameOfEdition: String = "Promos (Dice Tower 2016)" }
-private class PromosMechCruiserStorageBox extends Edition { override def nameOfEdition: String = "Promos (Mech Cruiser Storage Box)" }
+private class ColonyWars extends Edition with EditionInterface { override def nameOfEdition: String = "Colony Wars" }
+/* private class CosmicGambit extends Edition with EditionInterface { override def nameOfEdition: String = "Cosmic Gambit" }
+private class CrisisHeroes extends Edition with EditionInterface { override def nameOfEdition: String = "Crisis: Heroes" }
+private class CrisisFleetsAndFortresses extends Edition with EditionInterface { override def nameOfEdition: String = "Crisis: Fleets and Fortresses" }
+private class CrisisEvents extends Edition with EditionInterface { override def nameOfEdition: String = "Crisis: Events" }
+private class CrisisBasesAndBattleships extends Edition with EditionInterface { override def nameOfEdition: String = "Crisis: Bases & Battleships" }
+private class Gambit extends Edition with EditionInterface { override def nameOfEdition: String = "Gambit" }
+private class PromoPack1 extends Edition with EditionInterface { override def nameOfEdition: String = "Promo Pack 1" }
+private class FirstKickstarterPromoPack extends Edition with EditionInterface { override def nameOfEdition: String = "1st Kickstarter Promo Pack" }
+private class PromosBattlecruiserStorageBox extends Edition with EditionInterface { override def nameOfEdition: String = "Promos (Battlecruiser Storage Box)" }
+private class PromosImperialFighterDeckBox extends Edition with EditionInterface { override def nameOfEdition: String = "Promos (Imperial Fighter Deck Box)" }
+private class PromosDiceTower2016 extends Edition with EditionInterface { override def nameOfEdition: String = "Promos (Dice Tower 2016)" }
+private class PromosMechCruiserStorageBox extends Edition with EditionInterface { override def nameOfEdition: String = "Promos (Mech Cruiser Storage Box)" }
  */
 object Edition {
-    def apply(nameOfEdition: String): Edition = nameOfEdition.toLowerCase match {
+    def apply(nameOfEdition: String): EditionInterface = nameOfEdition.toLowerCase match {
         case "core set" => new CoreSet
         /* case "high alert: first strike" => new HighAlertFirstStrike
         case "high alert: tech" => new HighAlertTech

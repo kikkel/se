@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.view
 
 import de.htwg.util.{Observer, Observable}
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
-import de.htwg.se.starrealms.model.GameCore.Card
+import de.htwg.se.starrealms.model.GameCore.CardInterface
 
 
 /*
@@ -21,7 +21,7 @@ class ConsoleView(processor: CommandAdapter, readOnlyState: GameStateReadOnly, g
   private var inPlayPhase = false
 
   private val baseRenderer = new CardRenderer()
-  private val cardRenderer: Renderer[Card] = new LoggingDecorator(baseRenderer)
+  private val cardRenderer: Renderer[CardInterface] = new LoggingDecorator(baseRenderer)
 
   def render(): String = {
   val sb = new StringBuilder

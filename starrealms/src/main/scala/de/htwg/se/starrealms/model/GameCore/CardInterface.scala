@@ -2,29 +2,29 @@ package de.htwg.se.starrealms.model.GameCore
 
 import scala.util.{Try, Success, Failure}
 
-trait CardType {
+trait CardTypeInterface {
     def cardType: String
 }
 
-trait Faction {
+trait FactionInterface {
     def factionName: String
-    def matches(other: Faction): Boolean
+    def matches(other: FactionInterface): Boolean
     def render(): String = s"$factionName #factory"
     //def apply()
 }
-trait Card {
-    val edition: Edition
+trait CardInterface {
+    val edition: EditionInterface
     val cardName: String
     val primaryAbility: Option[AbilityInterface]
-    val faction: Faction
-    def cardType: Try[CardType]
+    val faction: FactionInterface
+    def cardType: Try[CardTypeInterface]
     val qty: Int
     val role: String
     def render(): String
 }
 
 
-trait Edition {
+trait EditionInterface {
     def nameOfEdition: String
     def render(): String = s"$nameOfEdition #factory"
     //def apply()

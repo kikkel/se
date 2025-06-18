@@ -1,16 +1,16 @@
 package de.htwg.se.starrealms.app
 
-import de.htwg.se.starrealms.model.GameStateComponent.impl._
+import de.htwg.se.starrealms.di.StarRealmsModule
+import com.google.inject.Guice
+
+
 import de.htwg.se.starrealms.model.PlayerComponent.impl._
 import de.htwg.se.starrealms.model.GameCore.impl._
-import de.htwg.se.starrealms.controller.ControllerComponent.impl._
-import de.htwg.se.starrealms.controller.GameLogicComponent.impl._
-import de.htwg.se.starrealms.controller.GameMediatorComponent.impl._
-import de.htwg.se.starrealms.controller.ControllerComponent.structure._
+
 
 
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
-import de.htwg.se.starrealms.model.GameCore.{DeckInterface, Builder}
+import de.htwg.se.starrealms.model.GameCore.{DeckInterface, Builder, DeckDirectorInterface}
 
 import de.htwg.se.starrealms.view._
 
@@ -18,19 +18,25 @@ import de.htwg.se.starrealms.view._
 
 import scalafx.application.JFXApp3
 import scalafx.scene.Scene
+import de.htwg.se.starrealms.model.GameStateComponent.impl.GameState
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
+import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
+import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
 
 object GameApp extends JFXApp3 {
+  val injector = Guice.createInjector(new StarRealmsModule())
   @volatile var running = true
 
   override def start(): Unit = {
-    val director = new DeckDirector()
-    val builderFactory: Builder = new DeckBuilder(new Deck())
+    val director: DeckDirectorInterface = injector.getInstance(classOf[DeckDirectorInterface])
+    val builderFactory: Builder = injector.getInstance(classOf[Builder])
 
     val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
     //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
 
     val csvLoader = new CardCSVLoader(sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath"))
-    val loadCards = new LoadCards(new DeckBuilder(new Deck()), director, csvLoader)
+    val loadCards = new LoadCards(builderFactory, director, csvLoader)
     val decksByRole = loadCards.load("Core Set")
     //val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set", builderFactory, director)
     if (decksByRole.isEmpty) {
@@ -50,12 +56,12 @@ object GameApp extends JFXApp3 {
     val player1 = Player("Player 1")
     val player2 = Player("Player 2")
 
-    val gameState = new GameState(decksByRole, player1, player2, builderFactory, director)
-    val gameLogic = new GameLogic(gameState)
-    val mediator = new StarRealmsMediator(gameState, gameLogic, List(player1, player2))
-    val controller = new Controller(mediator)
-    val commandAdapter = new CommandProcessorAdapter(mediator, controller)
-    val proxy: GameStateReadOnly = new GameStateProxy(gameState)
+    val gameState: GameStateInterface = injector.getInstance(classOf[GameStateInterface])
+    val gameLogic: GameLogicInterface = injector.getInstance(classOf[GameLogicInterface])
+    val mediator: GameMediator = injector.getInstance(classOf[GameMediator])
+    val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
+    val commandAdapter: CommandAdapter = injector.getInstance(classOf[CommandAdapter])
+    val proxy: GameStateReadOnly = injector.getInstance(classOf[GameStateReadOnly])
     val view = new ConsoleView(commandAdapter, proxy, gameLogic)
     val gui = new GraphicUI(commandAdapter, proxy, () => running = false)
 

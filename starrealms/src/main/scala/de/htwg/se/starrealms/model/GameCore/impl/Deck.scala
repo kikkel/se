@@ -1,34 +1,35 @@
 package de.htwg.se.starrealms.model.GameCore.impl
 
-import de.htwg.se.starrealms.model.GameCore.{DeckInterface, Card, DeckDirectorInterface, Builder}
+import de.htwg.se.starrealms.model.GameCore.{DeckInterface, CardInterface, DeckDirectorInterface, Builder}
+import com.google.inject.{Inject, Guice}
 
-class Deck extends DeckInterface {
+class Deck @Inject() extends DeckInterface {
     private var name: String = ""
-    private var cards: Map[Card, Int] = Map()
-    private var cardStack: List[Card] = List() // <- Reihenfolge der Karten
+    private var cards: Map[CardInterface, Int] = Map()
+    private var cardStack: List[CardInterface] = List() // <- Reihenfolge der Karten
 
     override def setName(name: String): Unit = this.name = name
-    override def setCards(newCards: Map[Card, Int]): Unit = {
+    override def setCards(newCards: Map[CardInterface, Int]): Unit = {
         cards = newCards
         cardStack = cards.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     }
 
-    override def setCardStack(newStack: List[Card]): Unit = {
+    override def setCardStack(newStack: List[CardInterface]): Unit = {
         cardStack = newStack
         cards = cardStack.groupBy(identity).view.mapValues(_.size).toMap
     }
 
     override def getName: String = name
-    override def getCards: Map[Card, Int] = cardStack.groupBy(identity).view.mapValues(_.size).toMap
-    override def getCardStack: List[Card] = cardStack
+    override def getCards: Map[CardInterface, Int] = cardStack.groupBy(identity).view.mapValues(_.size).toMap
+    override def getCardStack: List[CardInterface] = cardStack
 
-    override def addCard(card: Card): Unit = {
+    override def addCard(card: CardInterface): Unit = {
         cards = cards.updated(card, cards.getOrElse(card, 0) + 1)
         cardStack = cardStack :+ card
     }
-    override def addCards(cardsToAdd: List[Card]): Unit = { cardsToAdd.foreach(addCard) }
+    override def addCards(cardsToAdd: List[CardInterface]): Unit = { cardsToAdd.foreach(addCard) }
 
-    override def removeCard(card: Card): Unit = {
+    override def removeCard(card: CardInterface): Unit = {
         cards.get(card) match {
             case Some(qty) if qty > 1 => cards = cards.updated(card, qty - 1)
             case Some(_) => cards = cards - card
@@ -43,7 +44,7 @@ class Deck extends DeckInterface {
         cards = cardStack.groupBy(identity).view.mapValues(_.size).toMap
     }
 
-    override def drawCard(): Option[Card] = {
+    override def drawCard(): Option[CardInterface] = {
         cardStack match {
             case head :: tail =>
                 cardStack = tail
@@ -92,19 +93,19 @@ class Deck extends DeckInterface {
 
  */
 
-class DeckBuilder(product: DeckInterface) extends Builder {
+class DeckBuilder @Inject() (product: DeckInterface) extends Builder {
     private var productVar: DeckInterface = product
 
     override def reset: Unit = productVar.resetDeck() 
     override def setName(name: String): Unit = productVar.setName(name)
-    override def setCards(newCards: Map[Card, Int]): Unit = productVar.setCards(newCards)
-    override def addCards(cards: List[Card]): Unit = cards.foreach(productVar.addCard)
-    override def addCard(card: Card): Unit = productVar.addCard(card)
+    override def setCards(newCards: Map[CardInterface, Int]): Unit = productVar.setCards(newCards)
+    override def addCards(cards: List[CardInterface]): Unit = cards.foreach(productVar.addCard)
+    override def addCard(card: CardInterface): Unit = productVar.addCard(card)
     override def getProduct: DeckInterface = productVar
 
 }
 
-class DeckDirector extends DeckDirectorInterface {
+class DeckDirector @Inject() extends DeckDirectorInterface {
     override def constructEmptyDeck(name: String, builderFactory: => Builder): DeckInterface = {
         val builder = builderFactory
         builder.reset
@@ -112,7 +113,7 @@ class DeckDirector extends DeckDirectorInterface {
         builder.setCards(Map.empty)
         builder.getProduct
     }
-    override def constructCustomDeck(name: String, builderFactory: => Builder, cards: List[Card]): DeckInterface = {
+    override def constructCustomDeck(name: String, builderFactory: => Builder, cards: List[CardInterface]): DeckInterface = {
             val builder = builderFactory
             builder.reset
             builder.setName(name)
@@ -120,14 +121,18 @@ class DeckDirector extends DeckDirectorInterface {
             builder.setCards(cardMap)
             builder.getProduct
     }
-    override def constructDecks(builderFactory: => Builder, groupedCards: Map[String, List[Card]]): Map[String, DeckInterface] = {
+    override def constructDecks(builderFactory: => Builder, groupedCards: Map[String, List[CardInterface]]): Map[String, DeckInterface] = {
         groupedCards.map { case (role, cards) =>
             val builder = builderFactory
             builder.reset
             builder.setName(role)
             val cardMap = cards.groupBy(identity).view.mapValues(_.size).toMap
             builder.setCards(cardMap)
-            role -> builder.getProduct
+            val product = builder.getProduct
+            val deepCopy = new Deck()
+            deepCopy.setName(product.getName)
+            deepCopy.setCards(product.getCards)
+            role -> deepCopy
         }
     }
 }

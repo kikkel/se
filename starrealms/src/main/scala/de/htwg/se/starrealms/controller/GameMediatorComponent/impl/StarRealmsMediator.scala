@@ -13,23 +13,20 @@ class StarRealmsMediator(
 
     override def notify(sender: Any, event: String): Unit = event match {
         case "endTurn" =>
-        //gameLogic.saveState()
-        gameState.swapPlayers
-        //gameLogic.startTurn()
+            //gameLogic.saveState()
+            gameState.swapPlayers
+            //gameLogic.startTurn()
 
         case "playerSwitch" =>
-        val newPlayer = players.find(_ != gameState.getCurrentPlayer).get
-        gameState.setOpponent(gameState.getCurrentPlayer)
-        gameState.setCurrentPlayer(newPlayer)
+            val newPlayer = players.find(_ != gameState.getCurrentPlayer).get
+            gameState.setOpponent(gameState.getCurrentPlayer)
+            gameState.setCurrentPlayer(newPlayer)
 
         case _ =>
-        println(s"Unhandled event: $event")
+            println(s"Unhandled event: $event")
     }
     override def getGameLogic: GameLogicInterface = gameLogic
     override def getGameState: GameStateInterface = gameState
-    override def getCurrentPlayer: PlayerInterface = ???
+    override def getCurrentPlayer: PlayerInterface = gameState.getCurrentPlayer
 
- /*    override def startTurn: Unit = {
-        ga
-    } */
 }

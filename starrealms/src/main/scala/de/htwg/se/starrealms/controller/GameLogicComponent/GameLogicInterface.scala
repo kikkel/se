@@ -1,25 +1,25 @@
 package de.htwg.se.starrealms.controller.GameLogicComponent
 
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
-import de.htwg.se.starrealms.model.GameCore.Card
+import de.htwg.se.starrealms.model.GameCore.CardInterface
 
 trait GameLogicInterface {
-    def drawCard: Option[Card]
-    def returnCardToPlayerDeck(card: Card): Unit
+    def drawCard: Option[CardInterface]
+    def returnCardToPlayerDeck(card: CardInterface): Unit
 
-    def drawCards(count: Int): List[Card]
+    def drawCards(count: Int): List[CardInterface]
 
-    def playCard(card: Card): Unit
+    def playCard(card: CardInterface): Unit
 
-    def returnCardToHand(card: Card): Unit
+    def returnCardToHand(card: CardInterface): Unit
 
 
-    def buyCard(card: Card): Unit
-    def returnCardToTradeRow(card: Card): Unit
+    def buyCard(card: CardInterface): Unit
+    def returnCardToTradeRow(card: CardInterface): Unit
 
     def replenishTradeRow: Unit 
 
-    def undoReplenish(card: Card): Unit
+    def undoReplenish(card: CardInterface): Unit
 
 
     def endTurn: Unit

@@ -2,7 +2,7 @@ package de.htwg.se.starrealms.model.GameStateComponent.impl
 
 import de.htwg.util._
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
-import de.htwg.se.starrealms.model.GameCore.{Card, DeckDirectorInterface, DeckInterface, Builder}
+import de.htwg.se.starrealms.model.GameCore.{CardInterface, DeckDirectorInterface, DeckInterface, Builder}
 import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameSnapshot, PlayerSnapshot}
 
 import de.htwg.se.starrealms.model.GameCore.impl.FactionCard
@@ -20,11 +20,11 @@ class GameState(
   private var opponent: PlayerInterface = player2
 
   private var playerDecks: Map[PlayerInterface, DeckInterface] = Map()
-  private var hands: Map[PlayerInterface, List[Card]] = Map(player1 -> List(), player2 -> List())
-  private var discardPiles: Map[PlayerInterface, List[Card]] = Map(player1 -> List(), player2 -> List())
-  private var lastDiscardedHands: Map[PlayerInterface, List[Card]] = Map(player1 -> List(), player2 -> List())
+  private var hands: Map[PlayerInterface, List[CardInterface]] = Map(player1 -> List(), player2 -> List())
+  private var discardPiles: Map[PlayerInterface, List[CardInterface]] = Map(player1 -> List(), player2 -> List())
+  private var lastDiscardedHands: Map[PlayerInterface, List[CardInterface]] = Map(player1 -> List(), player2 -> List())
 
-  private var tradeRow: List[Card] = List()
+  private var tradeRow: List[CardInterface] = List()
   private var tradeDeck: DeckInterface = director.constructEmptyDeck("Trade Deck", builderFactory)
   private var explorerPile: DeckInterface = director.constructEmptyDeck("Explorer Pile", builderFactory)
 
@@ -40,15 +40,15 @@ class GameState(
     val vipers = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
     val playerCards = scala.util.Random.shuffle(scouts ++ vipers)
 
+    val deck1 = director.constructCustomDeck("Personal Deck 1", builderFactory, scala.util.Random.shuffle(playerCards))
+    val deck2 = director.constructCustomDeck("Personal Deck 2", builderFactory, scala.util.Random.shuffle(playerCards))
     playerDecks = Map(
-      player1 -> director.constructCustomDeck("Personal Deck 1", builderFactory, scala.util.Random.shuffle(playerCards)),
-      player2 -> director.constructCustomDeck("Personal Deck 2", builderFactory, scala.util.Random.shuffle(playerCards))
+      player1 -> deck1,
+      player2 -> deck2
     )
     playerDecks(player1).setName("Personal Deck 1")
     playerDecks(player2).setName("Personal Deck 2")
-    playerDecks(player1).setCardStack(scala.util.Random.shuffle(playerCards))
-    playerDecks(player2).setCardStack(scala.util.Random.shuffle(playerCards))
-
+    
     val allTrade = decks.getOrElse("Trade Deck", director.constructEmptyDeck("Trade Deck", builderFactory)).getCards
     val expandedTrade = allTrade.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     val shuffledTrade = scala.util.Random.shuffle(expandedTrade)
@@ -69,13 +69,13 @@ class GameState(
   override def getOpponent: PlayerInterface = opponent
 
   override def getPlayerDeck(player: PlayerInterface): DeckInterface = playerDecks(player)
-  override def getHand(player: PlayerInterface): List[Card] = hands(player)
-  override def getDiscardPile(player: PlayerInterface): List[Card] = discardPiles(player)
-  override def getDiscardPiles: Map[PlayerInterface, List[Card]] = discardPiles
-  override def getLastDiscardedHand(player: PlayerInterface): List[Card] = lastDiscardedHands(player)
+  override def getHand(player: PlayerInterface): List[CardInterface] = hands(player)
+  override def getDiscardPile(player: PlayerInterface): List[CardInterface] = discardPiles(player)
+  override def getDiscardPiles: Map[PlayerInterface, List[CardInterface]] = discardPiles
+  override def getLastDiscardedHand(player: PlayerInterface): List[CardInterface] = lastDiscardedHands(player)
 
   override def getTradeDeck: DeckInterface = tradeDeck
-  override def getTradeRow: List[Card] = tradeRow
+  override def getTradeRow: List[CardInterface] = tradeRow
   override def getExplorerPile: DeckInterface = explorerPile
 
   override def setCurrentPlayer(player: PlayerInterface): Unit = {
@@ -98,21 +98,21 @@ class GameState(
     notifyObservers()
   }
 
-  override def setHand(player: PlayerInterface, hand: List[Card]): Unit = {
+  override def setHand(player: PlayerInterface, hand: List[CardInterface]): Unit = {
     hands = hands.updated(player, hand)
     notifyObservers()
   }
 
-  override def setDiscardPile(player: PlayerInterface, discard: List[Card]): Unit = {
+  override def setDiscardPile(player: PlayerInterface, discard: List[CardInterface]): Unit = {
     discardPiles = discardPiles.updated(player, discard)
     notifyObservers()
   }
-  override def setLastDiscardedHand(player: PlayerInterface, hand: List[Card]): Unit = {
+  override def setLastDiscardedHand(player: PlayerInterface, hand: List[CardInterface]): Unit = {
     lastDiscardedHands = lastDiscardedHands.updated(player, hand)
     notifyObservers()
   }
 
-  override def setTradeRow(row: List[Card]): Unit = {
+  override def setTradeRow(row: List[CardInterface]): Unit = {
     tradeRow = row
     notifyObservers()
   }
@@ -132,7 +132,7 @@ class GameState(
   }
  
   override def getSnapshot: GameSnapshot = {
-    def cardList(cards: List[Card]): List[Card] = cards
+    def cardList(cards: List[CardInterface]): List[CardInterface] = cards
     val currentPlayerSnapshot = PlayerSnapshot(
       name = currentPlayer.getName,
       health = currentPlayer.getHealth,

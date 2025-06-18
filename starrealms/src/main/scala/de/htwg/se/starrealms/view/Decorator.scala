@@ -1,13 +1,13 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.model.GameCore.{Card, AbilityInterface}
+import de.htwg.se.starrealms.model.GameCore.{CardInterface, AbilityInterface}
 
-
+import com.google.inject.Inject
 import de.htwg.se.starrealms.model.GameCore.impl._
 
 trait Renderer[T] { def render(entity: T): String }
 
-abstract class RDecorator[T](wrapped: Renderer[T]) extends Renderer[T] {
+abstract class RDecorator[T] @Inject() (wrapped: Renderer[T]) extends Renderer[T] {
   override def render(entity: T): String = wrapped.render(entity)
 }
 
@@ -19,8 +19,8 @@ class LoggingDecorator[T](wrapped: Renderer[T]) extends RDecorator[T](wrapped) {
   }
 }
 
-class ColourHighlightDecorator[T](wrapped: Renderer[Card]) extends RDecorator[Card](wrapped) {
-  override def render(card: Card): String = {
+class ColourHighlightDecorator[T](wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
+  override def render(card: CardInterface): String = {
     val base = wrapped.render(card)
     val prefix = card.faction.factionName match {
         case "Trade Federation" => "[TRADFED] "
@@ -33,8 +33,8 @@ class ColourHighlightDecorator[T](wrapped: Renderer[Card]) extends RDecorator[Ca
   }
 }
 
-class CompactCardDecorator(wrapped: Renderer[Card]) extends RDecorator[Card](wrapped) {
-  override def render(card: Card): String = {
+class CompactCardDecorator(wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
+  override def render(card: CardInterface): String = {
     card match {
         case fc: FactionCard => s"${fc.cardName} (Primary Ability: ${renderAbility(fc.primaryAbility)},  Ally Ability: ${renderAbility(fc.allyAbility)},  Scrap Ability: ${renderAbility(fc.scrapAbility)})"
         case ec: ExplorerCard => s"${ec.cardName} (Ability: ${renderAbility(ec.primaryAbility)},  Scrap Ability: ${renderAbility(ec.scrapAbility)})"
@@ -45,8 +45,8 @@ class CompactCardDecorator(wrapped: Renderer[Card]) extends RDecorator[Card](wra
     ability.map(_.render).getOrElse("None")
 }
 
-class HtmlStyledDecorator(wrapped: Renderer[Card]) extends RDecorator[Card](wrapped) {
-  override def render(card: Card): String = {
+class HtmlStyledDecorator(wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
+  override def render(card: CardInterface): String = {
     val base = wrapped.render(card)
     s"<div class='card-block'$base</div>"
   }

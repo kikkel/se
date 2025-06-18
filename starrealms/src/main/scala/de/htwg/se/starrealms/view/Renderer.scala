@@ -1,12 +1,15 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.model.GameCore.{Card, AbilityInterface}
+import de.htwg.se.starrealms.model.GameCore.{CardInterface, AbilityInterface}
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameSnapshot, PlayerSnapshot}
 import de.htwg.util._
 
 import de.htwg.se.starrealms.model.GameCore.structure.{OptionsMenu, MainMenu}
 import de.htwg.se.starrealms.model.GameCore.impl.{DefaultCard, ExplorerCard, FactionCard}
+
+import com.google.inject.Inject
+import de.htwg.se.starrealms.app.GameApp.injector
 
 class OptionsMenuRender extends Renderer[OptionsMenu] {
   override def render(menu: OptionsMenu): String = {
@@ -22,8 +25,8 @@ class MainMenuRenderer extends Renderer[MainMenu] {
 }
 
 
-class CardRenderer extends Observable with Renderer[Card] {
-  override def render(card: Card): String = card match {
+class CardRenderer @Inject() extends Observable with Renderer[CardInterface] {
+  override def render(card: CardInterface): String = card match {
     case default: DefaultCard => renderDefaultCard(default)
     case explorer: ExplorerCard => renderExplorerCard(explorer)
     case faction: FactionCard => renderFactionCard(faction)
@@ -110,17 +113,17 @@ class SnapshotRenderer extends Renderer[GameSnapshot] {
        |""".stripMargin
   }
 
-  private def renderTradeRow(tradeRow: List[Card]): String = {
-    val cardRenderer = new CardRenderer()
+  private def renderTradeRow(tradeRow: List[CardInterface]): String = {
+    val cardRenderer = injector.getInstance(classOf[Renderer[CardInterface]])
     if (tradeRow.isEmpty) "Empty Trade Row"
     else tradeRow.zipWithIndex.map { case (card, index) =>
       s"${index + 1}. ${cardRenderer.render(card)}"
     }.mkString("\n")
   }
 
-  private def renderHand(hand: List[Card]): String = {
-    val baseRenderer = new CardRenderer()
-    val cardRenderer: Renderer[Card] = new ColourHighlightDecorator(
+  private def renderHand(hand: List[CardInterface]): String = {
+    val baseRenderer = injector.getInstance(classOf[Renderer[CardInterface]])
+    val cardRenderer: Renderer[CardInterface] = new ColourHighlightDecorator(
         new CompactCardDecorator(
             new LoggingDecorator(baseRenderer)
         )

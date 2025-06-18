@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model.GameCore.impl
 
-import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, DeckInterface, Card, Action, Edition}
+import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, DeckInterface, CardInterface, ActionInterface, EditionInterface}
 
 import scala.util.{Failure, Try, Success}
 import scala.io.Source
@@ -31,7 +31,7 @@ class LoadCards(
 
 
 class CardCSVLoader(filePath: String) {
-    private var cardsByEdition: Map[String, List[Card]] = Map()
+    private var cardsByEdition: Map[String, List[CardInterface]] = Map()
     private val validRoles = Set("Trade Deck", "Personal Deck", "Explorer Pile")
 
 
@@ -111,7 +111,7 @@ class CardCSVLoader(filePath: String) {
             notes = card.get("Notes").filter(_.nonEmpty)
         )
     }
-    def transformToSpecificCard(parsedCard: ParsedCard): Option[Card] = {
+    def transformToSpecificCard(parsedCard: ParsedCard): Option[CardInterface] = {
         if (!validRoles.contains(parsedCard.role)) {
             println(s"Unknown role: ${parsedCard.role}. Ignoring card.\n")
             return None
@@ -157,7 +157,7 @@ class CardCSVLoader(filePath: String) {
         }
     }
 
-    private def parseActions(text: String): List[Action] = {
+    private def parseActions(text: String): List[ActionInterface] = {
         text.split("<hr>").toList.map { action =>
             if (action.contains("OR")) {
                 val conditions = action.split("OR").map(_.trim)
@@ -173,8 +173,8 @@ class CardCSVLoader(filePath: String) {
             }
         }
     }
-    private def parseSingleAction(text: String): Action = {
-        val actionMap: Map[String, String => Action] = Map(
+    private def parseSingleAction(text: String): ActionInterface = {
+        val actionMap: Map[String, String => ActionInterface] = Map(
             "Trade" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Trade")),
             "Combat" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Combat")),
             "Authority" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Authority")),
@@ -187,13 +187,13 @@ class CardCSVLoader(filePath: String) {
         .map { case (_, constructor) => constructor(text) }
         .getOrElse(SimpleAction(text))
     }
-    def getCardsForEdition(nameOfEdition: String): List[Card] = {
+    def getCardsForEdition(nameOfEdition: String): List[CardInterface] = {
 
         cardsByEdition.filter { case (key, _) => key.trim.toLowerCase.contains(nameOfEdition.trim.toLowerCase) }
             .values.flatten.toList
     }
 
-    def getAllCards: List[Card] = cardsByEdition.values.flatten.toList;
+    def getAllCards: List[CardInterface] = cardsByEdition.values.flatten.toList;
 
 }
 
