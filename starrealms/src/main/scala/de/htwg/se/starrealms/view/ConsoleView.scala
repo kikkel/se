@@ -3,6 +3,7 @@ package de.htwg.se.starrealms.view
 import de.htwg.util.{Observer, Observable}
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
 import de.htwg.se.starrealms.model.GameCore.CardInterface
+import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
 
 
 /*
@@ -16,7 +17,7 @@ hand.foreach(card => println(card.cardName))
  */
 
 
-class ConsoleView(processor: CommandAdapter, readOnlyState: GameStateReadOnly, gameLogic: Observable) extends Observer {
+class ConsoleView(processor: CommandAdapter, readOnlyState: GameStateReadOnly, gameLogic: GameLogicInterface) extends Observer {
   gameLogic.addObserver(this)
   private var inPlayPhase = false
 
@@ -99,7 +100,7 @@ class ConsoleView(processor: CommandAdapter, readOnlyState: GameStateReadOnly, g
   }
   override def update: Unit = {
     val hand = readOnlyState.getHand(readOnlyState.getCurrentPlayer)
-    hand.foreach(card => println(cardRenderer.render(card))) 
+    hand.foreach(card => println(cardRenderer.render(card)))
     println(processor.getState)
   }
 }

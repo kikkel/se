@@ -6,6 +6,7 @@ import com.google.inject.Guice
 
 import de.htwg.se.starrealms.model.PlayerComponent.impl._
 import de.htwg.se.starrealms.model.GameCore.impl._
+import de.htwg.se.starrealms.view.ConsoleView
 
 
 
@@ -44,7 +45,7 @@ object GameApp extends JFXApp3 {
       return
     }
 
-    //debugging 
+    //debugging
     println("\n\nDecks by Role:")
     decksByRole.foreach { case (role, deck) =>
       println(s"Role: $role")

@@ -33,8 +33,8 @@ class StarRealmsModule extends AbstractModule with ScalaModule{
 
     bind(classOf[CardInterface]).to(classOf[GameCore.impl.Card])
     bind(classOf[CardTypeInterface]).to(classOf[GameCore.impl.CardType])
-    bind(classOf[FactionInterface]).to(classOf[GameCore.impl.Faction])
-    bind(classOf[EditionInterface]).to(classOf[GameCore.impl.Edition])
+    bind(classOf[FactionInterface]).to(classOf[FactionImpl])
+    bind(classOf[EditionInterface]).to(classOf[EditionImpl])
 
     bind(classOf[DeckInterface]).to(classOf[GameCore.impl.Deck])
     bind(classOf[DeckDirectorInterface]).to(classOf[GameCore.impl.DeckDirector])
