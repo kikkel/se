@@ -32,7 +32,7 @@ class CardRenderer extends Observable with Renderer[Card] {
   private def renderDefaultCard(card: DefaultCard): String =
     s"""
        |  Name: ${card.cardName}
-       |  Type: ${card.cardType}
+       |  Type: ${card.cardType.map(_.cardType).getOrElse("Unknown")}
        |  Ability: ${renderAbility(card.primaryAbility)}
        |""".stripMargin
 
@@ -40,7 +40,7 @@ class CardRenderer extends Observable with Renderer[Card] {
     s"""
        |  Name: ${card.cardName}
        |  Cost: ${card.cost}
-       |  Type: ${card.cardType}
+       |  Type: ${card.cardType.map(_.cardType).getOrElse("Unknown")}
        |  Ability: ${renderAbility(card.primaryAbility)}
        |  Scrap Ability: ${renderAbility(card.scrapAbility)}
        |""".stripMargin
@@ -48,7 +48,7 @@ class CardRenderer extends Observable with Renderer[Card] {
   private def renderFactionCard(card: FactionCard): String =
     s"""
        |  Name: ${card.cardName}
-       |  Type: ${card.cardType}
+       |  Type: ${card.cardType.map(_.cardType).getOrElse("Unknown")}
        |  Cost: ${card.cost}
        |  Primary Ability: ${renderAbility(card.primaryAbility)}
        |  Ally Ability: ${renderAbility(card.allyAbility)}
@@ -119,7 +119,12 @@ class SnapshotRenderer extends Renderer[GameSnapshot] {
   }
 
   private def renderHand(hand: List[Card]): String = {
-    val cardRenderer = new CardRenderer()
+    val baseRenderer = new CardRenderer()
+    val cardRenderer: Renderer[Card] = new ColourHighlightDecorator(
+        new CompactCardDecorator(
+            new LoggingDecorator(baseRenderer)
+        )
+    )
     if (hand.isEmpty) "Empty Hand"
     else hand.zipWithIndex.map { case (card, index) =>
       s"${index + 1}. ${cardRenderer.render(card)}"

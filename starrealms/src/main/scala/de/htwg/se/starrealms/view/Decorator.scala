@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.model.GameCore.Card
+import de.htwg.se.starrealms.model.GameCore.{Card, AbilityInterface}
 
 
 import de.htwg.se.starrealms.model.GameCore.impl._
@@ -36,11 +36,13 @@ class ColourHighlightDecorator[T](wrapped: Renderer[Card]) extends RDecorator[Ca
 class CompactCardDecorator(wrapped: Renderer[Card]) extends RDecorator[Card](wrapped) {
   override def render(card: Card): String = {
     card match {
-        case fc: FactionCard => s"${fc.cardName} (Cost: ${fc.cost})"
-        case ec: ExplorerCard => s"${ec.cardName} (Cost: ${ec.cost})"
-        case dc: DefaultCard => s"${dc.cardName}"
+        case fc: FactionCard => s"${fc.cardName} (Primary Ability: ${renderAbility(fc.primaryAbility)},  Ally Ability: ${renderAbility(fc.allyAbility)},  Scrap Ability: ${renderAbility(fc.scrapAbility)})"
+        case ec: ExplorerCard => s"${ec.cardName} (Ability: ${renderAbility(ec.primaryAbility)},  Scrap Ability: ${renderAbility(ec.scrapAbility)})"
+        case dc: DefaultCard => s"${dc.cardName} (Ability: ${renderAbility(dc.primaryAbility)})"
     }
   }
+  private def renderAbility(ability: Option[AbilityInterface]): String =
+    ability.map(_.render).getOrElse("None")
 }
 
 class HtmlStyledDecorator(wrapped: Renderer[Card]) extends RDecorator[Card](wrapped) {

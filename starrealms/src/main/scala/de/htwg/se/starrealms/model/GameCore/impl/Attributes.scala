@@ -9,8 +9,8 @@ class Ability(val actions: List[Action]) extends AbilityInterface {
   override def executeActions(): Unit = actions.foreach(_.doMove)
 
   override def render: String = {
-    if (actions.isEmpty) "No actions available"
-    else actions.map(a => s"${a.getClass.getSimpleName}(${a.description})").mkString(", ")
+    if (actions.isEmpty) "None"
+    else actions.map(_.description).mkString(", ")
   }
 }
 

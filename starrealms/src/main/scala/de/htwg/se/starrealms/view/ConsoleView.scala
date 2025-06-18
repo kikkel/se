@@ -26,7 +26,6 @@ class ConsoleView(processor: CommandAdapter, readOnlyState: GameStateReadOnly, g
   def render(): String = {
   val sb = new StringBuilder
   sb.append("\n\n")
-  sb.append(s"${processor.playerStatus}\n")
   if (!inPlayPhase) {
     sb.append("Enter 't' to start game\n")
     sb.append("Enter 's' to start your turn\n")

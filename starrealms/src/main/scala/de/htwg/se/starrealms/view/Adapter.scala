@@ -7,15 +7,11 @@ import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
 
 
-trait CommandAdapter { def handleInput(input: String): String; def getState: String; def playerStatus: String } //Adapter
+trait CommandAdapter { def handleInput(input: String): String; def getState: String } //Adapter
 
 class CommandProcessorAdapter(mediator: GameMediator, controller: ControllerInterface) extends CommandAdapter {
   val state = mediator.getGameState
-  override def playerStatus: String = {
-    val playerRenderer = new PlayerRenderer()
-    s"Current player: ${playerRenderer.render(state.getCurrentPlayer)}\n" +
-    s"Opponent: ${playerRenderer.render(state.getOpponent)}"
-  }
+
   override def handleInput(input: String): String = {
     println(s"INPUT RECEIVED: '$input'") // DEBUG
     val tokens = input.trim.toLowerCase.split("\\s+")

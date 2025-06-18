@@ -24,12 +24,12 @@ outputArea.appendText(
 */
 
 class GraphicUI(processor: CommandAdapter, readOnlyState: GameStateReadOnly, onExit: () => Unit) extends Stage with Observer {
-    private val baseRenderer = new CardRenderer()
+/*     private val baseRenderer = new CardRenderer()
     private val cardRenderer: Renderer[Card] = new ColourHighlightDecorator(
         new CompactCardDecorator(
             new LoggingDecorator(baseRenderer)
         )
-    )
+    ) */
 
 
     title = "Star Realms"
@@ -112,12 +112,8 @@ class GraphicUI(processor: CommandAdapter, readOnlyState: GameStateReadOnly, onE
     }
 
     override def update: Unit = {
-        val handCards = readOnlyState.getHand(readOnlyState.getCurrentPlayer)  
-        val renderedHand = handCards.map(cardRenderer.render).mkString("\n---\n")
 
         Platform.runLater {
-            outputArea.text = (s"Hand:\n$renderedHand\n")
-            outputArea.appendText(processor.playerStatus + "\n")
             outputArea.appendText(processor.getState + "\n")
         }
 
