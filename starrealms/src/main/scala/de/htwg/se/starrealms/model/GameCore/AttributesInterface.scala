@@ -1,9 +1,9 @@
 package de.htwg.se.starrealms.model.GameCore
 
-trait Action { def description: String; def doMove: Unit }
+trait ActionInterface { def description: String; def doMove: Unit }
 
 trait AbilityInterface {
-  def getActions: List[Action]
+  def getActions: List[ActionInterface]
   def hasActions: Boolean
   def executeActions(): Unit
   def render: String

@@ -1,6 +1,6 @@
 package de.htwg.se.starrealms.model.GameCore.impl
 
-import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, DeckInterface, Card, Action, Edition}
+import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, DeckInterface, Card, ActionInterface, Edition}
 
 import scala.util.{Failure, Try, Success}
 import scala.io.Source
@@ -157,7 +157,7 @@ class CardCSVLoader(filePath: String) {
         }
     }
 
-    private def parseActions(text: String): List[Action] = {
+    private def parseActions(text: String): List[ActionInterface] = {
         text.split("<hr>").toList.map { action =>
             if (action.contains("OR")) {
                 val conditions = action.split("OR").map(_.trim)
@@ -173,8 +173,8 @@ class CardCSVLoader(filePath: String) {
             }
         }
     }
-    private def parseSingleAction(text: String): Action = {
-        val actionMap: Map[String, String => Action] = Map(
+    private def parseSingleAction(text: String): ActionInterface = {
+        val actionMap: Map[String, String => ActionInterface] = Map(
             "Trade" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Trade")),
             "Combat" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Combat")),
             "Authority" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Authority")),

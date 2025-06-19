@@ -26,8 +26,8 @@ object GameApp extends JFXApp3 {
     val director = new DeckDirector()
     val builderFactory: Builder = new DeckBuilder(new Deck())
 
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
+    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
 
     val csvLoader = new CardCSVLoader(sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath"))
     val loadCards = new LoadCards(new DeckBuilder(new Deck()), director, csvLoader)
@@ -38,7 +38,7 @@ object GameApp extends JFXApp3 {
       return
     }
 
-    //debugging 
+    //debugging
     println("\n\nDecks by Role:")
     decksByRole.foreach { case (role, deck) =>
       println(s"Role: $role")
