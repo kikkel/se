@@ -9,10 +9,9 @@ import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
 import de.htwg.se.starrealms.model.GameCore.structure.{TradeRowReplenishStrategy, StartTurnStrategy}
 import de.htwg.se.starrealms.model.GameCore.CardInterface
 
-import com.google.inject.Inject
 
 
-class GameLogic @Inject() (val gameState: GameStateInterface) extends Observable with GameLogicInterface {
+class GameLogic (val gameState: GameStateInterface) extends Observable with GameLogicInterface {
   // Existing logic for strategies, if needed
   private val replenishStrategy = new TradeRowReplenishStrategy()
   private val startTurnStrategy = new StartTurnStrategy()

@@ -11,7 +11,7 @@ import de.htwg.se.starrealms.model.GameStateComponent
 import com.google.inject.Inject
 
 
-class GameState @Inject() (
+class GameState (
   val decksByRole: Map[String, DeckInterface],
   val player1: PlayerInterface,
   val player2: PlayerInterface,

@@ -11,13 +11,13 @@ import de.htwg.se.starrealms.model.GameCore.impl.{DefaultCard, ExplorerCard, Fac
 import com.google.inject.Inject
 import de.htwg.se.starrealms.app.GameApp.injector
 
-class OptionsMenuRender @Inject() extends Renderer[OptionsMenu] {
+class OptionsMenuRender extends Renderer[OptionsMenu] {
   override def render(menu: OptionsMenu): String = {
     val options = menu.getOptions.map(_.render()).mkString("\n")
     s"Options Menu:\n$options"
   }
 }
-class MainMenuRenderer @Inject() extends Renderer[MainMenu] {
+class MainMenuRenderer extends Renderer[MainMenu] {
   override def render(menu: MainMenu): String = {
     val options = menu.getOptions.map(_.render()).mkString("\n")
     s"Main Menu:\n$options"
@@ -25,7 +25,7 @@ class MainMenuRenderer @Inject() extends Renderer[MainMenu] {
 }
 
 
-class CardRenderer @Inject() extends Observable with Renderer[CardInterface] {
+class CardRenderer extends Observable with Renderer[CardInterface] {
   override def render(card: CardInterface): String = card match {
     case default: DefaultCard => renderDefaultCard(default)
     case explorer: ExplorerCard => renderExplorerCard(explorer)
@@ -72,7 +72,7 @@ class CardRenderer @Inject() extends Observable with Renderer[CardInterface] {
 
 class GameStateRenderer extends Renderer[GameLogic] { override def render(gameLogic: GameLogic): String = gameLogic.getDeckState } */
 
-class PlayerRenderer @Inject() extends Renderer[PlayerInterface] {
+class PlayerRenderer extends Renderer[PlayerInterface] {
   override def render(player: PlayerInterface): String = {
     s"""
        |Player Name: ${player.getName}
@@ -81,7 +81,7 @@ class PlayerRenderer @Inject() extends Renderer[PlayerInterface] {
   }
 }
 
-class SnapshotRenderer @Inject() extends Renderer[GameSnapshot] {
+class SnapshotRenderer extends Renderer[GameSnapshot] {
   override def render(snapshot: GameSnapshot): String = {
     val currentPlayer = renderPlayerSnapshot(snapshot.currentPlayer)
     val opponent = renderPlayerSnapshot(snapshot.opponent)

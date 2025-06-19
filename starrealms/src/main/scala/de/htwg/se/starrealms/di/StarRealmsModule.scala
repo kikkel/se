@@ -1,9 +1,6 @@
 package de.htwg.se.starrealms.di
 
-import com.google.inject.AbstractModule
-import net.codingwell.scalaguice.ScalaModule
-
-import de.htwg.util.CommandInterface
+/* import de.htwg.util.CommandInterface
 import de.htwg.se.starrealms.view._
 import de.htwg.se.starrealms.controller.{GameLogicComponent, GameMediatorComponent, ControllerComponent}
 import de.htwg.se.starrealms.controller.GameLogicComponent._
@@ -13,37 +10,46 @@ import de.htwg.se.starrealms.model.{GameCore, PlayerComponent, GameStateComponen
 import de.htwg.se.starrealms.model.GameCore._
 import de.htwg.se.starrealms.model.GameStateComponent._
 import de.htwg.se.starrealms.model.PlayerComponent._
-import scalafx.scene.input.KeyCode.R
+import scalafx.scene.input.KeyCode.R */
 
-class StarRealmsModule extends AbstractModule with ScalaModule{
-  override def configure(): Unit = {
+object StarRealmsModule {
 
-    //bind(classOf[CommandInterface]).to(classOf[ControllerComponent.structure.Command])
-    bind(classOf[CommandAdapter]).to(classOf[CommandProcessorAdapter])
-    bind(classOf[Renderer[?]]).to(classOf[RDecorator[?]])
+  //given CommandInterface = new ControllerComponent.structure.Command(using )
+  given adapter: CommandAdapter = new CommandProcessorAdapter(using mediator, controller)
+  //given renderer: Renderer[?] = new RDecorator[T]
 
-    bind(classOf[ControllerInterface]).to(classOf[ControllerComponent.impl.Controller])
-    bind(classOf[GameLogicInterface]).to(classOf[GameLogicComponent.impl.GameLogic])
-    bind(classOf[GameMediator]).to(classOf[GameMediatorComponent.impl.StarRealmsMediator])
-
-
-    bind(classOf[AbilityInterface]).to(classOf[GameCore.impl.Ability])
-    bind(classOf[ActionInterface]).to(classOf[GameCore.impl.Action])
-
-    bind(classOf[CardInterface]).to(classOf[GameCore.impl.Card])
-    bind(classOf[CardTypeInterface]).to(classOf[GameCore.impl.CardType])
-    //bind(classOf[FactionInterface]).to(classOf[GameCore.impl.Faction])
-    //bind(classOf[EditionInterface]).to(classOf[GameCore.impl.Edition])
-
-    bind(classOf[DeckInterface]).to(classOf[GameCore.impl.Deck])
-    bind(classOf[DeckDirectorInterface]).to(classOf[GameCore.impl.DeckDirector])
-    bind(classOf[Builder]).to(classOf[GameCore.impl.DeckBuilder])
-
-    bind(classOf[GameStateInterface]).to(classOf[GameStateComponent.impl.GameState])
-    bind(classOf[GameStateReadOnly]).to(classOf[ControllerComponent.structure.GameStateProxy])
-
-    bind(classOf[PlayerComponent.PlayerInterface]).to(classOf[PlayerComponent.impl.Player])
+  given controller: ControllerInterface = new ControllerComponent.impl.Controller(using mediator)
+  given gameLogic: GameLogicInterface = new GameLogicComponent.impl.GameLogic(using gameState)
+  given mediator: GameMediator = new GameMediatorComponent.impl.StarRealmsMediator(using gameState, gameLogic, players)
 
 
-  }
+  //given ability: AbilityInterface = new GameCore.impl.Ability(using actions)
+  //given action: ActionInterface = new GameCore.impl.Action()
+
+  //given card: CardInterface = new GameCore.impl.Card(using )
+  //given cardType: CardTypeInterface = new GameCore.impl.CardType(using )
+  //given faction: FactionInterface = new GameCore.impl.Faction(using )
+  //given editioin: EditionInterface = new GameCore.impl.Edition(using )
+
+  //given deck: DeckInterface = new GameCore.impl.Deck(using )
+  given director: DeckDirectorInterface = new GameCore.impl.DeckDirector()
+  given builder: Builder = new impl.DeckBuilder(using product)
+
+  given gameState: GameStateInterface = new GameStateComponent.impl.GameState(using decksByRole, player1, player2, builderFactory, director)
+  given proxy: GameStateReadOnly = new ControllerComponent.structure.GameStateProxy(using gameState)
+
+  //given player: PlayerComponent.PlayerInterface = new PlayerComponent.impl.Player(using )
+  given players: List[PlayerComponent.PlayerInterface] = List(
+    PlayerComponent.impl.Player("Player 1", 3),
+    PlayerComponent.impl.Player("Player 2", 3)
+  )
+
+  // Example decksByRole (replace this with real card loading logic)
+  given decksByRole: Map[String, DeckInterface] = Map(
+    "Personal Deck" -> new impl.Deck(),
+    "Trade Deck" -> new impl.Deck(),
+    "Explorer Pile" -> new impl.Deck()
+  )
+
+
 }

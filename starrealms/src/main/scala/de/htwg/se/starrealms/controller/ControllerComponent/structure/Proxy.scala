@@ -28,7 +28,7 @@ object DrawStrategyFactory {
   }
 }
 
-class GameStateProxy @Inject() (private val gameState: GameStateInterface) extends GameStateReadOnly {
+class GameStateProxy (private val gameState: GameStateInterface) extends GameStateReadOnly {
   override def getCurrentPlayer: PlayerInterface = gameState.getCurrentPlayer
   override def getOpponent: PlayerInterface = gameState.getOpponent
   override def getPlayerDeck(player: PlayerInterface): DeckInterface = gameState.getPlayerDeck(gameState.getCurrentPlayer)

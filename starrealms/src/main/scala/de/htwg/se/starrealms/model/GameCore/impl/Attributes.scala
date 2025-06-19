@@ -5,7 +5,7 @@ import de.htwg.se.starrealms.di.StarRealmsModule
 import com.google.inject.{Guice, Inject}
 
 
-class Ability @Inject() (val actions: List[ActionInterface]) extends AbilityInterface {
+class Ability (val actions: List[ActionInterface]) extends AbilityInterface {
   override def getActions: List[ActionInterface] = actions
   override def hasActions: Boolean = actions.nonEmpty
   override def executeActions(): Unit = actions.foreach(_.doMove)
@@ -57,7 +57,7 @@ case class ScrapAbility(override val actions: List[ActionInterface]) extends Abi
   }
 } */
 
-abstract class Action @Inject() extends ActionInterface {
+abstract class Action extends ActionInterface {
   def doMove: Unit
   def description: String = this.getClass.getSimpleName
 }

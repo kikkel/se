@@ -10,13 +10,11 @@ import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 import de.htwg.util.{Observable, UndoManager}
 
-import com.google.inject.Inject
-
 
 import scalafx.scene.input.KeyCode.Undo
 //import de.htwg.se.starrealms.controller.ControllerComponent._
 
-class Controller @Inject() (val mediator: GameMediator) extends Observable with ControllerInterface {
+class Controller(mediator: GameMediator) extends Observable with ControllerInterface {
   def gameState: GameStateInterface = mediator.getGameState
   def gameLogic: GameLogicInterface = mediator.getGameLogic
   val undoManager: UndoManager = new UndoManager()

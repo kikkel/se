@@ -6,12 +6,10 @@ import de.htwg.se.starrealms.model.GameCore.CardInterface
 import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
 
-import com.google.inject.Inject
-
 
 trait CommandAdapter { def handleInput(input: String): String; def getState: String } //Adapter
 
-class CommandProcessorAdapter @Inject() (mediator: GameMediator, controller: ControllerInterface) extends CommandAdapter {
+class CommandProcessorAdapter (mediator: GameMediator, controller: ControllerInterface) extends CommandAdapter {
   val state = mediator.getGameState
 
   override def handleInput(input: String): String = {

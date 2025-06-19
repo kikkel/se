@@ -7,7 +7,7 @@ import scala.util.{Try, Success, Failure}
 import scalafx.scene.input.KeyCode.S
 
 //--------------------------------------------------------------------------Card Types
-abstract class CardType @Inject() extends CardTypeInterface {
+abstract class CardType extends CardTypeInterface {
 }
 class Ship extends CardType with CardTypeInterface { override def cardType: String = "Ship" }
 class Base(val defense: String, val isOutpost: Boolean) extends CardType with CardTypeInterface { override def cardType: String = "Base" }
@@ -43,7 +43,7 @@ object Faction {
 // val tradeFederation = Faction("trade federation")
 
 //--------------------------------------------------------------------------Cards
-abstract class Card @Inject() extends CardInterface {
+abstract class Card extends CardInterface {
 }
 
 case class ParsedCard (

@@ -3,7 +3,7 @@ package de.htwg.se.starrealms.model.GameCore.impl
 import de.htwg.se.starrealms.model.GameCore.{DeckInterface, CardInterface, DeckDirectorInterface, Builder}
 import com.google.inject.{Inject, Guice}
 
-class Deck @Inject() extends DeckInterface {
+class Deck extends DeckInterface {
     private var name: String = ""
     private var cards: Map[CardInterface, Int] = Map()
     private var cardStack: List[CardInterface] = List() // <- Reihenfolge der Karten
@@ -93,7 +93,7 @@ class Deck @Inject() extends DeckInterface {
 
  */
 
-class DeckBuilder @Inject() (product: DeckInterface) extends Builder {
+class DeckBuilder (product: DeckInterface) extends Builder {
     private var productVar: DeckInterface = product
 
     override def reset: Unit = productVar.resetDeck() 
@@ -105,7 +105,7 @@ class DeckBuilder @Inject() (product: DeckInterface) extends Builder {
 
 }
 
-class DeckDirector @Inject() extends DeckDirectorInterface {
+class DeckDirector extends DeckDirectorInterface {
     override def constructEmptyDeck(name: String, builderFactory: => Builder): DeckInterface = {
         val builder = builderFactory
         builder.reset

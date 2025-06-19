@@ -1,8 +1,6 @@
 package de.htwg.se.starrealms.app
 
 import de.htwg.se.starrealms.di.StarRealmsModule
-import com.google.inject.Guice
-
 
 import de.htwg.se.starrealms.model.PlayerComponent.impl._
 import de.htwg.se.starrealms.model.GameCore.impl._
@@ -24,14 +22,15 @@ import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
 import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
 import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
+import scalafx.scene.input.KeyCode.S
+import scalafx.scene.input.KeyCode.Star
 
 object GameApp extends JFXApp3 {
-  val injector = Guice.createInjector(new StarRealmsModule())
   @volatile var running = true
 
   override def start(): Unit = {
-    val director: DeckDirectorInterface = injector.getInstance(classOf[DeckDirectorInterface])
-    val builderFactory: Builder = injector.getInstance(classOf[Builder])
+    val director: DeckDirectorInterface = StarRealmsModule.director
+    val builderFactory: Builder = StarRealmsModule.builderFactory
 
     val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
     //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
