@@ -42,3 +42,4 @@ case class ResetGameCommand(mediator: GameMediator) extends  CommandInterface {
 
 case class ShowDeckCommand(mediator: GameMediator) extends  CommandInterface {
   override def doMove: Unit = println(mediator.getGameState.getSnapshot); override def undoMove: Unit = {} }
+

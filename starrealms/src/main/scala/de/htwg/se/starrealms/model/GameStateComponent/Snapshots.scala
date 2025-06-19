@@ -1,6 +1,8 @@
 package de.htwg.se.starrealms.model.GameStateComponent
 import de.htwg.se.starrealms.model.GameCore.CardInterface
 
+import com.google.inject.Inject
+
 case class GameSnapshot(
   currentPlayer: PlayerSnapshot,
   opponent: PlayerSnapshot,
@@ -17,3 +19,16 @@ case class PlayerSnapshot(
   discardPile: List[CardInterface],
   playerDeck: List[CardInterface]
 )
+
+trait SnapshotFactory {
+  def createSnapshot: GameSnapshot
+}
+
+class SnapshotFactoryImpl @Inject() (
+  gameState: GameStateInterface
+) extends SnapshotFactory {
+  override def createSnapshot: GameSnapshot = {
+    gameState.getSnapshot
+  }
+}
+  

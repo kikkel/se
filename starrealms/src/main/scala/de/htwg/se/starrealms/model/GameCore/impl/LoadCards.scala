@@ -1,10 +1,12 @@
 package de.htwg.se.starrealms.model.GameCore.impl
 
-import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, DeckInterface, CardInterface, ActionInterface, EditionInterface}
+import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, DeckInterface, CardInterface, ActionInterface, EditionInterface, FactionInterface}
 
 import scala.util.{Failure, Try, Success}
 import scala.io.Source
 import scala.util.matching.Regex
+
+import com.google.inject.Provides
 
 
 class LoadCards(
@@ -82,6 +84,7 @@ class CardCSVLoader(filePath: String) {
             row.get("Role").exists(_.nonEmpty)
         )
     }
+    @Provides
     private def createParsedCard(card: Map[String, String]): ParsedCard = {
         val abilities = card.get("Text").map(_.split("<hr>").map(_.trim).toList).getOrElse(List())
         val primaryAbility = abilities.headOption.filter(_.nonEmpty).map(a => new Ability(parseActions(a)))

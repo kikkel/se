@@ -1,11 +1,13 @@
 package de.htwg.se.starrealms.model.PlayerComponent.impl
 
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
-import com.google.inject.Inject
+import com.google.inject.{Inject, Provides}
+import com.google.inject.name.Named
+import scalafx.scene.input.KeyCode.P
 
 case class Player @Inject() (
     name: String,
-    var health: Int //todo: implement starting helth elsewhere in code, e.g. start game
+    @Named("defaultHealth") var health: Int //todo: implement starting helth elsewhere in code, e.g. start game
 ) extends PlayerInterface {
     override def takeDamage(amount: Int): Unit = {
         health = math.max(0, health- amount)
