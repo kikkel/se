@@ -7,6 +7,8 @@ import de.htwg.se.starrealms.model.GameCore.structure.DefaultDrawStrategy
 import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameStateReadOnly, GameSnapshot}
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 
+import com.google.inject.Inject
+
 class DrawStrategyProxy extends DrawStrategy {
   private lazy val realStrategy: DrawStrategy = new DefaultDrawStrategy()
 
@@ -26,7 +28,7 @@ object DrawStrategyFactory {
   }
 }
 
-class GameStateProxy(private val gameState: GameStateInterface) extends GameStateReadOnly {
+class GameStateProxy @Inject() (private val gameState: GameStateInterface) extends GameStateReadOnly {
   override def getCurrentPlayer: PlayerInterface = gameState.getCurrentPlayer
   override def getOpponent: PlayerInterface = gameState.getOpponent
   override def getPlayerDeck(player: PlayerInterface): DeckInterface = gameState.getPlayerDeck(gameState.getCurrentPlayer)

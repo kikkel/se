@@ -11,7 +11,7 @@ abstract class RDecorator[T] @Inject() (wrapped: Renderer[T]) extends Renderer[T
   override def render(entity: T): String = wrapped.render(entity)
 }
 
-class LoggingDecorator[T](wrapped: Renderer[T]) extends RDecorator[T](wrapped) {
+class LoggingDecorator[T] @Inject() (wrapped: Renderer[T]) extends RDecorator[T](wrapped) {
   override def render(entity: T): String = {
     val result = super.render(entity)
     println(s"[LOG] Rendering entity: ${entity.toString.take(50)}")
@@ -19,7 +19,7 @@ class LoggingDecorator[T](wrapped: Renderer[T]) extends RDecorator[T](wrapped) {
   }
 }
 
-class ColourHighlightDecorator[T](wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
+class ColourHighlightDecorator[T] @Inject() (wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
   override def render(card: CardInterface): String = {
     val base = wrapped.render(card)
     val prefix = card.faction.factionName match {
@@ -33,7 +33,7 @@ class ColourHighlightDecorator[T](wrapped: Renderer[CardInterface]) extends RDec
   }
 }
 
-class CompactCardDecorator(wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
+class CompactCardDecorator @Inject() (wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
   override def render(card: CardInterface): String = {
     card match {
         case fc: FactionCard => s"${fc.cardName} (Primary Ability: ${renderAbility(fc.primaryAbility)},  Ally Ability: ${renderAbility(fc.allyAbility)},  Scrap Ability: ${renderAbility(fc.scrapAbility)})"
@@ -45,7 +45,7 @@ class CompactCardDecorator(wrapped: Renderer[CardInterface]) extends RDecorator[
     ability.map(_.render).getOrElse("None")
 }
 
-class HtmlStyledDecorator(wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
+class HtmlStyledDecorator @Inject() (wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
   override def render(card: CardInterface): String = {
     val base = wrapped.render(card)
     s"<div class='card-block'$base</div>"

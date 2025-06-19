@@ -1,10 +1,11 @@
 package de.htwg.se.starrealms.model.PlayerComponent.impl
 
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
+import com.google.inject.Inject
 
-case class Player(
+case class Player @Inject() (
     name: String,
-    var health: Int = 3
+    var health: Int //todo: implement starting helth elsewhere in code, e.g. start game
 ) extends PlayerInterface {
     override def takeDamage(amount: Int): Unit = {
         health = math.max(0, health- amount)

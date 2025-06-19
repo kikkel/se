@@ -8,8 +8,10 @@ import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameS
 import de.htwg.se.starrealms.model.GameCore.impl.FactionCard
 import de.htwg.se.starrealms.model.GameStateComponent
 
+import com.google.inject.Inject
 
-class GameState(
+
+class GameState @Inject() (
   val decksByRole: Map[String, DeckInterface],
   val player1: PlayerInterface,
   val player2: PlayerInterface,

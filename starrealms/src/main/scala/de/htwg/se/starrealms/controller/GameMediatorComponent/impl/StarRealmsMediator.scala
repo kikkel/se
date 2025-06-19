@@ -5,7 +5,9 @@ import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 
-class StarRealmsMediator(
+import com.google.inject.Inject
+
+class StarRealmsMediator @Inject() (
     val gameState: GameStateInterface,
     val gameLogic: GameLogicInterface,
     val players: List[PlayerInterface]

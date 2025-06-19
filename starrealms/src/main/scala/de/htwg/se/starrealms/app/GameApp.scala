@@ -54,8 +54,8 @@ object GameApp extends JFXApp3 {
     println("\n\n")
 
     println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
-    val player1 = Player("Player 1")
-    val player2 = Player("Player 2")
+    val player1 = Player("Player 1", 3)
+    val player2 = Player("Player 2", 3)
 
     val gameState: GameStateInterface = injector.getInstance(classOf[GameStateInterface])
     val gameLogic: GameLogicInterface = injector.getInstance(classOf[GameLogicInterface])

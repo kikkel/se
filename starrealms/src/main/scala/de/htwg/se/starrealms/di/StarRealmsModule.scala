@@ -18,9 +18,8 @@ import scalafx.scene.input.KeyCode.R
 class StarRealmsModule extends AbstractModule with ScalaModule{
   override def configure(): Unit = {
 
-    bind(classOf[CommandInterface]).to(classOf[ControllerComponent.structure.Command])
+    //bind(classOf[CommandInterface]).to(classOf[ControllerComponent.structure.Command])
     bind(classOf[CommandAdapter]).to(classOf[CommandProcessorAdapter])
-    bind(classOf[Renderer[CardInterface]]).to(classOf[CardRenderer])
     bind(classOf[Renderer[?]]).to(classOf[RDecorator[?]])
 
     bind(classOf[ControllerInterface]).to(classOf[ControllerComponent.impl.Controller])
