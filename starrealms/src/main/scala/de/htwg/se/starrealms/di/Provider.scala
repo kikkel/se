@@ -5,7 +5,6 @@ import de.htwg.se.starrealms.model.PlayerComponent.impl.Player
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 import de.htwg.se.starrealms.model.GameCore.Builder
 import de.htwg.se.starrealms.model.GameCore.ActionInterface
-import de.htwg.se.starrealms.model.GameCore.impl.Action
 import de.htwg.se.starrealms.model.GameCore.DeckInterface
 import de.htwg.se.starrealms.model.GameCore.impl.Deck
 

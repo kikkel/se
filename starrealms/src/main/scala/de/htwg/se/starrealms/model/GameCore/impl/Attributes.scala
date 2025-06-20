@@ -57,12 +57,9 @@ case class ScrapAbility(override val actions: List[ActionInterface]) extends Abi
   }
 } */
 
-abstract class Action @Inject() extends ActionInterface {
-  def doMove: Unit
-  def description: String = this.getClass.getSimpleName
-}
-case class SimpleAction(description: String) extends ActionInterface { override def doMove: Unit = println(description) }
-case class ConditionalAction(condition1: ActionInterface, condition2: ActionInterface) extends ActionInterface {
+
+case class SimpleAction @Inject() (description: String) extends ActionInterface { override def doMove: Unit = println(description) }
+case class ConditionalAction @Inject() (condition1: ActionInterface, condition2: ActionInterface) extends ActionInterface {
   override def doMove: Unit = {
     println("Condition met:")
     condition1.doMove
@@ -70,14 +67,14 @@ case class ConditionalAction(condition1: ActionInterface, condition2: ActionInte
   }
   override def description: String = s"Condition: $condition1, $condition2"
 }
-case class TriggeredAction(trigger: String, action: ActionInterface) extends ActionInterface {
+case class TriggeredAction @Inject() (trigger: String, action: ActionInterface) extends ActionInterface {
   override def doMove: Unit = {
     println(s"Triggered by $trigger:")
     action.doMove
   }
   override def description: String = s"Triggered by $trigger: $action"
 }
-case class CompositeAction(actions: List[ActionInterface]) extends ActionInterface {
+case class CompositeAction @Inject() (actions: List[ActionInterface]) extends ActionInterface {
   override def doMove: Unit = {
     println("Composite action:")
     actions.foreach(_.doMove)
