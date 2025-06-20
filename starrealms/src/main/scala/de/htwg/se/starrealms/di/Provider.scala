@@ -8,6 +8,28 @@ import de.htwg.se.starrealms.model.GameCore.ActionInterface
 import de.htwg.se.starrealms.model.GameCore.DeckInterface
 import de.htwg.se.starrealms.model.GameCore.impl.Deck
 
+import de.htwg.se.starrealms.view.GraphicUI
+import de.htwg.se.starrealms.view.CommandAdapter
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
+
+
+
+
+
+@Singleton
+class GraphicUIProvider @Inject() (
+  processor: CommandAdapter,
+  readOnlyState: GameStateReadOnly
+) extends Provider[GraphicUI] {
+
+  override def get(): GraphicUI = new GraphicUI(
+    processor,
+    readOnlyState,
+    () => System.exit(0)
+  )
+}
+
+
 @Singleton
 class PlayersProvider extends Provider[List[PlayerInterface]] {
   override def get(): List[PlayerInterface] = List(
@@ -33,4 +55,11 @@ class DecksByRoleProvider extends Provider[Map[String, DeckInterface]] {
     "Trade Deck" -> new Deck,
     "Explorer Pile" -> new Deck
   )
+}
+
+@Singleton
+class PlayerProvider @Inject() (name: String, health: Int) extends Provider[PlayerInterface] {
+  override def get(): PlayerInterface = {
+    Player(name, health)
+  }
 }

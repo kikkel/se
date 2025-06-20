@@ -5,6 +5,7 @@ import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
 import de.htwg.se.starrealms.model.GameCore.CardInterface
 import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
 
+import com.google.inject.Inject
 
 /*
 Use readOnlyState sparingly, and only for:
@@ -17,7 +18,7 @@ hand.foreach(card => println(card.cardName))
  */
 
 
-class ConsoleView(processor: CommandAdapter, readOnlyState: GameStateReadOnly, gameLogic: GameLogicInterface) extends Observer {
+class ConsoleView @Inject() (processor: CommandAdapter, readOnlyState: GameStateReadOnly, gameLogic: GameLogicInterface) extends Observer {
   gameLogic.addObserver(this)
   private var inPlayPhase = false
 

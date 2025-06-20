@@ -12,6 +12,8 @@ import scalafx.scene.paint.Color
 import scalafx.scene.text.Font
 import scalafx.stage.Stage
 
+import com.google.inject.Inject
+
 /*
 Use readOnlyState sparingly, and only for:
 	•	read-only visual rendering

@@ -68,8 +68,8 @@ object GameApp extends JFXApp3 {
     val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
     val commandAdapter: CommandAdapter = injector.getInstance(classOf[CommandAdapter])
     val proxy: GameStateReadOnly = injector.getInstance(classOf[GameStateReadOnly])
-    val view = new ConsoleView(commandAdapter, proxy, gameLogic)
-    val gui = new GraphicUI(commandAdapter, proxy, () => running = false)
+    val view = injector.getInstance(classOf[ConsoleView])
+    val gui = injector.getInstance(classOf[GraphicUI])
 
     // TUI in separatem Thread starten
     new Thread(() => {

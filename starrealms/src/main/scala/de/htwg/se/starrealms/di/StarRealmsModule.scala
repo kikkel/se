@@ -16,9 +16,13 @@ import de.htwg.se.starrealms.model.PlayerComponent._
 import scalafx.scene.input.KeyCode.R
 import com.google.inject.Provider
 import com.google.inject.TypeLiteral
+import scalafx.scene.input.KeyCode.G
 
 class StarRealmsModule extends AbstractModule with ScalaModule{
   override def configure(): Unit = {
+
+    bind(classOf[GraphicUI]).toProvider(classOf[GraphicUIProvider])
+    bind(classOf[ConsoleView])
 
     //bind(classOf[CommandInterface]).to(classOf[ControllerComponent.structure.Command])
     bind(classOf[CommandAdapter]).to(classOf[CommandProcessorAdapter])
@@ -44,7 +48,7 @@ class StarRealmsModule extends AbstractModule with ScalaModule{
     bind(classOf[GameStateInterface]).to(classOf[GameStateComponent.impl.GameState])
     bind(classOf[GameStateReadOnly]).to(classOf[ControllerComponent.structure.GameStateProxy])
 
-
+    bind(classOf[PlayerInterface]).toProvider(classOf[PlayerProvider])
     bind(new TypeLiteral[List[PlayerInterface]]{}).toProvider(classOf[PlayersProvider])
     bind(new TypeLiteral[Function0[Builder]]{}).toProvider(classOf[BuilderFactoryProvider])
     bind(new TypeLiteral[List[ActionInterface]]{}).toProvider(classOf[ActionsProvider])
