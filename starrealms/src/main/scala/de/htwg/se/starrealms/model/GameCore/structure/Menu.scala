@@ -1,4 +1,4 @@
-package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.model.GameCore.structure
 
 import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable

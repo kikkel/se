@@ -1,7 +1,9 @@
 package de.htwg.se.starrealms.view
 
-import de.htwg.se.starrealms.controller.CommandProcessor
 import de.htwg.util.Observer
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
+import de.htwg.se.starrealms.model.GameCore.CardInterface
+
 import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.control.{Button, Label, TextArea, TextField}
@@ -10,7 +12,27 @@ import scalafx.scene.paint.Color
 import scalafx.scene.text.Font
 import scalafx.stage.Stage
 
-class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage with Observer {
+import com.google.inject.Inject
+
+/*
+Use readOnlyState sparingly, and only for:
+	•	read-only visual rendering
+	•	shared UI components (TUI + GUI) that need direct game context
+example of how to use readOnlyState in GUI:
+
+outputArea.appendText(
+  s"Cards in hand: ${readOnlyState.getHand(readOnlyState.getCurrentPlayer).map(_.cardName).mkString(", ")}"
+) 
+*/
+
+class GraphicUI(processor: CommandAdapter, readOnlyState: GameStateReadOnly, onExit: () => Unit) extends Stage with Observer {
+/*     private val baseRenderer = new CardRenderer()
+    private val cardRenderer: Renderer[CardInterface] = new ColourHighlightDecorator(
+        new CompactCardDecorator(
+            new LoggingDecorator(baseRenderer)
+        )
+    ) */
+
 
     title = "Star Realms"
     width = 800
@@ -27,7 +49,7 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
         onAction = _ => {
             val input = text.value.trim
             if (input.nonEmpty) {
-                processCommand(input)
+                handleInput(input)
                 text = ""
             }
         }
@@ -39,15 +61,15 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
     }
 
     private val startButton = new Button("Start Game") {
-        onAction = _ => processCommand("t")
+        onAction = _ => handleInput("t")
     }
 
     private val replenishButton = new Button("Start turn") {
-        onAction = _ => processCommand("s")
+        onAction = _ => handleInput("s")
     }
 
     private val resetButton = new Button("Reset Game") {
-        onAction = _ => processCommand("r")
+        onAction = _ => handleInput("r")
     }
 
     private val exitButton = new Button("Exit Game") {
@@ -60,7 +82,7 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
         onAction = _ => {
             val input = inputField.text.value.trim
             if (input.nonEmpty) {
-                processCommand(s"b $input")
+                handleInput(s"b $input")
                 inputField.text = ""
             }
         }
@@ -85,15 +107,17 @@ class GraphicUI(processor: CommandProcessor, onExit: () => Unit) extends Stage w
         stylesheets.add("style.css")
     }
 
-    private def processCommand(command: String): Unit = {
+    private def handleInput(command: String): Unit = {
         outputArea.appendText(s"> $command\n")
-        val result = processor.processCommand(command)
+        val result = processor.handleInput(command)
         outputArea.appendText(result + "\n")
     }
 
     override def update: Unit = {
-        val state = processor.getState
-        outputArea.text = state
+
+        Platform.runLater {
+            outputArea.appendText(processor.getState + "\n")
+        }
 
     }
 

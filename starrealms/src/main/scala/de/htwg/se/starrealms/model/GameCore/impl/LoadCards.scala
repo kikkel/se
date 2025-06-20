@@ -1,41 +1,41 @@
-package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.model.GameCore.impl
 
+import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, DeckInterface, CardInterface, ActionInterface, EditionInterface}
 
-import scala.io.Source
 import scala.util.{Failure, Try, Success}
+import scala.io.Source
 import scala.util.matching.Regex
 
 
-object LoadCards {
-    def loadFromResource(getCsvPath: String, setName: String): Map[String, Deck] = {
-        val loader = new CardCSVLoader(getCsvPath)
-        loader.loadCardsFromFile()
+class LoadCards(
+    builderFactory: => Builder,
+    director: DeckDirectorInterface,
+    loader: CardCSVLoader
+) {
+    def load(setName: String): Map[String, DeckInterface] = {
+        loader.loadCardsFromFile
         val cards = loader.getAllCards.filter(_.edition.nameOfEdition.trim.equalsIgnoreCase(setName.trim))
-        val groupedCards = cards.groupBy(_.role.trim)
-        groupedCards.map { case (role, cards) =>
-            val deck = new Deck()
-            deck.setName(role)
-            val cardMap = cards.map(card => card -> card.qty).toMap
-            deck.setCards(cardMap)
-            role -> deck
+        val groupedCards = cards.groupBy(_.role.trim).map {
+            case (role, cards) =>
+                role -> cards.flatMap(card => List.fill(card.qty)(card))
         }
+
+        if (groupedCards.isEmpty) {
+            println(s"No cards found for edition: $setName")
+            return Map.empty
+        }
+
+        director.constructDecks(builderFactory, groupedCards)
     }
-
-    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
-
-
-    def getCsvPath: String =
-        sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath")
-
 }
 
+
 class CardCSVLoader(filePath: String) {
-    private var cardsByEdition: Map[String, List[Card]] = Map()
+    private var cardsByEdition: Map[String, List[CardInterface]] = Map()
     private val validRoles = Set("Trade Deck", "Personal Deck", "Explorer Pile")
 
 
-    def loadCardsFromFile(): Unit = {
+    def loadCardsFromFile: Unit = {
         Try(Source.fromFile(filePath).getLines().toList) match {
             case Success(lines) if lines.nonEmpty =>
                 val headers = parseCSVLine(lines.head)
@@ -111,7 +111,7 @@ class CardCSVLoader(filePath: String) {
             notes = card.get("Notes").filter(_.nonEmpty)
         )
     }
-    def transformToSpecificCard(parsedCard: ParsedCard): Option[Card] = {
+    def transformToSpecificCard(parsedCard: ParsedCard): Option[CardInterface] = {
         if (!validRoles.contains(parsedCard.role)) {
             println(s"Unknown role: ${parsedCard.role}. Ignoring card.\n")
             return None
@@ -157,7 +157,7 @@ class CardCSVLoader(filePath: String) {
         }
     }
 
-    private def parseActions(text: String): List[Action] = {
+    private def parseActions(text: String): List[ActionInterface] = {
         text.split("<hr>").toList.map { action =>
             if (action.contains("OR")) {
                 val conditions = action.split("OR").map(_.trim)
@@ -173,8 +173,8 @@ class CardCSVLoader(filePath: String) {
             }
         }
     }
-    private def parseSingleAction(text: String): Action = {
-        val actionMap: Map[String, String => Action] = Map(
+    private def parseSingleAction(text: String): ActionInterface = {
+        val actionMap: Map[String, String => ActionInterface] = Map(
             "Trade" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Trade")),
             "Combat" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Combat")),
             "Authority" -> (desc => SimpleAction(s"Gain ${desc.filter(_.isDigit)} Authority")),
@@ -187,13 +187,13 @@ class CardCSVLoader(filePath: String) {
         .map { case (_, constructor) => constructor(text) }
         .getOrElse(SimpleAction(text))
     }
-    def getCardsForEdition(nameOfEdition: String): List[Card] = {
+    def getCardsForEdition(nameOfEdition: String): List[CardInterface] = {
 
         cardsByEdition.filter { case (key, _) => key.trim.toLowerCase.contains(nameOfEdition.trim.toLowerCase) }
             .values.flatten.toList
     }
 
-    def getAllCards: List[Card] = cardsByEdition.values.flatten.toList;
+    def getAllCards: List[CardInterface] = cardsByEdition.values.flatten.toList;
 
 }
 

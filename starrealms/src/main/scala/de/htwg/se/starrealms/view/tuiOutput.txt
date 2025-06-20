@@ -1,96 +1,299 @@
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
+[success] Total time: 4 s, completed 16 Jun 2025, 15:19:03
+[info] running de.htwg.se.starrealms.app.GameApp 
+Jun 16, 2025 3:19:04 PM com.sun.javafx.application.PlatformImpl startup
+WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @10055ee4'
+Jun 16, 2025 3:19:09 PM com.sun.glass.ui.mac.MacApplication lambda$waitForReactivation$6
+WARNING: Timeout while waiting for app reactivation
 
-Discard Pile:
+Loaded Editions: 
+Core Set,
+Colony Wars
 
-TradeRow:
+Decks by Role:
+Role: Explorer Pile
+Cards: Explorer x10
+Role: Personal Deck
+Cards: Viper x4, Scout x16
+Role: Trade Deck
+Cards: Missile Mech x1, Battle Pod x2, Barter World x2, Trade Bot x3, Federation Shuttle x3, Blob World x1, Blob Fighter x3, Brain World x1, Port of Call x1, Junkyard x1, Blob Destroyer x2, Fleet HQ x1, Embassy Yacht x2, Central Office x1, War World x1, Trade Pod x3, Imperial Frigate x3, Trading Post x2, Mech World x1, Stealth Needle x1, Cutter x3, Flagship x1, Missile Bot x3, Battle Station x2, Blob Wheel x3, Trade Escort x1, Dreadnaught x1, Survey Ship x3, Supply Bot x3, Machine Base x1, Ram x2, Corvette x2, Recycling Station x2, Space Station x2, Mothership x1, Battle Blob x1, Freighter x2, The Hive x1, Imperial Fighter x3, Command Ship x1, Patrol Mech x2, Royal Redoubt x1, Blob Carrier x1, Defense Center x1, Battle Mech x1, Battlecruiser x1
 
+Deck loaded: Explorer Pile, Personal Deck, Trade Deck
 
+Current player: 
+Player Name: Player 1
+Health: 3
+
+Opponent: 
+Player Name: Player 2
+Health: 3
+
+Enter 't' to start game
 Enter 's' to start your turn
-Enter 't' to replenish the trade row
 Enter 'r' to reset the game
 Enter 'x' to exit the game
 
 
 
 Your command:
--------------------------------------------#1 t
+
 t
+INPUT RECEIVED: 't'
+
+Current Player:
+
+Name: Player 1
+Health: 3
+Hand: Empty Hand
+Discard Pile: 
+Deck Size: 75
+
+Opponent:
+
+Name: Player 2
+Health: 3
+Hand: Empty Hand
+Discard Pile: 
+Deck Size: 75
+
+
+Trade Row:
+1. 
+  Name: Trading Post
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@72c326b6)
+  Cost: 3
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 1 Authority), SimpleAction(Gain 1 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 3 Combat)
+  Faction: Trade Federation
+
+2. 
+  Name: Ram
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@95a332f)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: SimpleAction(Gain 3 Trade)
+  Faction: Blob
+
+3. 
+  Name: Flagship
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@62bf2c1d)
+  Cost: 6
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: SimpleAction(Gain 5 Trade)
+  Scrap Ability: None
+  Faction: Trade Federation
+
+4. 
+  Name: Supply Bot
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@1ef8660c)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 2 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Machine Cult
+
+5. 
+  Name: Blob Destroyer
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@6b2c0533)
+  Cost: 4
+  Primary Ability: SimpleAction(Gain 6 Combat)
+  Ally Ability: SimpleAction({Blob Ally}: You may destroy target base and/or scrap a card in the trade row.)
+  Scrap Ability: None
+  Faction: Blob
+
+Trade Deck Count: 45
+Explorer Count: 1
+
 Trade row replenished.
 
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
+Current player: 
+Player Name: Player 1
+Health: 3
 
-Discard Pile:
+Opponent: 
+Player Name: Player 2
+Health: 3
 
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
+Enter 't' to start game
 Enter 's' to start your turn
-Enter 't' to replenish the trade row
 Enter 'r' to reset the game
 Enter 'x' to exit the game
 
-
-
 Your command:
--------------------------------------------#2 s
+
 s
+INPUT RECEIVED: 's'
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Barter World
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@22e7ffde)
+  Cost: 4
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 2 Authority), SimpleAction(Gain 2 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 5 Combat)
+  Faction: Trade Federation
+
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Trade Pod
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@4ba8f52e)
+  Cost: 2
+  Primary Ability: SimpleAction(Gain 3 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Blob
+
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Supply Bot
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@1ef8660c)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 2 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Machine Cult
+
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Trading Post
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@72c326b6)
+  Cost: 3
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 1 Authority), SimpleAction(Gain 1 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 3 Combat)
+  Faction: Trade Federation
+
+[LOG] Rendering entity: FactionCard(de.htwg.se.starrealms.model.GameCore.i
+
+  Name: Battle Station
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@6d398750)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 5 Combat)
+  Faction: Machine Cult
+
+Current Player:
+
+Name: Player 1
+Health: 3
+Hand: 1. 
+  Name: Barter World
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@22e7ffde)
+  Cost: 4
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 2 Authority), SimpleAction(Gain 2 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 5 Combat)
+  Faction: Trade Federation
+
+2. 
+  Name: Trade Pod
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@4ba8f52e)
+  Cost: 2
+  Primary Ability: SimpleAction(Gain 3 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Blob
+
+3. 
+  Name: Supply Bot
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@1ef8660c)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 2 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Machine Cult
+
+4. 
+  Name: Trading Post
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@72c326b6)
+  Cost: 3
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 1 Authority), SimpleAction(Gain 1 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 3 Combat)
+  Faction: Trade Federation
+
+5. 
+  Name: Battle Station
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@6d398750)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 5 Combat)
+  Faction: Machine Cult
+
+Discard Pile: 
+Deck Size: 70
+
+
+Opponent:
+
+Name: Player 2
+Health: 3
+Hand: Empty Hand
+Discard Pile: 
+Deck Size: 70
+
+
+Trade Row:
+1. 
+  Name: Trading Post
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Base@72c326b6)
+  Cost: 3
+  Primary Ability: ConditionalAction(Condition: SimpleAction(Gain 1 Authority), SimpleAction(Gain 1 Trade))
+  Ally Ability: None
+  Scrap Ability: SimpleAction(Gain 3 Combat)
+  Faction: Trade Federation
+
+2. 
+  Name: Ram
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@95a332f)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: SimpleAction(Gain 3 Trade)
+  Faction: Blob
+
+3. 
+  Name: Flagship
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@62bf2c1d)
+  Cost: 6
+  Primary Ability: SimpleAction(Gain 5 Combat)
+  Ally Ability: SimpleAction(Gain 5 Trade)
+  Scrap Ability: None
+  Faction: Trade Federation
+
+4. 
+  Name: Supply Bot
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@1ef8660c)
+  Cost: 3
+  Primary Ability: SimpleAction(Gain 2 Trade)
+  Ally Ability: SimpleAction(Gain 2 Combat)
+  Scrap Ability: None
+  Faction: Machine Cult
+
+5. 
+  Name: Blob Destroyer
+  Type: Success(de.htwg.se.starrealms.model.GameCore.impl.Ship@6b2c0533)
+  Cost: 4
+  Primary Ability: SimpleAction(Gain 6 Combat)
+  Ally Ability: SimpleAction({Blob Ally}: You may destroy target base and/or scrap a card in the trade row.)
+  Scrap Ability: None
+  Faction: Blob
+
+Trade Deck Count: 44
+Explorer Count: 1
+
 Turn started.
 
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
+Current player: 
+Player Name: Player 1
+Health: 3
 
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Its your turn!
-Enter 'p <number>' to play a card from your hand
-Enter 'b <number>' to buy a card from the trade row
-Enter 'e' to end your turn
-Enter 'z' to undo the last action
-Enter 'y' to redo the last undone action
-Enter 'x' to exit the game
-
-
-Your command:
--------------------------------------------#3 z
-z
-Undo performed.
-
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
+Opponent: 
+Player Name: Player 2
+Health: 3
 
 Its your turn!
 Enter 'p <number>' to play a card from your hand
@@ -103,463 +306,11 @@ Enter 'x' to exit the game
 
 Your command:
 
--------------------------------------------#4 z
-z
-Undo performed.
+x
 
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
+Exiting the game... #ConsoleView
 
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
 
-Its your turn!
-Enter 'p <number>' to play a card from your hand
-Enter 'b <number>' to buy a card from the trade row
-Enter 'e' to end your turn
-Enter 'z' to undo the last action
-Enter 'y' to redo the last undone action
-Enter 'x' to exit the game
+Game exited. Goodbye! #main
 
-
-Your command:
--------------------------------------------#5 y
-y
-Redo performed.
-
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Its your turn!
-Enter 'p <number>' to play a card from your hand
-Enter 'b <number>' to buy a card from the trade row
-Enter 'e' to end your turn
-Enter 'z' to undo the last action
-Enter 'y' to redo the last undone action
-Enter 'x' to exit the game
-
-
-Your command:
--------------------------------------------#6 y
-y
-Redo performed.
-
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-6: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-7: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-8: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-9: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-10: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Its your turn!
-Enter 'p <number>' to play a card from your hand
-Enter 'b <number>' to buy a card from the trade row
-Enter 'e' to end your turn
-Enter 'z' to undo the last action
-Enter 'y' to redo the last undone action
-Enter 'x' to exit the game
-
-
-Your command:
--------------------------------------------#7 y
-y
-Redo performed.
-
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-6: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-7: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-8: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-9: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-10: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Its your turn!
-Enter 'p <number>' to play a card from your hand
-Enter 'b <number>' to buy a card from the trade row
-Enter 'e' to end your turn
-Enter 'z' to undo the last action
-Enter 'y' to redo the last undone action
-Enter 'x' to exit the game
-
-
-Your command:
--------------------------------------------#8 y
-y
-Redo performed.
-
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-6: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-7: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-8: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-9: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-10: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Its your turn!
-Enter 'p <number>' to play a card from your hand
-Enter 'b <number>' to buy a card from the trade row
-Enter 'e' to end your turn
-Enter 'z' to undo the last action
-Enter 'y' to redo the last undone action
-Enter 'x' to exit the game
-
-
-Your command:
--------------------------------------------#9 y
-y
-Redo performed.
-
-Active Player: Player 1 (Leben: 50)
-Opponent: Player 2 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-6: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-7: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-8: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-9: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-10: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Its your turn!
-Enter 'p <number>' to play a card from your hand
-Enter 'b <number>' to buy a card from the trade row
-Enter 'e' to end your turn
-Enter 'z' to undo the last action
-Enter 'y' to redo the last undone action
-Enter 'x' to exit the game
-
-
-Your command:
--------------------------------------------#10 e
-e
-Turn ended.
-
-Active Player: Player 2 (Leben: 50)
-Opponent: Player 1 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Enter 's' to start your turn
-Enter 't' to replenish the trade row
-Enter 'r' to reset the game
-Enter 'x' to exit the game
-
-
-
-Your command:
--------------------------------------------#11 p 3
-p 3
-Invalid command. Please try again.
-
-Active Player: Player 2 (Leben: 50)
-Opponent: Player 1 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Enter 's' to start your turn
-Enter 't' to replenish the trade row
-Enter 'r' to reset the game
-Enter 'x' to exit the game
-
-
-
-Your command:
--------------------------------------------#12 z
-z
-Undo performed.
-
-Active Player: Player 2 (Leben: 50)
-Opponent: Player 1 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-6: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-7: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-8: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-9: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-10: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Enter 's' to start your turn
-Enter 't' to replenish the trade row
-Enter 'r' to reset the game
-Enter 'x' to exit the game
-
-
-
-Your command:
--------------------------------------------#13 e
-e
-Invalid command. Please try again.
-
-
-
-
-Active Player: Player 2 (Leben: 50)
-Opponent: Player 1 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-6: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-7: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-8: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-9: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-10: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Enter 's' to start your turn
-Enter 't' to replenish the trade row
-Enter 'r' to reset the game
-Enter 'x' to exit the game
-
-
-
-Your command:
-----------------------------------------------------------------------------
-gui
-----------------------------------------------------------------------------
--------------------------------------------#2 z
-z
-Undo performed.
-
-Active Player: Player 2 (Leben: 50)
-Opponent: Player 1 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-
-TradeRow:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Enter 's' to start your turn
-Enter 't' to replenish the trade row
-Enter 'r' to reset the game
-Enter 'x' to exit the game
-
-
-
-Your command:
--------------------------------------------#3 y
-y
-Redo performed.
-
-
-
-
-
-Active Player: Player 2 (Leben: 50)
-Opponent: Player 1 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-Recycling Station | Star Empire | Base | Cost: 4 | Ability: Condition: SimpleAction(Gain 1 Trade), SimpleAction(discard up to two cards, then draw that many cards.)
-TradeRow:
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-
-Enter 's' to start your turn
-Enter 't' to replenish the trade row
-Enter 'r' to reset the game
-Enter 'x' to exit the game
-
-
-
-Your command:
-----------------------------------------------------------------------------
-gui
-----------------------------------------------------------------------------
--------------------------------------------#2 z
-z
-Undo performed.
-
-Active Player: Player 2 (Leben: 50)
-Opponent: Player 1 (Leben: 50)
-Hand:
-1: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-Discard Pile:
-
-TradeRow:
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
-
-Enter 's' to start your turn
-Enter 't' to replenish the trade row
-Enter 'r' to reset the game
-Enter 'x' to exit the game
-
-
-
-Your command:
--------------------------------------------#3 y
-y
-Redo performed.
-
-Active Player: Player 2 (Leben: 50)
-Opponent: Player 1 (Leben: 50)
-Hand:
-1: Viper | Unaligned | Ship | Cost: - | Ability: Gain 1 Combat
-2: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-3: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-4: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-5: Scout | Unaligned | Ship | Cost: - | Ability: Gain 1 Trade
-Discard Pile:
-
-TradeRow:
-Central Office | Trade Federation | Base | Cost: 7 | Ability: Gain 2 Trade
-Cutter | Trade Federation | Ship | Cost: 2 | Ability: Gain 42 Trade
-Missile Bot | Machine Cult | Ship | Cost: 2 | Ability: Gain 2 Combat
-Blob Fighter | Blob | Ship | Cost: 1 | Ability: Gain 3 Combat
-Battlecruiser | Star Empire | Ship | Cost: 6 | Ability: Gain 5 Combat
-
-Enter 's' to start your turn
-Enter 't' to replenish the trade row
-Enter 'r' to reset the game
-Enter 'x' to exit the game
-
-
-
-Your command:
+kianimoon@Kianis-MacBook-Air starrealms % 

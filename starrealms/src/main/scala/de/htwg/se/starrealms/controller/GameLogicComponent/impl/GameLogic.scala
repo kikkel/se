@@ -1,34 +1,24 @@
-package de.htwg.se.starrealms.model
+package de.htwg.se.starrealms.controller.GameLogicComponent.impl
 
 import scala.collection.mutable.ListBuffer
 import de.htwg.util.Observable
-import de.htwg.se.starrealms.model._
+
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
+
+import de.htwg.se.starrealms.model.GameCore.structure.{TradeRowReplenishStrategy, StartTurnStrategy}
+import de.htwg.se.starrealms.model.GameCore.CardInterface
+
+import com.google.inject.Inject
 
 
-//--------------------------------------------------------------------Strategy
-trait DrawStrategy { def draw(deck: Deck, count: Int): List[Card] }
-
-class StartTurnStrategy extends DrawStrategy {
-  override def draw(deck: Deck, count: Int): List[Card] = {
-    (1 to count).flatMap(_ => deck.drawCard()).toList
-  }
-}
-class TradeRowReplenishStrategy extends DrawStrategy {
-  override def draw(deck: Deck, count: Int): List[Card] = {
-    val cards = (1 to count).flatMap(_ => deck.drawCard()).toList
-    println(s"Trade Row: ${cards.map(_.render()).mkString(", ")}")
-    cards
-  }
-}
-
-//--------------------------------------------------------------------GameLogic
-class GameLogic(val gameState: GameState) extends Observable {
+class GameLogic @Inject() (val gameState: GameStateInterface) extends Observable with GameLogicInterface {
   // Existing logic for strategies, if needed
   private val replenishStrategy = new TradeRowReplenishStrategy()
   private val startTurnStrategy = new StartTurnStrategy()
 
   // --- Methods that encapsulate logic previously in GameState ---
-  def drawCard(): Option[Card] = {
+  def drawCard: Option[CardInterface] = {
     val deck = gameState.getPlayerDeck(gameState.getCurrentPlayer)
     val cardOpt = deck.drawCard()
     cardOpt.foreach { card =>
@@ -37,11 +27,11 @@ class GameLogic(val gameState: GameState) extends Observable {
     }
     cardOpt
   }
-  def returnCardToPlayerDeck(card: Card): Unit = {
+  def returnCardToPlayerDeck(card: CardInterface): Unit = {
     gameState.getPlayerDeck(gameState.getCurrentPlayer).addCard(card)
   }
 
-  def drawCards(count: Int): List[Card] = {
+  def drawCards(count: Int): List[CardInterface] = {
     val deck = gameState.getPlayerDeck(gameState.getCurrentPlayer)
     val drawn = (1 to count).flatMap(_ => deck.drawCard()).toList
     val updatedHand = gameState.getHand(gameState.getCurrentPlayer) ++ drawn
@@ -49,7 +39,7 @@ class GameLogic(val gameState: GameState) extends Observable {
     drawn
   }
 
-  def playCard(card: Card): Unit = {
+  def playCard(card: CardInterface): Unit = {
     val hand = gameState.getHand(gameState.getCurrentPlayer)
     if (hand.contains(card)) {
       val (before, after) = hand.span(_ != card)
@@ -63,7 +53,7 @@ class GameLogic(val gameState: GameState) extends Observable {
     }
   }
 
-  def returnCardToHand(card: Card): Unit = {
+  def returnCardToHand(card: CardInterface): Unit = {
     val player = gameState.getCurrentPlayer
     val discard = gameState.getDiscardPile(player)
     val (before, after) = discard.span(_ != card)
@@ -74,7 +64,7 @@ class GameLogic(val gameState: GameState) extends Observable {
   }
 
 
-  def buyCard(card: Card): Unit = {
+  def buyCard(card: CardInterface): Unit = {
     val tradeRow = gameState.getTradeRow
     if (tradeRow.contains(card)) {
       val (before, after) = tradeRow.span(_ != card)
@@ -82,10 +72,10 @@ class GameLogic(val gameState: GameState) extends Observable {
       val newDiscard = card :: gameState.getDiscardPile(gameState.getCurrentPlayer)
       gameState.setTradeRow(updatedTradeRow)
       gameState.setDiscardPile(gameState.getCurrentPlayer, newDiscard)
-      replenishTradeRow()
+      replenishTradeRow
     }
   }
-  def returnCardToTradeRow(card: Card): Unit = {
+  def returnCardToTradeRow(card: CardInterface): Unit = {
     val player = gameState.getCurrentPlayer
     val discard = gameState.getDiscardPile(player)
     val (before, after) = discard.span(_ != card)
@@ -95,7 +85,7 @@ class GameLogic(val gameState: GameState) extends Observable {
     gameState.setTradeRow(newTradeRow)
   }
 
-  def replenishTradeRow(): Unit = {
+  def replenishTradeRow: Unit = {
     val deck = gameState.getTradeDeck
     var tradeRow = gameState.getTradeRow
     while (tradeRow.size < 5 && deck.getCards.nonEmpty) {
@@ -104,7 +94,7 @@ class GameLogic(val gameState: GameState) extends Observable {
     gameState.setTradeRow(tradeRow)
   }
 
-  def undoReplenish(card: Card): Unit = {
+  def undoReplenish(card: CardInterface): Unit = {
     val tradeRow = gameState.getTradeRow
     val (before, after) = tradeRow.span(_ != card)
     val newTradeRow = before ++ after.drop(1)
@@ -112,7 +102,7 @@ class GameLogic(val gameState: GameState) extends Observable {
   }
 
 
-  def endTurn(): Unit = {
+  def endTurn: Unit = {
     val current = gameState.getCurrentPlayer
     val discardedHand = gameState.getHand(current)
     val updatedDiscard = gameState.getDiscardPile(current) ++ discardedHand
@@ -121,15 +111,15 @@ class GameLogic(val gameState: GameState) extends Observable {
     gameState.setHand(current, List())
 
     if (gameState.getOpponent.isAlive) {
-      gameState.swapPlayers()         // Spieler wechseln
+      gameState.swapPlayers         // Spieler wechseln
       drawCards(5)                    // Neue Karten für neuen Spieler ziehen
       gameState.notifyStateChange()   // Observer benachrichtigen, damit View aktualisiert wird
     } else {
-      gameState.checkGameOver()
+      gameState.checkGameOver
     }
   }
 
-  def undoEndTurn(): Unit = {
+  def undoEndTurn: Unit = {
     val previousPlayer = gameState.getOpponent
     val current = gameState.getCurrentPlayer
     val restoredHand = gameState.getLastDiscardedHand(previousPlayer)
@@ -140,13 +130,13 @@ class GameLogic(val gameState: GameState) extends Observable {
     gameState.setDiscardPile(previousPlayer, discard)
   }
 
-  def resetGame(): Unit = {
-    gameState.initializeDecks(gameState.decksByRole)
+  def resetGame: Unit = {
+    gameState.initializeDecks(gameState.getDecksByRole)
     drawCards(5)
-    replenishTradeRow()
+    replenishTradeRow
     gameState.notifyStateChange()
   }
-  def undoResetGame(): Unit = {
+  def undoResetGame: Unit = {
     //
     gameState.notifyStateChange()
   }
@@ -156,7 +146,7 @@ class GameLogic(val gameState: GameState) extends Observable {
     opponent.takeDamage(amount)
   }
 
-/*     def applyCombat(): Unit = {
+/*     def applyCombat: Unit = {
     val current = gameState.getCurrentPlayer
     val opponent = gameState.getOpponent
     // Alle Karten, die im aktuellen Zug gespielt wurden und Combat > 0 haben

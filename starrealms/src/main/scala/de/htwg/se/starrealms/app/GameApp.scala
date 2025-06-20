@@ -1,33 +1,75 @@
 package de.htwg.se.starrealms.app
 
-import de.htwg.se.starrealms.controller.Controller
-import de.htwg.se.starrealms.controller.CommandHandler
-import de.htwg.se.starrealms.model._
-import de.htwg.se.starrealms.view.{ConsoleView, GraphicUI}
+import de.htwg.se.starrealms.di.StarRealmsModule
+import com.google.inject.Guice
+import com.google.inject.Key
+
+
+import de.htwg.se.starrealms.model.PlayerComponent.impl._
+import de.htwg.se.starrealms.model.GameCore.impl._
+import de.htwg.se.starrealms.view.ConsoleView
+
+
+
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
+import de.htwg.se.starrealms.model.GameCore.{DeckInterface, Builder, DeckDirectorInterface}
+
+import de.htwg.se.starrealms.view._
+
+
 
 import scalafx.application.JFXApp3
 import scalafx.scene.Scene
+import de.htwg.se.starrealms.model.GameStateComponent.impl.GameState
+import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
+import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
+import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
+import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
+import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
+import com.google.inject.TypeLiteral
 
 object GameApp extends JFXApp3 {
+  val injector = Guice.createInjector(new StarRealmsModule())
   @volatile var running = true
 
   override def start(): Unit = {
-    val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set")
+    val director: DeckDirectorInterface = injector.getInstance(classOf[DeckDirectorInterface])
+    val builderFactory: Builder = injector.getInstance(classOf[Builder])
+
+    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
+    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
+
+    val csvLoader = new CardCSVLoader(sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath"))
+    val loadCards = new LoadCards(builderFactory, director, csvLoader)
+    val decksByRole = loadCards.load("Core Set")
+    //val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set", builderFactory, director)
     if (decksByRole.isEmpty) {
       println("No decks found. Exiting the game.")
       return
     }
+
+    //debugging
+    println("\n\nDecks by Role:")
+    decksByRole.foreach { case (role, deck) =>
+      println(s"Role: $role")
+      println(s"Cards: ${deck.getCards.map { case (card, qty) => s"${card.cardName} x$qty" }.mkString(", ")}")
+    }
+    println("\n\n")
+
     println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
+    val playerListKey = Key.get(new TypeLiteral[List[PlayerInterface]]() {})
+    val players: List[PlayerInterface] = injector.getInstance(playerListKey)
+    val player1 = players(0)
+    val player2 = players(1)
 
-    val player1 = Player("Player 1")
-    val player2 = Player("Player 2")
-
-    val gameState = new GameState(decksByRole, player1, player2)
-    val gameLogic = new GameLogic(gameState)
-    val controller = new Controller(gameLogic)
-    val commandHandler = new CommandHandler(controller)
-    val view = new ConsoleView(commandHandler, gameLogic)
-    val gui = new GraphicUI(commandHandler, () => running = false)
+    val gameState: GameStateInterface = injector.getInstance(classOf[GameStateInterface])
+    val gameLogic: GameLogicInterface = injector.getInstance(classOf[GameLogicInterface])
+    val mediator: GameMediator = injector.getInstance(classOf[GameMediator])
+    val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
+    val commandAdapter: CommandAdapter = injector.getInstance(classOf[CommandAdapter])
+    val proxy: GameStateReadOnly = injector.getInstance(classOf[GameStateReadOnly])
+    val view = injector.getInstance(classOf[ConsoleView])
+    val gui = injector.getInstance(classOf[GraphicUI])
 
     // TUI in separatem Thread starten
     new Thread(() => {
@@ -42,8 +84,8 @@ object GameApp extends JFXApp3 {
 
     gui.show()
 
-    controller.gameLogic.gameState.addObserver(gui)
-    controller.gameLogic.gameState.addObserver(view)
+    mediator.getGameState.addObserver(gui)
+    mediator.getGameState.addObserver(view)
 
   }
 }
