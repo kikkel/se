@@ -17,7 +17,9 @@ lazy val root = (project in file("."))
       "org.scalactic" %% "scalactic" % "3.2.19",
       "com.nrinaudo" %% "kantan.csv" % "0.6.1",
       "com.nrinaudo" %% "kantan.csv-generic" % "0.6.1",
-      "net.codingwell" %% "scala-guice" % "7.0.0"
+      "net.codingwell" %% "scala-guice" % "7.0.0",
+      //"org.scala-lang.modules" %% "scala-xml" % "2.4.0",
+      //"com.typesafe.play" %% "play-json" % "3.0.4" //UH OHHHHH!!
     ),
     Compile / mainClass := Some("de.htwg.se.starrealms.app.GameApp")
   )
