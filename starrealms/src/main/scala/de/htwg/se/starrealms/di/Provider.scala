@@ -57,9 +57,9 @@ class DecksByRoleProvider extends Provider[Map[String, DeckInterface]] {
   )
 }
 
-@Singleton
+/* @Singleton
 class PlayerProvider @Inject() (name: String, health: Int) extends Provider[PlayerInterface] {
   override def get(): PlayerInterface = {
     Player(name, health)
   }
-}
+} */

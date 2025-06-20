@@ -48,7 +48,7 @@ class StarRealmsModule extends AbstractModule with ScalaModule{
     bind(classOf[GameStateInterface]).to(classOf[GameStateComponent.impl.GameState])
     bind(classOf[GameStateReadOnly]).to(classOf[ControllerComponent.structure.GameStateProxy])
 
-    bind(classOf[PlayerInterface]).toProvider(classOf[PlayerProvider])
+    bind(classOf[PlayerInterface]).toInstance(new PlayerComponent.impl.Player(name = "Player 1", health = 100))
     bind(new TypeLiteral[List[PlayerInterface]]{}).toProvider(classOf[PlayersProvider])
     bind(new TypeLiteral[Function0[Builder]]{}).toProvider(classOf[BuilderFactoryProvider])
     bind(new TypeLiteral[List[ActionInterface]]{}).toProvider(classOf[ActionsProvider])
