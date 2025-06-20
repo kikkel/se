@@ -4,20 +4,20 @@ import de.htwg.util._
 import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 import de.htwg.se.starrealms.model.GameCore.{CardInterface, DeckDirectorInterface, DeckInterface, Builder}
 import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameSnapshot, PlayerSnapshot}
-
 import de.htwg.se.starrealms.model.GameCore.impl.FactionCard
 import de.htwg.se.starrealms.model.GameStateComponent
-
+import de.htwg.se.starrealms.di.{DecksByRoleProvider, PlayersProvider, BuilderFactoryProvider}
 import com.google.inject.Inject
-
 
 class GameState @Inject() (
   val decksByRole: Map[String, DeckInterface],
-  val player1: PlayerInterface,
-  val player2: PlayerInterface,
+  players: List[PlayerInterface],
   builderFactory: => Builder,
   director: DeckDirectorInterface
 ) extends Observable with GameStateInterface {
+  private val player1: PlayerInterface = players(0)
+  private val player2: PlayerInterface = players(1)
+
   private var currentPlayer: PlayerInterface = player1
   private var opponent: PlayerInterface = player2
 
@@ -50,7 +50,7 @@ class GameState @Inject() (
     )
     playerDecks(player1).setName("Personal Deck 1")
     playerDecks(player2).setName("Personal Deck 2")
-    
+
     val allTrade = decks.getOrElse("Trade Deck", director.constructEmptyDeck("Trade Deck", builderFactory)).getCards
     val expandedTrade = allTrade.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     val shuffledTrade = scala.util.Random.shuffle(expandedTrade)
@@ -132,7 +132,7 @@ class GameState @Inject() (
   override def notifyStateChange(): Unit = {
     notifyObservers()
   }
- 
+
   override def getSnapshot: GameSnapshot = {
     def cardList(cards: List[CardInterface]): List[CardInterface] = cards
     val currentPlayerSnapshot = PlayerSnapshot(

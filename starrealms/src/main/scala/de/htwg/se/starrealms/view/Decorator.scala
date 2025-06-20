@@ -11,6 +11,13 @@ abstract class RDecorator[T] @Inject() (wrapped: Renderer[T]) extends Renderer[T
   override def render(entity: T): String = wrapped.render(entity)
 }
 
+class CardRDecorator @Inject() (wrapped: Renderer[CardInterface]) extends RDecorator[CardInterface](wrapped) {
+  override def render(card: CardInterface): String = {
+    val base = wrapped.render(card)
+    s"[Card] $base"
+  }
+}
+
 class LoggingDecorator[T] @Inject() (wrapped: Renderer[T]) extends RDecorator[T](wrapped) {
   override def render(entity: T): String = {
     val result = super.render(entity)

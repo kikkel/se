@@ -2,6 +2,7 @@ package de.htwg.se.starrealms.app
 
 import de.htwg.se.starrealms.di.StarRealmsModule
 import com.google.inject.Guice
+import com.google.inject.Key
 
 
 import de.htwg.se.starrealms.model.PlayerComponent.impl._
@@ -24,6 +25,8 @@ import de.htwg.se.starrealms.model.GameStateComponent.GameStateInterface
 import de.htwg.se.starrealms.controller.GameLogicComponent.GameLogicInterface
 import de.htwg.se.starrealms.controller.GameMediatorComponent.GameMediator
 import de.htwg.se.starrealms.controller.ControllerComponent.ControllerInterface
+import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
+import com.google.inject.TypeLiteral
 
 object GameApp extends JFXApp3 {
   val injector = Guice.createInjector(new StarRealmsModule())
@@ -33,8 +36,8 @@ object GameApp extends JFXApp3 {
     val director: DeckDirectorInterface = injector.getInstance(classOf[DeckDirectorInterface])
     val builderFactory: Builder = injector.getInstance(classOf[Builder])
 
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
+    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
 
     val csvLoader = new CardCSVLoader(sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath"))
     val loadCards = new LoadCards(builderFactory, director, csvLoader)
@@ -54,8 +57,10 @@ object GameApp extends JFXApp3 {
     println("\n\n")
 
     println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
-    val player1 = Player("Player 1", 3)
-    val player2 = Player("Player 2", 3)
+    val playerListKey = Key.get(new TypeLiteral[List[PlayerInterface]]() {})
+    val players: List[PlayerInterface] = injector.getInstance(playerListKey)
+    val player1 = players(0)
+    val player2 = players(1)
 
     val gameState: GameStateInterface = injector.getInstance(classOf[GameStateInterface])
     val gameLogic: GameLogicInterface = injector.getInstance(classOf[GameLogicInterface])

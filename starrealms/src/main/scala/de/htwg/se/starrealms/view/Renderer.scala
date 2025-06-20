@@ -11,13 +11,13 @@ import de.htwg.se.starrealms.model.GameCore.impl.{DefaultCard, ExplorerCard, Fac
 import com.google.inject.Inject
 import de.htwg.se.starrealms.app.GameApp.injector
 
-class OptionsMenuRender @Inject() extends Renderer[OptionsMenu] {
+class OptionsMenuRender extends Renderer[OptionsMenu] {
   override def render(menu: OptionsMenu): String = {
     val options = menu.getOptions.map(_.render()).mkString("\n")
     s"Options Menu:\n$options"
   }
 }
-class MainMenuRenderer @Inject() extends Renderer[MainMenu] {
+class MainMenuRenderer extends Renderer[MainMenu] {
   override def render(menu: MainMenu): String = {
     val options = menu.getOptions.map(_.render()).mkString("\n")
     s"Main Menu:\n$options"

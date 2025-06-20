@@ -14,13 +14,15 @@ import de.htwg.se.starrealms.model.GameCore._
 import de.htwg.se.starrealms.model.GameStateComponent._
 import de.htwg.se.starrealms.model.PlayerComponent._
 import scalafx.scene.input.KeyCode.R
+import com.google.inject.Provider
+import com.google.inject.TypeLiteral
 
 class StarRealmsModule extends AbstractModule with ScalaModule{
   override def configure(): Unit = {
 
     //bind(classOf[CommandInterface]).to(classOf[ControllerComponent.structure.Command])
     bind(classOf[CommandAdapter]).to(classOf[CommandProcessorAdapter])
-    bind(classOf[Renderer[?]]).to(classOf[RDecorator[?]])
+    //bind(classOf[Renderer[?]]).to(classOf[RDecorator[?]])
 
     bind(classOf[ControllerInterface]).to(classOf[ControllerComponent.impl.Controller])
     bind(classOf[GameLogicInterface]).to(classOf[GameLogicComponent.impl.GameLogic])
@@ -28,10 +30,10 @@ class StarRealmsModule extends AbstractModule with ScalaModule{
 
 
     bind(classOf[AbilityInterface]).to(classOf[GameCore.impl.Ability])
-    bind(classOf[ActionInterface]).to(classOf[GameCore.impl.Action])
 
-    bind(classOf[CardInterface]).to(classOf[GameCore.impl.Card])
-    bind(classOf[CardTypeInterface]).to(classOf[GameCore.impl.CardType])
+    //Keine Bindings für abstrakte Klassen nötig??
+    //bind(classOf[CardInterface]).to(classOf[GameCore.impl.Card])
+    //bind(classOf[CardTypeInterface]).to(classOf[GameCore.impl.CardType])
     //bind(classOf[FactionInterface]).to(classOf[GameCore.impl.Faction])
     //bind(classOf[EditionInterface]).to(classOf[GameCore.impl.Edition])
 
@@ -42,7 +44,13 @@ class StarRealmsModule extends AbstractModule with ScalaModule{
     bind(classOf[GameStateInterface]).to(classOf[GameStateComponent.impl.GameState])
     bind(classOf[GameStateReadOnly]).to(classOf[ControllerComponent.structure.GameStateProxy])
 
-    bind(classOf[PlayerComponent.PlayerInterface]).to(classOf[PlayerComponent.impl.Player])
+
+    bind(new TypeLiteral[List[PlayerInterface]]{}).toProvider(classOf[PlayersProvider])
+    bind(new TypeLiteral[Function0[Builder]]{}).toProvider(classOf[BuilderFactoryProvider])
+    bind(new TypeLiteral[List[ActionInterface]]{}).toProvider(classOf[ActionsProvider])
+    bind(new TypeLiteral[Map[String, DeckInterface]]{}).toProvider(classOf[DecksByRoleProvider])
+    bind(new TypeLiteral[RDecorator[CardInterface]]{}).to(classOf[CardRDecorator])
+    bind(new TypeLiteral[Renderer[CardInterface]]{}).to(classOf[CardRDecorator])
 
 
   }
