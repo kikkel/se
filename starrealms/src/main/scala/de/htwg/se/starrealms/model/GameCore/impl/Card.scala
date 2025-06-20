@@ -7,10 +7,8 @@ import scala.util.{Try, Success, Failure}
 import scalafx.scene.input.KeyCode.S
 
 //--------------------------------------------------------------------------Card Types
-abstract class CardType @Inject() extends CardTypeInterface {
-}
-class Ship extends CardType with CardTypeInterface { override def cardType: String = "Ship" }
-class Base(val defense: String, val isOutpost: Boolean) extends CardType with CardTypeInterface { override def cardType: String = "Base" }
+class Ship extends CardTypeInterface { override def cardType: String = "Ship" }
+class Base(val defense: String, val isOutpost: Boolean) extends CardTypeInterface { override def cardType: String = "Base" }
 
 //--------------------------------------------------------------------------Faction Factory
 private class TradeFederation extends FactionInterface { override def factionName: String = "Trade Federation"; override def matches(other: FactionInterface): Boolean = other.factionName == factionName }
@@ -43,8 +41,6 @@ object Faction {
 // val tradeFederation = Faction("trade federation")
 
 //--------------------------------------------------------------------------Cards
-abstract class Card @Inject() extends CardInterface {
-}
 
 case class ParsedCard (
     edition: EditionInterface,
@@ -54,11 +50,11 @@ case class ParsedCard (
     allyAbility: Option[AbilityInterface],
     scrapAbility: Option[AbilityInterface],
     faction: FactionInterface,
-    cardType: Try[CardType],
+    cardType: Try[CardTypeInterface],
     qty: Int,
     role: String,
     notes: Option[String]
-) extends Card with CardInterface {
+) extends CardInterface {
 
     override def render(): String = {
         val cardTypeStr = cardType match {
@@ -76,12 +72,12 @@ case class DefaultCard(
     override val cardName: String,
     override val primaryAbility: Option[AbilityInterface],
     override val faction: FactionInterface,
-    override val cardType: Try[CardType],
+    override val cardType: Try[CardTypeInterface],
     override val qty: Int,
     override val role: String
 
 
-) extends Card with CardInterface {
+) extends CardInterface {
     override def render(): String = {
         val cardTypeStr = cardType match {
             case Success(value) => value.toString
@@ -98,10 +94,10 @@ case class ExplorerCard(
     override val primaryAbility: Option[AbilityInterface],
     val scrapAbility: Option[AbilityInterface],
     override val faction: FactionInterface,
-    override val cardType: Try[CardType],
+    override val cardType: Try[CardTypeInterface],
     override val qty: Int,
     override val role: String
-) extends Card with CardInterface {
+) extends CardInterface {
     override def render(): String = {
         val cardTypeStr = cardType match {
             case Success(value) => value.toString
@@ -119,11 +115,11 @@ case class FactionCard(
     val allyAbility: Option[AbilityInterface],
     val scrapAbility: Option[AbilityInterface],
     override val faction: FactionInterface,
-    override val cardType: Try[CardType],
+    override val cardType: Try[CardTypeInterface],
     override val qty: Int,
     override val role: String,
     val notes: Option[String]
-    ) extends Card with CardInterface {
+    ) extends CardInterface {
         override def render(): String = {
             val cardTypeStr = cardType match {
                 case Success(value) => value.toString
