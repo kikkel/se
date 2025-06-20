@@ -15,24 +15,20 @@ class LoadCards(
     def load(setName: String): Map[String, DeckInterface] = {
         loader.loadCardsFromFile
         val cards = loader.getAllCards.filter(_.edition.nameOfEdition.trim.equalsIgnoreCase(setName.trim))
-        val groupedCards = cards.groupBy(_.role.trim)
-        groupedCards.map { case (role, cards) =>
-            val deck = new Deck()
-            deck.setName(role)
-            val cardMap = cards.map(card => card -> card.qty).toMap
-            deck.setCards(cardMap)
-            role -> deck
+        val groupedCards = cards.groupBy(_.role.trim).map {
+            case (role, cards) =>
+                role -> cards.flatMap(card => List.fill(card.qty)(card))
         }
+
+        if (groupedCards.isEmpty) {
+            println(s"No cards found for edition: $setName")
+            return Map.empty
+        }
+
+        director.constructDecks(builderFactory, groupedCards)
     }
-
-    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
-
-
-    def getCsvPath: String =
-        sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath")
-
 }
+
 
 class CardCSVLoader(filePath: String) {
     private var cardsByEdition: Map[String, List[CardInterface]] = Map()
