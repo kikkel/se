@@ -7,7 +7,6 @@ import de.htwg.se.starrealms.model.GameStateComponent.{GameStateInterface, GameS
 import de.htwg.se.starrealms.model.GameCore.impl.FactionCard
 import de.htwg.se.starrealms.model.GameStateComponent
 import de.htwg.se.starrealms.di.{DecksByRoleProvider, PlayersProvider, BuilderFactoryProvider}
-import de.htwg.se.starrealms.model.GameCore.impl.Deck
 import com.google.inject.Inject
 
 class GameState @Inject() (
@@ -41,17 +40,16 @@ class GameState @Inject() (
     val expandedPersonal = allPersonal.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     val scouts = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
     val vipers = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
-    val player1Cards = scala.util.Random.shuffle(scouts ++ vipers)
-    val player2Cards = scala.util.Random.shuffle(scouts ++ vipers)
+    val playerCards = scala.util.Random.shuffle(scouts ++ vipers)
 
-    val deck1 = director.constructCustomDeck("Personal Deck 1", builderFactory, scala.util.Random.shuffle(player1Cards))
-    val deck2 = director.constructCustomDeck("Personal Deck 2", builderFactory, scala.util.Random.shuffle(player2Cards))
+    val deck1 = director.constructCustomDeck("Personal Deck 1", builderFactory, scala.util.Random.shuffle(playerCards))
+    val deck2 = director.constructCustomDeck("Personal Deck 2", builderFactory, scala.util.Random.shuffle(playerCards))
     playerDecks = Map(
-      player1 -> new Deck(),
-      player2 -> new Deck()
+      player1 -> deck1,
+      player2 -> deck2
     )
-    playerDecks(player1).setCardStack(player1Cards)
-    playerDecks(player2).setCardStack(player2Cards)
+    playerDecks(player1).setName("Personal Deck 1")
+    playerDecks(player2).setName("Personal Deck 2")
 
     val allTrade = decks.getOrElse("Trade Deck", director.constructEmptyDeck("Trade Deck", builderFactory)).getCards
     val expandedTrade = allTrade.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
