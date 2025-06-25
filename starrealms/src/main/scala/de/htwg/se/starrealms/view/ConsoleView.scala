@@ -26,24 +26,45 @@ class ConsoleView @Inject() (processor: CommandAdapter, readOnlyState: GameState
   private val cardRenderer: Renderer[CardInterface] = new LoggingDecorator(baseRenderer)
 
   def render(): String = {
-  val sb = new StringBuilder
-  sb.append("\n\n")
-  if (!inPlayPhase) {
-    sb.append("Enter 't' to start game\n")
-    sb.append("Enter 's' to start your turn\n")
-    sb.append("Enter 'r' to reset the game\n")
-    sb.append("Enter 'x' to exit the game\n\n")
-  } else {
-    sb.append("Its your turn!\n")
-    sb.append("Enter 'p <number>' to play a card from your hand\n")
-    sb.append("Enter 'b <number>' to buy a card from the trade row\n")
-    sb.append("Enter 'e' to end your turn\n")
-    sb.append("Enter 'z' to undo the last action\n")
-    sb.append("Enter 'y' to redo the last undone action\n")
-    sb.append("Enter 'x' to exit the game\n")
+    val sb = new StringBuilder
+    sb.append("\n\n")
+    val current = readOnlyState.getCurrentPlayer
+    val opponent = readOnlyState.getOpponent
+    sb.append(s"Current Player: ${current.getName} (Health: ${current.getHealth})\n")
+    sb.append(s"Opponent: ${opponent.getName} (Health: ${opponent.getHealth})\n\n")
+    sb.append(s"Your Hand:\n")
+    val hand = readOnlyState.getHand(current)
+    if (hand.isEmpty) sb.append("  (empty)\n")
+    else hand.zipWithIndex.foreach { case (card, idx) =>
+      sb.append(s"  [$idx] ${card.cardName}\n")
+    }
+    sb.append(s"\nYour Deck: ${readOnlyState.getPlayerDeck(current).getCardStack.size} cards\n")
+    sb.append(s"Your Discard Pile: ${readOnlyState.getDiscardPile(current).size} cards\n")
+    sb.append(s"\nTrade Row:\n")
+    val tradeRow = readOnlyState.getTradeRow
+    if (tradeRow.isEmpty) sb.append("  (empty)\n")
+    else tradeRow.zipWithIndex.foreach { case (card, idx) =>
+      sb.append(s"  [$idx] ${card.cardName}\n")
+    }
+    sb.append(s"\nTrade Deck: ${readOnlyState.getTradeDeck.getCardStack.size} cards\n")
+    sb.append(s"Explorer Pile: ${readOnlyState.getExplorerPile.getCardStack.size} cards\n\n")
+
+    if (!inPlayPhase) {
+      sb.append("Enter 't' to start game\n")
+      sb.append("Enter 's' to start your turn\n")
+      sb.append("Enter 'r' to reset the game\n")
+      sb.append("Enter 'x' to exit the game\n\n")
+    } else {
+      sb.append("Its your turn!\n")
+      sb.append("Enter 'p <number>' to play a card from your hand\n")
+      sb.append("Enter 'b <number>' to buy a card from the trade row\n")
+      sb.append("Enter 'e' to end your turn\n")
+      sb.append("Enter 'z' to undo the last action\n")
+      sb.append("Enter 'y' to redo the last undone action\n")
+      sb.append("Enter 'x' to exit the game\n")
+    }
+    sb.toString()
   }
-  sb.toString()
-}
 
   def processInput(input: String): Boolean = {
     if (!inPlayPhase) {
@@ -54,6 +75,7 @@ class ConsoleView @Inject() (processor: CommandAdapter, readOnlyState: GameState
         case "s" =>
           println(processor.handleInput("s"))
           inPlayPhase = true
+          println(render())
           true
         case "z" =>
           println(processor.handleInput("z"))
@@ -100,6 +122,7 @@ class ConsoleView @Inject() (processor: CommandAdapter, readOnlyState: GameState
     }
   }
   override def update: Unit = {
+    println(render())
     val hand = readOnlyState.getHand(readOnlyState.getCurrentPlayer)
     hand.foreach(card => println(cardRenderer.render(card)))
     println(processor.getState)

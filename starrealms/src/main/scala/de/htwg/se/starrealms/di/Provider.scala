@@ -7,14 +7,13 @@ import de.htwg.se.starrealms.model.GameCore.Builder
 import de.htwg.se.starrealms.model.GameCore.ActionInterface
 import de.htwg.se.starrealms.model.GameCore.DeckInterface
 import de.htwg.se.starrealms.model.GameCore.impl.Deck
-
+import de.htwg.se.starrealms.model.GameCore.impl.{LoadCards, CardCSVLoader, DeckDirector}
+import de.htwg.se.starrealms.model.GameCore.{Builder, DeckDirectorInterface, DeckInterface}
 import de.htwg.se.starrealms.view.GraphicUI
 import de.htwg.se.starrealms.view.CommandAdapter
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
-
-
-
-
+import scala.jdk.CollectionConverters._
+import de.htwg.se.starrealms.model.GameStateComponent.impl.GameState
 
 @Singleton
 class GraphicUIProvider @Inject() (
@@ -49,12 +48,16 @@ class ActionsProvider extends Provider[List[ActionInterface]] {
 }
 
 @Singleton
-class DecksByRoleProvider extends Provider[Map[String, DeckInterface]] {
-  override def get(): Map[String, DeckInterface] = Map(
-    "Personal Deck" -> new Deck,
-    "Trade Deck" -> new Deck,
-    "Explorer Pile" -> new Deck
-  )
+class DecksByRoleProvider @Inject() (
+  builder: Builder,
+  director: DeckDirectorInterface
+) extends Provider[Map[String, DeckInterface]] {
+  override def get(): Map[String, DeckInterface] = {
+    val ki_filePath: String = sys.env.getOrElse("CARDS_CSV_PATH", "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv")
+    val csvLoader = new CardCSVLoader(ki_filePath)
+    val loadCards = new LoadCards(builder, director, csvLoader)
+    loadCards.load("Core Set")
+  }
 }
 
 /* @Singleton
@@ -63,3 +66,22 @@ class PlayerProvider @Inject() (name: String, health: Int) extends Provider[Play
     Player(name, health)
   }
 } */
+
+@Singleton
+class GameStateProvider @Inject() (
+  decksByRole: Map[String, DeckInterface],
+  players: List[PlayerInterface],
+  builderFactory: () => Builder,
+  director: DeckDirectorInterface
+) extends Provider[GameState] {
+
+  // cache variable
+  private lazy val instance: GameState = new GameState(
+    decksByRole = decksByRole,
+    players = players,
+    builderFactory = builderFactory(),
+    director = director
+  )
+
+  override def get(): GameState = instance
+}

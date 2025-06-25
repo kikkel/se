@@ -35,24 +35,30 @@ class GameState @Inject() (
 
   override def getDecksByRole = decksByRole
 
-  override def initializeDecks(decks: Map[String, DeckInterface]): Unit = {
-    val allPersonal = decks.getOrElse("Personal Deck", director.constructEmptyDeck("Personal Deck", builderFactory)).getCards
-    val expandedPersonal = allPersonal.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
-    val scouts = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
-    val vipers = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
-    val playerCards = scala.util.Random.shuffle(scouts ++ vipers)
+  // ...existing code...
+override def initializeDecks(decks: Map[String, DeckInterface]): Unit = {
+  val allPersonal = decks.getOrElse("Personal Deck", director.constructEmptyDeck("Personal Deck", builderFactory)).getCards
+  val expandedPersonal = allPersonal.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
+  val scouts = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Scout")).take(8)
+  val vipers = expandedPersonal.filter(_.cardName.trim.equalsIgnoreCase("Viper")).take(2)
+  val playerCards = scala.util.Random.shuffle(scouts ++ vipers)
 
-    val deck1 = director.constructCustomDeck("Personal Deck 1", builderFactory, scala.util.Random.shuffle(playerCards))
-    val deck2 = director.constructCustomDeck("Personal Deck 2", builderFactory, scala.util.Random.shuffle(playerCards))
-    playerDecks = Map(
-      player1 -> deck1,
-      player2 -> deck2
-    )
-    playerDecks(player1).setName("Personal Deck 1")
-    playerDecks(player2).setName("Personal Deck 2")
+  val deck1 = director.constructCustomDeck("Personal Deck 1", builderFactory, scala.util.Random.shuffle(playerCards))
+  val deck2 = director.constructCustomDeck("Personal Deck 2", builderFactory, scala.util.Random.shuffle(playerCards))
+  playerDecks = Map(
+    player1 -> deck1,
+    player2 -> deck2
+  )
+  playerDecks(player1).setName("Personal Deck 1")
+  playerDecks(player2).setName("Personal Deck 2")
 
-    val allTrade = decks.getOrElse("Trade Deck", director.constructEmptyDeck("Trade Deck", builderFactory)).getCards
-    val expandedTrade = allTrade.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
+  hands = Map(player1 -> List(), player2 -> List())
+  discardPiles = Map(player1 -> List(), player2 -> List())
+  lastDiscardedHands = Map(player1 -> List(), player2 -> List())
+
+
+  val allTrade = decks.getOrElse("Trade Deck", director.constructEmptyDeck("Trade Deck", builderFactory)).getCards
+  val expandedTrade = allTrade.flatMap { case (card, qty) => List.fill(qty)(card) }.toList
     val shuffledTrade = scala.util.Random.shuffle(expandedTrade)
     tradeDeck = director.constructEmptyDeck("Trade Deck", builderFactory)
     tradeDeck.setName("Trade Deck")
@@ -100,9 +106,10 @@ class GameState @Inject() (
     notifyObservers()
   }
 
-  override def setHand(player: PlayerInterface, hand: List[CardInterface]): Unit = {
-    hands = hands.updated(player, hand)
-    notifyObservers()
+  override def setHand(player: PlayerInterface, cards: List[CardInterface]): Unit = {
+    println(s"[DEBUG] setHand for ${player.getName}: ${cards.map(_.cardName)}")
+    hands = hands.updated(player, cards)
+    println(s"[DEBUG] Updated hand for ${player.getName}: ${hands(player).map(_.cardName)}")
   }
 
   override def setDiscardPile(player: PlayerInterface, discard: List[CardInterface]): Unit = {
@@ -114,9 +121,9 @@ class GameState @Inject() (
     notifyObservers()
   }
 
-  override def setTradeRow(row: List[CardInterface]): Unit = {
-    tradeRow = row
-    notifyObservers()
+  override def setTradeRow(cards: List[CardInterface]): Unit = {
+    println(s"[DEBUG] setTradeRow: ${cards.map(_.cardName)}")
+    tradeRow = cards
   }
 
   override def setTradeDeck(deck: DeckInterface): Unit = {

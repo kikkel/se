@@ -96,7 +96,7 @@ class Deck @Inject() extends DeckInterface {
 class DeckBuilder @Inject() (product: DeckInterface) extends Builder {
     private var productVar: DeckInterface = product
 
-    override def reset: Unit = productVar.resetDeck() 
+    override def reset: Unit = productVar.resetDeck()
     override def setName(name: String): Unit = productVar.setName(name)
     override def setCards(newCards: Map[CardInterface, Int]): Unit = productVar.setCards(newCards)
     override def addCards(cards: List[CardInterface]): Unit = cards.foreach(productVar.addCard)
@@ -114,12 +114,13 @@ class DeckDirector @Inject() extends DeckDirectorInterface {
         builder.getProduct
     }
     override def constructCustomDeck(name: String, builderFactory: => Builder, cards: List[CardInterface]): DeckInterface = {
-            val builder = builderFactory
-            builder.reset
-            builder.setName(name)
-            val cardMap = cards.groupBy(identity).map { case (card, list) => card -> list.size }
-            builder.setCards(cardMap)
-            builder.getProduct
+        val builder = builderFactory
+        builder.reset
+        builder.setName(name)
+        val cardMap = cards.groupBy(identity).map { case (card, list) => card -> list.size }
+        builder.setCards(cardMap)
+        builder.getProduct.setCardStack(scala.util.Random.shuffle(cards)) // <--- Diese Zeile hinzufügen!
+        builder.getProduct
     }
     override def constructDecks(builderFactory: => Builder, groupedCards: Map[String, List[CardInterface]]): Map[String, DeckInterface] = {
         groupedCards.map { case (role, cards) =>

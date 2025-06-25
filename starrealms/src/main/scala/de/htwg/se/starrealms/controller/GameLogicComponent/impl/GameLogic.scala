@@ -32,12 +32,15 @@ class GameLogic @Inject() (val gameState: GameStateInterface) extends Observable
   }
 
   def drawCards(count: Int): List[CardInterface] = {
+    // Hand zuerst leeren
+    gameState.setHand(gameState.getCurrentPlayer, List())
     val deck = gameState.getPlayerDeck(gameState.getCurrentPlayer)
     val drawn = (1 to count).flatMap(_ => deck.drawCard()).toList
-    val updatedHand = gameState.getHand(gameState.getCurrentPlayer) ++ drawn
-    gameState.setHand(gameState.getCurrentPlayer, updatedHand)
+    println(s"Drawn cards: ${drawn.map(_.cardName).mkString(", ")}")
+    gameState.setHand(gameState.getCurrentPlayer, drawn)
     drawn
   }
+
 
   def playCard(card: CardInterface): Unit = {
     val hand = gameState.getHand(gameState.getCurrentPlayer)

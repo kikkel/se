@@ -36,8 +36,8 @@ object GameApp extends JFXApp3 {
     val director: DeckDirectorInterface = injector.getInstance(classOf[DeckDirectorInterface])
     val builderFactory: Builder = injector.getInstance(classOf[Builder])
 
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
+    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
 
     val csvLoader = new CardCSVLoader(sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath"))
     val loadCards = new LoadCards(builderFactory, director, csvLoader)

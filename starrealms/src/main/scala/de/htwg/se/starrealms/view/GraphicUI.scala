@@ -22,7 +22,7 @@ example of how to use readOnlyState in GUI:
 
 outputArea.appendText(
   s"Cards in hand: ${readOnlyState.getHand(readOnlyState.getCurrentPlayer).map(_.cardName).mkString(", ")}"
-) 
+)
 */
 
 class GraphicUI(processor: CommandAdapter, readOnlyState: GameStateReadOnly, onExit: () => Unit) extends Stage with Observer {
