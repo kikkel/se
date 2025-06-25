@@ -8,6 +8,7 @@ import com.google.inject.Key
 import de.htwg.se.starrealms.model.PlayerComponent.impl._
 import de.htwg.se.starrealms.model.GameCore.impl._
 import de.htwg.se.starrealms.view.ConsoleView
+import de.htwg.se.starrealms.model.FileIOComponent.FileIOInterface
 
 
 
@@ -36,8 +37,8 @@ object GameApp extends JFXApp3 {
     val director: DeckDirectorInterface = injector.getInstance(classOf[DeckDirectorInterface])
     val builderFactory: Builder = injector.getInstance(classOf[Builder])
 
-    val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    //val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
+    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
+    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
 
     val csvLoader = new CardCSVLoader(sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath"))
     val loadCards = new LoadCards(builderFactory, director, csvLoader)
@@ -86,6 +87,19 @@ object GameApp extends JFXApp3 {
 
     mediator.getGameState.addObserver(gui)
     mediator.getGameState.addObserver(view)
+
+    val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
+    val testPlayers = List(new Player("Player1", 100), new Player("Player2", 100))
+    fileIO.save(testPlayers, "players.json")
+    val loaded = fileIO.load("players.json")
+    println("Loaded players: " + loaded.map(_.getName))
+
+    //val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
+    //val testPlayers = List(new Player("Player1", 100), new Player("Player2", 100))
+    //fileIO.save(testPlayers, "players.xml")
+    //val loaded = fileIO.load("players.xml")
+    //println("Loaded players: " + loaded.map(_.getName))
+
 
   }
 }

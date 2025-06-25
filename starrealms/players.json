@@ -1,0 +1,15 @@
+{
+  "players" : [ {
+    "name" : "Player1",
+    "health" : 100,
+    "deckSize" : 0,
+    "discardSize" : 0,
+    "handSize" : 0
+  }, {
+    "name" : "Player2",
+    "health" : 100,
+    "deckSize" : 0,
+    "discardSize" : 0,
+    "handSize" : 0
+  } ]
+}
