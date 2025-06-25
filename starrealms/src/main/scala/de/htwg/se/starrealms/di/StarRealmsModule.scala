@@ -23,6 +23,11 @@ import scalafx.scene.input.KeyCode.G
 class StarRealmsModule extends AbstractModule with ScalaModule{
   override def configure(): Unit = {
 
+    bind(classOf[StarRealmsConfig]).toInstance(
+      StarRealmsConfig("/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv")
+      //StarRealmsConfig("/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv")
+    )
+
     bind(classOf[GraphicUI]).toProvider(classOf[GraphicUIProvider])
     bind(classOf[ConsoleView])
 

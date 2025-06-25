@@ -4,20 +4,15 @@ import de.htwg.se.starrealms.di.StarRealmsModule
 import com.google.inject.Guice
 import com.google.inject.Key
 
-
 import de.htwg.se.starrealms.model.PlayerComponent.impl._
 import de.htwg.se.starrealms.model.GameCore.impl._
 import de.htwg.se.starrealms.view.ConsoleView
 import de.htwg.se.starrealms.model.FileIOComponent.FileIOInterface
 
-
-
 import de.htwg.se.starrealms.model.GameStateComponent.GameStateReadOnly
 import de.htwg.se.starrealms.model.GameCore.{DeckInterface, Builder, DeckDirectorInterface}
 
 import de.htwg.se.starrealms.view._
-
-
 
 import scalafx.application.JFXApp3
 import scalafx.scene.Scene
@@ -37,27 +32,6 @@ object GameApp extends JFXApp3 {
     val director: DeckDirectorInterface = injector.getInstance(classOf[DeckDirectorInterface])
     val builderFactory: Builder = injector.getInstance(classOf[Builder])
 
-    //val ki_filePath: String = "/Users/kianimoon/se/se/starrealms/src/main/resources/PlayableSets.csv"
-    val ki_filePath: String = "/Users/koeseazra/SE-uebungen/se/starrealms/src/main/resources/PlayableSets.csv"
-
-    val csvLoader = new CardCSVLoader(sys.env.getOrElse("CARDS_CSV_PATH", s"$ki_filePath"))
-    val loadCards = new LoadCards(builderFactory, director, csvLoader)
-    val decksByRole = loadCards.load("Core Set")
-    //val decksByRole = LoadCards.loadFromResource(LoadCards.getCsvPath, "Core Set", builderFactory, director)
-    if (decksByRole.isEmpty) {
-      println("No decks found. Exiting the game.")
-      return
-    }
-
-    //debugging
-    println("\n\nDecks by Role:")
-    decksByRole.foreach { case (role, deck) =>
-      println(s"Role: $role")
-      println(s"Cards: ${deck.getCards.map { case (card, qty) => s"${card.cardName} x$qty" }.mkString(", ")}")
-    }
-    println("\n\n")
-
-    println(s"\n\nDeck loaded: ${decksByRole.keys.mkString(", ")}\n\n")
     val playerListKey = Key.get(new TypeLiteral[List[PlayerInterface]]() {})
     val players: List[PlayerInterface] = injector.getInstance(playerListKey)
     val player1 = players(0)
@@ -82,24 +56,16 @@ object GameApp extends JFXApp3 {
       System.exit(0)
     }).start()
 
-
     gui.show()
 
     mediator.getGameState.addObserver(gui)
     mediator.getGameState.addObserver(view)
 
+    // FileIO-Test (optional, kann entfernt werden)
     val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
     val testPlayers = List(new Player("Player1", 100), new Player("Player2", 100))
     fileIO.save(testPlayers, "players.json")
     val loaded = fileIO.load("players.json")
     println("Loaded players: " + loaded.map(_.getName))
-
-    //val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
-    //val testPlayers = List(new Player("Player1", 100), new Player("Player2", 100))
-    //fileIO.save(testPlayers, "players.xml")
-    //val loaded = fileIO.load("players.xml")
-    //println("Loaded players: " + loaded.map(_.getName))
-
-
   }
 }
