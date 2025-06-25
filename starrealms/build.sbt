@@ -20,6 +20,8 @@ lazy val root = (project in file("."))
       "net.codingwell" %% "scala-guice" % "7.0.0",
       //"org.scala-lang.modules" %% "scala-xml" % "2.4.0",
       //"com.typesafe.play" %% "play-json" % "3.0.4" //UH OHHHHH!!
+      "org.scala-lang.modules" %% "scala-xml" % "2.4.0",
+      "org.playframework" %% "play-json" % "3.0.4"
     ),
     Compile / mainClass := Some("de.htwg.se.starrealms.app.GameApp")
   )

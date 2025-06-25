@@ -4,11 +4,16 @@ import de.htwg.se.starrealms.model.PlayerComponent.PlayerInterface
 import com.google.inject.Inject
 
 case class Player @Inject() (
-    name: String,
-    var health: Int //todo: implement starting helth elsewhere in code, e.g. start game
+    private var name: String,
+    private var health: Int
 ) extends PlayerInterface {
+
+    private var deckSize: Int = 0
+    private var discardSize: Int = 0
+    private var handSize: Int = 0
+
     override def takeDamage(amount: Int): Unit = {
-        health = math.max(0, health- amount)
+        health = math.max(0, health - amount)
     }
 
     override def heal(amount: Int): Unit = {
@@ -17,16 +22,28 @@ case class Player @Inject() (
 
     override def isAlive: Boolean = health > 0
 
-    //override def toString: String = s"$name (Leben: $health)"
     override def getHealth: Int = health
-    override def getHandSize: Int = ???
-    override def getName: String = name
-    override def getDiscardSize: Int = ???
-    override def getDeckSize: Int = ???
+    override def setHealth(score: Int): Unit = {
+        health = score
+    }
 
-    override def setDeckSize(size: Int): Unit = ???
-    override def setDiscardSize(size: Int): Unit = ???
-    override def setName(name: String): Unit = ???
-    override def setHandSize(size: Int): Unit = ???
-    override def setHealth(score: Int): Unit = ???
+    override def getName: String = name
+    override def setName(newName: String): Unit = {
+        name = newName
+    }
+
+    override def getDeckSize: Int = deckSize
+    override def setDeckSize(size: Int): Unit = {
+        deckSize = size
+    }
+
+    override def getDiscardSize: Int = discardSize
+    override def setDiscardSize(size: Int): Unit = {
+        discardSize = size
+    }
+
+    override def getHandSize: Int = handSize
+    override def setHandSize(size: Int): Unit = {
+        handSize = size
+    }
 }

@@ -13,6 +13,8 @@ import de.htwg.se.starrealms.model.{GameCore, PlayerComponent, GameStateComponen
 import de.htwg.se.starrealms.model.GameCore._
 import de.htwg.se.starrealms.model.GameStateComponent._
 import de.htwg.se.starrealms.model.PlayerComponent._
+import de.htwg.se.starrealms.model.FileIOComponent.FileIOInterface
+
 import scalafx.scene.input.KeyCode.R
 import com.google.inject.Provider
 import com.google.inject.TypeLiteral
@@ -55,6 +57,11 @@ class StarRealmsModule extends AbstractModule with ScalaModule{
     bind(new TypeLiteral[Map[String, DeckInterface]]{}).toProvider(classOf[DecksByRoleProvider])
     bind(new TypeLiteral[RDecorator[CardInterface]]{}).to(classOf[CardRDecorator])
     bind(new TypeLiteral[Renderer[CardInterface]]{}).to(classOf[CardRDecorator])
+
+    //FileIO Bindings je nach dem welches genutzt werden soll auskommentieren
+    //bind(classOf[FileIOInterface]).to(classOf[de.htwg.se.starrealms.model.FileIOComponent.FileIOXMLimpl.FileIOXML])
+
+    bind(classOf[FileIOInterface]).to(classOf[de.htwg.se.starrealms.model.FileIOComponent.FileIOJsonimpl.FileIOJson])
 
 
   }

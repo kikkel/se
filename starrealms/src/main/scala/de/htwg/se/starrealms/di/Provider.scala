@@ -7,6 +7,9 @@ import de.htwg.se.starrealms.model.GameCore.Builder
 import de.htwg.se.starrealms.model.GameCore.ActionInterface
 import de.htwg.se.starrealms.model.GameCore.DeckInterface
 import de.htwg.se.starrealms.model.GameCore.impl.Deck
+import de.htwg.se.starrealms.model.FileIOComponent.FileIOInterface
+import de.htwg.se.starrealms.model.FileIOComponent.FileIOJsonimpl.FileIOJson
+import de.htwg.se.starrealms.model.FileIOComponent.FileIOXMLimpl.FileIOXML
 
 import de.htwg.se.starrealms.view.GraphicUI
 import de.htwg.se.starrealms.view.CommandAdapter
@@ -56,6 +59,7 @@ class DecksByRoleProvider extends Provider[Map[String, DeckInterface]] {
     "Explorer Pile" -> new Deck
   )
 }
+
 
 /* @Singleton
 class PlayerProvider @Inject() (name: String, health: Int) extends Provider[PlayerInterface] {
