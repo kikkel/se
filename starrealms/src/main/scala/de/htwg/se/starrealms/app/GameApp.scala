@@ -61,7 +61,7 @@ object GameApp extends JFXApp3 {
     mediator.getGameState.addObserver(gui)
     mediator.getGameState.addObserver(view)
 
-    // FileIO-Test (optional, kann entfernt werden)
+    //FileIO-Test
     val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
     val testPlayers = List(new Player("Player1", 100), new Player("Player2", 100))
     fileIO.save(testPlayers, "players.json")

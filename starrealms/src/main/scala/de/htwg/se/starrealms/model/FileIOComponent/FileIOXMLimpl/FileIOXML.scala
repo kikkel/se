@@ -8,7 +8,7 @@ import scala.io.Source
 
 class FileIOXML extends FileIOInterface {
 
-  // Serialisierung eines Players zu XML
+  //Serialisierung eines Players zu XML
   def playerToXml(player: PlayerInterface): Elem =
     <player>
       <name>{player.getName}</name>
@@ -18,7 +18,7 @@ class FileIOXML extends FileIOInterface {
       <handSize>{player.getHandSize}</handSize>
     </player>
 
-  // Deserialisierung eines Players aus XML
+  //Deseriealisierung Players aus XML
   def xmlToPlayer(node: scala.xml.Node): PlayerInterface = {
     val name = (node \ "name").text
     val health = (node \ "health").text.toInt
@@ -32,7 +32,7 @@ class FileIOXML extends FileIOInterface {
     player
   }
 
-  // Speichern einer Liste von Spielern als XML-Datei
+  //Speichern einer Liste von Spielern als XML-Datei
   override def save(players: List[PlayerInterface], filename: String): Unit = {
     val xml =
       <players>
@@ -44,7 +44,7 @@ class FileIOXML extends FileIOInterface {
     pw.close()
   }
 
-  // Laden einer Liste von Spielern aus einer XML-Datei
+  //Laden einer Liste von Spielern aus einer XML-Datei
   override def load(filename: String): List[PlayerInterface] = {
     val xml = XML.loadFile(filename)
     (xml \\ "player").map(xmlToPlayer).toList
