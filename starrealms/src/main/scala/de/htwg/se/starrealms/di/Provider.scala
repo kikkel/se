@@ -7,6 +7,7 @@ import de.htwg.se.starrealms.model.GameCore.Builder
 import de.htwg.se.starrealms.model.GameCore.ActionInterface
 import de.htwg.se.starrealms.model.GameCore.DeckInterface
 import de.htwg.se.starrealms.model.GameCore.impl.Deck
+import de.htwg.se.starrealms.model.GameCore.DeckDirectorInterface
 import de.htwg.se.starrealms.model.FileIOComponent.FileIOInterface
 import de.htwg.se.starrealms.model.FileIOComponent.FileIOJsonimpl.FileIOJson
 import de.htwg.se.starrealms.model.FileIOComponent.FileIOXMLimpl.FileIOXML
@@ -52,12 +53,18 @@ class ActionsProvider extends Provider[List[ActionInterface]] {
 }
 
 @Singleton
-class DecksByRoleProvider extends Provider[Map[String, DeckInterface]] {
-  override def get(): Map[String, DeckInterface] = Map(
-    "Personal Deck" -> new Deck,
-    "Trade Deck" -> new Deck,
-    "Explorer Pile" -> new Deck
-  )
+class DecksByRoleProvider @Inject() (
+  builder: Builder,
+  director: DeckDirectorInterface,
+  config: StarRealmsConfig
+) extends Provider[Map[String, DeckInterface]] {
+  override def get(): Map[String, DeckInterface] = {
+    val loader = new de.htwg.se.starrealms.model.GameCore.impl.CardCSVLoader(config.cardCsvPath)
+    val loadCards = new de.htwg.se.starrealms.model.GameCore.impl.LoadCards(builder, director, loader)
+    val decks = loadCards.load("Core Set")
+    println("DEBUG: DecksByRoleProvider loaded decks: " + decks.map { case (k, v) => s"$k -> ${v.getCardStack.size}" })
+    decks
+  }
 }
 
 
