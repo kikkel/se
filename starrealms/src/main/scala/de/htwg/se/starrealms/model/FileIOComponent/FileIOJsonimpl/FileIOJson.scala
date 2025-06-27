@@ -24,7 +24,6 @@ class FileIOJson extends FileIOInterface {
     val deckSize = (json \ "deckSize").as[Int]
     val discardSize = (json \ "discardSize").as[Int]
     val handSize = (json \ "handSize").as[Int]
-    // Passe ggf. die Player-Implementierung an!
     val player = new de.htwg.se.starrealms.model.PlayerComponent.impl.Player(name, health)
     player.setDeckSize(deckSize)
     player.setDiscardSize(discardSize)
