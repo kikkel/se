@@ -8,7 +8,6 @@ import scala.io.Source
 
 class FileIOJson extends FileIOInterface {
 
-  //Serialisierung eines Players zu JSON
   def playerToJson(player: PlayerInterface): JsObject = Json.obj(
     "name" -> player.getName,
     "health" -> player.getHealth,
@@ -17,7 +16,6 @@ class FileIOJson extends FileIOInterface {
     "handSize" -> player.getHandSize
   )
 
-  //Deserialisierung eines Players aus JSON
   def jsonToPlayer(json: JsValue): PlayerInterface = {
     val name = (json \ "name").as[String]
     val health = (json \ "health").as[Int]
