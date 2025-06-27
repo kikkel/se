@@ -32,7 +32,7 @@ class FileIOXML extends FileIOInterface {
     player
   }
 
-  //Speichern einer Liste von Spielern als XML-Datei
+  //Speichern einer Liste von Spielern als XML-Datei (write)
   override def save(players: List[PlayerInterface], filename: String): Unit = {
     val xml =
       <players>
@@ -44,7 +44,7 @@ class FileIOXML extends FileIOInterface {
     pw.close()
   }
 
-  //Laden einer Liste von Spielern aus einer XML-Datei
+  //Laden einer Liste von Spielern aus einer XML-Datei (read)
   override def load(filename: String): List[PlayerInterface] = {
     val xml = XML.loadFile(filename)
     (xml \\ "player").map(xmlToPlayer).toList

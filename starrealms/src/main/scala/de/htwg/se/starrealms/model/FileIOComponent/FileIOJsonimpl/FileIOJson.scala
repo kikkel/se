@@ -32,7 +32,7 @@ class FileIOJson extends FileIOInterface {
     player
   }
 
-  //Speichern einer Liste von Spielern als JSON-Datei
+  //Speichern einer Liste von Spielern als JSON-Datei (write in Vorlesung)
   override def save(players: List[PlayerInterface], filename: String): Unit = {
     val json = Json.obj(
       "players" -> players.map(playerToJson)
@@ -42,7 +42,7 @@ class FileIOJson extends FileIOInterface {
     pw.close()
   }
 
-  //Laden einer Liste von Spielern aus einer JSON-Datei
+  //Laden einer Liste von Spielern aus einer JSON-Datei (read in Vorlesung)
   override def load(filename: String): List[PlayerInterface] = {
     val source = Source.fromFile(filename)
     val jsonString = try source.mkString finally source.close()
